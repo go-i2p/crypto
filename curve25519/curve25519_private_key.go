@@ -14,8 +14,8 @@ func (k Curve25519PrivateKey) Bytes() []byte {
 	return k // Return the byte slice representation of the private key
 }
 
-// Public implements types.PrivateKey.
-func (k Curve25519PrivateKey) Public() (types.SigningPublicKey, error) {
+// Public implements types.PrivateEncryptionKey.
+func (k Curve25519PrivateKey) Public() (types.PublicEncryptionKey, error) {
 	// Create a proper x25519.PrivateKey from the byte slice
 	if len(k) != x25519.PrivateKeySize {
 		// Handle invalid private key length
@@ -66,4 +66,4 @@ func (k Curve25519PrivateKey) NewSigner() (types.Signer, error) {
 	return &Curve25519Signer{k: k}, nil
 }
 
-var _ types.PrivateKey = &Curve25519PrivateKey{}
+var _ types.PrivateEncryptionKey = &Curve25519PrivateKey{}

@@ -68,3 +68,5 @@ func CreateCurve25519PublicKey(data []byte) (k *curve25519.PublicKey) {
 	}
 	return
 }
+
+var _ types.PublicEncryptionKey = &Curve25519PublicKey{}
