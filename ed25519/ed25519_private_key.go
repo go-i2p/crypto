@@ -33,15 +33,9 @@ func (k Ed25519PrivateKey) Zero() {
 	}
 }
 
-func (k Ed25519PrivateKey) NewDecrypter() (types.Decrypter, error) {
-	if len(k) != ed25519.PrivateKeySize {
-		return nil, oops.Errorf("invalid ed25519 private key size")
-	}
-	d := &Ed25519Decrypter{
-		privateKey: k,
-	}
-	return d, nil
-}
+// NOTE: Ed25519 is a signature algorithm, not an encryption algorithm.
+// This private key type does not implement types.DecryptingPrivateKey.
+// For I2P decryption operations, use Curve25519 (X25519) instead.
 
 func (k Ed25519PrivateKey) NewSigner() (types.Signer, error) {
 	if len(k) != ed25519.PrivateKeySize {

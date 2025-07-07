@@ -2,10 +2,8 @@ package ed25519
 
 import (
 	"crypto/ed25519"
-	"crypto/rand"
 
 	"github.com/go-i2p/crypto/types"
-	"github.com/samber/oops"
 )
 
 type Ed25519PublicKey []byte
@@ -25,22 +23,12 @@ func (k Ed25519PublicKey) Bytes() []byte {
 	return k
 }
 
-func (elg Ed25519PublicKey) NewEncrypter() (enc types.Encrypter, err error) {
-	log.Debug("Creating new Ed25519 encrypter")
-	k := createEd25519PublicKey(elg[:])
-	if k == nil {
-		return nil, oops.Errorf("invalid public key format")
-	}
-
-	enc, err = createEd25519Encryption(k, rand.Reader)
-	if err != nil {
-		log.WithError(err).Error("Failed to create Ed25519 encrypter")
-		return nil, err
-	}
-
-	log.Debug("Ed25519 encrypter created successfully")
-	return enc, nil
-}
+// NOTE: Ed25519 is a signature algorithm, not an encryption algorithm.
+// For I2P encryption operations, use Curve25519 (X25519) instead.
+// This method has been removed to prevent cryptographic misuse.
+//
+// Use the curve25519 package for ECIES-X25519-AEAD encryption as required
+// by I2P protocol specifications.
 
 func createEd25519PublicKey(data []byte) (k *ed25519.PublicKey) {
 	log.WithField("data_length", len(data)).Debug("Creating Ed25519 public key")
