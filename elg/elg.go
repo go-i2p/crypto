@@ -6,23 +6,9 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/go-i2p/logger"
-	"github.com/samber/oops"
 	"github.com/sirupsen/logrus"
 
 	"golang.org/x/crypto/openpgp/elgamal"
-)
-
-var log = logger.GetGoI2PLogger()
-
-var (
-	one  = big.NewInt(1)
-	elgg = big.NewInt(2)
-)
-
-var (
-	ElgDecryptFail   = oops.Errorf("failed to decrypt elgamal encrypted data")
-	ElgEncryptTooBig = oops.Errorf("failed to encrypt data, too big for elgamal")
 )
 
 type PrivateKey struct {

@@ -3,25 +3,18 @@ package tunnel
 import (
 	"crypto/aes"
 	"crypto/cipher"
-
-	"github.com/go-i2p/logger"
 )
 
-var log = logger.GetGoI2PLogger()
-
-type TunnelData [1028]byte
-
-// A symetric key for encrypting tunnel messages
-type TunnelKey [32]byte
-
-// The initialization vector for a tunnel message
-type TunnelIV []byte
-
+// Tunnel represents a cryptographic tunnel with layer and IV encryption keys.
+// Moved from: tunnel.go
 type Tunnel struct {
 	layerKey cipher.Block
 	ivKey    cipher.Block
 }
 
+// NewTunnelCrypto creates a new tunnel cryptographic instance with the provided keys.
+// Returns a new Tunnel instance or an error if cipher creation fails.
+// Moved from: tunnel.go
 func NewTunnelCrypto(layerKey, ivKey TunnelKey) (t *Tunnel, err error) {
 	log.Debug("Creating new Tunnel crypto")
 	t = new(Tunnel)
@@ -40,7 +33,8 @@ func NewTunnelCrypto(layerKey, ivKey TunnelKey) (t *Tunnel, err error) {
 	return
 }
 
-// encrypt tunnel data in place
+// Encrypt encrypts tunnel data in place using the tunnel's encryption keys.
+// Moved from: tunnel.go
 func (t *Tunnel) Encrypt(td *TunnelData) {
 	log.Debug("Encrypting Tunnel data")
 	data := *td
@@ -51,6 +45,8 @@ func (t *Tunnel) Encrypt(td *TunnelData) {
 	log.Debug("Tunnel data encrypted successfully")
 }
 
+// Decrypt decrypts tunnel data in place using the tunnel's decryption keys.
+// Moved from: tunnel.go
 func (t *Tunnel) Decrypt(td *TunnelData) {
 	log.Debug("Decrypting Tunnel data")
 	data := *td

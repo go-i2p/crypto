@@ -4,11 +4,8 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 
-	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
-
-var log = logger.GetGoI2PLogger()
 
 // AESSymmetricDecrypter implements the Decrypter interface using AES
 type AESSymmetricDecrypter struct {

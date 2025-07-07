@@ -8,6 +8,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// pkcs7Pad applies PKCS#7 padding to data for the specified block size.
+// Moved from: aes_pkcs.go
 func pkcs7Pad(data []byte, blockSize int) []byte {
 	log.WithFields(logrus.Fields{
 		"data_length": len(data),
@@ -22,6 +24,8 @@ func pkcs7Pad(data []byte, blockSize int) []byte {
 	return append(data, padText...)
 }
 
+// pkcs7Unpad removes PKCS#7 padding from data.
+// Moved from: aes_pkcs.go
 func pkcs7Unpad(data []byte) ([]byte, error) {
 	log.WithField("data_length", len(data)).Debug("Removing PKCS#7 padding")
 

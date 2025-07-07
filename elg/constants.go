@@ -1,7 +1,31 @@
 package elgamal
 
-import "math/big"
+import (
+	"math/big"
 
+	"github.com/go-i2p/logger"
+	"github.com/samber/oops"
+)
+
+// Logger instance for ElGamal package operations
+// Moved from: elg.go
+var log = logger.GetGoI2PLogger()
+
+// Constants for ElGamal operations
+// Moved from: elg.go
+var (
+	one  = big.NewInt(1)
+	elgg = big.NewInt(2)
+)
+
+// Error constants for ElGamal operations
+// Moved from: elg.go
+var (
+	ElgDecryptFail   = oops.Errorf("failed to decrypt elgamal encrypted data")
+	ElgEncryptTooBig = oops.Errorf("failed to encrypt data, too big for elgamal")
+)
+
+// ElGamal cryptographic parameters for I2P
 var elgp = new(big.Int).SetBytes([]byte{
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xC9, 0x0F, 0xDA, 0xA2, 0x21, 0x68, 0xC2, 0x34,
 	0xC4, 0xC6, 0x62, 0x8B, 0x80, 0xDC, 0x1C, 0xD1, 0x29, 0x02, 0x4E, 0x08, 0x8A, 0x67, 0xCC, 0x74,

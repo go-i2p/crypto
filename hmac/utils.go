@@ -5,12 +5,9 @@ import (
 	"crypto/sha256"
 )
 
-type (
-	HMACKey    [32]byte
-	HMACDigest [32]byte
-)
-
-// I2PHMAC computes HMAC-SHA256 using the provided key and data
+// I2PHMAC computes HMAC-SHA256 using the provided key and data.
+// This function implements the I2P standard HMAC computation using SHA256.
+// Moved from: hmac.go
 func I2PHMAC(data []byte, k HMACKey) (d HMACDigest) {
 	// Create a new HMAC instance using SHA256 hash and our key
 	mac := hmac.New(sha256.New, k[:])

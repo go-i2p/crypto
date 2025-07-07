@@ -4,13 +4,10 @@ import (
 	"crypto/dsa"
 	"io"
 	"math/big"
-
-	"github.com/go-i2p/logger"
 )
 
-var log = logger.GetGoI2PLogger()
-
-// generate a dsa keypair
+// generateDSA generates a DSA keypair using the predefined I2P parameters.
+// Moved from: dsa.go
 func generateDSA(priv *dsa.PrivateKey, rand io.Reader) error {
 	log.Debug("Generating DSA key pair")
 	// put our paramters in
@@ -27,7 +24,8 @@ func generateDSA(priv *dsa.PrivateKey, rand io.Reader) error {
 	return err
 }
 
-// create i2p dsa public key given its public component
+// createDSAPublicKey creates an I2P DSA public key given its public component.
+// Moved from: dsa.go
 func createDSAPublicKey(Y *big.Int) *dsa.PublicKey {
 	log.Debug("Creating DSA public key")
 	return &dsa.PublicKey{
@@ -36,7 +34,8 @@ func createDSAPublicKey(Y *big.Int) *dsa.PublicKey {
 	}
 }
 
-// createa i2p dsa private key given its public component
+// createDSAPrivkey creates an I2P DSA private key given its private component.
+// Moved from: dsa.go
 func createDSAPrivkey(X *big.Int) (k *dsa.PrivateKey) {
 	log.Debug("Creating DSA private key")
 	if X.Cmp(dsap) == -1 {
