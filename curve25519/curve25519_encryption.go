@@ -24,8 +24,9 @@ func (c *Curve25519Encryption) Encrypt(data []byte) ([]byte, error) {
 // EncryptPadding encrypts data with optional zero padding and returns the encrypted data
 // uses ChaCha20-Poly1305 AEAD cipher
 func (c *Curve25519Encryption) EncryptPadding(data []byte, zeroPadding bool) ([]byte, error) {
-	// Maximum data size is 222 bytes for Curve25519 encryption
-	if len(data) > 222 {
+	// Maximum data size is 1024 bytes to support I2P tunnel build records
+	// This allows for tunnel data (1028 bytes) minus overhead
+	if len(data) > 1024 {
 		return nil, ErrDataTooBig
 	}
 
