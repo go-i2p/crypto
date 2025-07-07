@@ -2,7 +2,8 @@ package hmac
 
 import (
 	"bytes"
-	"encoding/base64"
+	"crypto/hmac"
+	"crypto/sha256"
 	"testing"
 )
 
@@ -17,11 +18,15 @@ func Test_I2PHMAC(t *testing.T) {
 		k[idx] = 1
 	}
 	d := I2PHMAC(data, k)
-	expected_str := "WypV9tIaH1Kn9i7/9OqP6Q=="
-	expected, _ := base64.StdEncoding.DecodeString(expected_str)
+
+	// Compute expected SHA256-HMAC result
+	mac := hmac.New(sha256.New, k[:])
+	mac.Write(data)
+	expected := mac.Sum(nil)
+
 	if !bytes.Equal(d[:], expected) {
 		t.Logf("%d vs %d", len(d), len(expected))
-		t.Logf("%q != %q", d, expected)
+		t.Logf("%x != %x", d, expected)
 		t.Fail()
 	}
 }
