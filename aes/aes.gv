@@ -1,0 +1,128 @@
+digraph gocallvis {
+    label="";
+    labeljust="l";
+    fontname="Arial";
+    fontsize="14";
+    rankdir="LR";
+    bgcolor="lightgray";
+    style="solid";
+    penwidth="0.5";
+    pad="0.0";
+    nodesep="0.35";
+
+    node [shape="box" style="filled,rounded" fillcolor="honeydew" fontname="Verdana" penwidth="1.0" margin="0.16,0.0"];
+    edge [minlen="2"]
+
+    subgraph "cluster_focus" {
+        labelloc="t";
+labeljust="c";
+fontsize="18";
+bgcolor="#e6ecfa";
+label="aes";
+        
+        "github.com/go-i2p/crypto/aes.init" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/aes.init | defined in .:0\nat aes_decrypter.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" fillcolor="lightblue" label="init" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/aes.pkcs7Unpad" [ fillcolor="lightblue" label="pkcs7Unpad" penwidth="0.5" tooltip="github.com/go-i2p/crypto/aes.pkcs7Unpad | defined in aes_pkcs.go:25\nat aes_pkcs.go:26: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_pkcs.go:35: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_pkcs.go:47: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_pkcs.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_pkcs.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_pkcs.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_pkcs.go:31: calling [github.com/samber/oops.Errorf]\nat aes_pkcs.go:36: calling [github.com/samber/oops.Errorf]\nat aes_pkcs.go:42: calling [github.com/samber/oops.Errorf]\nat aes_pkcs.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_pkcs.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "github.com/samber/oops.Errorf" [ penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" ]
+        "github.com/go-i2p/crypto/aes.pkcs7Pad" [ fillcolor="lightblue" label="pkcs7Pad" penwidth="0.5" tooltip="github.com/go-i2p/crypto/aes.pkcs7Pad | defined in aes_pkcs.go:11\nat aes_pkcs.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_pkcs.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_pkcs.go:12: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat aes_pkcs.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+        
+        subgraph "cluster_*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter" {
+        tooltip="type: *github.com/go-i2p/crypto/aes.AESSymmetricDecrypter";
+penwidth="0.5";
+fontcolor="#222222";
+style="rounded,filled";
+fillcolor="lightsteelblue";
+label="(*AESSymmetricDecrypter)";
+fontsize="15";
+labelloc="b";
+        
+        "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).DecryptNoPadding" [ tooltip="(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).DecryptNoPadding | defined in aes_decrypter.go:49\nat aes_decrypter.go:51: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="DecryptNoPadding" penwidth="1.5" ]
+        "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt" [ tooltip="(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt | defined in aes_decrypter.go:20\nat aes_decrypter.go:31: calling [github.com/samber/oops.Errorf]\nat aes_decrypter.go:38: calling [github.com/go-i2p/crypto/aes.pkcs7Unpad]\nat aes_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_decrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_decrypter.go:25: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_decrypter.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_decrypter.go:40: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_decrypter.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_decrypter.go:44: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_decrypter.go:25: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat aes_decrypter.go:40: calling [(*github.com/go-i2p/logger.Logger).WithError]" fillcolor="lightblue" label="Decrypt" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter" {
+        penwidth="0.5";
+style="rounded,filled";
+fillcolor="lightsteelblue";
+fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+label="(*AESSymmetricEncrypter)";
+tooltip="type: *github.com/go-i2p/crypto/aes.AESSymmetricEncrypter";
+        
+        "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).EncryptNoPadding" [ fillcolor="lightblue" label="EncryptNoPadding" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).EncryptNoPadding | defined in aes_encrypter.go:36\nat aes_encrypter.go:38: calling [github.com/samber/oops.Errorf]" ]
+        "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).Encrypt" [ tooltip="(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).Encrypt | defined in aes_encrypter.go:17\nat aes_encrypter.go:26: calling [github.com/go-i2p/crypto/aes.pkcs7Pad]\nat aes_encrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_encrypter.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_encrypter.go:18: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_encrypter.go:31: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).WithError]" fillcolor="lightblue" label="Encrypt" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/crypto/aes.AESSymmetricKey" {
+        fontsize="15";
+labelloc="b";
+style="rounded,filled";
+penwidth="0.5";
+fontcolor="#222222";
+fillcolor="lightsteelblue";
+label="(*AESSymmetricKey)";
+tooltip="type: *github.com/go-i2p/crypto/aes.AESSymmetricKey";
+        
+        "(*github.com/go-i2p/crypto/aes.AESSymmetricKey).NewEncrypter" [ fillcolor="lightblue" label="NewEncrypter" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/aes.AESSymmetricKey).NewEncrypter | defined in aes_key.go:12\nat aes_key.go:13: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/logger.Logger" {
+        fillcolor="wheat2";
+label="(*Logger)";
+tooltip="type: *github.com/go-i2p/logger.Logger";
+penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+        
+        "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" ]
+        "(*github.com/go-i2p/logger.Logger).Error" [ fillcolor="moccasin" label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" ]
+        "(*github.com/go-i2p/logger.Logger).WithFields" [ fillcolor="moccasin" label="logger\nWithFields" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithFields | defined in log.go:60" ]
+        "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" ]
+        
+    }
+
+        subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
+        tooltip="type: *github.com/sirupsen/logrus.Logger";
+penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+fillcolor="wheat2";
+label="(*Logger)";
+        
+        "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
+        
+    }
+
+    }
+
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).Encrypt" -> "github.com/go-i2p/crypto/aes.pkcs7Pad" [ tooltip="at aes_encrypter.go:26: calling [github.com/go-i2p/crypto/aes.pkcs7Pad]" ]
+    "github.com/go-i2p/crypto/aes.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at aes_decrypter.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/aes.pkcs7Unpad" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at aes_pkcs.go:26: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_pkcs.go:35: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_pkcs.go:47: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/aes.pkcs7Unpad" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at aes_pkcs.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_pkcs.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_pkcs.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "github.com/go-i2p/crypto/aes.pkcs7Unpad" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at aes_pkcs.go:31: calling [github.com/samber/oops.Errorf]\nat aes_pkcs.go:36: calling [github.com/samber/oops.Errorf]\nat aes_pkcs.go:42: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at aes_decrypter.go:31: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt" -> "github.com/go-i2p/crypto/aes.pkcs7Unpad" [ tooltip="at aes_decrypter.go:38: calling [github.com/go-i2p/crypto/aes.pkcs7Unpad]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).Encrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at aes_encrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_encrypter.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/aes.pkcs7Pad" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at aes_pkcs.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_pkcs.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at aes_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_decrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at aes_decrypter.go:25: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_decrypter.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat aes_decrypter.go:40: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/aes.pkcs7Unpad" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at aes_pkcs.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat aes_pkcs.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).EncryptNoPadding" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at aes_encrypter.go:38: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricKey).NewEncrypter" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at aes_key.go:13: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/aes.pkcs7Pad" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at aes_pkcs.go:12: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "github.com/go-i2p/crypto/aes.pkcs7Pad" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at aes_pkcs.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at aes_decrypter.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_decrypter.go:44: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).Decrypt" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at aes_decrypter.go:25: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat aes_decrypter.go:40: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).Encrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at aes_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricDecrypter).DecryptNoPadding" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at aes_decrypter.go:51: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).Encrypt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at aes_encrypter.go:18: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat aes_encrypter.go:31: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/aes.AESSymmetricEncrypter).Encrypt" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at aes_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+}
