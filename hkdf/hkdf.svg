@@ -78,9 +78,9 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/hkdf.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge6" class="edge">
+<g id="edge2" class="edge">
 <title>github.com/go&#45;i2p/crypto/hkdf.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge6"><a xlink:title="at constants.go:8: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<g id="a_edge2"><a xlink:title="at constants.go:8: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
 <path fill="none" stroke="#8b4513" d="M103.4222,-45.0818C126.3459,-43.4764 160.1033,-41.1123 190.5569,-38.9795"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="191.0065,-42.4567 200.7375,-38.2665 190.5174,-35.4738 191.0065,-42.4567"/>
 </a>
@@ -97,9 +97,9 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/hkdf.init&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge7" class="edge">
+<g id="edge3" class="edge">
 <title>github.com/go&#45;i2p/crypto/hkdf.init&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge7"><a xlink:title="at constants.go:12: calling [github.com/samber/oops.Errorf]&#10;at constants.go:13: calling [github.com/samber/oops.Errorf]&#10;at constants.go:14: calling [github.com/samber/oops.Errorf]&#10;at constants.go:15: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge3"><a xlink:title="at constants.go:12: calling [github.com/samber/oops.Errorf]&#10;at constants.go:13: calling [github.com/samber/oops.Errorf]&#10;at constants.go:14: calling [github.com/samber/oops.Errorf]&#10;at constants.go:15: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M103.4222,-54.0826C134.8142,-62.2 186.5223,-75.5709 222.2412,-84.8072"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="221.7588,-88.2975 232.3166,-87.4125 223.5113,-81.5204 221.7588,-88.2975"/>
 </a>
@@ -115,18 +115,18 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;github.com/samber/oops.Wrapf -->
-<g id="edge3" class="edge">
+<g id="edge6" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;github.com/samber/oops.Wrapf</title>
-<g id="a_edge3"><a xlink:title="at hkdf.go:21: calling [github.com/samber/oops.Wrapf]&#10;at hkdf.go:25: calling [github.com/samber/oops.Wrapf]&#10;at hkdf.go:40: calling [github.com/samber/oops.Wrapf]">
+<g id="a_edge6"><a xlink:title="at hkdf.go:21: calling [github.com/samber/oops.Wrapf]&#10;at hkdf.go:25: calling [github.com/samber/oops.Wrapf]&#10;at hkdf.go:40: calling [github.com/samber/oops.Wrapf]">
 <path fill="none" stroke="#8b4513" d="M292.9519,-165.4389C302.928,-162.0702 313.6101,-157.3812 322.254,-151 360.7998,-122.5443 352.0897,-97.5419 387.254,-65 390.3843,-62.1031 393.8185,-59.3093 397.3677,-56.6649"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="399.5816,-59.3876 405.7694,-50.7875 395.569,-53.6518 399.5816,-59.3876"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;golang.org/x/crypto/hkdf.New -->
-<g id="edge4" class="edge">
+<g id="edge7" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;golang.org/x/crypto/hkdf.New</title>
-<g id="a_edge4"><a xlink:title="at hkdf.go:35: calling [golang.org/x/crypto/hkdf.New]">
+<g id="a_edge7"><a xlink:title="at hkdf.go:35: calling [golang.org/x/crypto/hkdf.New]">
 <path fill="none" stroke="#8b4513" d="M292.8009,-162.5942C302.3562,-159.1616 312.832,-155.1524 322.254,-151 352.0876,-137.852 357.959,-131.308 387.254,-117 391.0786,-115.132 395.0959,-113.2229 399.1121,-111.3483"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="400.7738,-114.4364 408.3906,-107.0719 397.8437,-108.0791 400.7738,-114.4364"/>
 </a>
@@ -143,9 +143,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge1" class="edge">
+<g id="edge4" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge1"><a xlink:title="at hkdf.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:14: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:43: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge4"><a xlink:title="at hkdf.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:14: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at hkdf.go:43: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M292.7638,-173C318.3814,-173 355.2124,-173 385.0632,-173"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="385.3009,-176.5001 395.3009,-173 385.3008,-169.5001 385.3009,-176.5001"/>
 </a>
@@ -162,9 +162,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge2" class="edge">
+<g id="edge5" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge2"><a xlink:title="at hkdf.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at hkdf.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge5"><a xlink:title="at hkdf.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at hkdf.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M292.7638,-188.3751C321.4629,-202.5612 364.2354,-223.7038 395.5007,-239.1584"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="394.2904,-242.4644 404.8059,-243.758 397.3923,-236.1891 394.2904,-242.4644"/>
 </a>
@@ -180,9 +180,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).DeriveDefault&#45;&gt;(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive -->
-<g id="edge5" class="edge">
+<g id="edge1" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).DeriveDefault&#45;&gt;(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive</title>
-<g id="a_edge5"><a xlink:title="at hkdf.go:49: calling [(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive]">
+<g id="a_edge1"><a xlink:title="at hkdf.go:49: calling [(*github.com/go&#45;i2p/crypto/hkdf.HKDFImpl).Derive]">
 <path fill="none" stroke="#000000" d="M128.2338,-173C157.2967,-173 192.9775,-173 220.1263,-173"/>
 <polygon fill="#000000" stroke="#000000" points="220.4514,-176.5001 230.4513,-173 220.4513,-169.5001 220.4514,-176.5001"/>
 </a>

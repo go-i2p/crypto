@@ -1,115 +1,108 @@
-# Secure Random Number Generation Package
+# rand
+--
+    import "github.com/go-i2p/crypto/rand"
 
-This package provides cryptographically secure random number generation with entropy validation for the go-i2p/crypto library.
+![rand.svg](rand.svg)
 
-## Features
 
-- **Cryptographically Secure**: Uses `crypto/rand` as the underlying random source
-- **Entropy Validation**: Validates entropy for larger samples to ensure randomness quality
-- **Big Integer Support**: Secure generation of `big.Int` values with range validation
-- **Error Handling**: Comprehensive error handling with structured logging
-- **Retry Logic**: Automatic retry on entropy validation failures
 
 ## Usage
 
-### Basic Random Bytes
+```go
+const (
+	// Minimum entropy threshold for random data (bits per byte)
+	// Reduced to 4.0 for crypto/rand compatibility while still catching patterns
+	MinEntropyThreshold = 4.0
+
+	// Maximum retry attempts for entropy validation
+	MaxEntropyRetries = 10
+
+	// Sample size for entropy testing
+	EntropySampleSize = 1024
+)
+```
+Entropy validation constants
 
 ```go
-import "github.com/go-i2p/crypto/rand"
-
-// Generate 32 random bytes
-buf := make([]byte, 32)
-n, err := rand.Read(buf)
-if err != nil {
-    log.Fatal(err)
-}
+var (
+	ErrInsufficientEntropy = oops.Errorf("insufficient entropy in random source")
+	ErrRandomReadFailed    = oops.Errorf("failed to read from random source")
+	ErrEntropyValidation   = oops.Errorf("entropy validation failed")
+)
 ```
-
-### Secure Big Integer Generation
+Common errors for random number generation
 
 ```go
-// Generate random big.Int in range [0, max)
-max := big.NewInt(1000)
-randomNum, err := rand.ReadBigInt(max)
-if err != nil {
-    log.Fatal(err)
-}
-
-// Generate random big.Int in range [min, max)
-min := big.NewInt(100)
-max := big.NewInt(1000)
-randomNum, err := rand.ReadBigIntInRange(min, max)
-if err != nil {
-    log.Fatal(err)
-}
+var DefaultSecureReader = NewSecureReader()
 ```
+Global secure reader instance
 
-### Advanced Usage with SecureReader
+#### func  Read
 
 ```go
-// Create custom SecureReader instance
-sr := rand.NewSecureReader()
+func Read(p []byte) (n int, err error)
+```
+Read fills the provided byte slice with cryptographically secure random data
 
-// Use for multiple operations
-buf := make([]byte, 64)
-n, err := sr.Read(buf)
-if err != nil {
-    log.Fatal(err)
+#### func  ReadBigInt
+
+```go
+func ReadBigInt(max *big.Int) (*big.Int, error)
+```
+ReadBigInt generates a cryptographically secure big.Int in the range [0, max)
+
+#### func  ReadBigIntInRange
+
+```go
+func ReadBigIntInRange(min, max *big.Int) (*big.Int, error)
+```
+ReadBigIntInRange generates a cryptographically secure big.Int in the range
+[min, max)
+
+#### type SecureReader
+
+```go
+type SecureReader struct {
 }
-
-randomBigInt, err := sr.ReadBigInt(big.NewInt(2048))
-if err != nil {
-    log.Fatal(err)
-}
 ```
 
-## Security Features
+SecureReader provides cryptographically secure random number generation with
+entropy validation for the go-i2p/crypto library
 
-### Entropy Validation
-- Validates Shannon entropy for samples >= 32 bytes
-- Minimum entropy threshold of 6.0 bits per byte
-- Automatic retry on entropy validation failures
+#### func  NewSecureReader
 
-### Secure Big Integer Generation
-- Uses `crypto/rand.Int` for secure generation
-- Validates generated values are within specified ranges
-- Prevents timing attacks through consistent operation patterns
-
-### Error Handling
-- Structured error handling with `github.com/samber/oops`
-- Comprehensive logging for debugging and monitoring
-- Retry logic with configurable maximum attempts
-
-## Constants
-
-- `MinEntropyThreshold`: 6.0 bits per byte minimum entropy
-- `MaxEntropyRetries`: 10 maximum retry attempts for entropy validation
-- `EntropySampleSize`: 1024 bytes sample size for entropy testing
-
-## Thread Safety
-
-All functions and methods in this package are thread-safe and can be used concurrently from multiple goroutines.
-
-## Performance
-
-The package is optimized for cryptographic security over raw performance. Entropy validation adds minimal overhead for most use cases, and can be bypassed for small samples (< 32 bytes).
-
-## Integration with I2P Cryptography
-
-This package is specifically designed for use with I2P cryptographic operations:
-- ElGamal key generation
-- DSA/ECDSA key generation  
-- Symmetric key generation
-- Nonce and IV generation
-
-## Testing
-
-Run tests with:
-```bash
-go test -v ./rand/
+```go
+func NewSecureReader() *SecureReader
 ```
+NewSecureReader creates a new SecureReader using crypto/rand as the source
 
-Run benchmarks with:
-```bash
-go test -bench=. ./rand/
+#### func (*SecureReader) Read
+
+```go
+func (sr *SecureReader) Read(p []byte) (n int, err error)
 ```
+Read fills the provided byte slice with cryptographically secure random data and
+validates entropy before returning
+
+#### func (*SecureReader) ReadBigInt
+
+```go
+func (sr *SecureReader) ReadBigInt(max *big.Int) (*big.Int, error)
+```
+ReadBigInt generates a cryptographically secure big.Int in the range [0, max)
+
+#### func (*SecureReader) ReadBigIntInRange
+
+```go
+func (sr *SecureReader) ReadBigIntInRange(min, max *big.Int) (*big.Int, error)
+```
+ReadBigIntInRange generates a cryptographically secure big.Int in the range
+[min, max)
+
+
+
+rand 
+
+github.com/go-i2p/crypto/rand
+
+[go-i2p template file](/template.md)

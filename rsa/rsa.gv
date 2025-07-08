@@ -14,40 +14,40 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        labeljust="c";
+        label="rsa";
+labelloc="t";
+labeljust="c";
 fontsize="18";
 bgcolor="#e6ecfa";
-label="rsa";
-labelloc="t";
         
         "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
+        "github.com/go-i2p/crypto/rsa.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/rsa.init | defined in .:0\nat constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" ]
         "github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes" [ fillcolor="lightblue" label="rsaPublicKeyFromBytes" penwidth="0.5" tooltip="github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes | defined in utils.go:13" ]
-        "github.com/go-i2p/crypto/rsa.init" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/rsa.init | defined in .:0\nat constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" fillcolor="lightblue" label="init" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey" {
-        tooltip="type: *github.com/go-i2p/crypto/rsa.RSA3072PrivateKey";
-penwidth="0.5";
-fontsize="15";
-label="(*RSA3072PrivateKey)";
+        fontsize="15";
 fontcolor="#222222";
-labelloc="b";
 style="rounded,filled";
+label="(*RSA3072PrivateKey)";
+penwidth="0.5";
+labelloc="b";
 fillcolor="lightsteelblue";
+tooltip="type: *github.com/go-i2p/crypto/rsa.RSA3072PrivateKey";
         
-        "(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate" [ label="Generate" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate | defined in rsa3072_private.go:106\nat rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate" [ tooltip="(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate | defined in rsa3072_private.go:106\nat rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="Generate" penwidth="1.5" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/logger.Logger" {
-        fillcolor="wheat2";
+        style="rounded,filled";
+fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/go-i2p/logger.Logger";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
-style="rounded,filled";
         
         "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" ]
         "(*github.com/go-i2p/logger.Logger).Error" [ fillcolor="moccasin" label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" ]
@@ -55,168 +55,168 @@ style="rounded,filled";
     }
 
         subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        fontsize="15";
-fontcolor="#222222";
-labelloc="b";
+        labelloc="b";
 style="rounded,filled";
 fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/sirupsen/logrus.Logger";
 penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
         
         "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/rsa.RSA2048PrivateKey" {
-        fontcolor="#222222";
+        fontsize="15";
+fontcolor="#222222";
 labelloc="b";
-style="rounded,filled";
 fillcolor="lightsteelblue";
+label="(RSA2048PrivateKey)";
 tooltip="type: github.com/go-i2p/crypto/rsa.RSA2048PrivateKey";
 penwidth="0.5";
-fontsize="15";
-label="(RSA2048PrivateKey)";
+style="rounded,filled";
         
-        "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" [ penwidth="0.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey | defined in rsa2048_private.go:82\nat rsa2048_private.go:86: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:91: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="toRSAPrivateKey" ]
-        "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public | defined in rsa2048_private.go:53\nat rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:54: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]\nat rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Public" ]
-        "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" [ fillcolor="lightblue" label="SignHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash | defined in rsa2048_private.go:28\nat rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa2048_private.go:30: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" [ fillcolor="lightblue" label="toRSAPrivateKey" penwidth="0.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey | defined in rsa2048_private.go:82\nat rsa2048_private.go:86: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:91: calling [github.com/samber/oops.Errorf]" ]
         "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Zero" [ fillcolor="lightblue" label="Zero" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Zero | defined in rsa2048_private.go:73\nat rsa2048_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" [ fillcolor="lightblue" label="SignHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash | defined in rsa2048_private.go:28\nat rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa2048_private.go:30: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]\nat rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]" ]
         "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Sign" [ fillcolor="lightblue" label="Sign" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Sign | defined in rsa2048_private.go:20\nat rsa2048_private.go:23: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" [ fillcolor="lightblue" label="Public" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public | defined in rsa2048_private.go:53\nat rsa2048_private.go:54: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]\nat rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/rsa.RSA2048PublicKey" {
         labelloc="b";
 style="rounded,filled";
+fillcolor="lightsteelblue";
+label="(RSA2048PublicKey)";
 tooltip="type: github.com/go-i2p/crypto/rsa.RSA2048PublicKey";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
-fillcolor="lightsteelblue";
-label="(RSA2048PublicKey)";
         
-        "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash | defined in rsa2048_public.go:26\nat rsa2048_public.go:27: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]\nat rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]" ]
-        "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).NewVerifier" [ fillcolor="lightblue" label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).NewVerifier | defined in rsa2048_public.go:60\nat rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).Verify" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).Verify | defined in rsa2048_public.go:18\nat rsa2048_public.go:21: calling [(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash]" fillcolor="lightblue" label="Verify" ]
+        "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).NewVerifier" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).NewVerifier | defined in rsa2048_public.go:60\nat rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="NewVerifier" ]
+        "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" [ label="VerifyHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash | defined in rsa2048_public.go:26\nat rsa2048_public.go:27: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]\nat rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
+        "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).Verify | defined in rsa2048_public.go:18\nat rsa2048_public.go:21: calling [(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash]" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/rsa.RSA3072PrivateKey" {
         penwidth="0.5";
-fillcolor="lightsteelblue";
-label="(RSA3072PrivateKey)";
-tooltip="type: github.com/go-i2p/crypto/rsa.RSA3072PrivateKey";
 fontsize="15";
 fontcolor="#222222";
+label="(RSA3072PrivateKey)";
+tooltip="type: github.com/go-i2p/crypto/rsa.RSA3072PrivateKey";
 labelloc="b";
 style="rounded,filled";
+fillcolor="lightsteelblue";
         
-        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" [ tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey | defined in rsa3072_private.go:90\nat rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="toRSAPrivateKey" penwidth="0.5" ]
-        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash | defined in rsa3072_private.go:36\nat rsa3072_private.go:38: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]\nat rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="SignHash" ]
-        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Sign" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Sign | defined in rsa3072_private.go:29\nat rsa3072_private.go:32: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash]" fillcolor="lightblue" label="Sign" ]
-        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public | defined in rsa3072_private.go:59\nat rsa3072_private.go:61: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]\nat rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Public" ]
         "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Zero" [ fillcolor="lightblue" label="Zero" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Zero | defined in rsa3072_private.go:81\nat rsa3072_private.go:86: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" [ fillcolor="lightblue" label="toRSAPrivateKey" penwidth="0.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey | defined in rsa3072_private.go:90\nat rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" [ fillcolor="lightblue" label="SignHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash | defined in rsa3072_private.go:36\nat rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa3072_private.go:38: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Sign" [ fillcolor="lightblue" label="Sign" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Sign | defined in rsa3072_private.go:29\nat rsa3072_private.go:32: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" [ fillcolor="lightblue" label="Public" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public | defined in rsa3072_private.go:59\nat rsa3072_private.go:61: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]\nat rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/rsa.RSA3072PublicKey" {
-        labelloc="b";
-style="rounded,filled";
+        penwidth="0.5";
+labelloc="b";
 label="(RSA3072PublicKey)";
-penwidth="0.5";
+tooltip="type: github.com/go-i2p/crypto/rsa.RSA3072PublicKey";
 fontsize="15";
 fontcolor="#222222";
+style="rounded,filled";
 fillcolor="lightsteelblue";
-tooltip="type: github.com/go-i2p/crypto/rsa.RSA3072PublicKey";
         
-        "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash | defined in rsa3072_public.go:25\nat rsa3072_public.go:26: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]\nat rsa3072_public.go:28: calling [github.com/samber/oops.Errorf]\nat rsa3072_public.go:34: calling [github.com/samber/oops.Errorf]\nat rsa3072_public.go:40: calling [github.com/samber/oops.Errorf]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash" [ tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash | defined in rsa3072_public.go:25\nat rsa3072_public.go:28: calling [github.com/samber/oops.Errorf]\nat rsa3072_public.go:34: calling [github.com/samber/oops.Errorf]\nat rsa3072_public.go:40: calling [github.com/samber/oops.Errorf]\nat rsa3072_public.go:26: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]" fillcolor="lightblue" label="VerifyHash" penwidth="1.5" ]
         "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).Verify | defined in rsa3072_public.go:18\nat rsa3072_public.go:21: calling [(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash]" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/rsa.RSA4096PrivateKey" {
-        fontcolor="#222222";
+        tooltip="type: github.com/go-i2p/crypto/rsa.RSA4096PrivateKey";
+penwidth="0.5";
 labelloc="b";
 style="rounded,filled";
 label="(RSA4096PrivateKey)";
-tooltip="type: github.com/go-i2p/crypto/rsa.RSA4096PrivateKey";
-penwidth="0.5";
 fontsize="15";
+fontcolor="#222222";
 fillcolor="lightsteelblue";
         
-        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" [ fillcolor="lightblue" label="SignHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash | defined in rsa4096_private.go:29\nat rsa4096_private.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat rsa4096_private.go:42: calling [(*github.com/go-i2p/logger.Logger).Error]\nat rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_private.go:42: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_private.go:36: calling [github.com/samber/oops.Errorf]\nat rsa4096_private.go:43: calling [github.com/samber/oops.Errorf]" ]
-        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Zero" [ fillcolor="lightblue" label="Zero" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Zero | defined in rsa4096_private.go:84\nat rsa4096_private.go:85: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Bytes" [ fillcolor="lightblue" label="Bytes" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Bytes | defined in rsa4096_private.go:52\nat rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" [ label="SignHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash | defined in rsa4096_private.go:29\nat rsa4096_private.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat rsa4096_private.go:42: calling [(*github.com/go-i2p/logger.Logger).Error]\nat rsa4096_private.go:36: calling [github.com/samber/oops.Errorf]\nat rsa4096_private.go:43: calling [github.com/samber/oops.Errorf]\nat rsa4096_private.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_private.go:42: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
+        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Sign" [ fillcolor="lightblue" label="Sign" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Sign | defined in rsa4096_private.go:20\nat rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:24: calling [(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash]" ]
         "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public" [ fillcolor="lightblue" label="Public" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public | defined in rsa4096_private.go:59\nat rsa4096_private.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:65: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_private.go:66: calling [github.com/samber/oops.Errorf]\nat rsa4096_private.go:65: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Sign" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Sign | defined in rsa4096_private.go:20\nat rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:24: calling [(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash]" fillcolor="lightblue" label="Sign" ]
+        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Zero" [ tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Zero | defined in rsa4096_private.go:84\nat rsa4096_private.go:85: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Zero" penwidth="1.5" ]
+        "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Bytes" [ tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Bytes | defined in rsa4096_private.go:52\nat rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Bytes" penwidth="1.5" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/rsa.RSA4096PublicKey" {
-        fontsize="15";
+        fontcolor="#222222";
 labelloc="b";
-style="rounded,filled";
 fillcolor="lightsteelblue";
-tooltip="type: github.com/go-i2p/crypto/rsa.RSA4096PublicKey";
-penwidth="0.5";
-fontcolor="#222222";
 label="(RSA4096PublicKey)";
+penwidth="0.5";
+style="rounded,filled";
+tooltip="type: github.com/go-i2p/crypto/rsa.RSA4096PublicKey";
+fontsize="15";
         
-        "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).NewVerifier" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).NewVerifier | defined in rsa4096_public.go:61\nat rsa4096_public.go:62: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="NewVerifier" ]
-        "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash | defined in rsa4096_public.go:28\nat rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_public.go:30: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]\nat rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).Error]\nat rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]\nat rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]" ]
-        "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify | defined in rsa4096_public.go:19\nat rsa4096_public.go:23: calling [(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]\nat rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Verify" ]
+        "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).NewVerifier" [ fillcolor="lightblue" label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).NewVerifier | defined in rsa4096_public.go:61\nat rsa4096_public.go:62: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" [ tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash | defined in rsa4096_public.go:28\nat rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).Error]\nat rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_public.go:30: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]\nat rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]\nat rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="VerifyHash" penwidth="1.5" ]
+        "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify | defined in rsa4096_public.go:19\nat rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_public.go:23: calling [(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]" ]
         
     }
 
     }
 
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" -> "github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes" [ tooltip="at rsa2048_public.go:27: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa3072_private.go:86: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at rsa4096_private.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat rsa4096_private.go:42: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify" -> "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" [ tooltip="at rsa4096_public.go:23: calling [(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Sign" -> "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" [ tooltip="at rsa3072_private.go:32: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at rsa4096_private.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_private.go:42: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" -> "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" [ tooltip="at rsa3072_private.go:61: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" -> "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" [ tooltip="at rsa2048_private.go:54: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Sign" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa2048_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" -> "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" [ tooltip="at rsa3072_private.go:38: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:85: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).Verify" -> "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash" [ tooltip="at rsa3072_public.go:21: calling [(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes" [ tooltip="at rsa4096_public.go:30: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_public.go:62: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" -> "github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes" [ tooltip="at rsa2048_public.go:27: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]" ]
+    "(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
     "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at rsa4096_private.go:65: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).Verify" -> "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" [ tooltip="at rsa2048_public.go:21: calling [(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Sign" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_private.go:86: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:91: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa4096_private.go:66: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Sign" -> "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" [ tooltip="at rsa2048_private.go:23: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash" -> "github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes" [ tooltip="at rsa3072_public.go:26: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" -> "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" [ tooltip="at rsa2048_private.go:54: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_public.go:62: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_public.go:28: calling [github.com/samber/oops.Errorf]\nat rsa3072_public.go:34: calling [github.com/samber/oops.Errorf]\nat rsa3072_public.go:40: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa4096_private.go:66: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:85: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Sign" -> "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" [ tooltip="at rsa3072_private.go:32: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash]" ]
     "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa4096_private.go:36: calling [github.com/samber/oops.Errorf]\nat rsa4096_private.go:43: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Bytes" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]\nat rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at rsa3072_private.go:86: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" -> "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" [ tooltip="at rsa2048_private.go:30: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash" -> "github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes" [ tooltip="at rsa3072_public.go:26: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Sign" -> "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" [ tooltip="at rsa2048_private.go:23: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).Verify" -> "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" [ tooltip="at rsa4096_public.go:23: calling [(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_private.go:86: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:91: calling [github.com/samber/oops.Errorf]" ]
     "github.com/go-i2p/crypto/rsa.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at rsa4096_private.go:65: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at rsa4096_public.go:32: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at rsa4096_private.go:65: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at rsa4096_private.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat rsa4096_private.go:42: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).Verify" -> "(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash" [ tooltip="at rsa3072_public.go:21: calling [(github.com/go-i2p/crypto/rsa.RSA3072PublicKey).VerifyHash]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes" [ tooltip="at rsa4096_public.go:30: calling [github.com/go-i2p/crypto/rsa.rsaPublicKeyFromBytes]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" -> "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" [ tooltip="at rsa3072_private.go:61: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" -> "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey" [ tooltip="at rsa2048_private.go:30: calling [(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Bytes" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).SignHash" -> "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey" [ tooltip="at rsa3072_private.go:38: calling [(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]" ]
     "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).Sign" -> "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" [ tooltip="at rsa4096_private.go:24: calling [(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PublicKey).VerifyHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]\nat rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]\nat rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA4096PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PrivateKey).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]\nat rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/rsa.RSA3072PrivateKey).Generate" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]\nat rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).Verify" -> "(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash" [ tooltip="at rsa2048_public.go:21: calling [(github.com/go-i2p/crypto/rsa.RSA2048PublicKey).VerifyHash]" ]
 }

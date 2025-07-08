@@ -17,57 +17,57 @@
 <g id="clust7" class="cluster">
 <title>cluster_github.com/go&#45;i2p/crypto/elg.ElgPublicKey</title>
 <g id="a_clust7"><a xlink:title="type: github.com/go&#45;i2p/crypto/elg.ElgPublicKey">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28.3843,-370C28.3843,-370 126.0057,-370 126.0057,-370 132.0057,-370 138.0057,-376 138.0057,-382 138.0057,-382 138.0057,-436 138.0057,-436 138.0057,-442 132.0057,-448 126.0057,-448 126.0057,-448 28.3843,-448 28.3843,-448 22.3843,-448 16.3843,-442 16.3843,-436 16.3843,-436 16.3843,-382 16.3843,-382 16.3843,-376 22.3843,-370 28.3843,-370"/>
-<text text-anchor="middle" x="77.195" y="-378.5" font-family="Arial" font-size="15.00" fill="#222222">(ElgPublicKey)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28.3843,-559C28.3843,-559 126.0057,-559 126.0057,-559 132.0057,-559 138.0057,-565 138.0057,-571 138.0057,-571 138.0057,-625 138.0057,-625 138.0057,-631 132.0057,-637 126.0057,-637 126.0057,-637 28.3843,-637 28.3843,-637 22.3843,-637 16.3843,-631 16.3843,-625 16.3843,-625 16.3843,-571 16.3843,-571 16.3843,-565 22.3843,-559 28.3843,-559"/>
+<text text-anchor="middle" x="77.195" y="-567.5" font-family="Arial" font-size="15.00" fill="#222222">(ElgPublicKey)</text>
 </a>
 </g>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_github.com/go&#45;i2p/crypto/elg.ElgPrivateKey</title>
 <g id="a_clust6"><a xlink:title="type: github.com/go&#45;i2p/crypto/elg.ElgPrivateKey">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-235C28,-235 126.39,-235 126.39,-235 132.39,-235 138.39,-241 138.39,-247 138.39,-247 138.39,-301 138.39,-301 138.39,-307 132.39,-313 126.39,-313 126.39,-313 28,-313 28,-313 22,-313 16,-307 16,-301 16,-301 16,-247 16,-247 16,-241 22,-235 28,-235"/>
-<text text-anchor="middle" x="77.195" y="-243.5" font-family="Arial" font-size="15.00" fill="#222222">(ElgPrivateKey)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-289C28,-289 126.39,-289 126.39,-289 132.39,-289 138.39,-295 138.39,-301 138.39,-301 138.39,-355 138.39,-355 138.39,-361 132.39,-367 126.39,-367 126.39,-367 28,-367 28,-367 22,-367 16,-361 16,-355 16,-355 16,-301 16,-301 16,-295 22,-289 28,-289"/>
+<text text-anchor="middle" x="77.195" y="-297.5" font-family="Arial" font-size="15.00" fill="#222222">(ElgPrivateKey)</text>
 </a>
 </g>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_*github.com/sirupsen/logrus.Logger</title>
 <g id="a_clust5"><a xlink:title="type: *github.com/sirupsen/logrus.Logger">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M489.7527,-694C489.7527,-694 544.0739,-694 544.0739,-694 550.0739,-694 556.0739,-700 556.0739,-706 556.0739,-706 556.0739,-760 556.0739,-760 556.0739,-766 550.0739,-772 544.0739,-772 544.0739,-772 489.7527,-772 489.7527,-772 483.7527,-772 477.7527,-766 477.7527,-760 477.7527,-760 477.7527,-706 477.7527,-706 477.7527,-700 483.7527,-694 489.7527,-694"/>
-<text text-anchor="middle" x="516.9133" y="-702.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M489.7527,-275C489.7527,-275 544.0739,-275 544.0739,-275 550.0739,-275 556.0739,-281 556.0739,-287 556.0739,-287 556.0739,-341 556.0739,-341 556.0739,-347 550.0739,-353 544.0739,-353 544.0739,-353 489.7527,-353 489.7527,-353 483.7527,-353 477.7527,-347 477.7527,-341 477.7527,-341 477.7527,-287 477.7527,-287 477.7527,-281 483.7527,-275 489.7527,-275"/>
+<text text-anchor="middle" x="516.9133" y="-283.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
 </a>
 </g>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_*github.com/go&#45;i2p/logger.Logger</title>
 <g id="a_clust4"><a xlink:title="type: *github.com/go&#45;i2p/logger.Logger">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M477.3039,-315C477.3039,-315 555.5227,-315 555.5227,-315 561.5227,-315 567.5227,-321 567.5227,-327 567.5227,-327 567.5227,-625 567.5227,-625 567.5227,-631 561.5227,-637 555.5227,-637 555.5227,-637 477.3039,-637 477.3039,-637 471.3039,-637 465.3039,-631 465.3039,-625 465.3039,-625 465.3039,-327 465.3039,-327 465.3039,-321 471.3039,-315 477.3039,-315"/>
-<text text-anchor="middle" x="516.4133" y="-323.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M477.3039,-464C477.3039,-464 555.5227,-464 555.5227,-464 561.5227,-464 567.5227,-470 567.5227,-476 567.5227,-476 567.5227,-774 567.5227,-774 567.5227,-780 561.5227,-786 555.5227,-786 555.5227,-786 477.3039,-786 477.3039,-786 471.3039,-786 465.3039,-780 465.3039,-774 465.3039,-774 465.3039,-476 465.3039,-476 465.3039,-470 471.3039,-464 477.3039,-464"/>
+<text text-anchor="middle" x="516.4133" y="-472.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
 </a>
 </g>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_*github.com/go&#45;i2p/crypto/elg.elgDecrypter</title>
 <g id="a_clust3"><a xlink:title="type: *github.com/go&#45;i2p/crypto/elg.elgDecrypter">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M31.6515,-505C31.6515,-505 123.7385,-505 123.7385,-505 129.7385,-505 135.7385,-511 135.7385,-517 135.7385,-517 135.7385,-571 135.7385,-571 135.7385,-577 129.7385,-583 123.7385,-583 123.7385,-583 31.6515,-583 31.6515,-583 25.6515,-583 19.6515,-577 19.6515,-571 19.6515,-571 19.6515,-517 19.6515,-517 19.6515,-511 25.6515,-505 31.6515,-505"/>
-<text text-anchor="middle" x="77.695" y="-513.5" font-family="Arial" font-size="15.00" fill="#222222">(*elgDecrypter)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M31.6515,-424C31.6515,-424 123.7385,-424 123.7385,-424 129.7385,-424 135.7385,-430 135.7385,-436 135.7385,-436 135.7385,-490 135.7385,-490 135.7385,-496 129.7385,-502 123.7385,-502 123.7385,-502 31.6515,-502 31.6515,-502 25.6515,-502 19.6515,-496 19.6515,-490 19.6515,-490 19.6515,-436 19.6515,-436 19.6515,-430 25.6515,-424 31.6515,-424"/>
+<text text-anchor="middle" x="77.695" y="-432.5" font-family="Arial" font-size="15.00" fill="#222222">(*elgDecrypter)</text>
 </a>
 </g>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption</title>
 <g id="a_clust2"><a xlink:title="type: *github.com/go&#45;i2p/crypto/elg.ElgamalEncryption">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M47.0358,-856C47.0358,-856 345.0121,-856 345.0121,-856 351.0121,-856 357.0121,-862 357.0121,-868 357.0121,-868 357.0121,-922 357.0121,-922 357.0121,-928 351.0121,-934 345.0121,-934 345.0121,-934 47.0358,-934 47.0358,-934 41.0358,-934 35.0358,-928 35.0358,-922 35.0358,-922 35.0358,-868 35.0358,-868 35.0358,-862 41.0358,-856 47.0358,-856"/>
-<text text-anchor="middle" x="196.0239" y="-864.5" font-family="Arial" font-size="15.00" fill="#222222">(*ElgamalEncryption)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M47.0358,-873C47.0358,-873 345.0121,-873 345.0121,-873 351.0121,-873 357.0121,-879 357.0121,-885 357.0121,-885 357.0121,-939 357.0121,-939 357.0121,-945 351.0121,-951 345.0121,-951 345.0121,-951 47.0358,-951 47.0358,-951 41.0358,-951 35.0358,-945 35.0358,-939 35.0358,-939 35.0358,-885 35.0358,-885 35.0358,-879 41.0358,-873 47.0358,-873"/>
+<text text-anchor="middle" x="196.0239" y="-881.5" font-family="Arial" font-size="15.00" fill="#222222">(*ElgamalEncryption)</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.elgamalDecrypt -->
 <g id="node1" class="node">
 <title>github.com/go&#45;i2p/crypto/elg.elgamalDecrypt</title>
-<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/elg.elgamalDecrypt | defined in elg.go:47&#10;at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M336.8123,-548C336.8123,-548 247.0057,-548 247.0057,-548 241.0057,-548 235.0057,-542 235.0057,-536 235.0057,-536 235.0057,-524 235.0057,-524 235.0057,-518 241.0057,-512 247.0057,-512 247.0057,-512 336.8123,-512 336.8123,-512 342.8123,-512 348.8123,-518 348.8123,-524 348.8123,-524 348.8123,-536 348.8123,-536 348.8123,-542 342.8123,-548 336.8123,-548"/>
-<text text-anchor="middle" x="291.909" y="-525.8" font-family="Verdana" font-size="14.00" fill="#000000">elgamalDecrypt</text>
+<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/elg.elgamalDecrypt | defined in elg.go:47&#10;at elg.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M336.8123,-710C336.8123,-710 247.0057,-710 247.0057,-710 241.0057,-710 235.0057,-704 235.0057,-698 235.0057,-698 235.0057,-686 235.0057,-686 235.0057,-680 241.0057,-674 247.0057,-674 247.0057,-674 336.8123,-674 336.8123,-674 342.8123,-674 348.8123,-680 348.8123,-686 348.8123,-686 348.8123,-698 348.8123,-698 348.8123,-704 342.8123,-710 336.8123,-710"/>
+<text text-anchor="middle" x="291.909" y="-687.8" font-family="Verdana" font-size="14.00" fill="#000000">elgamalDecrypt</text>
 </a>
 </g>
 </g>
@@ -75,18 +75,18 @@
 <g id="node13" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
 <g id="a_node13"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithFields | defined in log.go:60">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M547.6324,-568C547.6324,-568 485.1942,-568 485.1942,-568 479.1942,-568 473.1942,-562 473.1942,-556 473.1942,-556 473.1942,-544 473.1942,-544 473.1942,-538 479.1942,-532 485.1942,-532 485.1942,-532 547.6324,-532 547.6324,-532 553.6324,-532 559.6324,-538 559.6324,-544 559.6324,-544 559.6324,-556 559.6324,-556 559.6324,-562 553.6324,-568 547.6324,-568"/>
-<text text-anchor="middle" x="516.4133" y="-554.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="516.4133" y="-537.4" font-family="Verdana" font-size="14.00" fill="#000000">WithFields</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M547.6324,-778C547.6324,-778 485.1942,-778 485.1942,-778 479.1942,-778 473.1942,-772 473.1942,-766 473.1942,-766 473.1942,-754 473.1942,-754 473.1942,-748 479.1942,-742 485.1942,-742 485.1942,-742 547.6324,-742 547.6324,-742 553.6324,-742 559.6324,-748 559.6324,-754 559.6324,-754 559.6324,-766 559.6324,-766 559.6324,-772 553.6324,-778 547.6324,-778"/>
+<text text-anchor="middle" x="516.4133" y="-764.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="516.4133" y="-747.4" font-family="Verdana" font-size="14.00" fill="#000000">WithFields</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge9" class="edge">
+<g id="edge23" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge9"><a xlink:title="at elg.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M348.8511,-535.0727C383.8161,-538.1876 428.326,-542.1527 462.6826,-545.2134"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="462.7261,-548.731 472.9972,-546.1323 463.3473,-541.7587 462.7261,-548.731"/>
+<g id="a_edge23"><a xlink:title="at elg.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M348.8511,-709.2472C383.9668,-719.8833 428.7099,-733.4356 463.1263,-743.8599"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="462.412,-747.3005 472.9972,-746.8497 464.4412,-740.6011 462.412,-747.3005"/>
 </a>
 </g>
 </g>
@@ -94,18 +94,18 @@
 <g id="node14" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
 <g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M544.9448,-446C544.9448,-446 487.8818,-446 487.8818,-446 481.8818,-446 475.8818,-440 475.8818,-434 475.8818,-434 475.8818,-422 475.8818,-422 475.8818,-416 481.8818,-410 487.8818,-410 487.8818,-410 544.9448,-410 544.9448,-410 550.9448,-410 556.9448,-416 556.9448,-422 556.9448,-422 556.9448,-434 556.9448,-434 556.9448,-440 550.9448,-446 544.9448,-446"/>
-<text text-anchor="middle" x="516.4133" y="-432.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="516.4133" y="-415.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M544.9448,-656C544.9448,-656 487.8818,-656 487.8818,-656 481.8818,-656 475.8818,-650 475.8818,-644 475.8818,-644 475.8818,-632 475.8818,-632 475.8818,-626 481.8818,-620 487.8818,-620 487.8818,-620 544.9448,-620 544.9448,-620 550.9448,-620 556.9448,-626 556.9448,-632 556.9448,-632 556.9448,-644 556.9448,-644 556.9448,-650 550.9448,-656 544.9448,-656"/>
+<text text-anchor="middle" x="516.4133" y="-642.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="516.4133" y="-625.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge13" class="edge">
+<g id="edge35" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge13"><a xlink:title="at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M345.5019,-511.9332C366.7903,-504.0323 391.212,-494.0431 412.428,-483 429.4853,-474.1215 431.6259,-468.3524 448.428,-459 454.0811,-455.8534 460.112,-452.7562 466.1589,-449.8086"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="468.0907,-452.7658 475.6222,-445.3142 465.0877,-446.4427 468.0907,-452.7658"/>
+<g id="a_edge35"><a xlink:title="at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M348.758,-704.4846C369.3388,-706.6408 392.4255,-706.2419 412.428,-699 432.0113,-691.9098 430.7961,-680.0857 448.428,-669 454.1094,-665.4279 460.271,-662.0336 466.4867,-658.891"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="468.1149,-661.9913 475.5825,-654.4755 465.0579,-655.694 468.1149,-661.9913"/>
 </a>
 </g>
 </g>
@@ -113,18 +113,18 @@
 <g id="node15" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
 <g id="a_node15"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M534.1796,-385C534.1796,-385 498.647,-385 498.647,-385 492.647,-385 486.647,-379 486.647,-373 486.647,-373 486.647,-361 486.647,-361 486.647,-355 492.647,-349 498.647,-349 498.647,-349 534.1796,-349 534.1796,-349 540.1796,-349 546.1796,-355 546.1796,-361 546.1796,-361 546.1796,-373 546.1796,-373 546.1796,-379 540.1796,-385 534.1796,-385"/>
-<text text-anchor="middle" x="516.4133" y="-371.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="516.4133" y="-354.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M534.1796,-595C534.1796,-595 498.647,-595 498.647,-595 492.647,-595 486.647,-589 486.647,-583 486.647,-583 486.647,-571 486.647,-571 486.647,-565 492.647,-559 498.647,-559 498.647,-559 534.1796,-559 534.1796,-559 540.1796,-559 546.1796,-565 546.1796,-571 546.1796,-571 546.1796,-583 546.1796,-583 546.1796,-589 540.1796,-595 534.1796,-595"/>
+<text text-anchor="middle" x="516.4133" y="-581.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="516.4133" y="-564.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge4" class="edge">
+<g id="edge30" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge4"><a xlink:title="at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M309.7991,-511.7264C337.5285,-484.1511 393.4403,-431.4712 448.428,-397 457.2819,-391.4496 467.3392,-386.4081 476.9519,-382.1092"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="478.5508,-385.2317 486.3554,-378.0666 475.786,-378.8008 478.5508,-385.2317"/>
+<g id="a_edge30"><a xlink:title="at elg.go:78: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M348.8963,-692.7085C370.4169,-690.4993 394.1058,-684.8447 412.428,-672 439.151,-653.2659 424.3962,-630.0807 448.428,-608 456.6922,-600.4068 467.1353,-594.4053 477.3407,-589.7869"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="478.6988,-593.0127 486.5768,-585.9284 476.0005,-586.5537 478.6988,-593.0127"/>
 </a>
 </g>
 </g>
@@ -132,46 +132,46 @@
 <g id="node18" class="node">
 <title>(*github.com/sirupsen/logrus.Logger).Debug</title>
 <g id="a_node18"><a xlink:title="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M535.2353,-764C535.2353,-764 497.5913,-764 497.5913,-764 491.5913,-764 485.5913,-758 485.5913,-752 485.5913,-752 485.5913,-740 485.5913,-740 485.5913,-734 491.5913,-728 497.5913,-728 497.5913,-728 535.2353,-728 535.2353,-728 541.2353,-728 547.2353,-734 547.2353,-740 547.2353,-740 547.2353,-752 547.2353,-752 547.2353,-758 541.2353,-764 535.2353,-764"/>
-<text text-anchor="middle" x="516.4133" y="-750.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
-<text text-anchor="middle" x="516.4133" y="-733.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M535.2353,-345C535.2353,-345 497.5913,-345 497.5913,-345 491.5913,-345 485.5913,-339 485.5913,-333 485.5913,-333 485.5913,-321 485.5913,-321 485.5913,-315 491.5913,-309 497.5913,-309 497.5913,-309 535.2353,-309 535.2353,-309 541.2353,-309 547.2353,-315 547.2353,-321 547.2353,-321 547.2353,-333 547.2353,-333 547.2353,-339 541.2353,-345 535.2353,-345"/>
+<text text-anchor="middle" x="516.4133" y="-331.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
+<text text-anchor="middle" x="516.4133" y="-314.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge20" class="edge">
+<g id="edge9" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.elgamalDecrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge20"><a xlink:title="at elg.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M337.829,-548.1177C350.6845,-554.3314 364.2,-562.0222 375.428,-571 429.6438,-614.3503 476.5997,-681.9742 500.1989,-719.1913"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="497.4159,-721.3421 505.6857,-727.9649 503.3509,-717.6305 497.4159,-721.3421"/>
+<g id="a_edge9"><a xlink:title="at elg.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M348.9219,-677.045C358.6795,-672.4915 368.0369,-666.6004 375.428,-659 441.6885,-590.8631 410.2348,-545.0308 448.428,-458 464.5683,-421.2211 486.4319,-380.3678 500.9587,-354.2188"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="504.1285,-355.7213 505.9545,-345.285 498.0189,-352.3047 504.1285,-355.7213"/>
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/elg.init -->
+<!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate -->
 <g id="node2" class="node">
-<title>github.com/go&#45;i2p/crypto/elg.init</title>
-<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/elg.init | defined in .:0&#10;at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]&#10;at constants.go:12: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M306.909,-52C306.909,-52 276.909,-52 276.909,-52 270.909,-52 264.909,-46 264.909,-40 264.909,-40 264.909,-28 264.909,-28 264.909,-22 270.909,-16 276.909,-16 276.909,-16 306.909,-16 306.909,-16 312.909,-16 318.909,-22 318.909,-28 318.909,-28 318.909,-40 318.909,-40 318.909,-46 312.909,-52 306.909,-52"/>
-<text text-anchor="middle" x="291.909" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
+<title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate</title>
+<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/elg.ElgamalGenerate | defined in elg.go:21&#10;at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:31: calling [github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange]&#10;at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg.go:34: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M340.5789,-170C340.5789,-170 243.2391,-170 243.2391,-170 237.2391,-170 231.2391,-164 231.2391,-158 231.2391,-158 231.2391,-146 231.2391,-146 231.2391,-140 237.2391,-134 243.2391,-134 243.2391,-134 340.5789,-134 340.5789,-134 346.5789,-134 352.5789,-140 352.5789,-146 352.5789,-146 352.5789,-158 352.5789,-158 352.5789,-164 346.5789,-170 340.5789,-170"/>
+<text text-anchor="middle" x="291.909" y="-147.8" font-family="Verdana" font-size="14.00" fill="#000000">ElgamalGenerate</text>
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<!-- github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange -->
 <g id="node3" class="node">
-<title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M565.1028,-52C565.1028,-52 467.7238,-52 467.7238,-52 461.7238,-52 455.7238,-46 455.7238,-40 455.7238,-40 455.7238,-28 455.7238,-28 455.7238,-22 461.7238,-16 467.7238,-16 467.7238,-16 565.1028,-16 565.1028,-16 571.1028,-16 577.1028,-22 577.1028,-28 577.1028,-28 577.1028,-40 577.1028,-40 577.1028,-46 571.1028,-52 565.1028,-52"/>
-<text text-anchor="middle" x="516.4133" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="516.4133" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
+<title>github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange</title>
+<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange | defined in secure_reader.go:160">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M572.3839,-174C572.3839,-174 460.4427,-174 460.4427,-174 454.4427,-174 448.4427,-168 448.4427,-162 448.4427,-162 448.4427,-150 448.4427,-150 448.4427,-144 454.4427,-138 460.4427,-138 460.4427,-138 572.3839,-138 572.3839,-138 578.3839,-138 584.3839,-144 584.3839,-150 584.3839,-150 584.3839,-162 584.3839,-162 584.3839,-168 578.3839,-174 572.3839,-174"/>
+<text text-anchor="middle" x="516.4133" y="-160.2" font-family="Verdana" font-size="14.00" fill="#000000">rand</text>
+<text text-anchor="middle" x="516.4133" y="-143.4" font-family="Verdana" font-size="14.00" fill="#000000">ReadBigIntInRange</text>
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge21" class="edge">
-<title>github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge21"><a xlink:title="at constants.go:12: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
-<path fill="none" stroke="#8b4513" d="M318.9895,-34C350.0842,-34 402.3316,-34 445.2687,-34"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="445.4001,-37.5001 455.4001,-34 445.4001,-30.5001 445.4001,-37.5001"/>
+<!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange -->
+<g id="edge27" class="edge">
+<title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange</title>
+<g id="a_edge27"><a xlink:title="at elg.go:31: calling [github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange]">
+<path fill="none" stroke="#8b4513" d="M352.5949,-145.8516C371.7358,-144.6164 392.9635,-143.9733 412.428,-145 420.7671,-145.4398 429.4668,-146.0768 438.1282,-146.8258"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="437.9774,-150.3265 448.2545,-147.7514 438.6147,-143.3556 437.9774,-150.3265"/>
 </a>
 </g>
 </g>
@@ -185,85 +185,48 @@
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge5" class="edge">
-<title>github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge5"><a xlink:title="at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M319.2847,-40.4367C343.7726,-46.2841 380.6059,-55.3009 412.428,-64 433.937,-69.8799 457.7865,-76.9498 477.2137,-82.8522"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="476.3478,-86.2473 486.934,-85.8199 478.3918,-79.5523 476.3478,-86.2473"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate -->
-<g id="node5" class="node">
-<title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate</title>
-<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/elg.ElgamalGenerate | defined in elg.go:21&#10;at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg.go:34: calling [github.com/samber/oops.Errorf]&#10;at elg.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:31: calling [github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M340.5789,-224C340.5789,-224 243.2391,-224 243.2391,-224 237.2391,-224 231.2391,-218 231.2391,-212 231.2391,-212 231.2391,-200 231.2391,-200 231.2391,-194 237.2391,-188 243.2391,-188 243.2391,-188 340.5789,-188 340.5789,-188 346.5789,-188 352.5789,-194 352.5789,-200 352.5789,-200 352.5789,-212 352.5789,-212 352.5789,-218 346.5789,-224 340.5789,-224"/>
-<text text-anchor="middle" x="291.909" y="-201.8" font-family="Verdana" font-size="14.00" fill="#000000">ElgamalGenerate</text>
-</a>
-</g>
-</g>
 <!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge14" class="edge">
+<g id="edge37" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge14"><a xlink:title="at elg.go:34: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M328.4792,-187.9189C369.602,-167.5868 436.0901,-134.7136 477.9663,-114.0091"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="479.6107,-117.1005 487.0237,-109.5309 476.5082,-110.8256 479.6107,-117.1005"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange -->
-<g id="node6" class="node">
-<title>github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange</title>
-<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange | defined in secure_reader.go:160">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M572.3839,-197C572.3839,-197 460.4427,-197 460.4427,-197 454.4427,-197 448.4427,-191 448.4427,-185 448.4427,-185 448.4427,-173 448.4427,-173 448.4427,-167 454.4427,-161 460.4427,-161 460.4427,-161 572.3839,-161 572.3839,-161 578.3839,-161 584.3839,-167 584.3839,-173 584.3839,-173 584.3839,-185 584.3839,-185 584.3839,-191 578.3839,-197 572.3839,-197"/>
-<text text-anchor="middle" x="516.4133" y="-183.2" font-family="Verdana" font-size="14.00" fill="#000000">rand</text>
-<text text-anchor="middle" x="516.4133" y="-166.4" font-family="Verdana" font-size="14.00" fill="#000000">ReadBigIntInRange</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange -->
-<g id="edge41" class="edge">
-<title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange</title>
-<g id="a_edge41"><a xlink:title="at elg.go:31: calling [github.com/go&#45;i2p/crypto/rand.ReadBigIntInRange]">
-<path fill="none" stroke="#8b4513" d="M352.6631,-198.6934C378.917,-195.536 409.9692,-191.8015 437.9368,-188.438"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="438.576,-191.8864 448.0865,-187.2173 437.7401,-184.9365 438.576,-191.8864"/>
+<g id="a_edge37"><a xlink:title="at elg.go:34: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M352.6631,-136.575C392.2052,-126.5355 442.6322,-113.7325 477.011,-105.0039"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="478.3041,-108.2868 487.1353,-102.4335 476.5815,-101.502 478.3041,-108.2868"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge10" class="edge">
+<g id="edge16" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge10"><a xlink:title="at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M352.5931,-217.4927C374.208,-224.4272 396.9925,-235.4708 412.428,-253 456.0249,-302.5107 406.2337,-346.2886 448.428,-397 453.4451,-403.0298 459.8852,-407.9406 466.7961,-411.9247"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="465.2327,-415.0563 475.73,-416.49 468.4179,-408.8229 465.2327,-415.0563"/>
+<g id="a_edge16"><a xlink:title="at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M301.3476,-170.129C318.011,-202.6651 352.9982,-273.4193 375.428,-336 417.659,-453.8274 366.9621,-512.9733 448.428,-608 453.3926,-613.791 459.6904,-618.5073 466.4407,-622.3364"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="465.3326,-625.6948 475.8436,-627.0256 468.4566,-619.4306 465.3326,-625.6948"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge6" class="edge">
+<g id="edge36" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge6"><a xlink:title="at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M352.6306,-203.5054C373.7399,-205.6479 396.1742,-211.723 412.428,-226 453.9429,-262.4657 409.7329,-305.5548 448.428,-345 455.999,-352.7178 466.294,-357.7304 476.581,-360.9854"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="475.7874,-364.3961 486.3521,-363.5985 477.5959,-357.6337 475.7874,-364.3961"/>
+<g id="a_edge36"><a xlink:title="at elg.go:33: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M352.6926,-161.9948C374.8596,-168.7506 398.0018,-180.0634 412.428,-199 506.6558,-322.6887 356.9271,-421.2806 448.428,-547 455.4154,-556.6005 466.1662,-563.1755 477.0712,-567.6595"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="476.0089,-570.9968 486.6034,-571.0853 478.3764,-564.4094 476.0089,-570.9968"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge40" class="edge">
+<g id="edge26" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.ElgamalGenerate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge40"><a xlink:title="at elg.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M305.791,-224.3525C324.2426,-249.5791 356.6926,-296.9766 375.428,-342 428.314,-469.0913 393.4725,-516.7897 448.428,-643 460.6278,-671.018 480.336,-699.7872 495.3996,-719.7739"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="492.6725,-721.9694 501.5356,-727.7742 498.2269,-717.7092 492.6725,-721.9694"/>
+<g id="a_edge26"><a xlink:title="at elg.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M352.5498,-149.2167C373.7751,-151.3023 396.3073,-157.4143 412.428,-172 457.8378,-213.0861 406.1914,-260.6582 448.428,-305 455.6794,-312.6129 465.5806,-317.5963 475.5824,-320.857"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="474.9541,-324.3137 485.5233,-323.5769 476.8015,-317.5618 474.9541,-324.3137"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey -->
-<g id="node7" class="node">
+<g id="node5" class="node">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey</title>
-<g id="a_node7"><a xlink:title="github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey | defined in elg_public_key.go:36&#10;at elg_public_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at elg_public_key.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_public_key.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M361.5719,-619C361.5719,-619 222.2461,-619 222.2461,-619 216.2461,-619 210.2461,-613 210.2461,-607 210.2461,-607 210.2461,-595 210.2461,-595 210.2461,-589 216.2461,-583 222.2461,-583 222.2461,-583 361.5719,-583 361.5719,-583 367.5719,-583 373.5719,-589 373.5719,-595 373.5719,-595 373.5719,-607 373.5719,-607 373.5719,-613 367.5719,-619 361.5719,-619"/>
-<text text-anchor="middle" x="291.909" y="-596.8" font-family="Verdana" font-size="14.00" fill="#000000">createElgamalPublicKey</text>
+<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey | defined in elg_public_key.go:36&#10;at elg_public_key.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_public_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at elg_public_key.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M361.5719,-535C361.5719,-535 222.2461,-535 222.2461,-535 216.2461,-535 210.2461,-529 210.2461,-523 210.2461,-523 210.2461,-511 210.2461,-511 210.2461,-505 216.2461,-499 222.2461,-499 222.2461,-499 361.5719,-499 361.5719,-499 367.5719,-499 373.5719,-505 373.5719,-511 373.5719,-511 373.5719,-523 373.5719,-523 373.5719,-529 367.5719,-535 361.5719,-535"/>
+<text text-anchor="middle" x="291.909" y="-512.8" font-family="Verdana" font-size="14.00" fill="#000000">createElgamalPublicKey</text>
 </a>
 </g>
 </g>
@@ -271,18 +234,18 @@
 <g id="node16" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithField</title>
 <g id="a_node16"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:54">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M544.6878,-629C544.6878,-629 488.1388,-629 488.1388,-629 482.1388,-629 476.1388,-623 476.1388,-617 476.1388,-617 476.1388,-605 476.1388,-605 476.1388,-599 482.1388,-593 488.1388,-593 488.1388,-593 544.6878,-593 544.6878,-593 550.6878,-593 556.6878,-599 556.6878,-605 556.6878,-605 556.6878,-617 556.6878,-617 556.6878,-623 550.6878,-629 544.6878,-629"/>
-<text text-anchor="middle" x="516.4133" y="-615.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="516.4133" y="-598.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M544.6878,-717C544.6878,-717 488.1388,-717 488.1388,-717 482.1388,-717 476.1388,-711 476.1388,-705 476.1388,-705 476.1388,-693 476.1388,-693 476.1388,-687 482.1388,-681 488.1388,-681 488.1388,-681 544.6878,-681 544.6878,-681 550.6878,-681 556.6878,-687 556.6878,-693 556.6878,-693 556.6878,-705 556.6878,-705 556.6878,-711 550.6878,-717 544.6878,-717"/>
+<text text-anchor="middle" x="516.4133" y="-703.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="516.4133" y="-686.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge17" class="edge">
+<g id="edge6" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge17"><a xlink:title="at elg_public_key.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M373.5953,-604.6385C404.5009,-606.0151 438.7526,-607.5408 465.9644,-608.7529"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="465.8814,-612.2526 476.0273,-609.2011 466.193,-605.2595 465.8814,-612.2526"/>
+<g id="a_edge6"><a xlink:title="at elg_public_key.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M310.4925,-535.0084C327.4226,-551.418 353.1137,-576.3279 375.428,-598 407.8949,-629.5325 410.9097,-643.6865 448.428,-669 454.1045,-672.8299 460.3496,-676.3613 466.6836,-679.5533"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="465.4387,-682.8372 475.9714,-683.9824 468.4518,-676.5188 465.4387,-682.8372"/>
 </a>
 </g>
 </g>
@@ -290,99 +253,136 @@
 <g id="node17" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Warn</title>
 <g id="a_node17"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Warn | defined in log.go:30">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M534.1796,-507C534.1796,-507 498.647,-507 498.647,-507 492.647,-507 486.647,-501 486.647,-495 486.647,-495 486.647,-483 486.647,-483 486.647,-477 492.647,-471 498.647,-471 498.647,-471 534.1796,-471 534.1796,-471 540.1796,-471 546.1796,-477 546.1796,-483 546.1796,-483 546.1796,-495 546.1796,-495 546.1796,-501 540.1796,-507 534.1796,-507"/>
-<text text-anchor="middle" x="516.4133" y="-493.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="516.4133" y="-476.4" font-family="Verdana" font-size="14.00" fill="#000000">Warn</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M534.1796,-534C534.1796,-534 498.647,-534 498.647,-534 492.647,-534 486.647,-528 486.647,-522 486.647,-522 486.647,-510 486.647,-510 486.647,-504 492.647,-498 498.647,-498 498.647,-498 534.1796,-498 534.1796,-498 540.1796,-498 546.1796,-504 546.1796,-510 546.1796,-510 546.1796,-522 546.1796,-522 546.1796,-528 540.1796,-534 534.1796,-534"/>
+<text text-anchor="middle" x="516.4133" y="-520.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="516.4133" y="-503.4" font-family="Verdana" font-size="14.00" fill="#000000">Warn</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="edge11" class="edge">
+<g id="edge17" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_edge11"><a xlink:title="at elg_public_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
-<path fill="none" stroke="#8b4513" d="M330.839,-582.9994C344.9796,-576.2921 361.0191,-568.4867 375.428,-561 408.4482,-543.8431 415.2477,-536.8452 448.428,-520 457.6236,-515.3315 467.6644,-510.573 477.1385,-506.2305"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="478.7084,-509.3618 486.3715,-502.0455 475.8185,-502.9861 478.7084,-509.3618"/>
+<g id="a_edge17"><a xlink:title="at elg_public_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<path fill="none" stroke="#8b4513" d="M373.5953,-516.6361C408.503,-516.4807 447.6797,-516.3062 476.1592,-516.1793"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="476.535,-519.6778 486.5193,-516.1332 476.5038,-512.6778 476.535,-519.6778"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge34" class="edge">
+<g id="edge25" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge34"><a xlink:title="at elg_public_key.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M322.242,-619.1249C338.1698,-628.7422 357.9569,-640.8477 375.428,-652 411.9452,-675.3101 453.1038,-702.9081 481.4794,-722.1469"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="479.6169,-725.1128 489.856,-727.8352 483.5494,-719.3218 479.6169,-725.1128"/>
+<g id="a_edge25"><a xlink:title="at elg_public_key.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M313.4354,-498.782C353.9168,-464.5222 441.4169,-390.4701 487.1797,-351.7407"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="489.5798,-354.2946 494.9521,-345.1628 485.0577,-348.9513 489.5798,-354.2946"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalEncryption -->
-<g id="node8" class="node">
+<g id="node6" class="node">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalEncryption</title>
-<g id="a_node8"><a xlink:title="github.com/go&#45;i2p/crypto/elg.createElgamalEncryption | defined in elg_encryption.go:56&#10;at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg_encryption.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M363.1814,-391C363.1814,-391 220.6366,-391 220.6366,-391 214.6366,-391 208.6366,-385 208.6366,-379 208.6366,-379 208.6366,-367 208.6366,-367 208.6366,-361 214.6366,-355 220.6366,-355 220.6366,-355 363.1814,-355 363.1814,-355 369.1814,-355 375.1814,-361 375.1814,-367 375.1814,-367 375.1814,-379 375.1814,-379 375.1814,-385 369.1814,-391 363.1814,-391"/>
-<text text-anchor="middle" x="291.909" y="-368.8" font-family="Verdana" font-size="14.00" fill="#000000">createElgamalEncryption</text>
+<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/crypto/elg.createElgamalEncryption | defined in elg_encryption.go:56&#10;at elg_encryption.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M363.1814,-646C363.1814,-646 220.6366,-646 220.6366,-646 214.6366,-646 208.6366,-640 208.6366,-634 208.6366,-634 208.6366,-622 208.6366,-622 208.6366,-616 214.6366,-610 220.6366,-610 220.6366,-610 363.1814,-610 363.1814,-610 369.1814,-610 375.1814,-616 375.1814,-622 375.1814,-622 375.1814,-634 375.1814,-634 375.1814,-640 369.1814,-646 363.1814,-646"/>
+<text text-anchor="middle" x="291.909" y="-623.8" font-family="Verdana" font-size="14.00" fill="#000000">createElgamalEncryption</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalEncryption&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge8" class="edge">
+<g id="edge19" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalEncryption&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge8"><a xlink:title="at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M375.0602,-380.6548C387.6734,-382.5907 400.4633,-385.0019 412.428,-388 430.4649,-392.5197 449.6189,-399.2855 466.5074,-405.9731"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="465.5813,-409.3741 476.1638,-409.8841 468.2091,-402.8861 465.5813,-409.3741"/>
+<g id="a_edge19"><a xlink:title="at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M375.1871,-631.7094C405.4824,-633.0589 438.8001,-634.5429 465.4626,-635.7305"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="465.5601,-639.2382 475.7059,-636.1868 465.8716,-632.2452 465.5601,-639.2382"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalEncryption&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge28" class="edge">
+<g id="edge38" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalEncryption&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge28"><a xlink:title="at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M375.1206,-361.9159C387.606,-361.0651 400.3426,-360.6516 412.428,-361 433.4747,-361.6067 456.8877,-362.9027 476.1605,-364.1356"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="476.1921,-367.6451 486.4003,-364.8092 476.6517,-360.6602 476.1921,-367.6451"/>
+<g id="a_edge38"><a xlink:title="at elg_encryption.go:76: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M371.3768,-609.9475C407.0326,-601.8477 447.5259,-592.649 476.647,-586.0336"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="477.4705,-589.4358 486.4467,-583.8074 475.9198,-582.6097 477.4705,-589.4358"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalEncryption&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge23" class="edge">
+<g id="edge11" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalEncryption&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge23"><a xlink:title="at elg_encryption.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M304.7277,-391.1082C321.7051,-415.392 352.2071,-460.0817 375.428,-500 411.3084,-561.681 412.4955,-581.3493 448.428,-643 464.0048,-669.7257 483.6352,-699.0665 497.7928,-719.5725"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="494.9184,-721.5695 503.4974,-727.7865 500.6678,-717.5765 494.9184,-721.5695"/>
+<g id="a_edge11"><a xlink:title="at elg_encryption.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M313.5352,-609.8741C331.2666,-594.4303 356.4452,-571.1231 375.428,-548 428.5847,-483.2496 478.1913,-397.3515 501.8691,-354.197"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="505.0779,-355.6229 506.7867,-345.1667 498.9303,-352.275 505.0779,-355.6229"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey -->
-<g id="node9" class="node">
+<g id="node7" class="node">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey</title>
-<g id="a_node9"><a xlink:title="github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey | defined in elg_private_key.go:35&#10;at elg_private_key.go:36: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_private_key.go:36: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:59: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:38: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at elg_private_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M363.447,-700C363.447,-700 220.371,-700 220.371,-700 214.371,-700 208.371,-694 208.371,-688 208.371,-688 208.371,-676 208.371,-676 208.371,-670 214.371,-664 220.371,-664 220.371,-664 363.447,-664 363.447,-664 369.447,-664 375.447,-670 375.447,-676 375.447,-676 375.447,-688 375.447,-688 375.447,-694 369.447,-700 363.447,-700"/>
-<text text-anchor="middle" x="291.909" y="-677.8" font-family="Verdana" font-size="14.00" fill="#000000">createElgamalPrivateKey</text>
+<g id="a_node7"><a xlink:title="github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey | defined in elg_private_key.go:35&#10;at elg_private_key.go:36: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_private_key.go:36: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:59: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:38: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at elg_private_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M363.447,-385C363.447,-385 220.371,-385 220.371,-385 214.371,-385 208.371,-379 208.371,-373 208.371,-373 208.371,-361 208.371,-361 208.371,-355 214.371,-349 220.371,-349 220.371,-349 363.447,-349 363.447,-349 369.447,-349 375.447,-355 375.447,-361 375.447,-361 375.447,-373 375.447,-373 375.447,-379 369.447,-385 363.447,-385"/>
+<text text-anchor="middle" x="291.909" y="-362.8" font-family="Verdana" font-size="14.00" fill="#000000">createElgamalPrivateKey</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge2" class="edge">
+<g id="edge3" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge2"><a xlink:title="at elg_private_key.go:36: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M375.5163,-679.9482C388.0675,-678.243 400.7187,-675.7077 412.428,-672 438.3264,-663.7995 464.6933,-648.2341 484.3964,-634.8799"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="486.4639,-637.7054 492.6827,-629.1276 482.4721,-631.9551 486.4639,-637.7054"/>
+<g id="a_edge3"><a xlink:title="at elg_private_key.go:36: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M306.6013,-385.2691C324.478,-408.0912 354.8195,-448.8004 375.428,-487 416.8087,-563.7026 387.8617,-606.3312 448.428,-669 453.6672,-674.4211 460.0571,-678.9304 466.7992,-682.6618"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="465.6213,-685.9839 476.1365,-687.2805 468.7249,-679.7095 465.6213,-685.9839"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="edge25" class="edge">
+<g id="edge39" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_edge25"><a xlink:title="at elg_private_key.go:38: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at elg_private_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
-<path fill="none" stroke="#8b4513" d="M330.191,-663.8793C345.3588,-655.5336 362.2781,-644.657 375.428,-632 418.2373,-590.7952 403.3869,-558.7526 448.428,-520 456.7741,-512.8191 467.059,-506.9923 477.0797,-502.4109"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="478.6976,-505.5265 486.5344,-498.3965 475.9618,-499.0832 478.6976,-505.5265"/>
+<g id="a_edge39"><a xlink:title="at elg_private_key.go:38: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at elg_private_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<path fill="none" stroke="#8b4513" d="M375.7094,-373.5805C388.5612,-376.8209 401.2533,-381.4446 412.428,-388 453.4301,-412.0531 484.9869,-458.747 502.1033,-488.5965"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="499.2213,-490.6149 507.1469,-497.646 505.3358,-487.2071 499.2213,-490.6149"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge19" class="edge">
+<g id="edge20" class="edge">
 <title>github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge19"><a xlink:title="at elg_private_key.go:36: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:59: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M355.3427,-700.0832C394.0031,-711.1042 442.2584,-724.8605 475.8233,-734.4289"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="475.165,-737.8806 485.7414,-737.2563 477.0841,-731.1488 475.165,-737.8806"/>
+<g id="a_edge20"><a xlink:title="at elg_private_key.go:36: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:59: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M375.5061,-352.1055C409.6645,-346.0195 447.6168,-339.2575 475.5201,-334.286"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="476.4623,-337.6733 485.6933,-332.4734 475.2344,-330.7818 476.4623,-337.6733"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/elg.init -->
+<g id="node8" class="node">
+<title>github.com/go&#45;i2p/crypto/elg.init</title>
+<g id="a_node8"><a xlink:title="github.com/go&#45;i2p/crypto/elg.init | defined in .:0&#10;at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]&#10;at constants.go:12: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M306.909,-52C306.909,-52 276.909,-52 276.909,-52 270.909,-52 264.909,-46 264.909,-40 264.909,-40 264.909,-28 264.909,-28 264.909,-22 270.909,-16 276.909,-16 276.909,-16 306.909,-16 306.909,-16 312.909,-16 318.909,-22 318.909,-28 318.909,-28 318.909,-40 318.909,-40 318.909,-46 312.909,-52 306.909,-52"/>
+<text text-anchor="middle" x="291.909" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge1" class="edge">
+<title>github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge1"><a xlink:title="at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M319.2847,-40.4367C343.7726,-46.2841 380.6059,-55.3009 412.428,-64 433.937,-69.8799 457.7865,-76.9498 477.2137,-82.8522"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="476.3478,-86.2473 486.934,-85.8199 478.3918,-79.5523 476.3478,-86.2473"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<g id="node9" class="node">
+<title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
+<g id="a_node9"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M565.1028,-52C565.1028,-52 467.7238,-52 467.7238,-52 461.7238,-52 455.7238,-46 455.7238,-40 455.7238,-40 455.7238,-28 455.7238,-28 455.7238,-22 461.7238,-16 467.7238,-16 467.7238,-16 565.1028,-16 565.1028,-16 571.1028,-16 577.1028,-22 577.1028,-28 577.1028,-28 577.1028,-40 577.1028,-40 577.1028,-46 571.1028,-52 565.1028,-52"/>
+<text text-anchor="middle" x="516.4133" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="516.4133" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<g id="edge22" class="edge">
+<title>github.com/go&#45;i2p/crypto/elg.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
+<g id="a_edge22"><a xlink:title="at constants.go:12: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<path fill="none" stroke="#8b4513" d="M318.9895,-34C350.0842,-34 402.3316,-34 445.2687,-34"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="445.4001,-37.5001 455.4001,-34 445.4001,-30.5001 445.4001,-37.5001"/>
 </a>
 </g>
 </g>
@@ -390,233 +390,233 @@
 <g id="node10" class="node">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding</title>
 <g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding | defined in elg_encryption.go:21&#10;at elg_encryption.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:51: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_encryption.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M337.1154,-926C337.1154,-926 246.7026,-926 246.7026,-926 240.7026,-926 234.7026,-920 234.7026,-914 234.7026,-914 234.7026,-902 234.7026,-902 234.7026,-896 240.7026,-890 246.7026,-890 246.7026,-890 337.1154,-890 337.1154,-890 343.1154,-890 349.1154,-896 349.1154,-902 349.1154,-902 349.1154,-914 349.1154,-914 349.1154,-920 343.1154,-926 337.1154,-926"/>
-<text text-anchor="middle" x="291.909" y="-903.8" font-family="Verdana" font-size="14.00" fill="#000000">EncryptPadding</text>
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M337.1154,-943C337.1154,-943 246.7026,-943 246.7026,-943 240.7026,-943 234.7026,-937 234.7026,-931 234.7026,-931 234.7026,-919 234.7026,-919 234.7026,-913 240.7026,-907 246.7026,-907 246.7026,-907 337.1154,-907 337.1154,-907 343.1154,-907 349.1154,-913 349.1154,-919 349.1154,-919 349.1154,-931 349.1154,-931 349.1154,-937 343.1154,-943 337.1154,-943"/>
+<text text-anchor="middle" x="291.909" y="-920.8" font-family="Verdana" font-size="14.00" fill="#000000">EncryptPadding</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge35" class="edge">
+<g id="edge33" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge35"><a xlink:title="at elg_encryption.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M349.2659,-906.2571C372.1639,-902.51 396.7603,-894.0766 412.428,-876 498.9379,-776.1894 370.3762,-687.5554 448.428,-581 452.5997,-575.3048 458.0702,-570.63 464.0987,-566.7993"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="466.1682,-569.6556 473.2441,-561.7701 462.7951,-563.5218 466.1682,-569.6556"/>
+<g id="a_edge33"><a xlink:title="at elg_encryption.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M332.6453,-943.0479C357.2526,-951.0806 388.3954,-955.9476 412.428,-942 469.8784,-908.6579 498.2678,-830.336 509.831,-788.1274"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="513.2769,-788.7836 512.4157,-778.2238 506.5037,-787.0158 513.2769,-788.7836"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge18" class="edge">
+<g id="edge8" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge18"><a xlink:title="at elg_encryption.go:51: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M349.2068,-911.8495C371.6778,-910.271 395.9697,-904.2353 412.428,-888 476.7262,-824.5731 409.0863,-769.2986 448.428,-688 457.866,-668.4965 473.6593,-650.1615 487.6493,-636.2791"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="490.3942,-638.4958 495.1842,-629.0456 485.5464,-633.4461 490.3942,-638.4958"/>
+<g id="a_edge8"><a xlink:title="at elg_encryption.go:51: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M349.2452,-934.0113C371.4534,-934.2773 395.5417,-930.133 412.428,-915 474.8084,-859.0967 396.57,-795.7818 448.428,-730 453.3971,-723.6966 459.9358,-718.6293 466.995,-714.5688"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="468.7914,-717.5825 476.1361,-709.9467 465.6327,-711.3357 468.7914,-717.5825"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge12" class="edge">
+<g id="edge2" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge12"><a xlink:title="at elg_encryption.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M349.0993,-923.7582C370.168,-926.4634 393.492,-925.5821 412.428,-915 466.6496,-884.699 496.076,-813.2468 508.7372,-773.6413"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="512.0865,-774.6572 511.6679,-764.0706 505.3933,-772.6076 512.0865,-774.6572"/>
+<g id="a_edge2"><a xlink:title="at elg_encryption.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M349.1679,-928.6469C372.0489,-926.9088 396.6592,-920.4272 412.428,-903 478.9937,-829.4336 421.0373,-553.356 448.428,-458 459.4538,-419.6157 482.254,-379.4125 498.4046,-353.8331"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="501.5548,-355.4052 504.0199,-345.1011 495.6671,-351.619 501.5548,-355.4052"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt -->
 <g id="node11" class="node">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt</title>
-<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt | defined in elg_encryption.go:16&#10;at elg_encryption.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:18: calling [(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding]&#10;at elg_encryption.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M99.5141,-926C99.5141,-926 54.8759,-926 54.8759,-926 48.8759,-926 42.8759,-920 42.8759,-914 42.8759,-914 42.8759,-902 42.8759,-902 42.8759,-896 48.8759,-890 54.8759,-890 54.8759,-890 99.5141,-890 99.5141,-890 105.5141,-890 111.5141,-896 111.5141,-902 111.5141,-902 111.5141,-914 111.5141,-914 111.5141,-920 105.5141,-926 99.5141,-926"/>
-<text text-anchor="middle" x="77.195" y="-903.8" font-family="Verdana" font-size="14.00" fill="#000000">Encrypt</text>
+<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt | defined in elg_encryption.go:16&#10;at elg_encryption.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_encryption.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_encryption.go:18: calling [(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M99.5141,-943C99.5141,-943 54.8759,-943 54.8759,-943 48.8759,-943 42.8759,-937 42.8759,-931 42.8759,-931 42.8759,-919 42.8759,-919 42.8759,-913 48.8759,-907 54.8759,-907 54.8759,-907 99.5141,-907 99.5141,-907 105.5141,-907 111.5141,-913 111.5141,-919 111.5141,-919 111.5141,-931 111.5141,-931 111.5141,-937 105.5141,-943 99.5141,-943"/>
+<text text-anchor="middle" x="77.195" y="-920.8" font-family="Verdana" font-size="14.00" fill="#000000">Encrypt</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt&#45;&gt;(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding -->
-<g id="edge31" class="edge">
+<g id="edge41" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt&#45;&gt;(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding</title>
-<g id="a_edge31"><a xlink:title="at elg_encryption.go:18: calling [(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding]">
-<path fill="none" stroke="#000000" d="M111.6925,-908C141.9241,-908 186.7505,-908 224.1322,-908"/>
-<polygon fill="#000000" stroke="#000000" points="224.46,-911.5001 234.46,-908 224.4599,-904.5001 224.46,-911.5001"/>
+<g id="a_edge41"><a xlink:title="at elg_encryption.go:18: calling [(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).EncryptPadding]">
+<path fill="none" stroke="#000000" d="M111.6925,-925C141.9241,-925 186.7505,-925 224.1322,-925"/>
+<polygon fill="#000000" stroke="#000000" points="224.46,-928.5001 234.46,-925 224.4599,-921.5001 224.46,-928.5001"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge36" class="edge">
+<g id="edge21" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge36"><a xlink:title="at elg_encryption.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M111.5684,-901.0153C179.0327,-885.5391 329.417,-842.0333 412.428,-748 433.009,-724.6862 430.0598,-713.0942 448.428,-688 461.5811,-670.0305 478.0788,-651.2703 491.5284,-636.7664"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="494.3573,-638.8666 498.6463,-629.1787 489.252,-634.0774 494.3573,-638.8666"/>
+<g id="a_edge21"><a xlink:title="at elg_encryption.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M111.5912,-915.5928C192.7447,-893.1219 390.9604,-836.5211 412.428,-814 440.453,-784.5997 420.0382,-759.0482 448.428,-730 453.6642,-724.6424 459.9976,-720.1244 466.6668,-716.3399"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="468.585,-719.2903 475.8978,-711.6239 465.4003,-713.0567 468.585,-719.2903"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge30" class="edge">
+<g id="edge14" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.ElgamalEncryption).Encrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge30"><a xlink:title="at elg_encryption.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M111.5809,-918.5795C167.4971,-934.2255 281.3496,-959.5785 375.428,-939 452.82,-922.0714 493.1916,-823.0483 508.7163,-773.7953"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="512.1074,-774.6733 511.6564,-764.0881 505.4079,-772.6442 512.1074,-774.6733"/>
+<g id="a_edge14"><a xlink:title="at elg_encryption.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M81.1452,-906.8166C102.8752,-806.8121 206.9305,-328.2221 208.39,-327 243.1804,-297.8682 367.0848,-317.2584 412.428,-319 433.1897,-319.7975 456.2317,-321.4874 475.3383,-323.1095"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="475.2421,-326.6143 485.5087,-323.9975 475.8511,-319.6408 475.2421,-326.6143"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt -->
 <g id="node12" class="node">
 <title>(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt</title>
-<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt | defined in elg_decrypter.go:9&#10;at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg_decrypter.go:10: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_decrypter.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg_decrypter.go:10: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_decrypter.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_decrypter.go:11: calling [github.com/go&#45;i2p/crypto/elg.elgamalDecrypt]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M99.7821,-575C99.7821,-575 54.6079,-575 54.6079,-575 48.6079,-575 42.6079,-569 42.6079,-563 42.6079,-563 42.6079,-551 42.6079,-551 42.6079,-545 48.6079,-539 54.6079,-539 54.6079,-539 99.7821,-539 99.7821,-539 105.7821,-539 111.7821,-545 111.7821,-551 111.7821,-551 111.7821,-563 111.7821,-563 111.7821,-569 105.7821,-575 99.7821,-575"/>
-<text text-anchor="middle" x="77.195" y="-552.8" font-family="Verdana" font-size="14.00" fill="#000000">Decrypt</text>
+<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt | defined in elg_decrypter.go:9&#10;at elg_decrypter.go:10: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_decrypter.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_decrypter.go:10: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_decrypter.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg_decrypter.go:11: calling [github.com/go&#45;i2p/crypto/elg.elgamalDecrypt]&#10;at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M99.7821,-494C99.7821,-494 54.6079,-494 54.6079,-494 48.6079,-494 42.6079,-488 42.6079,-482 42.6079,-482 42.6079,-470 42.6079,-470 42.6079,-464 48.6079,-458 54.6079,-458 54.6079,-458 99.7821,-458 99.7821,-458 105.7821,-458 111.7821,-464 111.7821,-470 111.7821,-470 111.7821,-482 111.7821,-482 111.7821,-488 105.7821,-494 99.7821,-494"/>
+<text text-anchor="middle" x="77.195" y="-471.8" font-family="Verdana" font-size="14.00" fill="#000000">Decrypt</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;github.com/go&#45;i2p/crypto/elg.elgamalDecrypt -->
-<g id="edge26" class="edge">
+<g id="edge31" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;github.com/go&#45;i2p/crypto/elg.elgamalDecrypt</title>
-<g id="a_edge26"><a xlink:title="at elg_decrypter.go:11: calling [github.com/go&#45;i2p/crypto/elg.elgamalDecrypt]">
-<path fill="none" stroke="#000000" d="M112.1704,-552.6019C142.5838,-548.7774 187.504,-543.1288 224.828,-538.4353"/>
-<polygon fill="#000000" stroke="#000000" points="225.6503,-541.8596 235.1355,-537.1392 224.7769,-534.9143 225.6503,-541.8596"/>
+<g id="a_edge31"><a xlink:title="at elg_decrypter.go:11: calling [github.com/go&#45;i2p/crypto/elg.elgamalDecrypt]">
+<path fill="none" stroke="#000000" d="M111.8731,-474.5173C132.1076,-475.565 156.6665,-480.4374 172.39,-496 225.1196,-548.1899 160.2593,-602.5409 208.39,-659 213.2575,-664.7098 219.2465,-669.4391 225.7633,-673.3547"/>
+<polygon fill="#000000" stroke="#000000" points="224.4461,-676.6176 234.9212,-678.2055 227.7226,-670.4317 224.4461,-676.6176"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge1" class="edge">
+<g id="edge15" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge1"><a xlink:title="at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M111.8289,-543.3202C130.6251,-535.0755 153.758,-523.5522 172.39,-510 190.9447,-496.504 187.9557,-483.4335 208.39,-473 252.2919,-450.5843 390.0309,-437.2649 465.5825,-431.4602"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="466.1049,-434.9309 475.8143,-430.6908 465.5799,-427.9506 466.1049,-434.9309"/>
+<g id="a_edge15"><a xlink:title="at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M111.9915,-484.4142C132.8015,-491.2917 157.9311,-503.2043 172.39,-523 235.7494,-609.7453 130.1482,-688.3971 208.39,-762 274.6976,-824.3763 338.7929,-833.5293 412.428,-780 454.3779,-749.5044 413.9078,-707.7058 448.428,-669 453.4737,-663.3426 459.7583,-658.6526 466.4534,-654.7833"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="468.4645,-657.685 475.7597,-650.0018 465.2655,-651.4588 468.4645,-657.685"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge16" class="edge">
+<g id="edge32" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge16"><a xlink:title="at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M88.2253,-538.8811C100.6329,-518.3978 121.2858,-483.9936 138.39,-454 170.5101,-397.6747 153.194,-360.0242 208.39,-326 218.0451,-320.0483 401.6361,-315.5104 412.428,-319 431.2072,-325.0723 430.8246,-336.0752 448.428,-345 457.2971,-349.4966 467.2774,-353.3341 476.8034,-356.4845"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="475.9116,-359.8728 486.5005,-359.5177 478.0014,-353.1919 475.9116,-359.8728"/>
+<g id="a_edge32"><a xlink:title="at elg_decrypter.go:13: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M111.7519,-465.9232C129.422,-461.285 151.3704,-456.3068 171.39,-454 277.8138,-441.7369 324.0557,-393.4463 412.428,-454 448.9903,-479.0529 417.8204,-514.9435 448.428,-547 456.2722,-555.2155 466.7626,-561.3286 477.1511,-565.8136"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="475.9957,-569.1196 486.5841,-569.4883 478.5367,-562.5971 475.9957,-569.1196"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge15" class="edge">
+<g id="edge5" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge15"><a xlink:title="at elg_decrypter.go:10: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_decrypter.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M80.1185,-575.0536C87.4563,-613.6794 110.6161,-703.8374 171.39,-741 262.785,-796.8871 317.758,-791.1399 412.428,-741 437.5922,-727.6723 430.9695,-710.4959 448.428,-688 462.1734,-670.2886 478.8143,-651.403 492.1918,-636.7678"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="495.0465,-638.8348 499.2489,-629.109 489.8987,-634.0914 495.0465,-638.8348"/>
+<g id="a_edge5"><a xlink:title="at elg_decrypter.go:10: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at elg_decrypter.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M95.0466,-494.1622C108.6582,-508.9177 126.954,-530.8472 138.39,-553 189.7499,-652.49 118.8929,-727.7217 208.39,-795 280.932,-849.5326 338.0532,-839.0051 412.428,-787 436.9835,-769.8301 425.8553,-749.7041 448.428,-730 453.9373,-725.1908 460.3171,-720.9964 466.9167,-717.3793"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="468.6399,-720.4302 475.9915,-712.801 465.4869,-714.1805 468.6399,-720.4302"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge22" class="edge">
+<g id="edge10" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/elg.elgDecrypter).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge22"><a xlink:title="at elg_decrypter.go:10: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_decrypter.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M79.9546,-575.2176C88.4755,-624.0971 119.3938,-757.7626 208.39,-807 287.7391,-850.9002 324.9162,-830.7738 412.428,-807 438.9954,-799.7826 465.7138,-783.8779 485.4142,-770.1186"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="487.5944,-772.8619 493.6758,-764.1862 483.5115,-767.176 487.5944,-772.8619"/>
+<g id="a_edge10"><a xlink:title="at elg_decrypter.go:10: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_decrypter.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M88.3845,-457.8846C116.7121,-412.3138 190.2974,-295.8373 208.39,-286 288.0932,-242.6638 325.8514,-252.8869 412.428,-280 431.0174,-285.8216 430.973,-296.3525 448.428,-305 456.9996,-309.2466 466.5756,-312.9309 475.7733,-316.0064"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="474.9496,-319.4169 485.5398,-319.1026 477.065,-312.7442 474.9496,-319.4169"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter -->
 <g id="node19" class="node">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter</title>
-<g id="a_node19"><a xlink:title="(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter | defined in elg_private_key.go:19&#10;at elg_private_key.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:21: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey]&#10;at elg_private_key.go:23: calling [github.com/samber/oops.Errorf]&#10;at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M118.5857,-305C118.5857,-305 35.8043,-305 35.8043,-305 29.8043,-305 23.8043,-299 23.8043,-293 23.8043,-293 23.8043,-281 23.8043,-281 23.8043,-275 29.8043,-269 35.8043,-269 35.8043,-269 118.5857,-269 118.5857,-269 124.5857,-269 130.5857,-275 130.5857,-281 130.5857,-281 130.5857,-293 130.5857,-293 130.5857,-299 124.5857,-305 118.5857,-305"/>
-<text text-anchor="middle" x="77.195" y="-282.8" font-family="Verdana" font-size="14.00" fill="#000000">NewDecrypter</text>
+<g id="a_node19"><a xlink:title="(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter | defined in elg_private_key.go:19&#10;at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at elg_private_key.go:23: calling [github.com/samber/oops.Errorf]&#10;at elg_private_key.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg_private_key.go:21: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M118.5857,-359C118.5857,-359 35.8043,-359 35.8043,-359 29.8043,-359 23.8043,-353 23.8043,-347 23.8043,-347 23.8043,-335 23.8043,-335 23.8043,-329 29.8043,-323 35.8043,-323 35.8043,-323 118.5857,-323 118.5857,-323 124.5857,-323 130.5857,-329 130.5857,-335 130.5857,-335 130.5857,-347 130.5857,-347 130.5857,-353 124.5857,-359 118.5857,-359"/>
+<text text-anchor="middle" x="77.195" y="-336.8" font-family="Verdana" font-size="14.00" fill="#000000">NewDecrypter</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge33" class="edge">
+<g id="edge7" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge33"><a xlink:title="at elg_private_key.go:23: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M82.4921,-268.7858C95.6506,-227.5266 134.2393,-127.9641 208.39,-95 297.7732,-55.2641 416.683,-72.3127 477.2904,-85.2849"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="476.6861,-88.7359 487.2067,-87.4836 478.2015,-81.9019 476.6861,-88.7359"/>
+<g id="a_edge7"><a xlink:title="at elg_private_key.go:23: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M81.8931,-322.7682C94.1979,-279.1482 131.8393,-168.8486 208.39,-121 292.0623,-68.7 414.434,-78.1137 476.755,-87.5717"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="476.5218,-91.0788 486.949,-89.2017 477.627,-84.1666 476.5218,-91.0788"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey -->
-<g id="edge32" class="edge">
+<g id="edge40" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey</title>
-<g id="a_edge32"><a xlink:title="at elg_private_key.go:21: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey]">
-<path fill="none" stroke="#000000" d="M130.7838,-302.4311C146.552,-309.5541 162.2703,-319.7105 172.39,-334 249.4915,-442.871 135.7499,-520.1029 208.39,-632 215.3604,-642.7374 225.5183,-651.4982 236.367,-658.5121"/>
-<polygon fill="#000000" stroke="#000000" points="234.7877,-661.6455 245.168,-663.7669 238.3763,-655.6353 234.7877,-661.6455"/>
+<g id="a_edge40"><a xlink:title="at elg_private_key.go:21: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPrivateKey]">
+<path fill="none" stroke="#000000" d="M130.5462,-347.4604C150.9941,-349.9364 174.9763,-352.8405 198.1056,-355.6412"/>
+<polygon fill="#000000" stroke="#000000" points="197.9553,-359.1485 208.3036,-356.8761 198.7969,-352.1993 197.9553,-359.1485"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge37" class="edge">
+<g id="edge4" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge37"><a xlink:title="at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M130.6832,-286.2022C222.4696,-285.0565 401.2538,-283.8919 412.428,-292 452.3572,-320.973 415.2858,-360.4573 448.428,-397 453.5207,-402.6152 459.8309,-407.2821 466.5374,-411.1412"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="465.3557,-414.4684 475.8512,-415.9159 468.5491,-408.2393 465.3557,-414.4684"/>
+<g id="a_edge4"><a xlink:title="at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M94.433,-359.0386C107.8834,-373.897 126.2606,-396.024 138.39,-418 160.4649,-457.9952 161.3283,-470.6767 172.39,-515 185.1827,-566.2592 169.3504,-714.4041 208.39,-750 222.1292,-762.5273 357.0149,-757.4196 375.428,-760 392.0896,-762.3349 398.6476,-777.6521 412.428,-768 450.7758,-741.1402 416.6561,-703.3881 448.428,-669 453.5118,-663.4976 459.7616,-658.9002 466.3927,-655.0794"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="468.31,-658.029 475.5977,-650.3387 465.1049,-651.8058 468.31,-658.029"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge38" class="edge">
+<g id="edge34" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge38"><a xlink:title="at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M84.5071,-268.9548C100.5311,-232.1789 142.6432,-149.3096 208.39,-117 275.0184,-84.2571 301.5131,-110.0695 375.428,-117 392.0911,-118.5624 400.7456,-112.0158 412.428,-124 481.8941,-195.2606 383.5856,-269.5078 448.428,-345 455.5948,-353.3439 465.9524,-358.5471 476.4309,-361.7842"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="475.8598,-365.2504 486.414,-364.3238 477.5855,-358.4664 475.8598,-365.2504"/>
+<g id="a_edge34"><a xlink:title="at elg_private_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M116.698,-359.0907C134.0534,-367.3979 154.5094,-377.6836 172.39,-388 189.0461,-397.61 190.1603,-405.8799 208.39,-412 278.8948,-435.67 305.2189,-397.4669 375.428,-422 394.4015,-428.6299 400.2085,-432.0427 412.428,-448 440.8929,-485.1719 416.4461,-512.807 448.428,-547 456.1873,-555.2958 466.6512,-561.4338 477.0415,-565.9171"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="475.8944,-569.2263 486.4832,-569.5837 478.4284,-562.701 475.8944,-569.2263"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge3" class="edge">
+<g id="edge13" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPrivateKey).NewDecrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge3"><a xlink:title="at elg_private_key.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M96.0188,-305.133C109.9723,-319.7055 128.2591,-341.4079 138.39,-364 212.9535,-530.278 68.9671,-650.6571 208.39,-768 225.7353,-782.5983 389.8802,-770.3591 412.428,-768 433.5849,-765.7864 456.7739,-761.1052 475.8745,-756.6276"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="476.8402,-759.9952 485.7413,-754.2487 475.1995,-753.1902 476.8402,-759.9952"/>
+<g id="a_edge13"><a xlink:title="at elg_private_key.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_private_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M87.1069,-322.9845C101.7975,-298.3941 131.9183,-255.3912 171.39,-238 195.9459,-227.1806 389.0593,-239.8107 412.428,-253 436.9074,-266.8161 425.8668,-288.2335 448.428,-305 456.4831,-310.9862 466.2364,-315.386 475.8102,-318.6042"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="475.0597,-322.0329 485.6434,-321.5472 477.0668,-315.3268 475.0597,-322.0329"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter -->
 <g id="node20" class="node">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter</title>
-<g id="a_node20"><a xlink:title="(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter | defined in elg_public_key.go:23&#10;at elg_public_key.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:26: calling [github.com/go&#45;i2p/crypto/elg.createElgamalEncryption]&#10;at elg_public_key.go:25: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey]&#10;at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M117.8171,-440C117.8171,-440 36.5729,-440 36.5729,-440 30.5729,-440 24.5729,-434 24.5729,-428 24.5729,-428 24.5729,-416 24.5729,-416 24.5729,-410 30.5729,-404 36.5729,-404 36.5729,-404 117.8171,-404 117.8171,-404 123.8171,-404 129.8171,-410 129.8171,-416 129.8171,-416 129.8171,-428 129.8171,-428 129.8171,-434 123.8171,-440 117.8171,-440"/>
-<text text-anchor="middle" x="77.195" y="-417.8" font-family="Verdana" font-size="14.00" fill="#000000">NewEncrypter</text>
+<g id="a_node20"><a xlink:title="(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter | defined in elg_public_key.go:23&#10;at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at elg_public_key.go:25: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey]&#10;at elg_public_key.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:26: calling [github.com/go&#45;i2p/crypto/elg.createElgamalEncryption]&#10;at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M117.8171,-629C117.8171,-629 36.5729,-629 36.5729,-629 30.5729,-629 24.5729,-623 24.5729,-617 24.5729,-617 24.5729,-605 24.5729,-605 24.5729,-599 30.5729,-593 36.5729,-593 36.5729,-593 117.8171,-593 117.8171,-593 123.8171,-593 129.8171,-599 129.8171,-605 129.8171,-605 129.8171,-617 129.8171,-617 129.8171,-623 123.8171,-629 117.8171,-629"/>
+<text text-anchor="middle" x="77.195" y="-606.8" font-family="Verdana" font-size="14.00" fill="#000000">NewEncrypter</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey -->
-<g id="edge27" class="edge">
+<g id="edge18" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey</title>
-<g id="a_edge27"><a xlink:title="at elg_public_key.go:25: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey]">
-<path fill="none" stroke="#000000" d="M130.226,-439.7718C145.4044,-446.9238 160.9238,-456.5074 172.39,-469 202.0803,-501.3479 178.5068,-528.8302 208.39,-561 214.5773,-567.6607 222.1061,-573.3305 230.082,-578.1222"/>
-<polygon fill="#000000" stroke="#000000" points="228.425,-581.2054 238.8698,-582.9824 231.8129,-575.0798 228.425,-581.2054"/>
+<g id="a_edge18"><a xlink:title="at elg_public_key.go:25: calling [github.com/go&#45;i2p/crypto/elg.createElgamalPublicKey]">
+<path fill="none" stroke="#000000" d="M118.34,-592.9871C153.3638,-577.6539 203.8126,-555.5679 241.3028,-539.155"/>
+<polygon fill="#000000" stroke="#000000" points="242.7809,-542.3287 250.5378,-535.112 239.9735,-535.9162 242.7809,-542.3287"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;github.com/go&#45;i2p/crypto/elg.createElgamalEncryption -->
-<g id="edge24" class="edge">
+<g id="edge28" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;github.com/go&#45;i2p/crypto/elg.createElgamalEncryption</title>
-<g id="a_edge24"><a xlink:title="at elg_public_key.go:26: calling [github.com/go&#45;i2p/crypto/elg.createElgamalEncryption]">
-<path fill="none" stroke="#000000" d="M129.995,-409.9505C152.0283,-404.9223 178.2372,-398.9411 203.081,-393.2715"/>
-<polygon fill="#000000" stroke="#000000" points="203.9188,-396.6704 212.8894,-391.0331 202.3613,-389.8458 203.9188,-396.6704"/>
+<g id="a_edge28"><a xlink:title="at elg_public_key.go:26: calling [github.com/go&#45;i2p/crypto/elg.createElgamalEncryption]">
+<path fill="none" stroke="#000000" d="M129.995,-615.1804C150.7468,-616.8235 175.2027,-618.7598 198.7334,-620.6228"/>
+<polygon fill="#000000" stroke="#000000" points="198.5028,-624.1154 208.7479,-621.4157 199.0554,-617.1373 198.5028,-624.1154"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge39" class="edge">
+<g id="edge29" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge39"><a xlink:title="at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M130.175,-422.7237C215.3761,-423.8876 381.7526,-426.1604 465.5723,-427.3055"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="465.5708,-430.8057 475.6177,-427.4427 465.6665,-423.8063 465.5708,-430.8057"/>
+<g id="a_edge29"><a xlink:title="at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M82.8086,-629.1894C96.5128,-670.0044 135.9691,-768.3283 208.39,-807 288.3832,-849.7152 340.6669,-862.4424 412.428,-807 462.5875,-768.2469 407.6382,-717.5177 448.428,-669 453.4758,-662.9959 459.9321,-658.0986 466.8498,-654.1202"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="468.472,-657.2218 475.7878,-649.5583 465.2897,-650.987 468.472,-657.2218"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge29" class="edge">
+<g id="edge12" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge29"><a xlink:title="at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M89.0438,-403.8278C101.9944,-383.5804 122.9541,-349.6527 138.39,-319 174.5866,-247.1206 143.8819,-200.1201 208.39,-152 281.1449,-97.7282 320.7928,-134.896 411.428,-130 459.8375,-127.385 416.7584,-308.2936 448.428,-345 455.6133,-353.3281 465.9765,-358.5264 476.4545,-361.7639"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="475.8811,-365.2295 486.4355,-364.3052 477.6084,-358.4459 475.8811,-365.2295"/>
+<g id="a_edge12"><a xlink:title="at elg_public_key.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M129.9457,-613.0407C144.001,-612.2931 158.9954,-610.298 172.39,-606 190.4687,-600.1989 190.3326,-588.8672 208.39,-583 279.122,-560.0177 302.2333,-586.1809 375.428,-573 392.3122,-569.9595 395.3162,-560.7722 412.428,-562 433.7096,-563.527 457.2539,-566.7905 476.5496,-569.8846"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="476.0676,-573.3523 486.5038,-571.5254 477.2062,-566.4455 476.0676,-573.3523"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge7" class="edge">
+<g id="edge24" class="edge">
 <title>(github.com/go&#45;i2p/crypto/elg.ElgPublicKey).NewEncrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge7"><a xlink:title="at elg_public_key.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M95.2773,-440.0458C109.0162,-454.7372 127.3706,-476.6371 138.39,-499 195.2786,-614.4505 106.9767,-700.7505 208.39,-780 244.1169,-807.9188 367.651,-787.1345 412.428,-780 433.9911,-776.5643 457.1574,-769.3578 476.1386,-762.4601"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="477.5116,-765.6835 485.6524,-758.9028 475.0599,-759.1268 477.5116,-765.6835"/>
+<g id="a_edge24"><a xlink:title="at elg_public_key.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at elg_public_key.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M89.3301,-592.9676C102.5313,-572.8426 123.7093,-539.0214 138.39,-508 177.4212,-425.524 134.7214,-368.8393 208.39,-315 281.6612,-261.4512 322.084,-298.3908 412.428,-307 433.5256,-309.0105 456.7087,-313.266 475.8207,-317.3368"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="475.1778,-320.7789 485.6952,-319.4997 476.6757,-313.941 475.1778,-320.7789"/>
 </a>
 </g>
 </g>

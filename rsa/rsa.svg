@@ -96,28 +96,19 @@
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes -->
-<g id="node2" class="node">
-<title>github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes</title>
-<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes | defined in utils.go:13">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M795.467,-1073C795.467,-1073 658.187,-1073 658.187,-1073 652.187,-1073 646.187,-1067 646.187,-1061 646.187,-1061 646.187,-1049 646.187,-1049 646.187,-1043 652.187,-1037 658.187,-1037 658.187,-1037 795.467,-1037 795.467,-1037 801.467,-1037 807.467,-1043 807.467,-1049 807.467,-1049 807.467,-1061 807.467,-1061 807.467,-1067 801.467,-1073 795.467,-1073"/>
-<text text-anchor="middle" x="726.827" y="-1050.8" font-family="Verdana" font-size="14.00" fill="#000000">rsaPublicKeyFromBytes</text>
-</a>
-</g>
-</g>
 <!-- github.com/go&#45;i2p/crypto/rsa.init -->
-<g id="node3" class="node">
+<g id="node2" class="node">
 <title>github.com/go&#45;i2p/crypto/rsa.init</title>
-<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/rsa.init | defined in .:0&#10;at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/rsa.init | defined in .:0&#10;at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M86.3633,-52C86.3633,-52 56.3633,-52 56.3633,-52 50.3633,-52 44.3633,-46 44.3633,-40 44.3633,-40 44.3633,-28 44.3633,-28 44.3633,-22 50.3633,-16 56.3633,-16 56.3633,-16 86.3633,-16 86.3633,-16 92.3633,-16 98.3633,-22 98.3633,-28 98.3633,-28 98.3633,-40 98.3633,-40 98.3633,-46 92.3633,-52 86.3633,-52"/>
 <text text-anchor="middle" x="71.3633" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="node4" class="node">
+<g id="node3" class="node">
 <title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
+<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M332.0108,-52C332.0108,-52 234.6318,-52 234.6318,-52 228.6318,-52 222.6318,-46 222.6318,-40 222.6318,-40 222.6318,-28 222.6318,-28 222.6318,-22 228.6318,-16 234.6318,-16 234.6318,-16 332.0108,-16 332.0108,-16 338.0108,-16 344.0108,-22 344.0108,-28 344.0108,-28 344.0108,-40 344.0108,-40 344.0108,-46 338.0108,-52 332.0108,-52"/>
 <text text-anchor="middle" x="283.3213" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="283.3213" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
@@ -125,27 +116,36 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/rsa.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge46" class="edge">
+<g id="edge27" class="edge">
 <title>github.com/go&#45;i2p/crypto/rsa.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge46"><a xlink:title="at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<g id="a_edge27"><a xlink:title="at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
 <path fill="none" stroke="#8b4513" d="M98.6392,-34C127.1724,-34 173.1429,-34 212.0796,-34"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="212.332,-37.5001 222.3319,-34 212.3319,-30.5001 212.332,-37.5001"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes -->
+<g id="node4" class="node">
+<title>github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes</title>
+<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes | defined in utils.go:13">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M795.467,-1073C795.467,-1073 658.187,-1073 658.187,-1073 652.187,-1073 646.187,-1067 646.187,-1061 646.187,-1061 646.187,-1049 646.187,-1049 646.187,-1043 652.187,-1037 658.187,-1037 658.187,-1037 795.467,-1037 795.467,-1037 801.467,-1037 807.467,-1043 807.467,-1049 807.467,-1049 807.467,-1061 807.467,-1061 807.467,-1067 801.467,-1073 795.467,-1073"/>
+<text text-anchor="middle" x="726.827" y="-1050.8" font-family="Verdana" font-size="14.00" fill="#000000">rsaPublicKeyFromBytes</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate -->
 <g id="node5" class="node">
 <title>(*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate</title>
-<g id="a_node5"><a xlink:title="(*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate | defined in rsa3072_private.go:106&#10;at rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node5"><a xlink:title="(*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate | defined in rsa3072_private.go:106&#10;at rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M308.3391,-296C308.3391,-296 258.3035,-296 258.3035,-296 252.3035,-296 246.3035,-290 246.3035,-284 246.3035,-284 246.3035,-272 246.3035,-272 246.3035,-266 252.3035,-260 258.3035,-260 258.3035,-260 308.3391,-260 308.3391,-260 314.3391,-260 320.3391,-266 320.3391,-272 320.3391,-272 320.3391,-284 320.3391,-284 320.3391,-290 314.3391,-296 308.3391,-296"/>
 <text text-anchor="middle" x="283.3213" y="-273.8" font-family="Verdana" font-size="14.00" fill="#000000">Generate</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge17" class="edge">
+<g id="edge47" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge17"><a xlink:title="at rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge47"><a xlink:title="at rsa3072_private.go:110: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:116: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M320.6711,-279.2715C381.4773,-281.6204 505.5807,-287.5777 610.0072,-300 636.0535,-303.0984 665.1266,-308.0703 687.7536,-312.2815"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="687.1863,-315.7362 697.6622,-314.1534 688.4858,-308.8578 687.1863,-315.7362"/>
 </a>
@@ -162,9 +162,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge32" class="edge">
+<g id="edge9" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Generate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge32"><a xlink:title="at rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge9"><a xlink:title="at rsa3072_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M320.3645,-276.1164C349.0926,-276.7428 387.9339,-282.4846 411.916,-306 461.1777,-354.3031 417.7916,-394.9321 447.916,-457 457.3898,-476.5197 472.3653,-495.6692 485.2876,-510.2252"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="482.8828,-512.7824 492.2074,-517.8124 488.0548,-508.0653 482.8828,-512.7824"/>
 </a>
@@ -174,9 +174,9 @@
 <g id="node6" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
 <g id="a_node6"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M538.9931,-1114C538.9931,-1114 481.9301,-1114 481.9301,-1114 475.9301,-1114 469.9301,-1108 469.9301,-1102 469.9301,-1102 469.9301,-1090 469.9301,-1090 469.9301,-1084 475.9301,-1078 481.9301,-1078 481.9301,-1078 538.9931,-1078 538.9931,-1078 544.9931,-1078 550.9931,-1084 550.9931,-1090 550.9931,-1090 550.9931,-1102 550.9931,-1102 550.9931,-1108 544.9931,-1114 538.9931,-1114"/>
-<text text-anchor="middle" x="510.4616" y="-1100.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="510.4616" y="-1083.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M538.9931,-1175C538.9931,-1175 481.9301,-1175 481.9301,-1175 475.9301,-1175 469.9301,-1169 469.9301,-1163 469.9301,-1163 469.9301,-1151 469.9301,-1151 469.9301,-1145 475.9301,-1139 481.9301,-1139 481.9301,-1139 538.9931,-1139 538.9931,-1139 544.9931,-1139 550.9931,-1145 550.9931,-1151 550.9931,-1151 550.9931,-1163 550.9931,-1163 550.9931,-1169 544.9931,-1175 538.9931,-1175"/>
+<text text-anchor="middle" x="510.4616" y="-1161.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="510.4616" y="-1144.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
 </a>
 </g>
 </g>
@@ -184,9 +184,9 @@
 <g id="node7" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
 <g id="a_node7"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M528.2279,-1175C528.2279,-1175 492.6953,-1175 492.6953,-1175 486.6953,-1175 480.6953,-1169 480.6953,-1163 480.6953,-1163 480.6953,-1151 480.6953,-1151 480.6953,-1145 486.6953,-1139 492.6953,-1139 492.6953,-1139 528.2279,-1139 528.2279,-1139 534.2279,-1139 540.2279,-1145 540.2279,-1151 540.2279,-1151 540.2279,-1163 540.2279,-1163 540.2279,-1169 534.2279,-1175 528.2279,-1175"/>
-<text text-anchor="middle" x="510.4616" y="-1161.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="510.4616" y="-1144.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M528.2279,-1114C528.2279,-1114 492.6953,-1114 492.6953,-1114 486.6953,-1114 480.6953,-1108 480.6953,-1102 480.6953,-1102 480.6953,-1090 480.6953,-1090 480.6953,-1084 486.6953,-1078 492.6953,-1078 492.6953,-1078 528.2279,-1078 528.2279,-1078 534.2279,-1078 540.2279,-1084 540.2279,-1090 540.2279,-1090 540.2279,-1102 540.2279,-1102 540.2279,-1108 534.2279,-1114 528.2279,-1114"/>
+<text text-anchor="middle" x="510.4616" y="-1100.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="510.4616" y="-1083.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
 </a>
 </g>
 </g>
@@ -200,164 +200,164 @@
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge30" class="edge">
+<g id="edge26" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge30"><a xlink:title="at rsa2048_private.go:86: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:91: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge26"><a xlink:title="at rsa2048_private.go:86: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:91: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M573.0434,-361.224C610.0949,-351.2918 655.8813,-339.0181 687.8166,-330.4573"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="688.9171,-333.786 697.6698,-327.816 687.1046,-327.0247 688.9171,-333.786"/>
 </a>
 </g>
 </g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public -->
-<g id="node10" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public</title>
-<g id="a_node10"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public | defined in rsa2048_private.go:53&#10;at rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:54: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]&#10;at rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M301.1001,-382C301.1001,-382 265.5425,-382 265.5425,-382 259.5425,-382 253.5425,-376 253.5425,-370 253.5425,-370 253.5425,-358 253.5425,-358 253.5425,-352 259.5425,-346 265.5425,-346 265.5425,-346 301.1001,-346 301.1001,-346 307.1001,-346 313.1001,-352 313.1001,-358 313.1001,-358 313.1001,-370 313.1001,-370 313.1001,-376 307.1001,-382 301.1001,-382"/>
-<text text-anchor="middle" x="283.3213" y="-359.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge1" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge1"><a xlink:title="at rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M313.244,-352.9204C338.7907,-344.0466 376.7193,-332.2452 410.916,-327 509.3867,-311.8962 627.1194,-314.6982 687.2366,-317.6027"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="687.2599,-321.1084 697.4254,-318.1231 687.617,-314.1175 687.2599,-321.1084"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge38" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge38"><a xlink:title="at rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M313.2135,-371.5996C330.0003,-376.6781 350.8676,-384.3903 367.5794,-395 417.8154,-426.8928 464.5999,-478.9652 490.19,-510.112"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="487.5132,-512.368 496.5299,-517.9314 492.9506,-507.9594 487.5132,-512.368"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey -->
-<g id="edge37" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey</title>
-<g id="a_edge37"><a xlink:title="at rsa2048_private.go:54: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]">
-<path fill="none" stroke="#000000" d="M313.4838,-365.8591C344.9225,-367.7968 395.366,-370.906 437.3344,-373.4927"/>
-<polygon fill="#000000" stroke="#000000" points="437.3309,-376.9991 447.5273,-374.121 437.7616,-370.0123 437.3309,-376.9991"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash -->
-<g id="node11" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash</title>
-<g id="a_node11"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash | defined in rsa2048_private.go:28&#10;at rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa2048_private.go:30: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M310.7615,-443C310.7615,-443 255.8811,-443 255.8811,-443 249.8811,-443 243.8811,-437 243.8811,-431 243.8811,-431 243.8811,-419 243.8811,-419 243.8811,-413 249.8811,-407 255.8811,-407 255.8811,-407 310.7615,-407 310.7615,-407 316.7615,-407 322.7615,-413 322.7615,-419 322.7615,-419 322.7615,-431 322.7615,-431 322.7615,-437 316.7615,-443 310.7615,-443"/>
-<text text-anchor="middle" x="283.3213" y="-420.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge2" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge2"><a xlink:title="at rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M322.9461,-412.6036C337.2474,-407.6847 353.3616,-401.6189 367.5794,-395 405.0814,-377.5414 408.5809,-360.8043 447.916,-348 491.4023,-333.8444 621.3677,-325.382 687.3942,-321.8831"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="687.6134,-325.3765 697.419,-321.3641 687.2514,-318.3859 687.6134,-325.3765"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge12" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge12"><a xlink:title="at rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M322.6686,-432.4178C348.8563,-438.2814 383.5316,-447.8618 411.916,-462 438.0571,-475.0208 464.3383,-495.1948 483.178,-511.1918"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="480.9205,-513.8668 490.7745,-517.7589 485.4985,-508.5712 480.9205,-513.8668"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey -->
-<g id="edge44" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey</title>
-<g id="a_edge44"><a xlink:title="at rsa2048_private.go:30: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]">
-<path fill="none" stroke="#000000" d="M322.6268,-416.8669C354.214,-410.3308 399.4497,-400.9706 437.6139,-393.0737"/>
-<polygon fill="#000000" stroke="#000000" points="438.5776,-396.4485 447.6609,-390.9948 437.1591,-389.5937 438.5776,-396.4485"/>
-</a>
-</g>
-</g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Zero -->
-<g id="node12" class="node">
+<g id="node10" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Zero</title>
-<g id="a_node12"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Zero | defined in rsa2048_private.go:73&#10;at rsa2048_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node10"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Zero | defined in rsa2048_private.go:73&#10;at rsa2048_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-443C86.3633,-443 56.3633,-443 56.3633,-443 50.3633,-443 44.3633,-437 44.3633,-431 44.3633,-431 44.3633,-419 44.3633,-419 44.3633,-413 50.3633,-407 56.3633,-407 56.3633,-407 86.3633,-407 86.3633,-407 92.3633,-407 98.3633,-413 98.3633,-419 98.3633,-419 98.3633,-431 98.3633,-431 98.3633,-437 92.3633,-443 86.3633,-443"/>
 <text text-anchor="middle" x="71.3633" y="-420.8" font-family="Verdana" font-size="14.00" fill="#000000">Zero</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge10" class="edge">
+<g id="edge7" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge10"><a xlink:title="at rsa2048_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge7"><a xlink:title="at rsa2048_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M98.7189,-441.114C114.6106,-449.8737 135.279,-460.2629 154.7266,-467 173.7259,-473.5818 179.3295,-472.1431 199.0632,-476 293.5329,-494.4638 317.4459,-497.538 411.916,-516 430.8215,-519.6946 451.7378,-523.92 469.4191,-527.5322"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="468.9172,-531.002 479.4161,-529.5795 470.3217,-524.1443 468.9172,-531.002"/>
 </a>
 </g>
 </g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash -->
+<g id="node11" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash</title>
+<g id="a_node11"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash | defined in rsa2048_private.go:28&#10;at rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa2048_private.go:30: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]&#10;at rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M310.7615,-382C310.7615,-382 255.8811,-382 255.8811,-382 249.8811,-382 243.8811,-376 243.8811,-370 243.8811,-370 243.8811,-358 243.8811,-358 243.8811,-352 249.8811,-346 255.8811,-346 255.8811,-346 310.7615,-346 310.7615,-346 316.7615,-346 322.7615,-352 322.7615,-358 322.7615,-358 322.7615,-370 322.7615,-370 322.7615,-376 316.7615,-382 310.7615,-382"/>
+<text text-anchor="middle" x="283.3213" y="-359.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge46" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge46"><a xlink:title="at rsa2048_private.go:32: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_private.go:38: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M322.6654,-349.7101C347.5899,-341.3822 380.7089,-331.6333 410.916,-327 509.3867,-311.8962 627.1194,-314.6982 687.2366,-317.6027"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="687.2599,-321.1084 697.4254,-318.1231 687.617,-314.1175 687.2599,-321.1084"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge14" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge14"><a xlink:title="at rsa2048_private.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M322.6865,-374.6195C337.4222,-379.5665 353.8941,-386.3118 367.5794,-395 417.8154,-426.8928 464.5999,-478.9652 490.19,-510.112"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="487.5132,-512.368 496.5299,-517.9314 492.9506,-507.9594 487.5132,-512.368"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey -->
+<g id="edge37" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey</title>
+<g id="a_edge37"><a xlink:title="at rsa2048_private.go:30: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]">
+<path fill="none" stroke="#000000" d="M322.6268,-366.4226C354.214,-368.3695 399.4497,-371.1577 437.6139,-373.51"/>
+<polygon fill="#000000" stroke="#000000" points="437.4645,-377.0073 447.6609,-374.1292 437.8952,-370.0206 437.4645,-377.0073"/>
+</a>
+</g>
+</g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Sign -->
-<g id="node13" class="node">
+<g id="node12" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Sign</title>
-<g id="a_node13"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Sign | defined in rsa2048_private.go:20&#10;at rsa2048_private.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash]">
+<g id="a_node12"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Sign | defined in rsa2048_private.go:20&#10;at rsa2048_private.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-382C86.3633,-382 56.3633,-382 56.3633,-382 50.3633,-382 44.3633,-376 44.3633,-370 44.3633,-370 44.3633,-358 44.3633,-358 44.3633,-352 50.3633,-346 56.3633,-346 56.3633,-346 86.3633,-346 86.3633,-346 92.3633,-346 98.3633,-352 98.3633,-358 98.3633,-358 98.3633,-370 98.3633,-370 98.3633,-376 92.3633,-382 86.3633,-382"/>
 <text text-anchor="middle" x="71.3633" y="-359.8" font-family="Verdana" font-size="14.00" fill="#000000">Sign</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash -->
-<g id="edge35" class="edge">
+<g id="edge24" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash</title>
-<g id="a_edge35"><a xlink:title="at rsa2048_private.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash]">
-<path fill="none" stroke="#000000" d="M98.6392,-371.8498C132.7979,-381.6804 191.947,-398.7031 234.1013,-410.8348"/>
-<polygon fill="#000000" stroke="#000000" points="233.3124,-414.2498 243.8903,-413.652 235.2484,-407.5228 233.3124,-414.2498"/>
+<g id="a_edge24"><a xlink:title="at rsa2048_private.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).SignHash]">
+<path fill="none" stroke="#000000" d="M98.6392,-364C132.7258,-364 191.6976,-364 233.8343,-364"/>
+<polygon fill="#000000" stroke="#000000" points="233.8904,-367.5001 243.8903,-364 233.8903,-360.5001 233.8904,-367.5001"/>
 </a>
 </g>
 </g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash -->
-<g id="node14" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash</title>
-<g id="a_node14"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash | defined in rsa2048_public.go:26&#10;at rsa2048_public.go:27: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]&#10;at rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M543.2609,-798C543.2609,-798 477.6623,-798 477.6623,-798 471.6623,-798 465.6623,-792 465.6623,-786 465.6623,-786 465.6623,-774 465.6623,-774 465.6623,-768 471.6623,-762 477.6623,-762 477.6623,-762 543.2609,-762 543.2609,-762 549.2609,-762 555.2609,-768 555.2609,-774 555.2609,-774 555.2609,-786 555.2609,-786 555.2609,-792 549.2609,-798 543.2609,-798"/>
-<text text-anchor="middle" x="510.4616" y="-775.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public -->
+<g id="node13" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public</title>
+<g id="a_node13"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public | defined in rsa2048_private.go:53&#10;at rsa2048_private.go:54: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]&#10;at rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M301.1001,-443C301.1001,-443 265.5425,-443 265.5425,-443 259.5425,-443 253.5425,-437 253.5425,-431 253.5425,-431 253.5425,-419 253.5425,-419 253.5425,-413 259.5425,-407 265.5425,-407 265.5425,-407 301.1001,-407 301.1001,-407 307.1001,-407 313.1001,-413 313.1001,-419 313.1001,-419 313.1001,-431 313.1001,-431 313.1001,-437 307.1001,-443 301.1001,-443"/>
+<text text-anchor="middle" x="283.3213" y="-420.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
 </a>
 </g>
 </g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge31" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge31"><a xlink:title="at rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M518.9434,-761.9675C552.1956,-691.2722 673.8074,-432.7214 713.9056,-347.4714"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="717.0795,-348.9465 718.1687,-338.4078 710.7453,-345.967 717.0795,-348.9465"/>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge30" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge30"><a xlink:title="at rsa2048_private.go:56: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M313.1081,-415.9079C329.482,-410.5363 349.9831,-403.1917 367.5794,-395 405.0814,-377.5414 408.5809,-360.8043 447.916,-348 491.4023,-333.8444 621.3677,-325.382 687.3942,-321.8831"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="687.6134,-325.3765 697.419,-321.3641 687.2514,-318.3859 687.6134,-325.3765"/>
 </a>
 </g>
 </g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes -->
-<g id="edge3" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes</title>
-<g id="a_edge3"><a xlink:title="at rsa2048_public.go:27: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]">
-<path fill="none" stroke="#000000" d="M552.8024,-798.1501C562.7427,-803.6198 572.8137,-810.2645 581.0072,-818 647.2537,-880.544 695.0299,-979.5538 715.5985,-1027.3624"/>
-<polygon fill="#000000" stroke="#000000" points="712.4523,-1028.909 719.5714,-1036.7555 718.8994,-1026.182 712.4523,-1028.909"/>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge17" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge17"><a xlink:title="at rsa2048_private.go:67: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M313.3077,-430.3984C340.1217,-435.9657 379.9965,-446.101 411.916,-462 438.0571,-475.0208 464.3383,-495.1948 483.178,-511.1918"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="480.9205,-513.8668 490.7745,-517.7589 485.4985,-508.5712 480.9205,-513.8668"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey -->
+<g id="edge4" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey</title>
+<g id="a_edge4"><a xlink:title="at rsa2048_private.go:54: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PrivateKey).toRSAPrivateKey]">
+<path fill="none" stroke="#000000" d="M313.4838,-418.7588C344.989,-412.2397 395.5794,-401.7715 437.6005,-393.0765"/>
+<polygon fill="#000000" stroke="#000000" points="438.444,-396.4762 447.5273,-391.0224 437.0255,-389.6214 438.444,-396.4762"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).NewVerifier -->
-<g id="node15" class="node">
+<g id="node14" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).NewVerifier</title>
-<g id="a_node15"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).NewVerifier | defined in rsa2048_public.go:60&#10;at rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node14"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).NewVerifier | defined in rsa2048_public.go:60&#10;at rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M318.5483,-737C318.5483,-737 248.0943,-737 248.0943,-737 242.0943,-737 236.0943,-731 236.0943,-725 236.0943,-725 236.0943,-713 236.0943,-713 236.0943,-707 242.0943,-701 248.0943,-701 248.0943,-701 318.5483,-701 318.5483,-701 324.5483,-701 330.5483,-707 330.5483,-713 330.5483,-713 330.5483,-725 330.5483,-725 330.5483,-731 324.5483,-737 318.5483,-737"/>
 <text text-anchor="middle" x="283.3213" y="-714.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge33" class="edge">
+<g id="edge18" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge33"><a xlink:title="at rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge18"><a xlink:title="at rsa2048_public.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M330.7579,-705.6967C356.4974,-696.9246 387.8722,-683.5838 411.916,-665 448.5364,-636.6956 478.7271,-591.6183 495.6669,-562.9363"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="498.7182,-564.6513 500.6926,-554.2421 492.6578,-561.1481 498.7182,-564.6513"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash -->
+<g id="node15" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash</title>
+<g id="a_node15"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash | defined in rsa2048_public.go:26&#10;at rsa2048_public.go:27: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]&#10;at rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M543.2609,-798C543.2609,-798 477.6623,-798 477.6623,-798 471.6623,-798 465.6623,-792 465.6623,-786 465.6623,-786 465.6623,-774 465.6623,-774 465.6623,-768 471.6623,-762 477.6623,-762 477.6623,-762 543.2609,-762 543.2609,-762 549.2609,-762 555.2609,-768 555.2609,-774 555.2609,-774 555.2609,-786 555.2609,-786 555.2609,-792 549.2609,-798 543.2609,-798"/>
+<text text-anchor="middle" x="510.4616" y="-775.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge42" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge42"><a xlink:title="at rsa2048_public.go:29: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa2048_public.go:40: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M518.9434,-761.9675C552.1956,-691.2722 673.8074,-432.7214 713.9056,-347.4714"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="717.0795,-348.9465 718.1687,-338.4078 710.7453,-345.967 717.0795,-348.9465"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes -->
+<g id="edge8" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes</title>
+<g id="a_edge8"><a xlink:title="at rsa2048_public.go:27: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]">
+<path fill="none" stroke="#000000" d="M552.8024,-798.1501C562.7427,-803.6198 572.8137,-810.2645 581.0072,-818 647.2537,-880.544 695.0299,-979.5538 715.5985,-1027.3624"/>
+<polygon fill="#000000" stroke="#000000" points="712.4523,-1028.909 719.5714,-1036.7555 718.8994,-1026.182 712.4523,-1028.909"/>
 </a>
 </g>
 </g>
@@ -371,162 +371,162 @@
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash -->
-<g id="edge28" class="edge">
+<g id="edge48" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash</title>
-<g id="a_edge28"><a xlink:title="at rsa2048_public.go:21: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash]">
+<g id="a_edge48"><a xlink:title="at rsa2048_public.go:21: calling [(github.com/go&#45;i2p/crypto/rsa.RSA2048PublicKey).VerifyHash]">
 <path fill="none" stroke="#000000" d="M313.4838,-780C349.6456,-780 410.9515,-780 455.5825,-780"/>
 <polygon fill="#000000" stroke="#000000" points="455.6888,-783.5001 465.6887,-780 455.6887,-776.5001 455.6888,-783.5001"/>
 </a>
 </g>
 </g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey -->
-<g id="node17" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey</title>
-<g id="a_node17"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey | defined in rsa3072_private.go:90&#10;at rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M561.0528,-163C561.0528,-163 459.8704,-163 459.8704,-163 453.8704,-163 447.8704,-157 447.8704,-151 447.8704,-151 447.8704,-139 447.8704,-139 447.8704,-133 453.8704,-127 459.8704,-127 459.8704,-127 561.0528,-127 561.0528,-127 567.0528,-127 573.0528,-133 573.0528,-139 573.0528,-139 573.0528,-151 573.0528,-151 573.0528,-157 567.0528,-163 561.0528,-163"/>
-<text text-anchor="middle" x="510.4616" y="-140.8" font-family="Verdana" font-size="14.00" fill="#000000">toRSAPrivateKey</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge13" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge13"><a xlink:title="at rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M573.1722,-162.6297C575.8752,-163.9882 578.5007,-165.443 581.0072,-167 635.2286,-200.6821 683.0921,-259.2351 708.2023,-293.3066"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="705.6722,-295.7795 714.3772,-301.819 711.3384,-291.6693 705.6722,-295.7795"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash -->
-<g id="node18" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash</title>
-<g id="a_node18"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash | defined in rsa3072_private.go:36&#10;at rsa3072_private.go:38: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]&#10;at rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M310.7615,-130C310.7615,-130 255.8811,-130 255.8811,-130 249.8811,-130 243.8811,-124 243.8811,-118 243.8811,-118 243.8811,-106 243.8811,-106 243.8811,-100 249.8811,-94 255.8811,-94 255.8811,-94 310.7615,-94 310.7615,-94 316.7615,-94 322.7615,-100 322.7615,-106 322.7615,-106 322.7615,-118 322.7615,-118 322.7615,-124 316.7615,-130 310.7615,-130"/>
-<text text-anchor="middle" x="283.3213" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge45" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge45"><a xlink:title="at rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M322.7122,-105.1205C392.7977,-93.6163 536.0171,-73.643 581.0072,-94 662.7965,-131.0078 703.9805,-239.893 719.4194,-291.8241"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="716.1308,-293.0541 722.2485,-301.7042 722.8604,-291.127 716.1308,-293.0541"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge15" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge15"><a xlink:title="at rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M322.7473,-118.6266C338.5435,-123.1071 355.762,-130.5776 367.5794,-143 466.8654,-247.3691 386.8203,-326.5472 447.916,-457 457.1184,-476.6491 472.0855,-495.8026 485.0712,-510.3283"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="482.6864,-512.9056 492.0325,-517.8959 487.8382,-508.1665 482.6864,-512.9056"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey -->
-<g id="edge14" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey</title>
-<g id="a_edge14"><a xlink:title="at rsa3072_private.go:38: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]">
-<path fill="none" stroke="#000000" d="M322.6268,-117.7105C354.214,-122.2996 399.4497,-128.8717 437.6139,-134.4163"/>
-<polygon fill="#000000" stroke="#000000" points="437.2616,-137.9018 447.6609,-135.876 438.268,-130.9746 437.2616,-137.9018"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign -->
-<g id="node19" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign</title>
-<g id="a_node19"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign | defined in rsa3072_private.go:29&#10;at rsa3072_private.go:32: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-130C86.3633,-130 56.3633,-130 56.3633,-130 50.3633,-130 44.3633,-124 44.3633,-118 44.3633,-118 44.3633,-106 44.3633,-106 44.3633,-100 50.3633,-94 56.3633,-94 56.3633,-94 86.3633,-94 86.3633,-94 92.3633,-94 98.3633,-100 98.3633,-106 98.3633,-106 98.3633,-118 98.3633,-118 98.3633,-124 92.3633,-130 86.3633,-130"/>
-<text text-anchor="middle" x="71.3633" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">Sign</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash -->
-<g id="edge6" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash</title>
-<g id="a_edge6"><a xlink:title="at rsa3072_private.go:32: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash]">
-<path fill="none" stroke="#000000" d="M98.6392,-112C132.7258,-112 191.6976,-112 233.8343,-112"/>
-<polygon fill="#000000" stroke="#000000" points="233.8904,-115.5001 243.8903,-112 233.8903,-108.5001 233.8904,-115.5001"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public -->
-<g id="node20" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public</title>
-<g id="a_node20"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public | defined in rsa3072_private.go:59&#10;at rsa3072_private.go:61: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]&#10;at rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M301.1001,-191C301.1001,-191 265.5425,-191 265.5425,-191 259.5425,-191 253.5425,-185 253.5425,-179 253.5425,-179 253.5425,-167 253.5425,-167 253.5425,-161 259.5425,-155 265.5425,-155 265.5425,-155 301.1001,-155 301.1001,-155 307.1001,-155 313.1001,-161 313.1001,-167 313.1001,-167 313.1001,-179 313.1001,-179 313.1001,-185 307.1001,-191 301.1001,-191"/>
-<text text-anchor="middle" x="283.3213" y="-168.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge19" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge19"><a xlink:title="at rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M313.1211,-162.4285C360.0783,-145.7802 446.1802,-115.2969 447.916,-115 506.221,-105.0277 528.4381,-87.8815 581.0072,-115 654.0543,-152.6823 698.506,-245.7455 716.9296,-292.4023"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="713.7167,-293.7995 720.5657,-301.883 720.2525,-291.2927 713.7167,-293.7995"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge20" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge20"><a xlink:title="at rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M313.2885,-184.744C330.7156,-192.7024 352.2033,-204.5815 367.5794,-220 446.1158,-298.7528 399.7859,-356.7331 447.916,-457 457.3054,-476.5604 472.2783,-495.7112 485.2203,-510.2576"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="482.8217,-512.8211 492.153,-517.8387 487.9874,-508.0971 482.8217,-512.8211"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey -->
-<g id="edge9" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey</title>
-<g id="a_edge9"><a xlink:title="at rsa3072_private.go:61: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]">
-<path fill="none" stroke="#000000" d="M313.4838,-169.2818C344.989,-165.3981 395.5794,-159.1617 437.6005,-153.9817"/>
-<polygon fill="#000000" stroke="#000000" points="438.0307,-157.4553 447.5273,-152.758 437.1742,-150.5079 438.0307,-157.4553"/>
-</a>
-</g>
-</g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Zero -->
-<g id="node21" class="node">
+<g id="node17" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Zero</title>
-<g id="a_node21"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Zero | defined in rsa3072_private.go:81&#10;at rsa3072_private.go:86: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node17"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Zero | defined in rsa3072_private.go:81&#10;at rsa3072_private.go:86: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-191C86.3633,-191 56.3633,-191 56.3633,-191 50.3633,-191 44.3633,-185 44.3633,-179 44.3633,-179 44.3633,-167 44.3633,-167 44.3633,-161 50.3633,-155 56.3633,-155 56.3633,-155 86.3633,-155 86.3633,-155 92.3633,-155 98.3633,-161 98.3633,-167 98.3633,-167 98.3633,-179 98.3633,-179 98.3633,-185 92.3633,-191 86.3633,-191"/>
 <text text-anchor="middle" x="71.3633" y="-168.8" font-family="Verdana" font-size="14.00" fill="#000000">Zero</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge43" class="edge">
+<g id="edge1" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge43"><a xlink:title="at rsa3072_private.go:86: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge1"><a xlink:title="at rsa3072_private.go:86: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M78.3265,-191.2133C101.4403,-251.243 175.4882,-440.0129 199.0632,-457 229.5998,-479.0033 331.1581,-464.507 367.5794,-474 403.7831,-483.4363 442.5895,-500.7831 470.61,-514.7332"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="469.1761,-517.9301 479.6797,-519.3176 472.3339,-511.6828 469.1761,-517.9301"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey -->
+<g id="node18" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey</title>
+<g id="a_node18"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey | defined in rsa3072_private.go:90&#10;at rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M561.0528,-163C561.0528,-163 459.8704,-163 459.8704,-163 453.8704,-163 447.8704,-157 447.8704,-151 447.8704,-151 447.8704,-139 447.8704,-139 447.8704,-133 453.8704,-127 459.8704,-127 459.8704,-127 561.0528,-127 561.0528,-127 567.0528,-127 573.0528,-133 573.0528,-139 573.0528,-139 573.0528,-151 573.0528,-151 573.0528,-157 567.0528,-163 561.0528,-163"/>
+<text text-anchor="middle" x="510.4616" y="-140.8" font-family="Verdana" font-size="14.00" fill="#000000">toRSAPrivateKey</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge31" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge31"><a xlink:title="at rsa3072_private.go:94: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:99: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M573.1722,-162.6297C575.8752,-163.9882 578.5007,-165.443 581.0072,-167 635.2286,-200.6821 683.0921,-259.2351 708.2023,-293.3066"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="705.6722,-295.7795 714.3772,-301.819 711.3384,-291.6693 705.6722,-295.7795"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash -->
+<g id="node19" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash</title>
+<g id="a_node19"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash | defined in rsa3072_private.go:36&#10;at rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa3072_private.go:38: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M310.7615,-130C310.7615,-130 255.8811,-130 255.8811,-130 249.8811,-130 243.8811,-124 243.8811,-118 243.8811,-118 243.8811,-106 243.8811,-106 243.8811,-100 249.8811,-94 255.8811,-94 255.8811,-94 310.7615,-94 310.7615,-94 316.7615,-94 322.7615,-100 322.7615,-106 322.7615,-106 322.7615,-118 322.7615,-118 322.7615,-124 316.7615,-130 310.7615,-130"/>
+<text text-anchor="middle" x="283.3213" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge5" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge5"><a xlink:title="at rsa3072_private.go:40: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:46: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M322.7122,-105.1205C392.7977,-93.6163 536.0171,-73.643 581.0072,-94 662.7965,-131.0078 703.9805,-239.893 719.4194,-291.8241"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="716.1308,-293.0541 722.2485,-301.7042 722.8604,-291.127 716.1308,-293.0541"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge19" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge19"><a xlink:title="at rsa3072_private.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M322.7473,-118.6266C338.5435,-123.1071 355.762,-130.5776 367.5794,-143 466.8654,-247.3691 386.8203,-326.5472 447.916,-457 457.1184,-476.6491 472.0855,-495.8026 485.0712,-510.3283"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="482.6864,-512.9056 492.0325,-517.8959 487.8382,-508.1665 482.6864,-512.9056"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey -->
+<g id="edge39" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey</title>
+<g id="a_edge39"><a xlink:title="at rsa3072_private.go:38: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]">
+<path fill="none" stroke="#000000" d="M322.6268,-117.7105C354.214,-122.2996 399.4497,-128.8717 437.6139,-134.4163"/>
+<polygon fill="#000000" stroke="#000000" points="437.2616,-137.9018 447.6609,-135.876 438.268,-130.9746 437.2616,-137.9018"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign -->
+<g id="node20" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign</title>
+<g id="a_node20"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign | defined in rsa3072_private.go:29&#10;at rsa3072_private.go:32: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-130C86.3633,-130 56.3633,-130 56.3633,-130 50.3633,-130 44.3633,-124 44.3633,-118 44.3633,-118 44.3633,-106 44.3633,-106 44.3633,-100 50.3633,-94 56.3633,-94 56.3633,-94 86.3633,-94 86.3633,-94 92.3633,-94 98.3633,-100 98.3633,-106 98.3633,-106 98.3633,-118 98.3633,-118 98.3633,-124 92.3633,-130 86.3633,-130"/>
+<text text-anchor="middle" x="71.3633" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">Sign</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash -->
+<g id="edge20" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash</title>
+<g id="a_edge20"><a xlink:title="at rsa3072_private.go:32: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).SignHash]">
+<path fill="none" stroke="#000000" d="M98.6392,-112C132.7258,-112 191.6976,-112 233.8343,-112"/>
+<polygon fill="#000000" stroke="#000000" points="233.8904,-115.5001 243.8903,-112 233.8903,-108.5001 233.8904,-115.5001"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public -->
+<g id="node21" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public</title>
+<g id="a_node21"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public | defined in rsa3072_private.go:59&#10;at rsa3072_private.go:61: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]&#10;at rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M301.1001,-191C301.1001,-191 265.5425,-191 265.5425,-191 259.5425,-191 253.5425,-185 253.5425,-179 253.5425,-179 253.5425,-167 253.5425,-167 253.5425,-161 259.5425,-155 265.5425,-155 265.5425,-155 301.1001,-155 301.1001,-155 307.1001,-155 313.1001,-161 313.1001,-167 313.1001,-167 313.1001,-179 313.1001,-179 313.1001,-185 307.1001,-191 301.1001,-191"/>
+<text text-anchor="middle" x="283.3213" y="-168.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge44" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge44"><a xlink:title="at rsa3072_private.go:63: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_private.go:69: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M313.1211,-162.4285C360.0783,-145.7802 446.1802,-115.2969 447.916,-115 506.221,-105.0277 528.4381,-87.8815 581.0072,-115 654.0543,-152.6823 698.506,-245.7455 716.9296,-292.4023"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="713.7167,-293.7995 720.5657,-301.883 720.2525,-291.2927 713.7167,-293.7995"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge45" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge45"><a xlink:title="at rsa3072_private.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M313.2885,-184.744C330.7156,-192.7024 352.2033,-204.5815 367.5794,-220 446.1158,-298.7528 399.7859,-356.7331 447.916,-457 457.3054,-476.5604 472.2783,-495.7112 485.2203,-510.2576"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="482.8217,-512.8211 492.153,-517.8387 487.9874,-508.0971 482.8217,-512.8211"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey -->
+<g id="edge36" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).Public&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey</title>
+<g id="a_edge36"><a xlink:title="at rsa3072_private.go:61: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PrivateKey).toRSAPrivateKey]">
+<path fill="none" stroke="#000000" d="M313.4838,-169.2818C344.989,-165.3981 395.5794,-159.1617 437.6005,-153.9817"/>
+<polygon fill="#000000" stroke="#000000" points="438.0307,-157.4553 447.5273,-152.758 437.1742,-150.5079 438.0307,-157.4553"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash -->
 <g id="node22" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash</title>
-<g id="a_node22"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash | defined in rsa3072_public.go:25&#10;at rsa3072_public.go:26: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]&#10;at rsa3072_public.go:28: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:40: calling [github.com/samber/oops.Errorf]">
+<g id="a_node22"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash | defined in rsa3072_public.go:25&#10;at rsa3072_public.go:28: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:40: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:26: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M543.2609,-894C543.2609,-894 477.6623,-894 477.6623,-894 471.6623,-894 465.6623,-888 465.6623,-882 465.6623,-882 465.6623,-870 465.6623,-870 465.6623,-864 471.6623,-858 477.6623,-858 477.6623,-858 543.2609,-858 543.2609,-858 549.2609,-858 555.2609,-864 555.2609,-870 555.2609,-870 555.2609,-882 555.2609,-882 555.2609,-888 549.2609,-894 543.2609,-894"/>
 <text text-anchor="middle" x="510.4616" y="-871.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge39" class="edge">
+<g id="edge13" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge39"><a xlink:title="at rsa3072_public.go:28: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:40: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge13"><a xlink:title="at rsa3072_public.go:28: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:34: calling [github.com/samber/oops.Errorf]&#10;at rsa3072_public.go:40: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M536.5947,-857.9779C551.5554,-846.4212 569.5685,-830.2016 581.0072,-812 679.7054,-654.9482 714.315,-427.9158 723.7976,-348.6197"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="727.3035,-348.7692 724.9729,-338.4339 720.3496,-347.9667 727.3035,-348.7692"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes -->
-<g id="edge36" class="edge">
+<g id="edge22" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes</title>
-<g id="a_edge36"><a xlink:title="at rsa3072_public.go:26: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]">
+<g id="a_edge22"><a xlink:title="at rsa3072_public.go:26: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]">
 <path fill="none" stroke="#000000" d="M532.3986,-894.1485C571.4383,-926.4463 653,-993.9226 697.0601,-1030.3737"/>
 <polygon fill="#000000" stroke="#000000" points="694.8959,-1033.1258 704.832,-1036.8034 699.358,-1027.7322 694.8959,-1033.1258"/>
 </a>
@@ -542,9 +542,9 @@
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash -->
-<g id="edge18" class="edge">
+<g id="edge33" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash</title>
-<g id="a_edge18"><a xlink:title="at rsa3072_public.go:21: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash]">
+<g id="a_edge33"><a xlink:title="at rsa3072_public.go:21: calling [(github.com/go&#45;i2p/crypto/rsa.RSA3072PublicKey).VerifyHash]">
 <path fill="none" stroke="#000000" d="M313.4838,-876C349.6456,-876 410.9515,-876 455.5825,-876"/>
 <polygon fill="#000000" stroke="#000000" points="455.6888,-879.5001 465.6887,-876 455.6887,-872.5001 455.6888,-879.5001"/>
 </a>
@@ -553,52 +553,124 @@
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash -->
 <g id="node24" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash</title>
-<g id="a_node24"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash | defined in rsa4096_private.go:29&#10;at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:36: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_private.go:43: calling [github.com/samber/oops.Errorf]">
+<g id="a_node24"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash | defined in rsa4096_private.go:29&#10;at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_private.go:36: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_private.go:43: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M310.7615,-1117C310.7615,-1117 255.8811,-1117 255.8811,-1117 249.8811,-1117 243.8811,-1111 243.8811,-1105 243.8811,-1105 243.8811,-1093 243.8811,-1093 243.8811,-1087 249.8811,-1081 255.8811,-1081 255.8811,-1081 310.7615,-1081 310.7615,-1081 316.7615,-1081 322.7615,-1087 322.7615,-1093 322.7615,-1093 322.7615,-1105 322.7615,-1105 322.7615,-1111 316.7615,-1117 310.7615,-1117"/>
 <text text-anchor="middle" x="283.3213" y="-1094.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge40" class="edge">
+<g id="edge21" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge40"><a xlink:title="at rsa4096_private.go:36: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_private.go:43: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge21"><a xlink:title="at rsa4096_private.go:36: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_private.go:43: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M322.7409,-1084.8938C387.1407,-1059.7582 514.3969,-1000.9664 581.0072,-908 647.9359,-814.5892 706.8509,-452.2283 722.6686,-348.1182"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="726.1552,-348.4686 724.1844,-338.0587 719.2333,-347.4255 726.1552,-348.4686"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge8" class="edge">
+<g id="edge32" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge8"><a xlink:title="at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M322.6268,-1098.4809C360.5523,-1097.98 418.1532,-1097.2192 459.5663,-1096.6722"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="459.7716,-1100.1699 469.7244,-1096.538 459.679,-1093.1705 459.7716,-1100.1699"/>
+<g id="a_edge32"><a xlink:title="at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M322.6268,-1109.0366C360.6326,-1118.7413 418.3973,-1133.4915 459.8293,-1144.0711"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="459.1694,-1147.5148 469.7244,-1146.5978 460.9013,-1140.7324 459.1694,-1147.5148"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge4" class="edge">
+<g id="edge2" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge4"><a xlink:title="at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M322.6268,-1109.0366C364.1517,-1119.6399 429.2639,-1136.2663 470.8894,-1146.8953"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="470.1253,-1150.3124 480.6804,-1149.3954 471.8572,-1143.53 470.1253,-1150.3124"/>
+<g id="a_edge2"><a xlink:title="at rsa4096_private.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_private.go:42: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M322.6268,-1098.4809C364.0639,-1097.9336 428.9887,-1097.0761 470.6251,-1096.5261"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="470.7275,-1100.0252 480.6804,-1096.3933 470.635,-1093.0258 470.7275,-1100.0252"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge7" class="edge">
+<g id="edge43" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge7"><a xlink:title="at rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge43"><a xlink:title="at rsa4096_private.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M292.0804,-1080.819C308.1302,-1047.1588 342.8725,-972.6648 367.5794,-908 408.7808,-800.1646 404.1133,-767.8051 447.916,-661 462.1227,-626.3596 481.9237,-588.0695 495.4154,-563.1117"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="498.5411,-564.6902 500.2525,-554.2345 492.3944,-561.3409 498.5411,-564.6902"/>
 </a>
 </g>
 </g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Zero -->
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign -->
 <g id="node25" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign</title>
+<g id="a_node25"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign | defined in rsa4096_private.go:20&#10;at rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:24: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-1163C86.3633,-1163 56.3633,-1163 56.3633,-1163 50.3633,-1163 44.3633,-1157 44.3633,-1151 44.3633,-1151 44.3633,-1139 44.3633,-1139 44.3633,-1133 50.3633,-1127 56.3633,-1127 56.3633,-1127 86.3633,-1127 86.3633,-1127 92.3633,-1127 98.3633,-1133 98.3633,-1139 98.3633,-1139 98.3633,-1151 98.3633,-1151 98.3633,-1157 92.3633,-1163 86.3633,-1163"/>
+<text text-anchor="middle" x="71.3633" y="-1140.8" font-family="Verdana" font-size="14.00" fill="#000000">Sign</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge6" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge6"><a xlink:title="at rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M98.5973,-1133.5857C106.3765,-1128.9705 114.0141,-1122.8426 118.7266,-1115 173.0211,-1024.6426 92.5748,-727.144 154.7266,-642 173.2674,-616.6003 210.5771,-632.0596 367.5794,-587 402.6817,-576.9257 441.6738,-562.8036 470.0452,-551.9736"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="471.5375,-555.1497 479.6138,-548.2923 469.0239,-548.6165 471.5375,-555.1497"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash -->
+<g id="edge40" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash</title>
+<g id="a_edge40"><a xlink:title="at rsa4096_private.go:24: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash]">
+<path fill="none" stroke="#000000" d="M98.6392,-1139.0805C132.7979,-1131.6672 191.947,-1118.8304 234.1013,-1109.6819"/>
+<polygon fill="#000000" stroke="#000000" points="234.8602,-1113.0988 243.8903,-1107.5575 233.3755,-1106.258 234.8602,-1113.0988"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public -->
+<g id="node26" class="node">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public</title>
+<g id="a_node26"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public | defined in rsa4096_private.go:59&#10;at rsa4096_private.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:66: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M89.1421,-1102C89.1421,-1102 53.5845,-1102 53.5845,-1102 47.5845,-1102 41.5845,-1096 41.5845,-1090 41.5845,-1090 41.5845,-1078 41.5845,-1078 41.5845,-1072 47.5845,-1066 53.5845,-1066 53.5845,-1066 89.1421,-1066 89.1421,-1066 95.1421,-1066 101.1421,-1072 101.1421,-1078 101.1421,-1078 101.1421,-1090 101.1421,-1090 101.1421,-1096 95.1421,-1102 89.1421,-1102"/>
+<text text-anchor="middle" x="71.3633" y="-1079.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge15" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge15"><a xlink:title="at rsa4096_private.go:66: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M101.543,-1070.7312C108.2584,-1066.3657 114.6007,-1060.8323 118.7266,-1054 214.7473,-894.9949 60.4092,-345.603 199.0632,-222 227.0167,-197.0809 330.4497,-217.1273 367.5794,-222 464.9261,-234.7753 486.3186,-253.0452 581.0072,-279 617.1932,-288.9188 658.3386,-300.5169 687.6752,-308.8415"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="686.9561,-312.2756 697.5319,-311.6413 688.8688,-305.542 686.9561,-312.2756"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge11" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge11"><a xlink:title="at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M101.2841,-1075.631C155.7887,-1061.8665 274.2421,-1038.8278 367.5794,-1069 409.4825,-1082.5456 410.0601,-1104.4993 447.916,-1127 452.0958,-1129.4844 456.5129,-1131.9313 460.9886,-1134.2909"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="459.7025,-1137.5641 470.2002,-1138.9953 462.8863,-1131.33 459.7025,-1137.5641"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge29" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge29"><a xlink:title="at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M101.262,-1067.5569C116.7256,-1059.9788 136.2006,-1051.8293 154.7266,-1048 266.6668,-1024.8623 300.5325,-1022.3158 411.916,-1048 433.2339,-1052.9157 455.2782,-1063.0962 473.0976,-1072.8216"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="471.5736,-1075.9801 482.0047,-1077.8357 475.0074,-1069.8802 471.5736,-1075.9801"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge10" class="edge">
+<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge10"><a xlink:title="at rsa4096_private.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M101.5361,-1070.7271C108.2517,-1066.3616 114.5957,-1060.8293 118.7266,-1054 169.3872,-970.2468 96.7843,-693.8909 154.7266,-615 167.3158,-597.8593 178.6813,-603.0722 199.0632,-597 212.0216,-593.1394 388.2941,-559.3153 469.7336,-543.7629"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="470.4761,-547.1844 479.6424,-541.8714 469.1635,-540.3086 470.4761,-547.1844"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Zero -->
+<g id="node27" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Zero</title>
-<g id="a_node25"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Zero | defined in rsa4096_private.go:84&#10;at rsa4096_private.go:85: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node27"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Zero | defined in rsa4096_private.go:84&#10;at rsa4096_private.go:85: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-980C86.3633,-980 56.3633,-980 56.3633,-980 50.3633,-980 44.3633,-974 44.3633,-968 44.3633,-968 44.3633,-956 44.3633,-956 44.3633,-950 50.3633,-944 56.3633,-944 56.3633,-944 86.3633,-944 86.3633,-944 92.3633,-944 98.3633,-950 98.3633,-956 98.3633,-956 98.3633,-968 98.3633,-968 98.3633,-974 92.3633,-980 86.3633,-980"/>
 <text text-anchor="middle" x="71.3633" y="-957.8" font-family="Verdana" font-size="14.00" fill="#000000">Zero</text>
 </a>
@@ -614,92 +686,20 @@
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Bytes -->
-<g id="node26" class="node">
+<g id="node28" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Bytes</title>
-<g id="a_node26"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Bytes | defined in rsa4096_private.go:52&#10;at rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node28"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Bytes | defined in rsa4096_private.go:52&#10;at rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M87.2498,-1041C87.2498,-1041 55.4768,-1041 55.4768,-1041 49.4768,-1041 43.4768,-1035 43.4768,-1029 43.4768,-1029 43.4768,-1017 43.4768,-1017 43.4768,-1011 49.4768,-1005 55.4768,-1005 55.4768,-1005 87.2498,-1005 87.2498,-1005 93.2498,-1005 99.2498,-1011 99.2498,-1017 99.2498,-1017 99.2498,-1029 99.2498,-1029 99.2498,-1035 93.2498,-1041 87.2498,-1041"/>
 <text text-anchor="middle" x="71.3633" y="-1018.8" font-family="Verdana" font-size="14.00" fill="#000000">Bytes</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Bytes&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge41" class="edge">
+<g id="edge38" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Bytes&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge41"><a xlink:title="at rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge38"><a xlink:title="at rsa4096_private.go:53: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M99.5294,-1010.952C106.9596,-1006.4086 114.1671,-1000.48 118.7266,-993 165.7548,-915.8485 100.9921,-660.6403 154.7266,-588 167.3743,-570.9024 178.4425,-575.204 199.0632,-570 293.8247,-546.0854 408.9975,-538.9915 469.2266,-536.8873"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="469.5819,-540.3779 479.4648,-536.5597 469.358,-533.3814 469.5819,-540.3779"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public -->
-<g id="node27" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public</title>
-<g id="a_node27"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public | defined in rsa4096_private.go:59&#10;at rsa4096_private.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_private.go:66: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M89.1421,-1102C89.1421,-1102 53.5845,-1102 53.5845,-1102 47.5845,-1102 41.5845,-1096 41.5845,-1090 41.5845,-1090 41.5845,-1078 41.5845,-1078 41.5845,-1072 47.5845,-1066 53.5845,-1066 53.5845,-1066 89.1421,-1066 89.1421,-1066 95.1421,-1066 101.1421,-1072 101.1421,-1078 101.1421,-1078 101.1421,-1090 101.1421,-1090 101.1421,-1096 95.1421,-1102 89.1421,-1102"/>
-<text text-anchor="middle" x="71.3633" y="-1079.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge34" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge34"><a xlink:title="at rsa4096_private.go:66: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M101.543,-1070.7312C108.2584,-1066.3657 114.6007,-1060.8323 118.7266,-1054 214.7473,-894.9949 60.4092,-345.603 199.0632,-222 227.0167,-197.0809 330.4497,-217.1273 367.5794,-222 464.9261,-234.7753 486.3186,-253.0452 581.0072,-279 617.1932,-288.9188 658.3386,-300.5169 687.6752,-308.8415"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="686.9561,-312.2756 697.5319,-311.6413 688.8688,-305.542 686.9561,-312.2756"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge27" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge27"><a xlink:title="at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M101.262,-1067.5569C116.7256,-1059.9788 136.2006,-1051.8293 154.7266,-1048 266.6668,-1024.8623 300.5325,-1022.3158 411.916,-1048 433.2339,-1052.9157 455.2782,-1063.0962 473.0976,-1072.8216"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="471.5736,-1075.9801 482.0047,-1077.8357 475.0074,-1069.8802 471.5736,-1075.9801"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge47" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge47"><a xlink:title="at rsa4096_private.go:65: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M101.2841,-1075.631C155.7887,-1061.8665 274.2421,-1038.8278 367.5794,-1069 409.4825,-1082.5456 410.0601,-1104.4993 447.916,-1127 455.3568,-1131.4227 463.5498,-1135.7267 471.4859,-1139.6301"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="470.0935,-1142.844 480.6239,-1144.0115 473.12,-1136.532 470.0935,-1142.844"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge26" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge26"><a xlink:title="at rsa4096_private.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M101.5361,-1070.7271C108.2517,-1066.3616 114.5957,-1060.8293 118.7266,-1054 169.3872,-970.2468 96.7843,-693.8909 154.7266,-615 167.3158,-597.8593 178.6813,-603.0722 199.0632,-597 212.0216,-593.1394 388.2941,-559.3153 469.7336,-543.7629"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="470.4761,-547.1844 479.6424,-541.8714 469.1635,-540.3086 470.4761,-547.1844"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign -->
-<g id="node28" class="node">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign</title>
-<g id="a_node28"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign | defined in rsa4096_private.go:20&#10;at rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_private.go:24: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.3633,-1163C86.3633,-1163 56.3633,-1163 56.3633,-1163 50.3633,-1163 44.3633,-1157 44.3633,-1151 44.3633,-1151 44.3633,-1139 44.3633,-1139 44.3633,-1133 50.3633,-1127 56.3633,-1127 56.3633,-1127 86.3633,-1127 86.3633,-1127 92.3633,-1127 98.3633,-1133 98.3633,-1139 98.3633,-1139 98.3633,-1151 98.3633,-1151 98.3633,-1157 92.3633,-1163 86.3633,-1163"/>
-<text text-anchor="middle" x="71.3633" y="-1140.8" font-family="Verdana" font-size="14.00" fill="#000000">Sign</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge29" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge29"><a xlink:title="at rsa4096_private.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M98.5973,-1133.5857C106.3765,-1128.9705 114.0141,-1122.8426 118.7266,-1115 173.0211,-1024.6426 92.5748,-727.144 154.7266,-642 173.2674,-616.6003 210.5771,-632.0596 367.5794,-587 402.6817,-576.9257 441.6738,-562.8036 470.0452,-551.9736"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="471.5375,-555.1497 479.6138,-548.2923 469.0239,-548.6165 471.5375,-555.1497"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash -->
-<g id="edge48" class="edge">
-<title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).Sign&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash</title>
-<g id="a_edge48"><a xlink:title="at rsa4096_private.go:24: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PrivateKey).SignHash]">
-<path fill="none" stroke="#000000" d="M98.6392,-1139.0805C132.7979,-1131.6672 191.947,-1118.8304 234.1013,-1109.6819"/>
-<polygon fill="#000000" stroke="#000000" points="234.8602,-1113.0988 243.8903,-1107.5575 233.3755,-1106.258 234.8602,-1113.0988"/>
 </a>
 </g>
 </g>
@@ -713,9 +713,9 @@
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge24" class="edge">
+<g id="edge12" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge24"><a xlink:title="at rsa4096_public.go:62: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge12"><a xlink:title="at rsa4096_public.go:62: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M92.8737,-1212.6805C102.5533,-1203.1135 113.059,-1190.5795 118.7266,-1177 162.3161,-1072.5593 88.24,-760.5829 154.7266,-669 167.2207,-651.7898 178.7874,-657.4177 199.0632,-651 272.3551,-627.8018 295.5814,-638.9472 367.5794,-612 405.0954,-597.9586 445.1405,-575.9852 473.262,-559.2697"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="475.1876,-562.1959 481.955,-554.044 471.5811,-556.1964 475.1876,-562.1959"/>
 </a>
@@ -724,52 +724,52 @@
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash -->
 <g id="node30" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash</title>
-<g id="a_node30"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash | defined in rsa4096_public.go:28&#10;at rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_public.go:30: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]&#10;at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]">
+<g id="a_node30"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash | defined in rsa4096_public.go:28&#10;at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_public.go:30: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]&#10;at rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M316.1206,-1249C316.1206,-1249 250.522,-1249 250.522,-1249 244.522,-1249 238.522,-1243 238.522,-1237 238.522,-1237 238.522,-1225 238.522,-1225 238.522,-1219 244.522,-1213 250.522,-1213 250.522,-1213 316.1206,-1213 316.1206,-1213 322.1206,-1213 328.1206,-1219 328.1206,-1225 328.1206,-1225 328.1206,-1237 328.1206,-1237 328.1206,-1243 322.1206,-1249 316.1206,-1249"/>
 <text text-anchor="middle" x="283.3213" y="-1226.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge42" class="edge">
+<g id="edge41" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge42"><a xlink:title="at rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge41"><a xlink:title="at rsa4096_public.go:33: calling [github.com/samber/oops.Errorf]&#10;at rsa4096_public.go:39: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M328.0316,-1230.9266C402.1773,-1229.8214 545.9124,-1223.1909 581.0072,-1189 643.213,-1128.3964 709.7985,-491.5348 724.0469,-348.4369"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="727.5504,-348.5735 725.053,-338.2772 720.5845,-347.8836 727.5504,-348.5735"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes -->
-<g id="edge21" class="edge">
+<g id="edge35" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes</title>
-<g id="a_edge21"><a xlink:title="at rsa4096_public.go:30: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]">
+<g id="a_edge35"><a xlink:title="at rsa4096_public.go:30: calling [github.com/go&#45;i2p/crypto/rsa.rsaPublicKeyFromBytes]">
 <path fill="none" stroke="#000000" d="M328.0025,-1242.1366C394.0671,-1256.056 519.7134,-1272.5914 610.0072,-1224 666.6381,-1193.5242 701.4466,-1122.1434 717.0801,-1082.5955"/>
 <polygon fill="#000000" stroke="#000000" points="720.4315,-1083.63 720.7286,-1073.0393 713.8919,-1081.1332 720.4315,-1083.63"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge22" class="edge">
+<g id="edge28" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge22"><a xlink:title="at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M311.4867,-1212.9806C354.8304,-1185.2844 434.323,-1134.6361 447.916,-1127 452.8028,-1124.2547 457.9653,-1121.4896 463.1445,-1118.8014"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="465.1105,-1121.7276 472.4288,-1114.0665 461.9303,-1115.4917 465.1105,-1121.7276"/>
+<g id="a_edge28"><a xlink:title="at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M328.1969,-1216.38C366.2178,-1203.9932 420.692,-1186.246 460.1758,-1173.3826"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="461.448,-1176.6493 469.8719,-1170.2237 459.2796,-1169.9936 461.448,-1176.6493"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge25" class="edge">
+<g id="edge23" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge25"><a xlink:title="at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M328.1969,-1216.38C369.7934,-1202.8283 431.0835,-1182.8606 470.8915,-1169.8915"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="472.1003,-1173.1788 480.5243,-1166.7533 469.9319,-1166.5232 472.1003,-1173.1788"/>
+<g id="a_edge23"><a xlink:title="at rsa4096_public.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M311.4867,-1212.9806C354.8304,-1185.2844 434.323,-1134.6361 447.916,-1127 455.4344,-1122.7764 463.6055,-1118.5057 471.4855,-1114.5404"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="473.1421,-1117.6257 480.5457,-1110.0469 470.0319,-1111.3546 473.1421,-1117.6257"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge11" class="edge">
+<g id="edge34" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge11"><a xlink:title="at rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge34"><a xlink:title="at rsa4096_public.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_public.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M325.8467,-1212.9987C341.3483,-1204.3388 357.5227,-1192.4288 367.5794,-1177 494.3175,-982.5621 377.291,-882.0899 447.916,-661 459.2434,-625.54 479.4539,-587.693 493.8341,-563.0524"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="496.9411,-564.6749 499.0294,-554.2879 490.9195,-561.1055 496.9411,-564.6749"/>
 </a>
@@ -778,25 +778,25 @@
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify -->
 <g id="node31" class="node">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify</title>
-<g id="a_node31"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify | defined in rsa4096_public.go:19&#10;at rsa4096_public.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]&#10;at rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node31"><a xlink:title="(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify | defined in rsa4096_public.go:19&#10;at rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at rsa4096_public.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M89.3981,-1310C89.3981,-1310 53.3285,-1310 53.3285,-1310 47.3285,-1310 41.3285,-1304 41.3285,-1298 41.3285,-1298 41.3285,-1286 41.3285,-1286 41.3285,-1280 47.3285,-1274 53.3285,-1274 53.3285,-1274 89.3981,-1274 89.3981,-1274 95.3981,-1274 101.3981,-1280 101.3981,-1286 101.3981,-1286 101.3981,-1298 101.3981,-1298 101.3981,-1304 95.3981,-1310 89.3981,-1310"/>
 <text text-anchor="middle" x="71.3633" y="-1287.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge23" class="edge">
+<g id="edge3" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge23"><a xlink:title="at rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge3"><a xlink:title="at rsa4096_public.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M101.7855,-1278.2553C108.3258,-1273.9452 114.5262,-1268.5568 118.7266,-1262 263.6185,-1035.8242 10.4602,-854.2539 199.0632,-663 252.2274,-609.0885 297.3672,-666.3395 367.5794,-638 412.5956,-619.8303 456.9061,-584.7855 483.963,-560.8978"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="486.3485,-563.4597 491.4552,-554.1768 481.6742,-558.249 486.3485,-563.4597"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash -->
-<g id="edge5" class="edge">
+<g id="edge25" class="edge">
 <title>(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash</title>
-<g id="a_edge5"><a xlink:title="at rsa4096_public.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]">
+<g id="a_edge25"><a xlink:title="at rsa4096_public.go:23: calling [(github.com/go&#45;i2p/crypto/rsa.RSA4096PublicKey).VerifyHash]">
 <path fill="none" stroke="#000000" d="M101.7317,-1283.2602C134.8314,-1273.7343 188.4634,-1258.2994 228.8785,-1246.6683"/>
 <polygon fill="#000000" stroke="#000000" points="229.9451,-1250.0034 238.587,-1243.8742 228.009,-1243.2765 229.9451,-1250.0034"/>
 </a>

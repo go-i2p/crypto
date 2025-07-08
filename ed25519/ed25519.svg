@@ -62,10 +62,75 @@
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes -->
+<!-- github.com/samber/oops.Errorf -->
 <g id="node1" class="node">
+<title>github.com/samber/oops.Errorf</title>
+<g id="a_node1"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M631.7958,-291C631.7958,-291 597.4052,-291 597.4052,-291 591.4052,-291 585.4052,-285 585.4052,-279 585.4052,-279 585.4052,-267 585.4052,-267 585.4052,-261 591.4052,-255 597.4052,-255 597.4052,-255 631.7958,-255 631.7958,-255 637.7958,-255 643.7958,-261 643.7958,-267 643.7958,-267 643.7958,-279 643.7958,-279 643.7958,-285 637.7958,-291 631.7958,-291"/>
+<text text-anchor="middle" x="614.6005" y="-277.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
+<text text-anchor="middle" x="614.6005" y="-260.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key -->
+<g id="node2" class="node">
+<title>github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key</title>
+<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key | defined in utils.go:14&#10;at utils.go:17: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M425.2567,-401C425.2567,-401 300.4757,-401 300.4757,-401 294.4757,-401 288.4757,-395 288.4757,-389 288.4757,-389 288.4757,-377 288.4757,-377 288.4757,-371 294.4757,-365 300.4757,-365 300.4757,-365 425.2567,-365 425.2567,-365 431.2567,-365 437.2567,-371 437.2567,-377 437.2567,-377 437.2567,-389 437.2567,-389 437.2567,-395 431.2567,-401 425.2567,-401"/>
+<text text-anchor="middle" x="362.8662" y="-378.8" font-family="Verdana" font-size="14.00" fill="#000000">GenerateEd25519Key</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge2" class="edge">
+<title>github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge2"><a xlink:title="at utils.go:17: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M428.3838,-364.9952C445.7389,-359.5475 464.2909,-353.1025 481.0058,-346 514.407,-331.8071 550.4116,-311.8379 576.6175,-296.3721"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="578.6576,-299.2308 585.4579,-291.1064 575.0754,-293.2169 578.6576,-299.2308"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ed25519.init -->
+<g id="node3" class="node">
+<title>github.com/go&#45;i2p/crypto/ed25519.init</title>
+<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.init | defined in .:0&#10;at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]&#10;at constants.go:15: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M377.8662,-52C377.8662,-52 347.8662,-52 347.8662,-52 341.8662,-52 335.8662,-46 335.8662,-40 335.8662,-40 335.8662,-28 335.8662,-28 335.8662,-22 341.8662,-16 347.8662,-16 347.8662,-16 377.8662,-16 377.8662,-16 383.8662,-16 389.8662,-22 389.8662,-28 389.8662,-28 389.8662,-40 389.8662,-40 389.8662,-46 383.8662,-52 377.8662,-52"/>
+<text text-anchor="middle" x="362.8662" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge24" class="edge">
+<title>github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge24"><a xlink:title="at constants.go:15: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M390.1206,-35.5441C415.7395,-38.2073 454.071,-45.4339 481.0058,-65 545.5695,-111.9006 586.8219,-200.3996 604.5661,-245.3278"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="601.3293,-246.6624 608.1886,-254.7371 607.8619,-244.1473 601.3293,-246.6624"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<g id="node4" class="node">
+<title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
+<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M663.29,-52C663.29,-52 565.911,-52 565.911,-52 559.911,-52 553.911,-46 553.911,-40 553.911,-40 553.911,-28 553.911,-28 553.911,-22 559.911,-16 565.911,-16 565.911,-16 663.29,-16 663.29,-16 669.29,-16 675.29,-22 675.29,-28 675.29,-28 675.29,-40 675.29,-40 675.29,-46 669.29,-52 663.29,-52"/>
+<text text-anchor="middle" x="614.6005" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="614.6005" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<g id="edge6" class="edge">
+<title>github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
+<g id="a_edge6"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<path fill="none" stroke="#8b4513" d="M390.2854,-34C426.7656,-34 492.5793,-34 543.5187,-34"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="543.8207,-37.5001 553.8206,-34 543.8206,-30.5001 543.8207,-37.5001"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes -->
+<g id="node5" class="node">
 <title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes</title>
-<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes | defined in ed25519_public_key.go:46&#10;at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ed25519_public_key.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:47: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes | defined in ed25519_public_key.go:46&#10;at ed25519_public_key.go:47: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_public_key.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M467.2706,-709C467.2706,-709 258.4618,-709 258.4618,-709 252.4618,-709 246.4618,-703 246.4618,-697 246.4618,-697 246.4618,-685 246.4618,-685 246.4618,-679 252.4618,-673 258.4618,-673 258.4618,-673 467.2706,-673 467.2706,-673 473.2706,-673 479.2706,-679 479.2706,-685 479.2706,-685 479.2706,-697 479.2706,-697 479.2706,-703 473.2706,-709 467.2706,-709"/>
 <text text-anchor="middle" x="362.8662" y="-686.8" font-family="Verdana" font-size="14.00" fill="#000000">CreateEd25519PublicKeyFromBytes</text>
 </a>
@@ -82,9 +147,9 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge18" class="edge">
+<g id="edge1" class="edge">
 <title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge18"><a xlink:title="at ed25519_public_key.go:47: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge1"><a xlink:title="at ed25519_public_key.go:47: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M430.6575,-672.9571C472.7664,-661.7497 525.9825,-647.586 564.3288,-637.38"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="565.4708,-640.698 574.2341,-634.7437 563.6703,-633.9335 565.4708,-640.698"/>
 </a>
@@ -101,9 +166,9 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge7" class="edge">
+<g id="edge29" class="edge">
 <title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge7"><a xlink:title="at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_edge29"><a xlink:title="at ed25519_public_key.go:50: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="none" stroke="#8b4513" d="M401.6905,-672.8884C424.8613,-661.9255 454.7852,-647.4977 481.0058,-634 513.8992,-617.0673 521.3123,-611.3156 554.0058,-594 560.981,-590.3057 568.4417,-586.4287 575.6595,-582.7159"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="577.313,-585.8014 584.6174,-578.1269 574.1214,-579.5713 577.313,-585.8014"/>
 </a>
@@ -120,55 +185,27 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge15" class="edge">
+<g id="edge19" class="edge">
 <title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PublicKeyFromBytes&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge15"><a xlink:title="at ed25519_public_key.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge19"><a xlink:title="at ed25519_public_key.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M429.6655,-709.0442C475.5282,-721.4329 534.9224,-737.4769 573.8606,-747.9951"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="573.2184,-751.447 583.7851,-750.676 575.0439,-744.6892 573.2184,-751.447"/>
 </a>
 </g>
 </g>
-<!-- github.com/samber/oops.Errorf -->
-<g id="node2" class="node">
-<title>github.com/samber/oops.Errorf</title>
-<g id="a_node2"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M631.7958,-291C631.7958,-291 597.4052,-291 597.4052,-291 591.4052,-291 585.4052,-285 585.4052,-279 585.4052,-279 585.4052,-267 585.4052,-267 585.4052,-261 591.4052,-255 597.4052,-255 597.4052,-255 631.7958,-255 631.7958,-255 637.7958,-255 643.7958,-261 643.7958,-267 643.7958,-267 643.7958,-279 643.7958,-279 643.7958,-285 637.7958,-291 631.7958,-291"/>
-<text text-anchor="middle" x="614.6005" y="-277.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
-<text text-anchor="middle" x="614.6005" y="-260.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes -->
-<g id="node3" class="node">
-<title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes</title>
-<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes | defined in ed25519_private_key.go:74&#10;at ed25519_private_key.go:76: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M469.1456,-401C469.1456,-401 256.5868,-401 256.5868,-401 250.5868,-401 244.5868,-395 244.5868,-389 244.5868,-389 244.5868,-377 244.5868,-377 244.5868,-371 250.5868,-365 256.5868,-365 256.5868,-365 469.1456,-365 469.1456,-365 475.1456,-365 481.1456,-371 481.1456,-377 481.1456,-377 481.1456,-389 481.1456,-389 481.1456,-395 475.1456,-401 469.1456,-401"/>
-<text text-anchor="middle" x="362.8662" y="-378.8" font-family="Verdana" font-size="14.00" fill="#000000">CreateEd25519PrivateKeyFromBytes</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge21" class="edge">
-<title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge21"><a xlink:title="at ed25519_private_key.go:76: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M428.3838,-364.9952C445.7389,-359.5475 464.2909,-353.1025 481.0058,-346 514.407,-331.8071 550.4116,-311.8379 576.6175,-296.3721"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="578.6576,-299.2308 585.4579,-291.1064 575.0754,-293.2169 578.6576,-299.2308"/>
-</a>
-</g>
-</g>
 <!-- github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey -->
-<g id="node4" class="node">
+<g id="node6" class="node">
 <title>github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey</title>
-<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey | defined in ed25519_public_key.go:33&#10;at ed25519_public_key.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at ed25519_public_key.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_public_key.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:39: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey | defined in ed25519_public_key.go:33&#10;at ed25519_public_key.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at ed25519_public_key.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_public_key.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:39: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M434.428,-621C434.428,-621 291.3044,-621 291.3044,-621 285.3044,-621 279.3044,-615 279.3044,-609 279.3044,-609 279.3044,-597 279.3044,-597 279.3044,-591 285.3044,-585 291.3044,-585 291.3044,-585 434.428,-585 434.428,-585 440.428,-585 446.428,-591 446.428,-597 446.428,-597 446.428,-609 446.428,-609 446.428,-615 440.428,-621 434.428,-621"/>
 <text text-anchor="middle" x="362.8662" y="-598.8" font-family="Verdana" font-size="14.00" fill="#000000">createEd25519PublicKey</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge10" class="edge">
+<g id="edge21" class="edge">
 <title>github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge10"><a xlink:title="at ed25519_public_key.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge21"><a xlink:title="at ed25519_public_key.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M446.6901,-609.9927C485.5755,-613.2366 530.5093,-616.985 564.1037,-619.7875"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="563.8899,-623.2817 574.1463,-620.6253 564.4719,-616.306 563.8899,-623.2817"/>
 </a>
@@ -185,91 +222,54 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="edge2" class="edge">
+<g id="edge8" class="edge">
 <title>github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_edge2"><a xlink:title="at ed25519_public_key.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<g id="a_edge8"><a xlink:title="at ed25519_public_key.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
 <path fill="none" stroke="#8b4513" d="M407.8712,-584.9432C455.4344,-565.8601 529.7128,-536.0584 575.0859,-517.8539"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="576.6073,-521.0148 584.5849,-514.0428 574.0007,-514.5182 576.6073,-521.0148"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge29" class="edge">
+<g id="edge28" class="edge">
 <title>github.com/go&#45;i2p/crypto/ed25519.createEd25519PublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge29"><a xlink:title="at ed25519_public_key.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:39: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge28"><a xlink:title="at ed25519_public_key.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_public_key.go:39: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M403.9958,-621.0135C427.1475,-631.6871 456.284,-646.0247 481.0058,-661 518.0803,-683.4579 557.7978,-713.4332 584.2006,-734.2942"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="582.2802,-737.239 592.2848,-740.7259 586.6384,-731.7611 582.2802,-737.239"/>
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key -->
-<g id="node5" class="node">
-<title>github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key</title>
-<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key | defined in utils.go:14&#10;at utils.go:17: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M425.2567,-113C425.2567,-113 300.4757,-113 300.4757,-113 294.4757,-113 288.4757,-107 288.4757,-101 288.4757,-101 288.4757,-89 288.4757,-89 288.4757,-83 294.4757,-77 300.4757,-77 300.4757,-77 425.2567,-77 425.2567,-77 431.2567,-77 437.2567,-83 437.2567,-89 437.2567,-89 437.2567,-101 437.2567,-101 437.2567,-107 431.2567,-113 425.2567,-113"/>
-<text text-anchor="middle" x="362.8662" y="-90.8" font-family="Verdana" font-size="14.00" fill="#000000">GenerateEd25519Key</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge24" class="edge">
-<title>github.com/go&#45;i2p/crypto/ed25519.GenerateEd25519Key&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge24"><a xlink:title="at utils.go:17: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M437.1327,-100.916C452.3306,-104.2593 467.7241,-109.336 481.0058,-117 535.2978,-148.3283 578.0214,-210.1907 599.4638,-245.8803"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="596.6106,-247.9333 604.6954,-254.7807 602.6453,-244.3861 596.6106,-247.9333"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.init -->
-<g id="node6" class="node">
-<title>github.com/go&#45;i2p/crypto/ed25519.init</title>
-<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.init | defined in .:0&#10;at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]&#10;at constants.go:15: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M377.8662,-52C377.8662,-52 347.8662,-52 347.8662,-52 341.8662,-52 335.8662,-46 335.8662,-40 335.8662,-40 335.8662,-28 335.8662,-28 335.8662,-22 341.8662,-16 347.8662,-16 347.8662,-16 377.8662,-16 377.8662,-16 383.8662,-16 389.8662,-22 389.8662,-28 389.8662,-28 389.8662,-40 389.8662,-40 389.8662,-46 383.8662,-52 377.8662,-52"/>
-<text text-anchor="middle" x="362.8662" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge14" class="edge">
-<title>github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge14"><a xlink:title="at constants.go:15: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M390.1206,-35.5441C415.7395,-38.2073 454.071,-45.4339 481.0058,-65 545.5695,-111.9006 586.8219,-200.3996 604.5661,-245.3278"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="601.3293,-246.6624 608.1886,-254.7371 607.8619,-244.1473 601.3293,-246.6624"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes -->
 <g id="node7" class="node">
-<title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_node7"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M663.29,-52C663.29,-52 565.911,-52 565.911,-52 559.911,-52 553.911,-46 553.911,-40 553.911,-40 553.911,-28 553.911,-28 553.911,-22 559.911,-16 565.911,-16 565.911,-16 663.29,-16 663.29,-16 669.29,-16 675.29,-22 675.29,-28 675.29,-28 675.29,-40 675.29,-40 675.29,-46 669.29,-52 663.29,-52"/>
-<text text-anchor="middle" x="614.6005" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="614.6005" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
+<title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes</title>
+<g id="a_node7"><a xlink:title="github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes | defined in ed25519_private_key.go:74&#10;at ed25519_private_key.go:76: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M469.1456,-113C469.1456,-113 256.5868,-113 256.5868,-113 250.5868,-113 244.5868,-107 244.5868,-101 244.5868,-101 244.5868,-89 244.5868,-89 244.5868,-83 250.5868,-77 256.5868,-77 256.5868,-77 469.1456,-77 469.1456,-77 475.1456,-77 481.1456,-83 481.1456,-89 481.1456,-89 481.1456,-101 481.1456,-101 481.1456,-107 475.1456,-113 469.1456,-113"/>
+<text text-anchor="middle" x="362.8662" y="-90.8" font-family="Verdana" font-size="14.00" fill="#000000">CreateEd25519PrivateKeyFromBytes</text>
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge1" class="edge">
-<title>github.com/go&#45;i2p/crypto/ed25519.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge1"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
-<path fill="none" stroke="#8b4513" d="M390.2854,-34C426.7656,-34 492.5793,-34 543.5187,-34"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="543.8207,-37.5001 553.8206,-34 543.8206,-30.5001 543.8207,-37.5001"/>
+<!-- github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge14" class="edge">
+<title>github.com/go&#45;i2p/crypto/ed25519.CreateEd25519PrivateKeyFromBytes&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge14"><a xlink:title="at ed25519_private_key.go:76: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M473.4879,-113.0336C476.0556,-114.2719 478.5663,-115.5923 481.0058,-117 535.2978,-148.3283 578.0214,-210.1907 599.4638,-245.8803"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="596.6106,-247.9333 604.6954,-254.7807 602.6453,-244.3861 596.6106,-247.9333"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier -->
 <g id="node8" class="node">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier</title>
-<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier | defined in ed25519_private_key.go:15&#10;at ed25519_private_key.go:19: calling [(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public]&#10;at ed25519_private_key.go:17: calling [github.com/samber/oops.Errorf]&#10;at ed25519_private_key.go:21: calling [github.com/samber/oops.Errorf]">
+<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier | defined in ed25519_private_key.go:15&#10;at ed25519_private_key.go:17: calling [github.com/samber/oops.Errorf]&#10;at ed25519_private_key.go:21: calling [github.com/samber/oops.Errorf]&#10;at ed25519_private_key.go:19: calling [(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M124.5903,-309C124.5903,-309 54.1363,-309 54.1363,-309 48.1363,-309 42.1363,-303 42.1363,-297 42.1363,-297 42.1363,-285 42.1363,-285 42.1363,-279 48.1363,-273 54.1363,-273 54.1363,-273 124.5903,-273 124.5903,-273 130.5903,-273 136.5903,-279 136.5903,-285 136.5903,-285 136.5903,-297 136.5903,-297 136.5903,-303 130.5903,-309 124.5903,-309"/>
 <text text-anchor="middle" x="89.3633" y="-286.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge27" class="edge">
+<g id="edge12" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge27"><a xlink:title="at ed25519_private_key.go:17: calling [github.com/samber/oops.Errorf]&#10;at ed25519_private_key.go:21: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge12"><a xlink:title="at ed25519_private_key.go:17: calling [github.com/samber/oops.Errorf]&#10;at ed25519_private_key.go:21: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M136.8147,-304.9561C167.3307,-313.1913 208.0032,-322.8009 244.7266,-327 349.0598,-338.9297 377.9238,-347.0455 481.0058,-327 514.468,-320.4929 550.1586,-305.6133 576.2244,-293.118"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="577.9265,-296.1817 585.3702,-288.6422 574.8496,-289.8942 577.9265,-296.1817"/>
 </a>
@@ -285,56 +285,38 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier&#45;&gt;(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public -->
-<g id="edge12" class="edge">
+<g id="edge23" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewVerifier&#45;&gt;(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public</title>
-<g id="a_edge12"><a xlink:title="at ed25519_private_key.go:19: calling [(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public]">
+<g id="a_edge23"><a xlink:title="at ed25519_private_key.go:19: calling [(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public]">
 <path fill="none" stroke="#000000" d="M116.6449,-272.8953C146.8651,-253.5262 197.5681,-223.0298 244.7266,-204 270.0779,-193.7701 299.8572,-185.9817 323.1751,-180.7702"/>
 <polygon fill="#000000" stroke="#000000" points="324.0355,-184.1651 333.0672,-178.6263 322.5528,-177.3239 324.0355,-184.1651"/>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash -->
-<g id="node9" class="node">
-<title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash</title>
-<g id="a_node9"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash | defined in ed25519_signer.go:27&#10;at ed25519_signer.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_signer.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_signer.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_signer.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M390.3064,-814C390.3064,-814 335.426,-814 335.426,-814 329.426,-814 323.426,-808 323.426,-802 323.426,-802 323.426,-790 323.426,-790 323.426,-784 329.426,-778 335.426,-778 335.426,-778 390.3064,-778 390.3064,-778 396.3064,-778 402.3064,-784 402.3064,-790 402.3064,-790 402.3064,-802 402.3064,-802 402.3064,-808 396.3064,-814 390.3064,-814"/>
-<text text-anchor="middle" x="362.8662" y="-791.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge3" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge3"><a xlink:title="at ed25519_signer.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_signer.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M402.2791,-795.0037C436.7806,-792.0968 486.2273,-782.7176 518.0058,-754 539.1329,-734.9079 537.1905,-723.9807 554.0058,-701 566.6016,-683.786 581.3957,-664.9619 593.2127,-650.2348"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="596.2354,-652.0621 599.7873,-642.0803 590.786,-647.6684 596.2354,-652.0621"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge13" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge13"><a xlink:title="at ed25519_signer.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_signer.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M402.0978,-798.6638C433.668,-799.9896 479.0374,-800.0463 518.0058,-793 536.8714,-789.5887 556.9829,-783.0184 573.9432,-776.5558"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="575.5048,-779.7028 583.5318,-772.7878 572.9445,-773.1877 575.5048,-779.7028"/>
-</a>
-</g>
-</g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign -->
-<g id="node10" class="node">
+<g id="node9" class="node">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign</title>
-<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign | defined in ed25519_signer.go:14&#10;at ed25519_signer.go:23: calling [(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash]&#10;at ed25519_signer.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_signer.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_signer.go:19: calling [github.com/samber/oops.Errorf]&#10;at ed25519_signer.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_node9"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign | defined in ed25519_signer.go:14&#10;at ed25519_signer.go:23: calling [(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash]&#10;at ed25519_signer.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_signer.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ed25519_signer.go:19: calling [github.com/samber/oops.Errorf]&#10;at ed25519_signer.go:15: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M104.3633,-814C104.3633,-814 74.3633,-814 74.3633,-814 68.3633,-814 62.3633,-808 62.3633,-802 62.3633,-802 62.3633,-790 62.3633,-790 62.3633,-784 68.3633,-778 74.3633,-778 74.3633,-778 104.3633,-778 104.3633,-778 110.3633,-778 116.3633,-784 116.3633,-790 116.3633,-790 116.3633,-802 116.3633,-802 116.3633,-808 110.3633,-814 104.3633,-814"/>
 <text text-anchor="middle" x="89.3633" y="-791.8" font-family="Verdana" font-size="14.00" fill="#000000">Sign</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge23" class="edge">
+<g id="edge18" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge23"><a xlink:title="at ed25519_signer.go:19: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge18"><a xlink:title="at ed25519_signer.go:19: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M98.7265,-777.7582C117.6239,-741.4727 162.3996,-658.1284 207.7266,-593 222.5173,-571.7478 222.7298,-561.6588 244.7266,-548 336.3248,-491.1227 393.6863,-556.25 481.0058,-493 498.8803,-480.0526 568.7358,-356.0551 599.6924,-300.127"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="602.8858,-301.5843 604.6569,-291.1385 596.7583,-298.1999 602.8858,-301.5843"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash -->
+<g id="node10" class="node">
+<title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash</title>
+<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash | defined in ed25519_signer.go:27&#10;at ed25519_signer.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_signer.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_signer.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_signer.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M390.3064,-814C390.3064,-814 335.426,-814 335.426,-814 329.426,-814 323.426,-808 323.426,-802 323.426,-802 323.426,-790 323.426,-790 323.426,-784 329.426,-778 335.426,-778 335.426,-778 390.3064,-778 390.3064,-778 396.3064,-778 402.3064,-784 402.3064,-790 402.3064,-790 402.3064,-802 402.3064,-802 402.3064,-808 396.3064,-814 390.3064,-814"/>
+<text text-anchor="middle" x="362.8662" y="-791.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
 </a>
 </g>
 </g>
@@ -357,27 +339,45 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge30" class="edge">
+<g id="edge17" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge30"><a xlink:title="at ed25519_signer.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_edge17"><a xlink:title="at ed25519_signer.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="none" stroke="#8b4513" d="M98.684,-777.9189C124.9543,-727.7372 200.5538,-588.7959 244.7266,-564 267.6401,-551.1377 454.8703,-556.7206 481.0058,-554 497.5755,-552.2751 501.3959,-546.718 518.0058,-548 536.6422,-549.4384 557.1225,-552.4156 574.4105,-555.3413"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="574.2639,-558.8687 584.7171,-557.1421 575.4687,-551.9731 574.2639,-558.8687"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge11" class="edge">
+<g id="edge9" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge11"><a xlink:title="at ed25519_signer.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge9"><a xlink:title="at ed25519_signer.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M116.406,-803.8457C180.6402,-821.2559 347.0295,-859.1354 481.0058,-827 516.7742,-818.4206 553.7682,-798.5876 579.7321,-782.5421"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="581.847,-785.3462 588.4357,-777.0492 578.111,-779.4265 581.847,-785.3462"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
+<g id="edge10" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
+<g id="a_edge10"><a xlink:title="at ed25519_signer.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ed25519_signer.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M402.2791,-795.0037C436.7806,-792.0968 486.2273,-782.7176 518.0058,-754 539.1329,-734.9079 537.1905,-723.9807 554.0058,-701 566.6016,-683.786 581.3957,-664.9619 593.2127,-650.2348"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="596.2354,-652.0621 599.7873,-642.0803 590.786,-647.6684 596.2354,-652.0621"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge11" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Signer).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge11"><a xlink:title="at ed25519_signer.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_signer.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M402.0978,-798.6638C433.668,-799.9896 479.0374,-800.0463 518.0058,-793 536.8714,-789.5887 556.9829,-783.0184 573.9432,-776.5558"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="575.5048,-779.7028 583.5318,-772.7878 572.9445,-773.1877 575.5048,-779.7028"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify -->
 <g id="node11" class="node">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify</title>
-<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify | defined in ed25519_verifier.go:43&#10;at ed25519_verifier.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_verifier.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ed25519_verifier.go:50: calling [(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash]">
+<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify | defined in ed25519_verifier.go:43&#10;at ed25519_verifier.go:50: calling [(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash]&#10;at ed25519_verifier.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ed25519_verifier.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M107.3981,-479C107.3981,-479 71.3285,-479 71.3285,-479 65.3285,-479 59.3285,-473 59.3285,-467 59.3285,-467 59.3285,-455 59.3285,-455 59.3285,-449 65.3285,-443 71.3285,-443 71.3285,-443 107.3981,-443 107.3981,-443 113.3981,-443 119.3981,-449 119.3981,-455 119.3981,-455 119.3981,-467 119.3981,-467 119.3981,-473 113.3981,-479 107.3981,-479"/>
 <text text-anchor="middle" x="89.3633" y="-456.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
 </a>
@@ -386,16 +386,16 @@
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash -->
 <g id="node12" class="node">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash</title>
-<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash | defined in ed25519_verifier.go:16&#10;at ed25519_verifier.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ed25519_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at ed25519_verifier.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_verifier.go:38: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_verifier.go:29: calling [github.com/samber/oops.Errorf]&#10;at ed25519_verifier.go:36: calling [github.com/samber/oops.Errorf]&#10;at ed25519_verifier.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ed25519_verifier.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash | defined in ed25519_verifier.go:16&#10;at ed25519_verifier.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_verifier.go:38: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_verifier.go:29: calling [github.com/samber/oops.Errorf]&#10;at ed25519_verifier.go:36: calling [github.com/samber/oops.Errorf]&#10;at ed25519_verifier.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ed25519_verifier.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ed25519_verifier.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ed25519_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M395.6655,-479C395.6655,-479 330.0669,-479 330.0669,-479 324.0669,-479 318.0669,-473 318.0669,-467 318.0669,-467 318.0669,-455 318.0669,-455 318.0669,-449 324.0669,-443 330.0669,-443 330.0669,-443 395.6655,-443 395.6655,-443 401.6655,-443 407.6655,-449 407.6655,-455 407.6655,-455 407.6655,-467 407.6655,-467 407.6655,-473 401.6655,-479 395.6655,-479"/>
 <text text-anchor="middle" x="362.8662" y="-456.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash -->
-<g id="edge26" class="edge">
+<g id="edge3" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash</title>
-<g id="a_edge26"><a xlink:title="at ed25519_verifier.go:50: calling [(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash]">
+<g id="a_edge3"><a xlink:title="at ed25519_verifier.go:50: calling [(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash]">
 <path fill="none" stroke="#000000" d="M119.4153,-461C164.6153,-461 250.8363,-461 307.5906,-461"/>
 <polygon fill="#000000" stroke="#000000" points="307.8285,-464.5001 317.8285,-461 307.8284,-457.5001 307.8285,-464.5001"/>
 </a>
@@ -412,72 +412,72 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge19" class="edge">
+<g id="edge7" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge19"><a xlink:title="at ed25519_verifier.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<g id="a_edge7"><a xlink:title="at ed25519_verifier.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
 <path fill="none" stroke="#8b4513" d="M119.4638,-468.8401C150.5703,-476.5076 200.6589,-487.6464 244.7266,-492 349.2308,-502.3242 377.7337,-511.042 481.0058,-492 511.3142,-486.4115 543.643,-474.2503 568.9057,-463.205"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="570.5204,-466.3172 578.223,-459.0425 567.665,-459.926 570.5204,-466.3172"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge17" class="edge">
+<g id="edge13" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge17"><a xlink:title="at ed25519_verifier.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge13"><a xlink:title="at ed25519_verifier.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M93.4915,-479.3289C105.9789,-529.9424 148.5516,-671.7377 244.7266,-730 289.6755,-757.2298 433.5992,-717.3177 481.0058,-740 502.8806,-750.4663 494.9146,-770.9987 517.0058,-781 534.8953,-789.0991 556.0193,-785.753 574.0314,-779.4916"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="575.6095,-782.6342 583.6776,-775.7672 573.0882,-776.104 575.6095,-782.6342"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge25" class="edge">
+<g id="edge16" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge25"><a xlink:title="at ed25519_verifier.go:29: calling [github.com/samber/oops.Errorf]&#10;at ed25519_verifier.go:36: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge16"><a xlink:title="at ed25519_verifier.go:29: calling [github.com/samber/oops.Errorf]&#10;at ed25519_verifier.go:36: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M407.5739,-460.0405C430.8646,-457.7894 458.9969,-452.1953 481.0058,-439 502.9728,-425.8299 500.9659,-413.968 517.0058,-394 543.3128,-361.2504 573.7079,-323.5949 593.4951,-299.1054"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="596.4643,-300.9996 600.0276,-291.0219 591.0199,-296.5998 596.4643,-300.9996"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge28" class="edge">
+<g id="edge20" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge28"><a xlink:title="at ed25519_verifier.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ed25519_verifier.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_edge20"><a xlink:title="at ed25519_verifier.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ed25519_verifier.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="none" stroke="#8b4513" d="M407.2918,-479.0008C454.8946,-498.2889 529.7336,-528.6128 575.2737,-547.0652"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="574.2202,-550.4147 584.8027,-550.9263 576.849,-543.927 574.2202,-550.4147"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge8" class="edge">
+<g id="edge25" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge8"><a xlink:title="at ed25519_verifier.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<g id="a_edge25"><a xlink:title="at ed25519_verifier.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
 <path fill="none" stroke="#8b4513" d="M407.7089,-459.2254C430.7688,-456.7306 458.6477,-451.1639 481.0058,-439 501.4416,-427.8819 495.6345,-410.1925 517.0058,-401 533.8048,-393.7742 537.205,-411.7784 554.0058,-419 556.6085,-420.1187 559.2889,-421.2313 562.0062,-422.328"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="560.7402,-425.591 571.3279,-425.9815 563.2946,-419.0737 560.7402,-425.591"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="edge9" class="edge">
+<g id="edge30" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_edge9"><a xlink:title="at ed25519_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<g id="a_edge30"><a xlink:title="at ed25519_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
 <path fill="none" stroke="#8b4513" d="M407.5831,-453.1152C438.896,-449.0808 481.4959,-446.5891 518.0058,-455 519.6315,-455.3745 549.6323,-470.0212 575.772,-482.8643"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="574.2858,-486.0338 584.804,-487.3055 577.3746,-479.7521 574.2858,-486.0338"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge20" class="edge">
+<g id="edge15" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ed25519.Ed25519Verifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge20"><a xlink:title="at ed25519_verifier.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_verifier.go:38: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge15"><a xlink:title="at ed25519_verifier.go:20: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ed25519_verifier.go:38: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M407.7665,-459.5223C431.8197,-460.9731 460.6105,-466.581 481.0058,-483 513.509,-509.1663 535.2746,-618.7136 554.0058,-656 567.3918,-682.6462 584.8476,-711.8395 597.5836,-732.3203"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="594.6237,-734.1882 602.8992,-740.8038 600.5554,-730.4714 594.6237,-734.1882"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge16" class="edge">
+<g id="edge5" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge16"><a xlink:title="at ed25519_private_key.go:65: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge5"><a xlink:title="at ed25519_private_key.go:65: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M393.0544,-178.9962C417.2726,-184.2619 451.9071,-192.8246 481.0058,-204 514.467,-216.8509 550.4673,-235.7669 576.6562,-250.5446"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="575.0696,-253.6689 585.4902,-255.5824 578.5373,-247.5881 575.0696,-253.6689"/>
 </a>
@@ -493,9 +493,9 @@
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewSigner&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge5" class="edge">
+<g id="edge26" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).NewSigner&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge5"><a xlink:title="at ed25519_private_key.go:42: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge26"><a xlink:title="at ed25519_private_key.go:42: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M406.4276,-240.7488C453.9487,-248.111 529.3432,-259.7915 575.1701,-266.8912"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="574.8957,-270.3904 585.3137,-268.4627 575.9675,-263.4729 574.8957,-270.3904"/>
 </a>
@@ -511,9 +511,9 @@
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Generate&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge6" class="edge">
+<g id="edge27" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ed25519.Ed25519PrivateKey).Generate&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge6"><a xlink:title="at ed25519_private_key.go:54: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge27"><a xlink:title="at ed25519_private_key.go:54: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M400.0105,-291.7538C446.8998,-287.656 527.2126,-280.6372 575.1626,-276.4466"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="575.5116,-279.9296 585.1689,-275.5721 574.9021,-272.9561 575.5116,-279.9296"/>
 </a>
