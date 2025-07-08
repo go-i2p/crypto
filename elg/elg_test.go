@@ -112,3 +112,53 @@ func TestElg(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestElgamalKeyValidation(t *testing.T) {
+	// Test cases for createElgamalPrivateKey validation
+	testCases := []struct {
+		name        string
+		keyData     []byte
+		shouldError bool
+	}{
+		{
+			name:        "Valid key length",
+			keyData:     make([]byte, 256),
+			shouldError: false,
+		},
+		{
+			name:        "Invalid key length - too short",
+			keyData:     make([]byte, 255),
+			shouldError: true,
+		},
+		{
+			name:        "Invalid key length - too long",
+			keyData:     make([]byte, 257),
+			shouldError: true,
+		},
+		{
+			name:        "Zero key - invalid",
+			keyData:     make([]byte, 256), // all zeros
+			shouldError: true,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			if tc.name == "Valid key length" {
+				// Create a valid non-zero key for this test
+				tc.keyData[255] = 1 // Set to 1 to make it valid
+			}
+
+			var elgKey ElgPrivateKey
+			copy(elgKey[:], tc.keyData)
+
+			_, err := elgKey.NewDecrypter()
+
+			if tc.shouldError && err == nil {
+				t.Errorf("Expected error for %s but got none", tc.name)
+			} else if !tc.shouldError && err != nil {
+				t.Errorf("Unexpected error for %s: %v", tc.name, err)
+			}
+		})
+	}
+}

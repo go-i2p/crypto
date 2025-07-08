@@ -125,7 +125,6 @@ func main() {
 
 - **Asymmetric Encryption**
   - Curve25519 (X25519) key agreement
-  - Ed25519 encryption support
   - RSA (2048/3072/4096-bit)
   - ElGamal encryption
 
