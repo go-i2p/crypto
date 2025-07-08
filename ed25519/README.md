@@ -10,56 +10,19 @@
 
 ```go
 var (
-	Ed25519EncryptTooBig    = oops.Errorf("failed to encrypt data, too big for Ed25519")
 	ErrInvalidPublicKeySize = oops.Errorf("failed to verify: invalid ed25519 public key size")
 )
 ```
+Error constants for Ed25519 operations Moved from: ed25519.go
 
 #### func  GenerateEd25519Key
 
 ```go
 func GenerateEd25519Key() (types.SigningPrivateKey, error)
 ```
-
-#### type Ed25519Decrypter
-
-```go
-type Ed25519Decrypter struct {
-}
-```
-
-
-#### func (*Ed25519Decrypter) Decrypt
-
-```go
-func (d *Ed25519Decrypter) Decrypt(data []byte) ([]byte, error)
-```
-
-#### func (*Ed25519Decrypter) DecryptPadding
-
-```go
-func (d *Ed25519Decrypter) DecryptPadding(data []byte, zeroPadding bool) ([]byte, error)
-```
-
-#### type Ed25519Encryption
-
-```go
-type Ed25519Encryption struct {
-}
-```
-
-
-#### func (*Ed25519Encryption) Encrypt
-
-```go
-func (ed25519 *Ed25519Encryption) Encrypt(data []byte) (enc []byte, err error)
-```
-
-#### func (*Ed25519Encryption) EncryptPadding
-
-```go
-func (ed25519 *Ed25519Encryption) EncryptPadding(data []byte, zeroPadding bool) (encrypted []byte, err error)
-```
+GenerateEd25519Key generates a new Ed25519 private key for digital signatures.
+Returns a private key that implements the SigningPrivateKey interface. Moved
+from: ed25519.go
 
 #### type Ed25519PrivateKey
 
@@ -90,12 +53,6 @@ func (k Ed25519PrivateKey) Generate() (types.SigningPrivateKey, error)
 
 ```go
 func (k Ed25519PrivateKey) Len() int
-```
-
-#### func (Ed25519PrivateKey) NewDecrypter
-
-```go
-func (k Ed25519PrivateKey) NewDecrypter() (types.Decrypter, error)
 ```
 
 #### func (Ed25519PrivateKey) NewSigner
@@ -146,12 +103,6 @@ func (k Ed25519PublicKey) Bytes() []byte
 
 ```go
 func (k Ed25519PublicKey) Len() int
-```
-
-#### func (Ed25519PublicKey) NewEncrypter
-
-```go
-func (elg Ed25519PublicKey) NewEncrypter() (enc types.Encrypter, err error)
 ```
 
 #### func (Ed25519PublicKey) NewVerifier

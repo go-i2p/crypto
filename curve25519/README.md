@@ -17,6 +17,7 @@ var (
 	ErrDecryptionFailed  = oops.Errorf("failed to decrypt data with Curve25519")
 )
 ```
+Error constants for Curve25519 operations Moved from: curve25519.go
 
 #### func  CreateCurve25519PublicKey
 
@@ -29,7 +30,9 @@ func CreateCurve25519PublicKey(data []byte) (k *curve25519.PublicKey)
 ```go
 func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, error)
 ```
-GenerateKeyPair generates a new Curve25519 key pair
+GenerateKeyPair generates a new Curve25519 key pair for encryption/decryption
+operations. Returns the public key, private key, and any error that occurred
+during generation. Moved from: curve25519.go
 
 #### type Curve25519Decrypter
 
@@ -109,9 +112,9 @@ NewSigner creates a new Curve25519 signer
 #### func (Curve25519PrivateKey) Public
 
 ```go
-func (k Curve25519PrivateKey) Public() (types.SigningPublicKey, error)
+func (k Curve25519PrivateKey) Public() (types.PublicEncryptionKey, error)
 ```
-Public implements types.PrivateKey.
+Public implements types.PrivateEncryptionKey.
 
 #### func (Curve25519PrivateKey) Zero
 

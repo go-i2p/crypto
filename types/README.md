@@ -52,7 +52,7 @@ type PrivateEncryptionKey interface {
 	// returns decrypter or nil and error if the private key is in a bad format
 	NewDecrypter() (Decrypter, error)
 	// Public key
-	Public() (SigningPublicKey, error)
+	Public() (PublicEncryptionKey, error)
 	// Bytes returns the raw bytes of this private key
 	Bytes() []byte
 	// Zero clears all sensitive data from the private key

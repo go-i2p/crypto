@@ -2,10 +2,12 @@ package curve25519
 
 import (
 	"crypto/sha256"
+	"io"
 
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 	"golang.org/x/crypto/chacha20poly1305"
+	"golang.org/x/crypto/hkdf"
 )
 
 // Curve25519Decrypter handles Curve25519-based decryption
@@ -36,11 +38,15 @@ func (c *Curve25519Decrypter) Decrypt(data []byte) ([]byte, error) {
 		return nil, oops.Errorf("Curve25519 key exchange failed: %w", err)
 	}
 
-	// Derive decryption key using SHA-256
-	key := sha256.Sum256(sharedSecret)
+	// Derive decryption key using HKDF-SHA256
+	hkdfReader := hkdf.New(sha256.New, sharedSecret, nil, []byte("ChaCha20-Poly1305"))
+	key := make([]byte, chacha20poly1305.KeySize)
+	if _, err := io.ReadFull(hkdfReader, key); err != nil {
+		return nil, oops.Errorf("failed to derive decryption key: %w", err)
+	}
 
 	// Create ChaCha20-Poly1305 cipher
-	aead, err := chacha20poly1305.New(key[:])
+	aead, err := chacha20poly1305.New(key)
 	if err != nil {
 		return nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
 	}

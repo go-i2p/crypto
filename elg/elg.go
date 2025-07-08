@@ -6,6 +6,8 @@ import (
 	"io"
 	"math/big"
 
+	"github.com/go-i2p/crypto/rand"
+	"github.com/samber/oops"
 	"github.com/sirupsen/logrus"
 
 	"golang.org/x/crypto/openpgp/elgamal"
@@ -16,22 +18,29 @@ type PrivateKey struct {
 }
 
 // generate an elgamal key pair
-func ElgamalGenerate(priv *elgamal.PrivateKey, rand io.Reader) (err error) {
+func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 	log.Debug("Generating ElGamal key pair")
 	priv.P = elgp
 	priv.G = elgg
-	xBytes := make([]byte, priv.P.BitLen()/8)
-	_, err = io.ReadFull(rand, xBytes)
-	if err == nil {
-		// set private key
-		priv.X = new(big.Int).SetBytes(xBytes)
-		// compute public key
-		priv.Y = new(big.Int).Exp(priv.G, priv.X, priv.P)
-		log.Debug("ElGamal key pair generated successfully")
-	} else {
-		log.WithError(err).Error("Failed to generate ElGamal key pair")
+
+	// Generate cryptographically secure private key using secure random package
+	// Private key must be in range [1, p-1]
+	pMinus1 := new(big.Int).Sub(priv.P, one)
+
+	// Use our secure random package for cryptographically secure key generation
+	x, err := rand.ReadBigIntInRange(one, pMinus1)
+	if err != nil {
+		log.WithError(err).Error("Failed to generate secure private key")
+		return oops.Errorf("ElGamal private key generation failed: %w", err)
 	}
-	return
+
+	priv.X = x
+
+	// compute public key
+	priv.Y = new(big.Int).Exp(priv.G, priv.X, priv.P)
+
+	log.Debug("ElGamal key pair generated successfully")
+	return nil
 }
 
 // decrypt an elgamal encrypted message, i2p style

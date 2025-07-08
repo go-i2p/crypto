@@ -14,11 +14,12 @@ var (
 	ElgEncryptTooBig = oops.Errorf("failed to encrypt data, too big for elgamal")
 )
 ```
+Error constants for ElGamal operations Moved from: elg.go
 
 #### func  ElgamalGenerate
 
 ```go
-func ElgamalGenerate(priv *elgamal.PrivateKey, rand io.Reader) (err error)
+func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error)
 ```
 generate an elgamal key pair
 

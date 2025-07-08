@@ -15,7 +15,7 @@ const (
 	TagSize   = 16 // Poly1305 authentication tag size
 )
 ```
-Key sizes
+Key and nonce size constants for ChaCha20 Moved from: chacha20.go
 
 ```go
 var (
@@ -26,7 +26,7 @@ var (
 	ErrAuthFailed       = oops.Errorf("ChaCha20-Poly1305 authentication failed")
 )
 ```
-Error definitions
+Error constants for ChaCha20 operations Moved from: chacha20.go
 
 #### type ChaCha20Key
 
@@ -34,7 +34,8 @@ Error definitions
 type ChaCha20Key [KeySize]byte
 ```
 
-ChaCha20Key is a 256-bit key for ChaCha20
+ChaCha20Key represents a 256-bit key for ChaCha20 encryption/decryption
+operations. Moved from: chacha20.go
 
 #### func  GenerateKey
 
@@ -77,14 +78,17 @@ NewEncrypter creates a new encrypter using this key
 type ChaCha20Nonce [NonceSize]byte
 ```
 
-ChaCha20Nonce is a 96-bit nonce for ChaCha20
+ChaCha20Nonce represents a 96-bit nonce for ChaCha20-Poly1305 AEAD operations.
+Moved from: chacha20.go
 
 #### func  NewRandomNonce
 
 ```go
 func NewRandomNonce() (ChaCha20Nonce, error)
 ```
-NewRandomNonce generates a cryptographically secure random nonce
+NewRandomNonce generates a cryptographically secure random nonce for ChaCha20.
+Returns a 96-bit nonce suitable for ChaCha20-Poly1305 AEAD encryption. Moved
+from: chacha20.go
 
 #### type ChaCha20PolyDecrypter
 

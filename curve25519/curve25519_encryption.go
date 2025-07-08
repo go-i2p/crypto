@@ -8,6 +8,7 @@ import (
 	"github.com/samber/oops"
 	curve25519 "go.step.sm/crypto/x25519"
 	"golang.org/x/crypto/chacha20poly1305"
+	"golang.org/x/crypto/hkdf"
 )
 
 type Curve25519Encryption struct {
@@ -36,11 +37,15 @@ func (c *Curve25519Encryption) EncryptPadding(data []byte, zeroPadding bool) ([]
 		return nil, oops.Errorf("failed to derive shared secret: %w", err)
 	}
 
-	// Derive encryption key using SHA-256
-	key := sha256.Sum256(sharedSecret)
+	// Derive encryption key using HKDF-SHA256
+	hkdfReader := hkdf.New(sha256.New, sharedSecret, nil, []byte("ChaCha20-Poly1305"))
+	key := make([]byte, chacha20poly1305.KeySize)
+	if _, err := io.ReadFull(hkdfReader, key); err != nil {
+		return nil, oops.Errorf("failed to derive encryption key: %w", err)
+	}
 
 	// Create ChaCha20-Poly1305 cipher
-	aead, err := chacha20poly1305.New(key[:])
+	aead, err := chacha20poly1305.New(key)
 	if err != nil {
 		return nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
 	}
