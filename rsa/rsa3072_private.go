@@ -11,13 +11,13 @@ import (
 	"github.com/samber/oops"
 )
 
-type (
+type RSA3072PrivateKey struct {
 	RSA3072PrivateKey [786]byte
-)
+}
 
 // Len implements types.SigningPrivateKey.
 func (r *RSA3072PrivateKey) Len() int {
-	return len(r)
+	return len(r.RSA3072PrivateKey)
 }
 
 // NewSigner implements types.SigningPrivateKey.
@@ -52,7 +52,7 @@ func (r RSA3072PrivateKey) SignHash(h []byte) (sig []byte, err error) {
 
 // Bytes implements types.PrivateKey - returns raw key bytes
 func (r RSA3072PrivateKey) Bytes() []byte {
-	return r[:]
+	return r.RSA3072PrivateKey[:]
 }
 
 // Public implements types.PrivateKey - derives public key from private key
@@ -63,25 +63,28 @@ func (r RSA3072PrivateKey) Public() (types.SigningPublicKey, error) {
 		return nil, oops.Errorf("failed to parse RSA private key: %w", err)
 	}
 
-	// Extract public key from private key
-	pubBytes := x509.MarshalPKCS1PublicKey(&privKey.PublicKey)
-	if len(pubBytes) > 384 {
-		return nil, oops.Errorf("RSA public key exceeds expected size")
+	// Extract public key and convert to bytes
+	pubKey := privKey.Public().(*rsa.PublicKey)
+	pubBytes := pubKey.N.Bytes()
+
+	// Create and return the RSA3072PublicKey
+	var publicKey RSA3072PublicKey
+	// Pad with zeros if necessary (big-endian format)
+	if len(pubBytes) <= 384 {
+		copy(publicKey[384-len(pubBytes):], pubBytes)
+	} else {
+		copy(publicKey[:], pubBytes[len(pubBytes)-384:])
 	}
 
-	// Create and return RSA3072PublicKey
-	var pubKey RSA3072PublicKey
-	copy(pubKey[:], pubBytes)
-
 	log.Debug("RSA-3072 public key derived successfully")
-	return pubKey, nil
+	return publicKey, nil
 }
 
 // Zero implements types.PrivateKey - securely erases key material
-func (r RSA3072PrivateKey) Zero() {
+func (r *RSA3072PrivateKey) Zero() {
 	// Overwrite private key material with zeros
-	for i := range r {
-		r[i] = 0
+	for i := range r.RSA3072PrivateKey {
+		r.RSA3072PrivateKey[i] = 0
 	}
 	log.Debug("RSA-3072 private key securely erased")
 }
@@ -89,7 +92,7 @@ func (r RSA3072PrivateKey) Zero() {
 // Helper method to convert byte array to rsa.PrivateKey
 func (r RSA3072PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 	// Parse PKCS#1 encoded private key
-	privKey, err := x509.ParsePKCS1PrivateKey(r[:])
+	privKey, err := x509.ParsePKCS1PrivateKey(r.RSA3072PrivateKey[:])
 	if err != nil {
 		return nil, oops.Errorf("invalid RSA private key format: %w", err)
 	}
@@ -118,13 +121,13 @@ func (r *RSA3072PrivateKey) Generate() (types.SigningPrivateKey, error) {
 
 	// Copy bytes into fixed-size array
 	var newKey RSA3072PrivateKey
-	copy(newKey[:], privBytes)
+	copy(newKey.RSA3072PrivateKey[:], privBytes)
 
 	log.Debug("RSA-3072 private key generated successfully")
 	return &newKey, nil
 }
 
 var (
-	_ types.PrivateKey = RSA3072PrivateKey{}
+	_ types.PrivateKey = (*RSA3072PrivateKey)(nil)
 	_ types.Signer     = RSA3072PrivateKey{}
 )

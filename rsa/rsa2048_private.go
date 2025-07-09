@@ -11,9 +11,9 @@ import (
 	"github.com/samber/oops"
 )
 
-type (
-	RSA2048PrivateKey [512]byte
-)
+type RSA2048PrivateKey struct {
+	RSA2048PrivateKey [256]byte
+}
 
 // Sign implements types.Signer.
 // Signs data by first hashing it with SHA-256
@@ -45,7 +45,7 @@ func (r RSA2048PrivateKey) SignHash(h []byte) (sig []byte, err error) {
 // Bytes implements types.PrivateKey.
 // Returns the raw bytes of the private key
 func (r RSA2048PrivateKey) Bytes() []byte {
-	return r[:]
+	return r.RSA2048PrivateKey[:]
 }
 
 // Public implements types.PrivateKey.
@@ -62,7 +62,12 @@ func (r RSA2048PrivateKey) Public() (types.SigningPublicKey, error) {
 
 	// Create and return the RSA2048PublicKey
 	var publicKey RSA2048PublicKey
-	copy(publicKey[:], pubBytes)
+	// Pad with zeros if necessary (big-endian format)
+	if len(pubBytes) <= 256 {
+		copy(publicKey[256-len(pubBytes):], pubBytes)
+	} else {
+		copy(publicKey[:], pubBytes[len(pubBytes)-256:])
+	}
 
 	log.Debug("RSA-2048 public key extracted successfully")
 	return publicKey, nil
@@ -70,10 +75,10 @@ func (r RSA2048PrivateKey) Public() (types.SigningPublicKey, error) {
 
 // Zero implements types.PrivateKey.
 // Securely erases key material
-func (r RSA2048PrivateKey) Zero() {
+func (r *RSA2048PrivateKey) Zero() {
 	// Overwrite private key material with zeros
-	for i := range r {
-		r[i] = 0
+	for i := range r.RSA2048PrivateKey {
+		r.RSA2048PrivateKey[i] = 0
 	}
 	log.Debug("RSA-2048 private key securely erased")
 }
@@ -81,7 +86,7 @@ func (r RSA2048PrivateKey) Zero() {
 // Helper method to convert byte array to rsa.PrivateKey
 func (r RSA2048PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 	// Parse PKCS#1 encoded private key
-	privKey, err := x509.ParsePKCS1PrivateKey(r[:])
+	privKey, err := x509.ParsePKCS1PrivateKey(r.RSA2048PrivateKey[:])
 	if err != nil {
 		return nil, oops.Errorf("invalid RSA private key format: %w", err)
 	}
@@ -95,6 +100,6 @@ func (r RSA2048PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 }
 
 var (
-	_ types.PrivateKey = RSA2048PrivateKey{}
+	_ types.PrivateKey = (*RSA2048PrivateKey)(nil)
 	_ types.Signer     = RSA2048PrivateKey{}
 )

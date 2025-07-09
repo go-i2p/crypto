@@ -1,9 +1,7 @@
 package chacha20
 
 import (
-	"crypto/rand"
-	"io"
-
+	"github.com/go-i2p/crypto/rand"
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
 )
@@ -11,7 +9,7 @@ import (
 // GenerateKey creates a new random ChaCha20 key
 func GenerateKey() (*ChaCha20Key, error) {
 	key := new(ChaCha20Key)
-	_, err := io.ReadFull(rand.Reader, key[:])
+	_, err := rand.Read(key[:])
 	if err != nil {
 		return nil, oops.Errorf("failed to generate ChaCha20 key: %w", err)
 	}

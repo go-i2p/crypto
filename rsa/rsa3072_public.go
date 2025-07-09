@@ -3,7 +3,6 @@ package rsa
 import (
 	"crypto"
 	"crypto/rsa"
-	"crypto/sha256"
 	"crypto/sha512"
 
 	"github.com/go-i2p/crypto/types"
@@ -23,7 +22,7 @@ func (r RSA3072PublicKey) Verify(data []byte, sig []byte) error {
 
 // VerifyHash implements types.Verifier.
 func (r RSA3072PublicKey) VerifyHash(h []byte, sig []byte) error {
-	pubKey, err := rsaPublicKeyFromBytes(r[:], 3072)
+	pubKey, err := rsaPublicKeyFromBytes(r[:], 384)
 	if err != nil {
 		return oops.Errorf("failed to parse RSA3072 public key: %w", err)
 	}
@@ -31,8 +30,8 @@ func (r RSA3072PublicKey) VerifyHash(h []byte, sig []byte) error {
 	// For RSA3072, SHA512 is often used
 	hashed := h
 	if len(h) != sha512.Size {
-		return oops.Errorf("RSA3072 verification requires SHA-256 hash (expected %d bytes, got %d)",
-			sha256.Size, len(h))
+		return oops.Errorf("RSA3072 verification requires SHA-512 hash (expected %d bytes, got %d)",
+			sha512.Size, len(h))
 	}
 
 	err = rsa.VerifyPKCS1v15(pubKey, crypto.SHA512, hashed, sig)

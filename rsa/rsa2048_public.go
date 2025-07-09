@@ -24,7 +24,7 @@ func (r RSA2048PublicKey) Verify(data []byte, sig []byte) error {
 // VerifyHash implements types.Verifier.
 // This method verifies a pre-computed hash against the signature
 func (r RSA2048PublicKey) VerifyHash(h []byte, sig []byte) error {
-	pubKey, err := rsaPublicKeyFromBytes(r[:], 2048)
+	pubKey, err := rsaPublicKeyFromBytes(r[:], 256)
 	if err != nil {
 		return oops.Errorf("failed to parse RSA2048 public key: %w", err)
 	}

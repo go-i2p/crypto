@@ -3,7 +3,6 @@ package rsa
 import (
 	"crypto"
 	"crypto/rsa"
-	"crypto/sha256"
 	"crypto/sha512"
 
 	"github.com/go-i2p/crypto/types"
@@ -27,17 +26,22 @@ func (r RSA4096PublicKey) Verify(data []byte, sig []byte) error {
 // This method verifies a pre-computed hash against the signature
 func (r RSA4096PublicKey) VerifyHash(h []byte, sig []byte) error {
 	log.Debug("Verifying RSA-4096 signature with pre-computed hash")
-	pubKey, err := rsaPublicKeyFromBytes(r[:], 4096)
+	pubKey, err := rsaPublicKeyFromBytes(r[:], 512)
 	if err != nil {
 		log.WithError(err).Error("Failed to parse RSA-4096 public key")
 		return oops.Errorf("invalid RSA-4096 public key: %w", err)
 	}
 
+	// For RSA4096, we use SHA-512
+	if len(h) != sha512.Size {
+		return oops.Errorf("RSA4096 verification requires SHA-512 hash (expected %d bytes, got %d)",
+			sha512.Size, len(h))
+	}
+
 	// Verify the signature using PKCS1v15
 	err = rsa.VerifyPKCS1v15(pubKey, crypto.SHA512, h, sig)
 	if err != nil {
-		return oops.Errorf("RSA4096 verification requires SHA-256 hash (expected %d bytes, got %d)",
-			sha256.Size, len(h))
+		return oops.Errorf("RSA signature verification failed: %w", err)
 	}
 
 	log.Debug("RSA-4096 signature verified successfully")

@@ -1,9 +1,7 @@
 package chacha20
 
 import (
-	"crypto/rand"
-	"io"
-
+	"github.com/go-i2p/crypto/rand"
 	"github.com/samber/oops"
 )
 
@@ -12,7 +10,7 @@ import (
 // Moved from: chacha20.go
 func NewRandomNonce() (ChaCha20Nonce, error) {
 	var nonce ChaCha20Nonce
-	_, err := io.ReadFull(rand.Reader, nonce[:])
+	_, err := rand.Read(nonce[:])
 	if err != nil {
 		return ChaCha20Nonce{}, oops.Errorf("failed to generate random nonce: %w", err)
 	}

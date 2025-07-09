@@ -11,9 +11,9 @@ import (
 	"github.com/samber/oops"
 )
 
-type (
+type RSA4096PrivateKey struct {
 	RSA4096PrivateKey [1024]byte
-)
+}
 
 // Sign implements types.Signer.
 // Signs data by first hashing it with SHA-512
@@ -30,7 +30,7 @@ func (r RSA4096PrivateKey) SignHash(h []byte) (sig []byte, err error) {
 	log.Debug("Signing hash with RSA-4096")
 
 	// Parse the private key from PKCS#1 DER format
-	privKey, err := x509.ParsePKCS1PrivateKey(r[:])
+	privKey, err := x509.ParsePKCS1PrivateKey(r.RSA4096PrivateKey[:])
 	if err != nil {
 		log.WithError(err).Error("Failed to parse RSA-4096 private key")
 		return nil, oops.Errorf("invalid RSA-4096 private key: %w", err)
@@ -51,7 +51,7 @@ func (r RSA4096PrivateKey) SignHash(h []byte) (sig []byte, err error) {
 // Returns the raw bytes of the private key
 func (r RSA4096PrivateKey) Bytes() []byte {
 	log.Debug("Getting RSA-4096 private key bytes")
-	return r[:]
+	return r.RSA4096PrivateKey[:]
 }
 
 // Public implements types.PrivateKey.
@@ -60,7 +60,7 @@ func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
 	log.Debug("Extracting public key from RSA-4096 private key")
 
 	// Parse the private key from PKCS#1 DER format
-	privKey, err := x509.ParsePKCS1PrivateKey(r[:])
+	privKey, err := x509.ParsePKCS1PrivateKey(r.RSA4096PrivateKey[:])
 	if err != nil {
 		log.WithError(err).Error("Failed to parse RSA-4096 private key")
 		return nil, oops.Errorf("invalid RSA-4096 private key: %w", err)
@@ -81,15 +81,15 @@ func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
 
 // Zero implements types.PrivateKey.
 // Securely clears the private key from memory
-func (r RSA4096PrivateKey) Zero() {
+func (r *RSA4096PrivateKey) Zero() {
 	log.Debug("Securely clearing RSA-4096 private key from memory")
 	// Overwrite the key material with zeros
-	for i := range r {
-		r[i] = 0
+	for i := range r.RSA4096PrivateKey {
+		r.RSA4096PrivateKey[i] = 0
 	}
 }
 
 var (
-	_ types.PrivateKey = RSA4096PrivateKey{}
+	_ types.PrivateKey = (*RSA4096PrivateKey)(nil)
 	_ types.Signer     = RSA4096PrivateKey{}
 )
