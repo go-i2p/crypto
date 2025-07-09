@@ -8,10 +8,22 @@
 
 ## Usage
 
+```go
+var (
+	ErrInvalidKeySize     = oops.Errorf("invalid RSA key size")
+	ErrInvalidKeyFormat   = oops.Errorf("invalid RSA key format")
+	ErrSignatureFailed    = oops.Errorf("RSA signature operation failed")
+	ErrVerificationFailed = oops.Errorf("RSA signature verification failed")
+)
+```
+Error constants for RSA operations
+
 #### type RSA2048PrivateKey
 
 ```go
-type RSA2048PrivateKey [512]byte
+type RSA2048PrivateKey struct {
+	RSA2048PrivateKey [256]byte
+}
 ```
 
 
@@ -43,10 +55,10 @@ func (r RSA2048PrivateKey) SignHash(h []byte) (sig []byte, err error)
 ```
 SignHash implements types.Signer. Signs a pre-computed hash
 
-#### func (RSA2048PrivateKey) Zero
+#### func (*RSA2048PrivateKey) Zero
 
 ```go
-func (r RSA2048PrivateKey) Zero()
+func (r *RSA2048PrivateKey) Zero()
 ```
 Zero implements types.PrivateKey. Securely erases key material
 
@@ -98,7 +110,9 @@ against the signature
 #### type RSA3072PrivateKey
 
 ```go
-type RSA3072PrivateKey [786]byte
+type RSA3072PrivateKey struct {
+	RSA3072PrivateKey [786]byte
+}
 ```
 
 
@@ -151,10 +165,10 @@ func (r RSA3072PrivateKey) SignHash(h []byte) (sig []byte, err error)
 ```
 SignHash implements types.Signer - signs a pre-computed hash
 
-#### func (RSA3072PrivateKey) Zero
+#### func (*RSA3072PrivateKey) Zero
 
 ```go
-func (r RSA3072PrivateKey) Zero()
+func (r *RSA3072PrivateKey) Zero()
 ```
 Zero implements types.PrivateKey - securely erases key material
 
@@ -203,7 +217,9 @@ VerifyHash implements types.Verifier.
 #### type RSA4096PrivateKey
 
 ```go
-type RSA4096PrivateKey [1024]byte
+type RSA4096PrivateKey struct {
+	RSA4096PrivateKey [1024]byte
+}
 ```
 
 
@@ -235,10 +251,10 @@ func (r RSA4096PrivateKey) SignHash(h []byte) (sig []byte, err error)
 ```
 SignHash implements types.Signer. Signs a pre-computed hash
 
-#### func (RSA4096PrivateKey) Zero
+#### func (*RSA4096PrivateKey) Zero
 
 ```go
-func (r RSA4096PrivateKey) Zero()
+func (r *RSA4096PrivateKey) Zero()
 ```
 Zero implements types.PrivateKey. Securely clears the private key from memory
 

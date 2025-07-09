@@ -20,8 +20,8 @@ labelloc="t";
 labeljust="c";
 fontsize="18";
         
-        "github.com/go-i2p/crypto/types.init" [ label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/types.init | defined in .:0\nat sign.go:6: calling [github.com/samber/oops.Errorf]\nat sign.go:7: calling [github.com/samber/oops.Errorf]\nat sign.go:8: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
-        "github.com/samber/oops.Errorf" [ penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" ]
+        "github.com/go-i2p/crypto/types.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/types.init | defined in .:0\nat sign.go:6: calling [github.com/samber/oops.Errorf]\nat sign.go:7: calling [github.com/samber/oops.Errorf]\nat sign.go:8: calling [github.com/samber/oops.Errorf]" ]
+        "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
         
     }
 

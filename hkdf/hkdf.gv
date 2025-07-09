@@ -14,34 +14,48 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        fontsize="18";
+        labeljust="c";
+fontsize="18";
 bgcolor="#e6ecfa";
 label="hkdf";
 labelloc="t";
-labeljust="c";
         
         "github.com/samber/oops.Wrapf" [ fillcolor="moccasin" label="oops\nWrapf" penwidth="1.5" tooltip="github.com/samber/oops.Wrapf | defined in oops.go:20" ]
         "golang.org/x/crypto/hkdf.New" [ fillcolor="moccasin" label="hkdf\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/hkdf.New | defined in hkdf.go:92" ]
-        "github.com/go-i2p/crypto/hkdf.init" [ tooltip="github.com/go-i2p/crypto/hkdf.init | defined in .:0\nat constants.go:8: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat constants.go:12: calling [github.com/samber/oops.Errorf]\nat constants.go:13: calling [github.com/samber/oops.Errorf]\nat constants.go:14: calling [github.com/samber/oops.Errorf]\nat constants.go:15: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="init" penwidth="0.5" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" ]
-        "github.com/samber/oops.Errorf" [ label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" ]
+        "github.com/go-i2p/crypto/hkdf.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/hkdf.init | defined in .:0\nat constants.go:8: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat constants.go:12: calling [github.com/samber/oops.Errorf]\nat constants.go:13: calling [github.com/samber/oops.Errorf]\nat constants.go:14: calling [github.com/samber/oops.Errorf]\nat constants.go:15: calling [github.com/samber/oops.Errorf]" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
+        "github.com/samber/oops.Errorf" [ penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/hkdf.HKDFImpl" {
-        fontsize="15";
-fontcolor="#222222";
-label="(*HKDFImpl)";
+        fontcolor="#222222";
 labelloc="b";
-style="rounded,filled";
 fillcolor="lightsteelblue";
-tooltip="type: *github.com/go-i2p/crypto/hkdf.HKDFImpl";
+label="(*HKDFImpl)";
 penwidth="0.5";
+fontsize="15";
+style="rounded,filled";
+tooltip="type: *github.com/go-i2p/crypto/hkdf.HKDFImpl";
         
-        "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" [ fillcolor="lightblue" label="Derive" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive | defined in hkdf.go:12\nat hkdf.go:13: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:14: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:15: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:43: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat hkdf.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat hkdf.go:21: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:25: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:40: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:35: calling [golang.org/x/crypto/hkdf.New]" ]
-        "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).DeriveDefault" [ fillcolor="lightblue" label="DeriveDefault" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/hkdf.HKDFImpl).DeriveDefault | defined in hkdf.go:48\nat hkdf.go:49: calling [(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive]" ]
+        "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" [ fillcolor="lightblue" label="Derive" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive | defined in hkdf.go:12\nat hkdf.go:35: calling [golang.org/x/crypto/hkdf.New]\nat hkdf.go:13: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:14: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:15: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:43: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat hkdf.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat hkdf.go:21: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:25: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:40: calling [github.com/samber/oops.Wrapf]" ]
+        "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).DeriveDefault" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/hkdf.HKDFImpl).DeriveDefault | defined in hkdf.go:48\nat hkdf.go:49: calling [(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive]" fillcolor="lightblue" label="DeriveDefault" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/logger.Logger" {
+        fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+fillcolor="wheat2";
+label="(*Logger)";
+tooltip="type: *github.com/go-i2p/logger.Logger";
+penwidth="0.5";
+        
+        "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
         penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
@@ -49,33 +63,19 @@ labelloc="b";
 style="rounded,filled";
 fillcolor="wheat2";
 label="(*Logger)";
-tooltip="type: *github.com/go-i2p/logger.Logger";
-        
-        "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" ]
-        
-    }
-
-        subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        fillcolor="wheat2";
-label="(*Logger)";
 tooltip="type: *github.com/sirupsen/logrus.Logger";
-penwidth="0.5";
-fontsize="15";
-fontcolor="#222222";
-labelloc="b";
-style="rounded,filled";
         
-        "(*github.com/sirupsen/logrus.Logger).Debug" [ penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" fillcolor="moccasin" label="logrus\nDebug" ]
+        "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
         
     }
 
     }
 
+    "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at hkdf.go:35: calling [golang.org/x/crypto/hkdf.New]" ]
     "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).DeriveDefault" -> "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" [ tooltip="at hkdf.go:49: calling [(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive]" ]
     "github.com/go-i2p/crypto/hkdf.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:8: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
     "github.com/go-i2p/crypto/hkdf.init" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at constants.go:12: calling [github.com/samber/oops.Errorf]\nat constants.go:13: calling [github.com/samber/oops.Errorf]\nat constants.go:14: calling [github.com/samber/oops.Errorf]\nat constants.go:15: calling [github.com/samber/oops.Errorf]" ]
     "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at hkdf.go:13: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:14: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:15: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat hkdf.go:43: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
     "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at hkdf.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat hkdf.go:43: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" -> "github.com/samber/oops.Wrapf" [ tooltip="at hkdf.go:21: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:25: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:40: calling [github.com/samber/oops.Wrapf]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at hkdf.go:35: calling [golang.org/x/crypto/hkdf.New]" ]
+    "(*github.com/go-i2p/crypto/hkdf.HKDFImpl).Derive" -> "github.com/samber/oops.Wrapf" [ color="saddlebrown" tooltip="at hkdf.go:21: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:25: calling [github.com/samber/oops.Wrapf]\nat hkdf.go:40: calling [github.com/samber/oops.Wrapf]" ]
 }
