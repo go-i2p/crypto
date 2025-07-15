@@ -57,6 +57,33 @@ func main() {
 }
 ```
 
+### Stream Cipher Encryption (ChaCha20)
+
+```go
+package main
+
+import (
+    "github.com/go-i2p/crypto/chacha20"
+    "github.com/go-i2p/crypto/types"
+)
+
+func main() {
+    // Generate ChaCha20 key
+    key, _ := chacha20.GenerateKey()
+    
+    // Create encrypter and decrypter
+    encrypter, _ := key.NewEncrypter()
+    decrypter, _ := key.NewDecrypter()
+    
+    // Encrypt data
+    plaintext := []byte("Hello, I2P!")
+    ciphertext, _ := encrypter.Encrypt(plaintext)
+    
+    // Decrypt data
+    decrypted, _ := decrypter.Decrypt(ciphertext)
+}
+```
+
 ### Asymmetric Encryption (Curve25519)
 
 ```go
