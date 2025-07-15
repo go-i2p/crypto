@@ -3,7 +3,6 @@ package ed25519
 import (
 	"crypto/ed25519"
 	"crypto/rand"
-	"fmt"
 
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
@@ -60,14 +59,14 @@ func (k Ed25519PrivateKey) Generate() (types.SigningPrivateKey, error) {
 }
 
 func (k Ed25519PrivateKey) Public() (types.SigningPublicKey, error) {
-	fmt.Printf("Ed25519PrivateKey.Public(): len(k) = %d\n", len(k))
+	log.WithField("key_length", len(k)).Debug("Ed25519PrivateKey.Public() called")
 	if len(k) != ed25519.PrivateKeySize {
 		return nil, oops.Errorf("invalid ed25519 private key size: expected %d, got %d",
 			ed25519.PrivateKeySize, len(k))
 	}
 	// Extract public key portion (last 32 bytes)
 	pubKey := ed25519.PrivateKey(k).Public().(ed25519.PublicKey)
-	fmt.Printf("Ed25519PrivateKey.Public(): extracted pubKey length: %d\n", len(pubKey))
+	log.WithField("pubkey_length", len(pubKey)).Debug("Ed25519PrivateKey.Public() extracted public key")
 	return Ed25519PublicKey(pubKey), nil
 }
 
