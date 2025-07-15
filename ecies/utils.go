@@ -128,47 +128,79 @@ func buildCiphertextResult(ephemeralPub, nonce, ciphertext []byte) []byte {
 // The ciphertext must be in the format: [ephemeral_pubkey][nonce][aead_ciphertext]
 // Moved from: ecies.go
 func DecryptECIESX25519(recipientPrivKey, ciphertext []byte) ([]byte, error) {
-	if len(recipientPrivKey) != PrivateKeySize {
-		return nil, ErrInvalidPrivateKey
+	if err := validateDecryptionInputs(recipientPrivKey, ciphertext); err != nil {
+		return nil, err
 	}
 
-	// Validate minimum ciphertext length
+	ephemeralPubKey, nonce, aeadCiphertext := extractCiphertextComponents(ciphertext)
+
+	privKey, ephemeralKey := convertKeysToX25519Format(recipientPrivKey, ephemeralPubKey)
+
+	decryptionKey, err := performKeyAgreementAndDerivation(privKey, ephemeralKey)
+	if err != nil {
+		return nil, err
+	}
+
+	plaintext, err := decryptWithAEAD(decryptionKey, nonce, aeadCiphertext, ephemeralPubKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return plaintext, nil
+}
+
+// validateDecryptionInputs checks that the private key and ciphertext are valid for decryption.
+func validateDecryptionInputs(recipientPrivKey, ciphertext []byte) error {
+	if len(recipientPrivKey) != PrivateKeySize {
+		return ErrInvalidPrivateKey
+	}
+
 	minSize := PublicKeySize + NonceSize + TagSize
 	if len(ciphertext) < minSize {
-		return nil, ErrInvalidCiphertext
+		return ErrInvalidCiphertext
 	}
 
-	// Extract components from ciphertext
-	ephemeralPubKey := ciphertext[:PublicKeySize]
-	nonce := ciphertext[PublicKeySize : PublicKeySize+NonceSize]
-	aeadCiphertext := ciphertext[PublicKeySize+NonceSize:]
+	return nil
+}
 
-	// Convert private key to proper format
+// extractCiphertextComponents parses the ciphertext format and extracts its components.
+func extractCiphertextComponents(ciphertext []byte) (ephemeralPubKey, nonce, aeadCiphertext []byte) {
+	ephemeralPubKey = ciphertext[:PublicKeySize]
+	nonce = ciphertext[PublicKeySize : PublicKeySize+NonceSize]
+	aeadCiphertext = ciphertext[PublicKeySize+NonceSize:]
+	return
+}
+
+// convertKeysToX25519Format converts raw byte keys to proper X25519 key types.
+func convertKeysToX25519Format(recipientPrivKey, ephemeralPubKey []byte) (x25519.PrivateKey, x25519.PublicKey) {
 	privKey := x25519.PrivateKey(recipientPrivKey)
-
-	// Convert ephemeral public key to proper format
 	ephemeralKey := x25519.PublicKey(ephemeralPubKey)
+	return privKey, ephemeralKey
+}
 
-	// Perform X25519 key agreement (static-ephemeral DH)
+// performKeyAgreementAndDerivation executes X25519 key agreement and derives the decryption key.
+func performKeyAgreementAndDerivation(privKey x25519.PrivateKey, ephemeralKey x25519.PublicKey) ([]byte, error) {
 	sharedSecret, err := privKey.SharedKey(ephemeralKey)
 	if err != nil {
 		return nil, oops.Errorf("X25519 key agreement failed: %w", err)
 	}
 
-	// Derive decryption key using HKDF with SHA-256
 	hkdfReader := hkdf.New(sha256.New, sharedSecret, nil, []byte("ECIES-X25519-AEAD"))
 	decryptionKey := make([]byte, 32)
 	if _, err := io.ReadFull(hkdfReader, decryptionKey); err != nil {
 		return nil, oops.Errorf("HKDF key derivation failed: %w", err)
 	}
 
-	// Create ChaCha20-Poly1305 AEAD cipher
+	return decryptionKey, nil
+}
+
+// decryptWithAEAD creates an AEAD cipher and performs the final decryption step.
+func decryptWithAEAD(decryptionKey, nonce, aeadCiphertext, ephemeralPubKey []byte) ([]byte, error) {
 	aead, err := chacha20poly1305.New(decryptionKey)
 	if err != nil {
 		return nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
 	}
 
-	// Decrypt ciphertext with associated data = ephemeral public key
 	plaintext, err := aead.Open(nil, nonce, aeadCiphertext, ephemeralPubKey)
 	if err != nil {
 		return nil, oops.Errorf("ChaCha20-Poly1305 decryption failed: %w", err)
