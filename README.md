@@ -84,6 +84,7 @@ func main() {
 }
 ```
 
+
 ### Asymmetric Encryption (Curve25519)
 
 ```go
@@ -97,15 +98,42 @@ import (
 func main() {
     // Generate key pair
     pubKey, privKey, _ := curve25519.GenerateKeyPair()
-    
+
     // Create encrypter and decrypter
     encrypter, _ := pubKey.NewEncrypter()
     decrypter, _ := privKey.NewDecrypter()
-    
+
     // Encrypt data
     plaintext := []byte("Secret message")
     ciphertext, _ := encrypter.Encrypt(plaintext)
-    
+
+    // Decrypt data
+    decrypted, _ := decrypter.Decrypt(ciphertext)
+}
+```
+
+### Asymmetric Encryption (ElGamal)
+
+```go
+package main
+
+import (
+    "github.com/go-i2p/crypto/elg"
+    "github.com/go-i2p/crypto/types"
+)
+
+func main() {
+    // Generate ElGamal key pair
+    pubKey, privKey, _ := elg.GenerateKeyPair()
+
+    // Create encrypter and decrypter
+    encrypter, _ := pubKey.NewEncrypter()
+    decrypter, _ := privKey.NewDecrypter()
+
+    // Encrypt data
+    plaintext := []byte("Confidential message")
+    ciphertext, _ := encrypter.Encrypt(plaintext)
+
     // Decrypt data
     decrypted, _ := decrypter.Decrypt(ciphertext)
 }
