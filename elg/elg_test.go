@@ -72,43 +72,98 @@ func BenchmarkElgEncrypt(b *testing.B) {
 }
 
 func TestElg(t *testing.T) {
+	k, err := generateElgamalPrivateKey(t)
+	if err != nil {
+		return
+	}
+
+	msg, err := generateRandomMessage(t)
+	if err != nil {
+		return
+	}
+
+	encrypter, err := createElgamalEncrypter(t, k)
+	if err != nil {
+		return
+	}
+
+	ciphertext, err := encryptMessage(t, encrypter, msg)
+	if err != nil {
+		return
+	}
+
+	decryptedMsg, err := decryptMessage(t, k, ciphertext)
+	if err != nil {
+		return
+	}
+
+	validateRoundTripResult(t, msg, decryptedMsg)
+}
+
+// generateElgamalPrivateKey creates a new ElGamal private key for testing.
+func generateElgamalPrivateKey(t *testing.T) (*elgamal.PrivateKey, error) {
 	k := new(elgamal.PrivateKey)
 	err := ElgamalGenerate(k, rand.Reader)
-	if err == nil {
-		msg := make([]byte, 222)
-		_, err := io.ReadFull(rand.Reader, msg)
-		if err == nil {
-			pub := createElgamalPublicKey(k.Y.Bytes())
-			enc, err := createElgamalEncryption(pub, rand.Reader)
-			if err == nil {
-				emsg, err := enc.Encrypt(msg)
-				if err == nil {
-					dec, err := elgamalDecrypt(k, emsg, true)
-					if err == nil {
-						if bytes.Equal(dec, msg) {
-							t.Logf("%q == %q", dec, msg)
-						} else {
-							t.Logf("%q != %q", dec, msg)
-							t.Fail()
-						}
-					} else {
-						t.Logf("decrypt failed: %s", err.Error())
-						t.Fail()
-					}
-				} else {
-					t.Logf("failed to encrypt message: %s", err.Error())
-					t.Fail()
-				}
-			} else {
-				t.Logf("failed to create encryption: %s", err.Error())
-				t.Fail()
-			}
-		} else {
-			t.Logf("failed to generate random message: %s", err.Error())
-			t.Fail()
-		}
-	} else {
+	if err != nil {
 		t.Logf("error while generating key: %s", err.Error())
+		t.Fail()
+		return nil, err
+	}
+	return k, nil
+}
+
+// generateRandomMessage creates a random message of the appropriate size for ElGamal encryption.
+func generateRandomMessage(t *testing.T) ([]byte, error) {
+	msg := make([]byte, 222)
+	_, err := io.ReadFull(rand.Reader, msg)
+	if err != nil {
+		t.Logf("failed to generate random message: %s", err.Error())
+		t.Fail()
+		return nil, err
+	}
+	return msg, nil
+}
+
+// createElgamalEncrypter sets up an ElGamal encrypter from the given private key.
+func createElgamalEncrypter(t *testing.T, k *elgamal.PrivateKey) (*ElgamalEncryption, error) {
+	pub := createElgamalPublicKey(k.Y.Bytes())
+	enc, err := createElgamalEncryption(pub, rand.Reader)
+	if err != nil {
+		t.Logf("failed to create encryption: %s", err.Error())
+		t.Fail()
+		return nil, err
+	}
+	return enc, nil
+}
+
+// encryptMessage encrypts the given message using the ElGamal encrypter.
+func encryptMessage(t *testing.T, enc *ElgamalEncryption, msg []byte) ([]byte, error) {
+	emsg, err := enc.Encrypt(msg)
+	if err != nil {
+		t.Logf("failed to encrypt message: %s", err.Error())
+		t.Fail()
+		return nil, err
+	}
+	return emsg, nil
+}
+
+// decryptMessage decrypts the given ciphertext using the ElGamal private key.
+func decryptMessage(t *testing.T, k *elgamal.PrivateKey, ciphertext []byte) ([]byte, error) {
+	dec, err := elgamalDecrypt(k, ciphertext, true)
+	if err != nil {
+		t.Logf("decrypt failed: %s", err.Error())
+		t.Fail()
+		return nil, err
+	}
+	return dec, nil
+}
+
+// validateRoundTripResult verifies that the decrypted message matches the original.
+func validateRoundTripResult(t *testing.T, original, decrypted []byte) {
+	if bytes.Equal(decrypted, original) {
+		t.Logf("%q == %q", decrypted, original)
+	} else {
+		t.Logf("%q != %q", decrypted, original)
 		t.Fail()
 	}
 }
