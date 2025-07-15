@@ -111,6 +111,32 @@ func main() {
 }
 ```
 
+
+### Message Authentication (HMAC)
+
+```go
+package main
+
+import (
+    "crypto/rand"
+    "github.com/go-i2p/crypto/hmac"
+)
+
+func main() {
+    // Generate HMAC key
+    var key hmac.HMACKey
+    rand.Read(key[:])
+
+    // Data to authenticate
+    data := []byte("Authenticate this message")
+
+    // Compute HMAC-SHA256 digest
+    digest := hmac.I2PHMAC(data, key)
+
+    // Use digest for authentication or verification
+}
+```
+
 ### Digital Signatures (Ed25519)
 
 ```go

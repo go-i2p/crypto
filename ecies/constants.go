@@ -2,7 +2,13 @@
 // Moved from: ecies.go
 package ecies
 
-import "github.com/samber/oops"
+import (
+	"github.com/go-i2p/logger"
+	"github.com/samber/oops"
+)
+
+// Logger instance for ECIES package operations
+var log = logger.GetGoI2PLogger()
 
 // Constants for ECIES-X25519 implementation
 // Moved from: ecies.go

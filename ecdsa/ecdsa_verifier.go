@@ -7,6 +7,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/samber/oops"
 	"github.com/sirupsen/logrus"
 )
 
@@ -31,8 +32,8 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 		log.WithFields(logrus.Fields{
 			"expected_length": expectedSigLen,
 			"actual_length":   len(sig),
-		}).Error("Invalid ECDSA signature length")
-		err = types.ErrInvalidSignature
+		}).Error("Unsupported ECDSA signature format or length")
+		err = oops.Errorf("unsupported ECDSA signature format: got %d bytes, expected %d (R||S)", len(sig), expectedSigLen)
 		return
 	}
 
