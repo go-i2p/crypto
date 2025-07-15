@@ -100,10 +100,10 @@ type PublicKey interface {
 ```
 
 
-#### type RecievingPublicKey
+#### type ReceivingPublicKey
 
 ```go
-type RecievingPublicKey interface {
+type ReceivingPublicKey interface {
 	Len() int
 	Bytes() []byte
 	NewEncrypter() (Encrypter, error)

@@ -5,7 +5,7 @@ type PublicKey interface {
 	Bytes() []byte
 }
 
-type RecievingPublicKey interface {
+type ReceivingPublicKey interface {
 	Len() int
 	Bytes() []byte
 	NewEncrypter() (Encrypter, error)
