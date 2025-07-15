@@ -38,8 +38,10 @@ func (v *ECDSAVerifier) Verify(data, sig []byte) (err error) {
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying ECDSA signature")
-	// sum the data and get the hash
-	h := v.h.New().Sum(data)[len(data):]
+	// hash the data
+	hasher := v.h.New()
+	hasher.Write(data)
+	h := hasher.Sum(nil)
 	// verify
 	err = v.VerifyHash(h, sig)
 	return
