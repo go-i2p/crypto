@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>go-i2p/crypto</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="nav-sidebar">
+    <div class="repo-info">
+      <h2>
+        <a href="index.html">go-i2p/crypto</a>
+      </h2>
+      <div class="repo-meta">
+        📝 46 commits
+         • 📜 MIT License
+      </div>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Repository Overview</a></li>
+      
+      
+        <div class="nav-section-title">Documentation:</div>
+        
+          <li><a href="docs/template.html">Template</a></li>
+        
+      
+    </ul>
+    
+    <div class="nav-footer">
+      <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a>
+    </div>
+  </nav>
+  
+  <div class="main-content">
+    <header class="repo-header">
+      <h1>go-i2p/crypto</h1>
+      <div class="repo-description">Comprehensive cryptography library for the I2P (Invisible Internet Project) anonymous networking ecosystem, factored out from the main router imple...</div>
+      
+      <div class="repo-stats">
+        
+        <div class="repo-stat">
+          <span>📝</span> <span>46 commits</span>
+        </div>
+        
+        
+        <div class="repo-stat">
+          <span>📅</span> <span>Last updated: July 15, 2025</span>
+        </div>
+        
+        
+        <div class="repo-stat">
+          <span>📜</span> <span>MIT License</span>
+        </div>
+        
+      </div>
+    </header>
+    
+    <main>
+      
+      <section id="readme" class="repo-section">
+        <h2>README</h2>
+        <div class="readme-content">
+          <h1 id="go-i2p-crypto">go-i2p/crypto</h1>
+
+<p>Comprehensive cryptography library for the I2P (Invisible Internet Project) anonymous networking ecosystem, factored out from the main router implementation. This package provides I2P-specific cryptographic implementations including symmetric encryption, asymmetric encryption, digital signatures, and hashing functions required for privacy-preserving communications and onion routing.</p>
+
+<hr>
+
+<h2 id="installation">Installation</h2>
+
+<p>Install the package using Go modules:</p>
+
+<pre><code class="language-bash">go get github.com/go-i2p/crypto
+</code></pre>
+
+<p><strong>Requirements:</strong></p>
+
+<ul>
+<li>Go 1.24.2 or later</li>
+<li>CGO_ENABLED=0 for static linking (recommended)</li>
+</ul>
+
+<hr>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="basic-symmetric-encryption-aes">Basic Symmetric Encryption (AES)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;crypto/rand&quot;
+    &quot;github.com/go-i2p/crypto/aes&quot;
+    &quot;github.com/go-i2p/crypto/types&quot;
+)
+
+func main() {
+    // Generate key and IV
+    key := make([]byte, 32) // AES-256
+    iv := make([]byte, 16)  // AES block size
+    rand.Read(key)
+    rand.Read(iv)
+    
+    // Create symmetric key
+    symmetricKey := &amp;aes.AESSymmetricKey{
+        Key: key,
+        IV:  iv,
+    }
+    
+    // Create encrypter and decrypter
+    encrypter, _ := symmetricKey.NewEncrypter()
+    decrypter, _ := symmetricKey.NewDecrypter()
+    
+    // Encrypt data
+    plaintext := []byte(&quot;Hello, I2P!&quot;)
+    ciphertext, _ := encrypter.Encrypt(plaintext)
+    
+    // Decrypt data
+    decrypted, _ := decrypter.Decrypt(ciphertext)
+}
+</code></pre>
+
+<h3 id="stream-cipher-encryption-chacha20">Stream Cipher Encryption (ChaCha20)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/chacha20&quot;
+    &quot;github.com/go-i2p/crypto/types&quot;
+)
+
+func main() {
+    // Generate ChaCha20 key
+    key, _ := chacha20.GenerateKey()
+    
+    // Create encrypter and decrypter
+    encrypter, _ := key.NewEncrypter()
+    decrypter, _ := key.NewDecrypter()
+    
+    // Encrypt data
+    plaintext := []byte(&quot;Hello, I2P!&quot;)
+    ciphertext, _ := encrypter.Encrypt(plaintext)
+    
+    // Decrypt data
+    decrypted, _ := decrypter.Decrypt(ciphertext)
+}
+</code></pre>
+
+<h3 id="asymmetric-encryption-curve25519">Asymmetric Encryption (Curve25519)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/curve25519&quot;
+    &quot;github.com/go-i2p/crypto/types&quot;
+)
+
+func main() {
+    // Generate key pair
+    pubKey, privKey, _ := curve25519.GenerateKeyPair()
+
+    // Create encrypter and decrypter
+    encrypter, _ := pubKey.NewEncrypter()
+    decrypter, _ := privKey.NewDecrypter()
+
+    // Encrypt data
+    plaintext := []byte(&quot;Secret message&quot;)
+    ciphertext, _ := encrypter.Encrypt(plaintext)
+
+    // Decrypt data
+    decrypted, _ := decrypter.Decrypt(ciphertext)
+}
+</code></pre>
+
+<h3 id="asymmetric-encryption-elgamal">Asymmetric Encryption (ElGamal)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/elg&quot;
+    &quot;github.com/go-i2p/crypto/types&quot;
+)
+
+func main() {
+    // Generate ElGamal key pair
+    pubKey, privKey, _ := elg.GenerateKeyPair()
+
+    // Create encrypter and decrypter
+    encrypter, _ := pubKey.NewEncrypter()
+    decrypter, _ := privKey.NewDecrypter()
+
+    // Encrypt data
+    plaintext := []byte(&quot;Confidential message&quot;)
+    ciphertext, _ := encrypter.Encrypt(plaintext)
+
+    // Decrypt data
+    decrypted, _ := decrypter.Decrypt(ciphertext)
+}
+</code></pre>
+
+<h3 id="message-authentication-hmac">Message Authentication (HMAC)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;crypto/rand&quot;
+    &quot;github.com/go-i2p/crypto/hmac&quot;
+)
+
+func main() {
+    // Generate HMAC key
+    var key hmac.HMACKey
+    rand.Read(key[:])
+
+    // Data to authenticate
+    data := []byte(&quot;Authenticate this message&quot;)
+
+    // Compute HMAC-SHA256 digest
+    digest := hmac.I2PHMAC(data, key)
+
+    // Use digest for authentication or verification
+}
+</code></pre>
+
+<h3 id="digital-signatures-ed25519">Digital Signatures (Ed25519)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/ed25519&quot;
+    &quot;github.com/go-i2p/crypto/types&quot;
+)
+
+func main() {
+    // Generate signing key
+    privKey, _ := ed25519.GenerateEd25519Key()
+    pubKey, _ := privKey.Public()
+    
+    // Create signer and verifier
+    signer, _ := privKey.NewSigner()
+    verifier, _ := pubKey.NewVerifier()
+    
+    // Sign data
+    data := []byte(&quot;Document to sign&quot;)
+    signature, _ := signer.Sign(data)
+    
+    // Verify signature
+    err := verifier.Verify(data, signature)
+    if err == nil {
+        // Signature is valid
+    }
+}
+</code></pre>
+
+<hr>
+
+<h2 id="features">Features</h2>
+
+<ul>
+<li><p><strong>Symmetric Encryption</strong></p>
+
+<ul>
+<li>AES (128/192/256-bit) with CBC mode</li>
+<li>ChaCha20 stream cipher</li>
+</ul></li>
+
+<li><p><strong>Asymmetric Encryption</strong></p>
+
+<ul>
+<li>Curve25519 (X25519) key agreement</li>
+<li>RSA (2048/3072/4096-bit)</li>
+<li>ElGamal encryption</li>
+</ul></li>
+
+<li><p><strong>Digital Signatures</strong></p>
+
+<ul>
+<li>Ed25519 signatures</li>
+<li>DSA (Digital Signature Algorithm)</li>
+<li>ECDSA (P-256, P-384, P-521 curves)</li>
+</ul></li>
+
+<li><p><strong>Message Authentication</strong></p>
+
+<ul>
+<li>HMAC (Hash-based Message Authentication Code)</li>
+<li>HKDF (HMAC-based Key Derivation Function)</li>
+</ul></li>
+</ul>
+
+<hr>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>The package follows an interface-first design with core cryptographic interfaces defined in the <code>types/</code> package:</p>
+
+<ul>
+<li><code>Encrypter</code> / <code>Decrypter</code> interfaces for encryption operations</li>
+<li><code>Signer</code> / <code>Verifier</code> interfaces for signature operations</li>
+<li><code>PublicEncryptionKey</code> / <code>PrivateEncryptionKey</code> for key management</li>
+<li><code>SigningPublicKey</code> / <code>SigningPrivateKey</code> for signing keys</li>
+</ul>
+
+<p>Each cryptographic algorithm is implemented in its own package with consistent error handling using the <code>github.com/samber/oops</code> library.</p>
+
+<hr>
+
+<h2 id="testing">Testing</h2>
+
+<p>Run the comprehensive test suite:</p>
+
+<pre><code class="language-bash">make test
+</code></pre>
+
+<p>The test suite includes table-driven tests for all cryptographic operations, testing edge cases like empty data, exact block sizes, and large datasets.</p>
+
+<hr>
+
+<h2 id="license">License</h2>
+
+<p>MIT License - see LICENSE file for details.</p>
+
+<p>Copyright &copy; 2025 I2P For Go</p>
+
+        </div>
+      </section>
+      
+      
+      
+      <section id="contributors" class="repo-section">
+        <h2>Top Contributors</h2>
+        <div class="contributors-list">
+          
+          <div class="contributor-item">
+            <!-- Use first letter as avatar if no image available -->
+            <div class="contributor-avatar">
+              e
+            </div>
+            <div class="contributor-info">
+              <div class="contributor-name">
+                eyedeekay
+              </div>
+              <div class="contributor-commits">
+                46 commits
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <a href="https://github.com/go-i2p/crypto/graphs/contributors" target="_blank">View all contributors on GitHub →</a>
+      </section>
+      
+    </main>
+    
+    <footer class="page-footer">
+      <p>Generated on 2025-07-15 22:50:21 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
