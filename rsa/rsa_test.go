@@ -3,7 +3,6 @@ package rsa
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	"crypto/x509"
 	"testing"
 
 	"github.com/go-i2p/crypto/types"
@@ -29,24 +28,24 @@ func generateRSA2048PrivateKey() (RSA2048PrivateKey, error) {
 		return RSA2048PrivateKey{}, err
 	}
 
-	// TEMPORARY FIX: Store only the modulus bytes for now
-	// This is not the final I2P-compliant format, but allows testing
+	// I2P-compliant format: Store modulus (256 bytes) + private exponent (256 bytes)
 	var privKey RSA2048PrivateKey
-	
-	// Store the modulus (N) which is exactly 256 bytes for RSA-2048
+
+	// Store the modulus (N) - first 256 bytes
 	modulusBytes := stdPrivKey.N.Bytes()
-	if len(modulusBytes) != 256 {
-		// Pad with leading zeros if needed
-		if len(modulusBytes) < 256 {
-			paddedModulus := make([]byte, 256)
-			copy(paddedModulus[256-len(modulusBytes):], modulusBytes)
-			copy(privKey.RSA2048PrivateKey[:], paddedModulus)
-		} else {
-			return RSA2048PrivateKey{}, ErrInvalidKeySize
-		}
-	} else {
-		copy(privKey.RSA2048PrivateKey[:], modulusBytes)
+	if len(modulusBytes) > 256 {
+		return RSA2048PrivateKey{}, ErrInvalidKeySize
 	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA2048PrivateKey[256-len(modulusBytes):256], modulusBytes)
+
+	// Store the private exponent (D) - next 256 bytes
+	dBytes := stdPrivKey.D.Bytes()
+	if len(dBytes) > 256 {
+		return RSA2048PrivateKey{}, ErrInvalidKeySize
+	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA2048PrivateKey[512-len(dBytes):512], dBytes)
 
 	return privKey, nil
 }
@@ -58,16 +57,24 @@ func generateRSA3072PrivateKey() (RSA3072PrivateKey, error) {
 		return RSA3072PrivateKey{}, err
 	}
 
-	// Convert to PKCS#1 DER format
-	derBytes := x509.MarshalPKCS1PrivateKey(stdPrivKey)
-
+	// I2P-compliant format: Store modulus (384 bytes) + private exponent (384 bytes)
 	var privKey RSA3072PrivateKey
-	if len(derBytes) > 786 {
+
+	// Store the modulus (N) - first 384 bytes
+	modulusBytes := stdPrivKey.N.Bytes()
+	if len(modulusBytes) > 384 {
 		return RSA3072PrivateKey{}, ErrInvalidKeySize
 	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA3072PrivateKey[384-len(modulusBytes):384], modulusBytes)
 
-	// Copy the DER bytes to the fixed-size array
-	copy(privKey.RSA3072PrivateKey[:], derBytes)
+	// Store the private exponent (D) - next 384 bytes
+	dBytes := stdPrivKey.D.Bytes()
+	if len(dBytes) > 384 {
+		return RSA3072PrivateKey{}, ErrInvalidKeySize
+	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA3072PrivateKey[768-len(dBytes):768], dBytes)
 
 	return privKey, nil
 }
@@ -79,16 +86,24 @@ func generateRSA4096PrivateKey() (RSA4096PrivateKey, error) {
 		return RSA4096PrivateKey{}, err
 	}
 
-	// Convert to PKCS#1 DER format
-	derBytes := x509.MarshalPKCS1PrivateKey(stdPrivKey)
-
+	// I2P-compliant format: Store modulus (512 bytes) + private exponent (512 bytes)
 	var privKey RSA4096PrivateKey
-	if len(derBytes) > 1024 {
+
+	// Store the modulus (N) - first 512 bytes
+	modulusBytes := stdPrivKey.N.Bytes()
+	if len(modulusBytes) > 512 {
 		return RSA4096PrivateKey{}, ErrInvalidKeySize
 	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA4096PrivateKey[512-len(modulusBytes):512], modulusBytes)
 
-	// Copy the DER bytes to the fixed-size array
-	copy(privKey.RSA4096PrivateKey[:], derBytes)
+	// Store the private exponent (D) - next 512 bytes
+	dBytes := stdPrivKey.D.Bytes()
+	if len(dBytes) > 512 {
+		return RSA4096PrivateKey{}, ErrInvalidKeySize
+	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA4096PrivateKey[1024-len(dBytes):1024], dBytes)
 
 	return privKey, nil
 }
@@ -205,10 +220,10 @@ func TestRSA2048_Bytes(t *testing.T) {
 	var privKey RSA2048PrivateKey
 	var pubKey RSA2048PublicKey
 
-	// Test private key bytes
+	// Test private key bytes (I2P format: 256 bytes modulus + 256 bytes private exponent)
 	privBytes := privKey.Bytes()
-	if len(privBytes) != 256 {
-		t.Errorf("RSA2048PrivateKey.Bytes() length = %d, want 256", len(privBytes))
+	if len(privBytes) != 512 {
+		t.Errorf("RSA2048PrivateKey.Bytes() length = %d, want 512", len(privBytes))
 	}
 
 	// Test public key bytes

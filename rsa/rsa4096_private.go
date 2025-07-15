@@ -5,14 +5,14 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha512"
-	"crypto/x509"
+	"math/big"
 
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
 )
 
 type RSA4096PrivateKey struct {
-	RSA4096PrivateKey [1024]byte
+	RSA4096PrivateKey [1024]byte // I2P-compliant: 512 bytes modulus + 512 bytes private exponent
 }
 
 // Sign implements types.Signer.
@@ -29,8 +29,8 @@ func (r RSA4096PrivateKey) Sign(data []byte) (sig []byte, err error) {
 func (r RSA4096PrivateKey) SignHash(h []byte) (sig []byte, err error) {
 	log.Debug("Signing hash with RSA-4096")
 
-	// Parse the private key from PKCS#1 DER format
-	privKey, err := x509.ParsePKCS1PrivateKey(r.RSA4096PrivateKey[:])
+	// Convert I2P format to rsa.PrivateKey
+	privKey, err := r.toRSAPrivateKey()
 	if err != nil {
 		log.WithError(err).Error("Failed to parse RSA-4096 private key")
 		return nil, oops.Errorf("invalid RSA-4096 private key: %w", err)
@@ -59,8 +59,8 @@ func (r RSA4096PrivateKey) Bytes() []byte {
 func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
 	log.Debug("Extracting public key from RSA-4096 private key")
 
-	// Parse the private key from PKCS#1 DER format
-	privKey, err := x509.ParsePKCS1PrivateKey(r.RSA4096PrivateKey[:])
+	// Convert I2P format to rsa.PrivateKey
+	privKey, err := r.toRSAPrivateKey()
 	if err != nil {
 		log.WithError(err).Error("Failed to parse RSA-4096 private key")
 		return nil, oops.Errorf("invalid RSA-4096 private key: %w", err)
@@ -77,6 +77,36 @@ func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
 
 	log.Debug("RSA-4096 public key extracted successfully")
 	return pubKey, nil
+}
+
+// Helper method to convert I2P format to rsa.PrivateKey
+func (r RSA4096PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
+	// Extract modulus (N) from first 512 bytes
+	nBytes := r.RSA4096PrivateKey[:512]
+	n := new(big.Int).SetBytes(nBytes)
+
+	// Extract private exponent (D) from next 512 bytes
+	dBytes := r.RSA4096PrivateKey[512:1024]
+	d := new(big.Int).SetBytes(dBytes)
+
+	// Standard RSA public exponent
+	e := 65537
+
+	// Create RSA private key
+	privKey := &rsa.PrivateKey{
+		PublicKey: rsa.PublicKey{
+			N: n,
+			E: e,
+		},
+		D: d,
+	}
+
+	// Validate key size is 4096 bits
+	if privKey.Size() != 512 {
+		return nil, oops.Errorf("unexpected RSA key size: got %d, want 512", privKey.Size())
+	}
+
+	return privKey, nil
 }
 
 // Zero implements types.PrivateKey.

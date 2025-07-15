@@ -5,14 +5,14 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
-	"crypto/x509"
+	"math/big"
 
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
 )
 
 type RSA2048PrivateKey struct {
-	RSA2048PrivateKey [256]byte
+	RSA2048PrivateKey [512]byte // I2P-compliant: 256 bytes modulus + 256 bytes private exponent
 }
 
 // Sign implements types.Signer.
@@ -83,15 +83,29 @@ func (r *RSA2048PrivateKey) Zero() {
 	log.Debug("RSA-2048 private key securely erased")
 }
 
-// Helper method to convert byte array to rsa.PrivateKey
+// Helper method to convert I2P format to rsa.PrivateKey
 func (r RSA2048PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
-	// Parse PKCS#1 encoded private key
-	privKey, err := x509.ParsePKCS1PrivateKey(r.RSA2048PrivateKey[:])
-	if err != nil {
-		return nil, oops.Errorf("invalid RSA private key format: %w", err)
+	// Extract modulus (N) from first 256 bytes
+	nBytes := r.RSA2048PrivateKey[:256]
+	n := new(big.Int).SetBytes(nBytes)
+
+	// Extract private exponent (D) from next 256 bytes
+	dBytes := r.RSA2048PrivateKey[256:512]
+	d := new(big.Int).SetBytes(dBytes)
+
+	// Standard RSA public exponent
+	e := 65537
+
+	// Create RSA private key
+	privKey := &rsa.PrivateKey{
+		PublicKey: rsa.PublicKey{
+			N: n,
+			E: e,
+		},
+		D: d,
 	}
 
-	// Validate key size is 2048 bits (256 bytes)
+	// Validate key size is 2048 bits
 	if privKey.Size() != 256 {
 		return nil, oops.Errorf("unexpected RSA key size: got %d, want 256", privKey.Size())
 	}
