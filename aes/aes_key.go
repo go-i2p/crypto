@@ -58,3 +58,21 @@ func (k *AESSymmetricKey) NewDecrypter() (types.Decrypter, error) {
 		IV:  k.IV,
 	}, nil
 }
+
+// Zero implements secure memory cleanup for sensitive key material.
+// Clears both the AES key and IV from memory.
+func (k *AESSymmetricKey) Zero() {
+	log.Debug("Securely clearing AES key material from memory")
+
+	// Overwrite key with zeros
+	for i := range k.Key {
+		k.Key[i] = 0
+	}
+
+	// Overwrite IV with zeros
+	for i := range k.IV {
+		k.IV[i] = 0
+	}
+
+	log.Debug("AES key material securely erased")
+}

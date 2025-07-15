@@ -248,3 +248,54 @@ func TestAESConstructorValidation(t *testing.T) {
 		})
 	}
 }
+
+// TestAESZeroMethod tests that Zero() method securely clears key material
+func TestAESZeroMethod(t *testing.T) {
+	// Create test key with known data
+	key := &AESSymmetricKey{
+		Key: []byte("this_is_a_test_key_32_bytes_long"), // 32 bytes for AES-256
+		IV:  []byte("test_iv_16_bytes"),                 // 16 bytes for AES IV
+	}
+
+	// Verify key and IV have non-zero data initially
+	keyHasData := false
+	for _, b := range key.Key {
+		if b != 0 {
+			keyHasData = true
+			break
+		}
+	}
+	if !keyHasData {
+		t.Error("Test key should have non-zero data initially")
+	}
+
+	ivHasData := false
+	for _, b := range key.IV {
+		if b != 0 {
+			ivHasData = true
+			break
+		}
+	}
+	if !ivHasData {
+		t.Error("Test IV should have non-zero data initially")
+	}
+
+	// Call Zero() method
+	key.Zero()
+
+	// Verify all key bytes are zero
+	for i, b := range key.Key {
+		if b != 0 {
+			t.Errorf("Key byte %d is %d, expected 0 after Zero()", i, b)
+		}
+	}
+
+	// Verify all IV bytes are zero
+	for i, b := range key.IV {
+		if b != 0 {
+			t.Errorf("IV byte %d is %d, expected 0 after Zero()", i, b)
+		}
+	}
+
+	t.Log("AES Zero() method successfully cleared all key material")
+}
