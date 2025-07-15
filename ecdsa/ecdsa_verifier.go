@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"crypto/ecdsa"
 	"crypto/elliptic"
+	"math/big"
 
 	"github.com/go-i2p/crypto/types"
 	"github.com/sirupsen/logrus"
@@ -22,8 +23,24 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 		"sig_length":  len(sig),
 	}).Debug("Verifying ECDSA signature hash")
 
-	r, s := elliptic.Unmarshal(v.c, sig)
-	if r == nil || s == nil || !ecdsa.Verify(v.k, h, r, s) {
+	// Calculate expected signature length based on curve
+	curveOrderBytes := (v.c.Params().BitSize + 7) / 8
+	expectedSigLen := 2 * curveOrderBytes
+
+	if len(sig) != expectedSigLen {
+		log.WithFields(logrus.Fields{
+			"expected_length": expectedSigLen,
+			"actual_length":   len(sig),
+		}).Error("Invalid ECDSA signature length")
+		err = types.ErrInvalidSignature
+		return
+	}
+
+	// Parse r and s from signature bytes
+	r := new(big.Int).SetBytes(sig[:curveOrderBytes])
+	s := new(big.Int).SetBytes(sig[curveOrderBytes:])
+
+	if !ecdsa.Verify(v.k, h, r, s) {
 		log.Warn("Invalid ECDSA signature")
 		err = types.ErrInvalidSignature
 	} else {
