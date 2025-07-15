@@ -10,7 +10,7 @@ import (
 
 func TestDSA(t *testing.T) {
 	var sk DSAPrivateKey
-	var pk DSAPublicKey
+	var pk types.SigningPublicKey
 	var err error
 	sk, err = sk.Generate()
 	if err == nil {
@@ -25,6 +25,9 @@ func TestDSA(t *testing.T) {
 			t.Fail()
 		}
 		pk, err = sk.Public()
+		if err != nil {
+			t.Fatal(err)
+		}
 		data := make([]byte, 512)
 		io.ReadFull(rand.Reader, data)
 		if err == nil {
@@ -62,7 +65,7 @@ func BenchmarkDSAGenerate(b *testing.B) {
 
 func BenchmarkDSASignVerify(b *testing.B) {
 	var sk DSAPrivateKey
-	var pk DSAPublicKey
+	var pk types.SigningPublicKey
 	var err error
 	sk, err = sk.Generate()
 	if err != nil {

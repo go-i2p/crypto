@@ -17,16 +17,17 @@ func (k DSAPrivateKey) NewSigner() (s types.Signer, err error) {
 	return
 }
 
-func (k DSAPrivateKey) Public() (pk DSAPublicKey, err error) {
+func (k DSAPrivateKey) Public() (types.SigningPublicKey, error) {
+	var pk DSAPublicKey
 	p := createDSAPrivkey(new(big.Int).SetBytes(k[:]))
 	if p == nil {
 		log.Error("Invalid DSA private key format")
-		err = types.ErrInvalidKeyFormat
+		return nil, types.ErrInvalidKeyFormat
 	} else {
 		copy(pk[:], p.Y.Bytes())
 		log.Debug("DSA public key derived successfully")
 	}
-	return
+	return pk, nil
 }
 
 func (k DSAPrivateKey) Len() int {
