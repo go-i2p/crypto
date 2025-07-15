@@ -1,4 +1,4 @@
-1name: Go Tests
+name: Go Tests
 
 on:
     push:
