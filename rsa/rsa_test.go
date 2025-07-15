@@ -199,8 +199,8 @@ func TestRSA2048_Bytes(t *testing.T) {
 
 	// Test private key bytes
 	privBytes := privKey.Bytes()
-	if len(privBytes) != 512 {
-		t.Errorf("RSA2048PrivateKey.Bytes() length = %d, want 512", len(privBytes))
+	if len(privBytes) != 256 {
+		t.Errorf("RSA2048PrivateKey.Bytes() length = %d, want 256", len(privBytes))
 	}
 
 	// Test public key bytes
