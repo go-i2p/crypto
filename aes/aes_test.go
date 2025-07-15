@@ -180,3 +180,71 @@ func TestPKCS7UnpadInvalidInput(t *testing.T) {
 		})
 	}
 }
+
+// TestAESConstructorValidation tests that NewEncrypter and NewDecrypter validate keys early
+func TestAESConstructorValidation(t *testing.T) {
+	testCases := []struct {
+		name          string
+		keySize       int
+		ivSize        int
+		expectSuccess bool
+		description   string
+	}{
+		{"AES128_valid", 16, 16, true, "Valid AES-128 key and IV"},
+		{"AES192_valid", 24, 16, true, "Valid AES-192 key and IV"},
+		{"AES256_valid", 32, 16, true, "Valid AES-256 key and IV"},
+		{"invalid_key_15", 15, 16, false, "Invalid key size: 15 bytes"},
+		{"invalid_key_17", 17, 16, false, "Invalid key size: 17 bytes"},
+		{"invalid_key_0", 0, 16, false, "Invalid key size: 0 bytes"},
+		{"invalid_iv_15", 16, 15, false, "Invalid IV size: 15 bytes"},
+		{"invalid_iv_17", 16, 17, false, "Invalid IV size: 17 bytes"},
+		{"invalid_iv_0", 16, 0, false, "Invalid IV size: 0 bytes"},
+		{"both_invalid", 15, 15, false, "Both key and IV invalid"},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			// Create key with specified sizes
+			key := &AESSymmetricKey{
+				Key: make([]byte, tc.keySize),
+				IV:  make([]byte, tc.ivSize),
+			}
+
+			// Test NewEncrypter
+			encrypter, encErr := key.NewEncrypter()
+			if tc.expectSuccess {
+				if encErr != nil {
+					t.Errorf("NewEncrypter failed for %s: %v", tc.description, encErr)
+				}
+				if encrypter == nil {
+					t.Errorf("NewEncrypter returned nil encrypter for %s", tc.description)
+				}
+			} else {
+				if encErr == nil {
+					t.Errorf("NewEncrypter should have failed for %s", tc.description)
+				}
+				if encrypter != nil {
+					t.Errorf("NewEncrypter should have returned nil encrypter for %s", tc.description)
+				}
+			}
+
+			// Test NewDecrypter
+			decrypter, decErr := key.NewDecrypter()
+			if tc.expectSuccess {
+				if decErr != nil {
+					t.Errorf("NewDecrypter failed for %s: %v", tc.description, decErr)
+				}
+				if decrypter == nil {
+					t.Errorf("NewDecrypter returned nil decrypter for %s", tc.description)
+				}
+			} else {
+				if decErr == nil {
+					t.Errorf("NewDecrypter should have failed for %s", tc.description)
+				}
+				if decrypter != nil {
+					t.Errorf("NewDecrypter should have returned nil decrypter for %s", tc.description)
+				}
+			}
+		})
+	}
+}

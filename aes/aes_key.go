@@ -11,6 +11,20 @@ type AESSymmetricKey struct {
 // NewEncrypter creates a new AESSymmetricEncrypter
 func (k *AESSymmetricKey) NewEncrypter() (types.Encrypter, error) {
 	log.Debug("Creating new AESSymmetricEncrypter")
+
+	// Validate key size (must be 16, 24, or 32 bytes for AES)
+	keyLen := len(k.Key)
+	if keyLen != 16 && keyLen != 24 && keyLen != 32 {
+		log.WithField("key_length", keyLen).Error("Invalid AES key size")
+		return nil, ErrInvalidKeySize
+	}
+
+	// Validate IV size (must be 16 bytes for AES)
+	if len(k.IV) != 16 {
+		log.WithField("iv_length", len(k.IV)).Error("Invalid AES IV size")
+		return nil, ErrInvalidIVSize
+	}
+
 	return &AESSymmetricEncrypter{
 		Key: k.Key,
 		IV:  k.IV,
@@ -24,6 +38,21 @@ func (k *AESSymmetricKey) Len() int {
 
 // NewDecrypter creates a new AESSymmetricDecrypter
 func (k *AESSymmetricKey) NewDecrypter() (types.Decrypter, error) {
+	log.Debug("Creating new AESSymmetricDecrypter")
+
+	// Validate key size (must be 16, 24, or 32 bytes for AES)
+	keyLen := len(k.Key)
+	if keyLen != 16 && keyLen != 24 && keyLen != 32 {
+		log.WithField("key_length", keyLen).Error("Invalid AES key size")
+		return nil, ErrInvalidKeySize
+	}
+
+	// Validate IV size (must be 16 bytes for AES)
+	if len(k.IV) != 16 {
+		log.WithField("iv_length", len(k.IV)).Error("Invalid AES IV size")
+		return nil, ErrInvalidIVSize
+	}
+
 	return &AESSymmetricDecrypter{
 		Key: k.Key,
 		IV:  k.IV,
