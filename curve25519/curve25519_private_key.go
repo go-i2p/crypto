@@ -26,7 +26,11 @@ func (k Curve25519PrivateKey) Public() (types.PublicEncryptionKey, error) {
 	copy(privKey, k)
 	// Derive the public key from the private key
 	pubKey := privKey.Public() // This will return the corresponding public key
-	x25519PubKey := pubKey.(curve25519.PublicKey)
+	x25519PubKey, ok := pubKey.(curve25519.PublicKey)
+	if !ok {
+		log.Error("Failed to convert public key to curve25519.PublicKey")
+		return nil, ErrInvalidPrivateKey
+	}
 	curve25519PubKey := Curve25519PublicKey(x25519PubKey)
 	return &curve25519PubKey, nil
 }
