@@ -8,6 +8,17 @@
 
 ## Usage
 
+```go
+var (
+	// ErrInvalidKeySize indicates the AES key is not 16, 24, or 32 bytes
+	ErrInvalidKeySize = oops.Errorf("invalid AES key size: must be 16, 24, or 32 bytes")
+
+	// ErrInvalidIVSize indicates the AES IV is not 16 bytes
+	ErrInvalidIVSize = oops.Errorf("invalid AES IV size: must be 16 bytes")
+)
+```
+Error definitions for AES operations
+
 #### func  NewCipher
 
 ```go
@@ -95,6 +106,14 @@ NewDecrypter creates a new AESSymmetricDecrypter
 func (k *AESSymmetricKey) NewEncrypter() (types.Encrypter, error)
 ```
 NewEncrypter creates a new AESSymmetricEncrypter
+
+#### func (*AESSymmetricKey) Zero
+
+```go
+func (k *AESSymmetricKey) Zero()
+```
+Zero implements secure memory cleanup for sensitive key material. Clears both
+the AES key and IV from memory.
 
 
 

@@ -22,7 +22,7 @@ Error constants for RSA operations
 
 ```go
 type RSA2048PrivateKey struct {
-	RSA2048PrivateKey [256]byte
+	RSA2048PrivateKey [512]byte // I2P-compliant: 256 bytes modulus + 256 bytes private exponent
 }
 ```
 
@@ -111,7 +111,7 @@ against the signature
 
 ```go
 type RSA3072PrivateKey struct {
-	RSA3072PrivateKey [786]byte
+	RSA3072PrivateKey [768]byte // I2P-compliant: 384 bytes modulus + 384 bytes private exponent
 }
 ```
 
@@ -218,7 +218,7 @@ VerifyHash implements types.Verifier.
 
 ```go
 type RSA4096PrivateKey struct {
-	RSA4096PrivateKey [1024]byte
+	RSA4096PrivateKey [1024]byte // I2P-compliant: 512 bytes modulus + 512 bytes private exponent
 }
 ```
 
