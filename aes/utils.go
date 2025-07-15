@@ -21,7 +21,7 @@ func pkcs7Pad(data []byte, blockSize int) []byte {
 	padded := append(data, padText...)
 
 	log.WithField("padded_length", len(padded)).Debug("PKCS#7 padding applied")
-	return append(data, padText...)
+	return padded
 }
 
 // pkcs7Unpad removes PKCS#7 padding from data.
