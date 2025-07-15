@@ -1,4 +1,4 @@
-package elgamal
+package elg
 
 import (
 	"crypto/sha256"

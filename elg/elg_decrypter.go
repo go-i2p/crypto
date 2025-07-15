@@ -1,4 +1,4 @@
-package elgamal
+package elg
 
 import "golang.org/x/crypto/openpgp/elgamal"
 
