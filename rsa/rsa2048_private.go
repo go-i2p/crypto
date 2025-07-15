@@ -83,6 +83,48 @@ func (r *RSA2048PrivateKey) Zero() {
 	log.Debug("RSA-2048 private key securely erased")
 }
 
+// Len implements types.SigningPrivateKey.
+func (r RSA2048PrivateKey) Len() int {
+	return len(r.RSA2048PrivateKey)
+}
+
+// NewSigner implements types.SigningPrivateKey.
+func (r RSA2048PrivateKey) NewSigner() (types.Signer, error) {
+	return r, nil
+}
+
+// Generate implements types.SigningPrivateKey.
+func (r RSA2048PrivateKey) Generate() (types.SigningPrivateKey, error) {
+	log.Debug("Generating new RSA2048 private key")
+	stdPrivKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+		log.WithError(err).Error("Failed to generate RSA2048 key")
+		return nil, oops.Errorf("failed to generate RSA2048 key: %w", err)
+	}
+
+	// I2P-compliant format: Store modulus (256 bytes) + private exponent (256 bytes)
+	var privKey RSA2048PrivateKey
+
+	// Store the modulus (N) - first 256 bytes
+	modulusBytes := stdPrivKey.N.Bytes()
+	if len(modulusBytes) > 256 {
+		return nil, ErrInvalidKeySize
+	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA2048PrivateKey[256-len(modulusBytes):256], modulusBytes)
+
+	// Store the private exponent (D) - next 256 bytes
+	dBytes := stdPrivKey.D.Bytes()
+	if len(dBytes) > 256 {
+		return nil, ErrInvalidKeySize
+	}
+	// Pad with leading zeros if needed
+	copy(privKey.RSA2048PrivateKey[512-len(dBytes):512], dBytes)
+
+	log.Debug("New RSA2048 private key generated successfully")
+	return privKey, nil
+}
+
 // Helper method to convert I2P format to rsa.PrivateKey
 func (r RSA2048PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 	// Extract modulus (N) from first 256 bytes

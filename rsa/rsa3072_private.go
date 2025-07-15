@@ -121,32 +121,33 @@ func (r RSA3072PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 
 // Generate creates a new RSA-3072 private key
 func (r *RSA3072PrivateKey) Generate() (types.SigningPrivateKey, error) {
-	// Generate a new RSA-3072 private key
-	privateKey, err := rsa.GenerateKey(rand.Reader, 3072)
+	log.Debug("Generating new RSA-3072 private key")
+	stdPrivKey, err := rsa.GenerateKey(rand.Reader, 3072)
 	if err != nil {
+		log.WithError(err).Error("Failed to generate RSA-3072 private key")
 		return nil, oops.Errorf("failed to generate RSA-3072 key: %w", err)
 	}
 
-	// I2P-compliant format: Store modulus (384 bytes) + private exponent (384 bytes)
+	// Convert to our format
 	var newKey RSA3072PrivateKey
 
-	// Store the modulus (N) - first 384 bytes
-	modulusBytes := privateKey.N.Bytes()
-	if len(modulusBytes) > 384 {
-		return nil, oops.Errorf("RSA modulus exceeds expected size")
+	// Extract modulus (384 bytes for RSA-3072)
+	nBytes := stdPrivKey.N.Bytes()
+	if len(nBytes) <= 384 {
+		copy(newKey.RSA3072PrivateKey[384-len(nBytes):384], nBytes)
+	} else {
+		copy(newKey.RSA3072PrivateKey[:384], nBytes[len(nBytes)-384:])
 	}
-	// Pad with leading zeros if needed
-	copy(newKey.RSA3072PrivateKey[384-len(modulusBytes):384], modulusBytes)
 
-	// Store the private exponent (D) - next 384 bytes
-	dBytes := privateKey.D.Bytes()
-	if len(dBytes) > 384 {
-		return nil, oops.Errorf("RSA private exponent exceeds expected size")
+	// Extract private exponent (384 bytes for RSA-3072)
+	dBytes := stdPrivKey.D.Bytes()
+	if len(dBytes) <= 384 {
+		copy(newKey.RSA3072PrivateKey[768-len(dBytes):], dBytes)
+	} else {
+		copy(newKey.RSA3072PrivateKey[384:], dBytes[len(dBytes)-384:])
 	}
-	// Pad with leading zeros if needed
-	copy(newKey.RSA3072PrivateKey[768-len(dBytes):768], dBytes)
 
-	log.Debug("RSA-3072 private key generated successfully")
+	log.Debug("New RSA-3072 private key generated successfully")
 	return &newKey, nil
 }
 

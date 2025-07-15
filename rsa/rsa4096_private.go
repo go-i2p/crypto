@@ -119,6 +119,48 @@ func (r *RSA4096PrivateKey) Zero() {
 	}
 }
 
+// Len implements types.SigningPrivateKey.
+func (r RSA4096PrivateKey) Len() int {
+	return len(r.RSA4096PrivateKey)
+}
+
+// NewSigner implements types.SigningPrivateKey.
+func (r RSA4096PrivateKey) NewSigner() (types.Signer, error) {
+	return r, nil
+}
+
+// Generate implements types.SigningPrivateKey.
+func (r RSA4096PrivateKey) Generate() (types.SigningPrivateKey, error) {
+	log.Debug("Generating new RSA-4096 private key")
+	stdPrivKey, err := rsa.GenerateKey(rand.Reader, 4096)
+	if err != nil {
+		log.WithError(err).Error("Failed to generate RSA-4096 private key")
+		return nil, oops.Errorf("failed to generate RSA-4096 key: %w", err)
+	}
+
+	// Convert to our format
+	var newKey RSA4096PrivateKey
+
+	// Extract modulus (512 bytes for RSA-4096)
+	nBytes := stdPrivKey.N.Bytes()
+	if len(nBytes) <= 512 {
+		copy(newKey.RSA4096PrivateKey[512-len(nBytes):512], nBytes)
+	} else {
+		copy(newKey.RSA4096PrivateKey[:512], nBytes[len(nBytes)-512:])
+	}
+
+	// Extract private exponent (512 bytes for RSA-4096)
+	dBytes := stdPrivKey.D.Bytes()
+	if len(dBytes) <= 512 {
+		copy(newKey.RSA4096PrivateKey[1024-len(dBytes):], dBytes)
+	} else {
+		copy(newKey.RSA4096PrivateKey[512:], dBytes[len(dBytes)-512:])
+	}
+
+	log.Debug("New RSA-4096 private key generated successfully")
+	return newKey, nil
+}
+
 var (
 	_ types.PrivateKey = (*RSA4096PrivateKey)(nil)
 	_ types.Signer     = RSA4096PrivateKey{}
