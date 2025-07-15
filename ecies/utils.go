@@ -19,20 +19,54 @@ import (
 // Returns ciphertext in the format: [ephemeral_pubkey][nonce][aead_ciphertext]
 // Moved from: ecies.go
 func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
+	if err := validateEncryptionInputs(recipientPubKey, plaintext); err != nil {
+		return nil, err
+	}
+
+	ephemeralPub, ephemeralPriv, err := generateEphemeralKeyPair()
+	if err != nil {
+		return nil, err
+	}
+
+	encryptionKey, err := deriveEncryptionKey(ephemeralPriv, recipientPubKey)
+	if err != nil {
+		return nil, err
+	}
+
+	nonce, ciphertext, err := encryptWithAEAD(encryptionKey, plaintext, ephemeralPub)
+	if err != nil {
+		return nil, err
+	}
+
+	result := buildCiphertextResult(ephemeralPub, nonce, ciphertext)
+	return result, nil
+}
+
+// validateEncryptionInputs checks that the recipient public key and plaintext are valid.
+func validateEncryptionInputs(recipientPubKey, plaintext []byte) error {
 	if len(recipientPubKey) != PublicKeySize {
-		return nil, ErrInvalidPublicKey
+		return ErrInvalidPublicKey
 	}
 
 	if len(plaintext) > MaxPlaintextSize {
-		return nil, ErrDataTooBig
+		return ErrDataTooBig
 	}
 
-	// Generate ephemeral key pair using x25519 directly
+	return nil
+}
+
+// generateEphemeralKeyPair creates a new ephemeral X25519 key pair for encryption.
+func generateEphemeralKeyPair() ([]byte, x25519.PrivateKey, error) {
 	ephemeralPub, ephemeralPriv, err := x25519.GenerateKey(rand.Reader)
 	if err != nil {
-		return nil, oops.Errorf("failed to generate ephemeral key pair: %w", err)
+		return nil, nil, oops.Errorf("failed to generate ephemeral key pair: %w", err)
 	}
 
+	return ephemeralPub, ephemeralPriv, nil
+}
+
+// deriveEncryptionKey performs X25519 key agreement and derives the encryption key using HKDF.
+func deriveEncryptionKey(ephemeralPriv x25519.PrivateKey, recipientPubKey []byte) ([]byte, error) {
 	// Convert recipient public key to x25519 format
 	recipientKey := x25519.PublicKey(recipientPubKey)
 
@@ -50,22 +84,31 @@ func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
 		return nil, oops.Errorf("HKDF key derivation failed: %w", err)
 	}
 
+	return encryptionKey, nil
+}
+
+// encryptWithAEAD encrypts the plaintext using ChaCha20-Poly1305 AEAD with a random nonce.
+func encryptWithAEAD(encryptionKey, plaintext, ephemeralPub []byte) ([]byte, []byte, error) {
 	// Create ChaCha20-Poly1305 AEAD cipher
 	aead, err := chacha20poly1305.New(encryptionKey)
 	if err != nil {
-		return nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
+		return nil, nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
 	}
 
 	// Generate random nonce
 	nonce := make([]byte, NonceSize)
 	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
-		return nil, oops.Errorf("failed to generate nonce: %w", err)
+		return nil, nil, oops.Errorf("failed to generate nonce: %w", err)
 	}
 
 	// Encrypt plaintext with associated data = ephemeral public key
 	ciphertext := aead.Seal(nil, nonce, plaintext, ephemeralPub)
 
-	// Build result: [ephemeral_pubkey][nonce][aead_ciphertext]
+	return nonce, ciphertext, nil
+}
+
+// buildCiphertextResult assembles the final ciphertext in the format [ephemeral_pubkey][nonce][aead_ciphertext].
+func buildCiphertextResult(ephemeralPub, nonce, ciphertext []byte) []byte {
 	result := make([]byte, PublicKeySize+NonceSize+len(ciphertext))
 	offset := 0
 
@@ -77,7 +120,7 @@ func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
 
 	copy(result[offset:], ciphertext)
 
-	return result, nil
+	return result
 }
 
 // DecryptECIESX25519 decrypts ciphertext using ECIES-X25519 scheme.
