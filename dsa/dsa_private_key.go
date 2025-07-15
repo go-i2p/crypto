@@ -1,6 +1,8 @@
 package dsa
 
 import (
+	"crypto/dsa"
+	"crypto/rand"
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
@@ -32,4 +34,19 @@ func (k DSAPrivateKey) Public() (types.SigningPublicKey, error) {
 
 func (k DSAPrivateKey) Len() int {
 	return len(k)
+}
+
+func (k DSAPrivateKey) Generate() (types.SigningPrivateKey, error) {
+	log.Debug("Generating new DSA private key")
+	dk := new(dsa.PrivateKey)
+	err := generateDSA(dk, rand.Reader)
+	if err == nil {
+		var newKey DSAPrivateKey
+		copy(newKey[:], dk.X.Bytes())
+		log.Debug("New DSA private key generated successfully")
+		return newKey, nil
+	} else {
+		log.WithError(err).Error("Failed to generate new DSA private key")
+		return nil, err
+	}
 }

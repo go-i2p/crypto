@@ -12,7 +12,11 @@ func TestDSA(t *testing.T) {
 	var sk DSAPrivateKey
 	var pk types.SigningPublicKey
 	var err error
-	sk, err = sk.Generate()
+	generatedKey, err := sk.Generate()
+	if err != nil {
+		t.Fatal(err)
+	}
+	sk = generatedKey.(DSAPrivateKey)
 	if err == nil {
 		zeros := 0
 		for b := range sk {
@@ -67,10 +71,11 @@ func BenchmarkDSASignVerify(b *testing.B) {
 	var sk DSAPrivateKey
 	var pk types.SigningPublicKey
 	var err error
-	sk, err = sk.Generate()
+	generatedKey, err := sk.Generate()
 	if err != nil {
 		panic(err.Error())
 	}
+	sk = generatedKey.(DSAPrivateKey)
 	pk, err = sk.Public()
 	if err != nil {
 		panic(err.Error())
