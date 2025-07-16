@@ -70,6 +70,14 @@ the "New Session" message format from I2P Proposal 144. The recipient's public
 key must be 32 bytes (X25519 public key). Returns ciphertext in the format:
 [ephemeral_pubkey][nonce][aead_ciphertext] Moved from: ecies.go
 
+#### func  GenerateECIESKeyPair
+
+```go
+func GenerateECIESKeyPair() (*ECIESPublicKey, *ECIESPrivateKey, error)
+```
+GenerateECIESKeyPair generates a new ECIES key pair using the standard interface
+types
+
 #### func  GenerateKeyPair
 
 ```go
@@ -78,6 +86,112 @@ func GenerateKeyPair() ([]byte, []byte, error)
 GenerateKeyPair generates a new X25519 key pair suitable for ECIES-X25519.
 Returns (publicKey, privateKey, error) where keys are 32 bytes each. Moved from:
 ecies.go
+
+#### type ECIESDecrypter
+
+```go
+type ECIESDecrypter struct {
+	PrivateKey ECIESPrivateKey
+}
+```
+
+ECIESDecrypter implements types.Decrypter using ECIES
+
+#### func (*ECIESDecrypter) Decrypt
+
+```go
+func (d *ECIESDecrypter) Decrypt(data []byte) ([]byte, error)
+```
+Decrypt decrypts data using ECIES-X25519
+
+#### type ECIESEncrypter
+
+```go
+type ECIESEncrypter struct {
+	PublicKey ECIESPublicKey
+}
+```
+
+ECIESEncrypter implements types.Encrypter using ECIES
+
+#### func (*ECIESEncrypter) Encrypt
+
+```go
+func (e *ECIESEncrypter) Encrypt(data []byte) ([]byte, error)
+```
+Encrypt encrypts data using ECIES-X25519
+
+#### type ECIESPrivateKey
+
+```go
+type ECIESPrivateKey [PrivateKeySize]byte
+```
+
+ECIESPrivateKey represents an ECIES X25519 private key for decryption
+
+#### func (ECIESPrivateKey) Bytes
+
+```go
+func (k ECIESPrivateKey) Bytes() []byte
+```
+Bytes returns the private key as a byte slice
+
+#### func (ECIESPrivateKey) Len
+
+```go
+func (k ECIESPrivateKey) Len() int
+```
+Len returns the length of the private key in bytes
+
+#### func (ECIESPrivateKey) NewDecrypter
+
+```go
+func (k ECIESPrivateKey) NewDecrypter() (types.Decrypter, error)
+```
+NewDecrypter creates a new decrypter using this private key
+
+#### func (ECIESPrivateKey) Public
+
+```go
+func (k ECIESPrivateKey) Public() (types.PublicEncryptionKey, error)
+```
+Public returns the corresponding public key
+
+#### func (ECIESPrivateKey) Zero
+
+```go
+func (k ECIESPrivateKey) Zero()
+```
+Zero securely clears the private key from memory
+
+#### type ECIESPublicKey
+
+```go
+type ECIESPublicKey [PublicKeySize]byte
+```
+
+ECIESPublicKey represents an ECIES X25519 public key for encryption
+
+#### func (ECIESPublicKey) Bytes
+
+```go
+func (k ECIESPublicKey) Bytes() []byte
+```
+Bytes returns the public key as a byte slice
+
+#### func (ECIESPublicKey) Len
+
+```go
+func (k ECIESPublicKey) Len() int
+```
+Len returns the length of the public key in bytes
+
+#### func (ECIESPublicKey) NewEncrypter
+
+```go
+func (k ECIESPublicKey) NewEncrypter() (types.Encrypter, error)
+```
+NewEncrypter creates a new encrypter using this public key
 
 
 

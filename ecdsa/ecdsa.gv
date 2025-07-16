@@ -20,86 +20,86 @@ labelloc="t";
 labeljust="c";
 fontsize="18";
         
-        "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ fillcolor="lightblue" label="CreateECVerifier" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecdsa.CreateECVerifier | defined in ecdsa_verifier.go:67\nat ecdsa_verifier.go:68: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:74: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_verifier.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:82: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "github.com/go-i2p/crypto/ecdsa.init" [ label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecdsa.init | defined in .:0\nat constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" fillcolor="lightblue" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
-        "github.com/samber/oops.Errorf" [ tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" ]
+        "github.com/samber/oops.Errorf" [ penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" ]
+        "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecdsa.CreateECVerifier | defined in ecdsa_verifier.go:68\nat ecdsa_verifier.go:69: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:72: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:83: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:75: calling [(*github.com/go-i2p/logger.Logger).Error]" fillcolor="lightblue" label="CreateECVerifier" ]
+        "github.com/go-i2p/crypto/ecdsa.init" [ tooltip="github.com/go-i2p/crypto/ecdsa.init | defined in .:0\nat constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" fillcolor="lightblue" label="init" penwidth="0.5" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier" {
         penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 style="rounded,filled";
-fillcolor="lightsteelblue";
-label="(*ECDSAVerifier)";
 tooltip="type: *github.com/go-i2p/crypto/ecdsa.ECDSAVerifier";
 labelloc="b";
+fillcolor="lightsteelblue";
+label="(*ECDSAVerifier)";
         
-        "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" [ label="Verify" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify | defined in ecdsa_verifier.go:53\nat ecdsa_verifier.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:63: calling [(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]\nat ecdsa_verifier.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
-        "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" [ label="VerifyHash" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash | defined in ecdsa_verifier.go:20\nat ecdsa_verifier.go:34: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_verifier.go:44: calling [(*github.com/go-i2p/logger.Logger).Warn]\nat ecdsa_verifier.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:21: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:31: calling [(*github.com/go-i2p/logger.Logger).WithFields]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify | defined in ecdsa_verifier.go:54\nat ecdsa_verifier.go:55: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:64: calling [(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash | defined in ecdsa_verifier.go:21\nat ecdsa_verifier.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_verifier.go:36: calling [github.com/samber/oops.Errorf]\nat ecdsa_verifier.go:22: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:32: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:45: calling [(*github.com/go-i2p/logger.Logger).Warn]" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey" {
-        penwidth="0.5";
-fontsize="15";
-labelloc="b";
-style="rounded,filled";
+        labelloc="b";
 label="(*ECP256PrivateKey)";
-fontcolor="#222222";
+style="rounded,filled";
 fillcolor="lightsteelblue";
 tooltip="type: *github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey";
+penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
         
-        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public" [ tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public | defined in ecdsa_p256_private.go:74\nat ecdsa_p256_private.go:80: calling [github.com/samber/oops.Errorf]\nat ecdsa_p256_private.go:95: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Public" penwidth="1.5" ]
-        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt | defined in ecdsa_p256_private.go:61\nat ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]" ]
-        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Generate" [ fillcolor="lightblue" label="Generate" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Generate | defined in ecdsa_p256_private.go:109\nat ecdsa_p256_private.go:113: calling [github.com/samber/oops.Errorf]\nat ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Zero" [ fillcolor="lightblue" label="Zero" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Zero | defined in ecdsa_p256_private.go:100\nat ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" [ fillcolor="lightblue" label="SignHash" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash | defined in ecdsa_p256_private.go:31\nat ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]\nat ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Sign" [ tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Sign | defined in ecdsa_p256_private.go:24\nat ecdsa_p256_private.go:27: calling [(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash]" fillcolor="lightblue" label="Sign" penwidth="1.5" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" [ label="SignHash" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash | defined in ecdsa_p256_private.go:31\nat ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]\nat ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Sign" [ label="Sign" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Sign | defined in ecdsa_p256_private.go:24\nat ecdsa_p256_private.go:27: calling [(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public | defined in ecdsa_p256_private.go:74\nat ecdsa_p256_private.go:95: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p256_private.go:80: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="Public" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Generate" [ label="Generate" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Generate | defined in ecdsa_p256_private.go:109\nat ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p256_private.go:113: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt" [ label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt | defined in ecdsa_p256_private.go:61\nat ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Zero" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Zero | defined in ecdsa_p256_private.go:100\nat ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Zero" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey" {
-        fontcolor="#222222";
+        labelloc="b";
 style="rounded,filled";
-fontsize="15";
-labelloc="b";
-fillcolor="lightsteelblue";
-label="(*ECP256PublicKey)";
 tooltip="type: *github.com/go-i2p/crypto/ecdsa.ECP256PublicKey";
 penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
+fillcolor="lightsteelblue";
+label="(*ECP256PublicKey)";
         
-        "(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt | defined in ecdsa_p256_public.go:38\nat ecdsa_p256_public.go:40: calling [github.com/samber/oops.Errorf]\nat ecdsa_p256_public.go:39: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+        "(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt" [ label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt | defined in ecdsa_p256_public.go:38\nat ecdsa_p256_public.go:39: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p256_public.go:40: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/logger.Logger" {
-        fontsize="15";
-fontcolor="#222222";
-labelloc="b";
-style="rounded,filled";
-fillcolor="wheat2";
+        fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/go-i2p/logger.Logger";
 penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
         
-        "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" ]
+        "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" ]
         "(*github.com/go-i2p/logger.Logger).WithFields" [ fillcolor="moccasin" label="logger\nWithFields" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithFields | defined in log.go:60" ]
         "(*github.com/go-i2p/logger.Logger).Error" [ fillcolor="moccasin" label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" ]
-        "(*github.com/go-i2p/logger.Logger).WithError" [ penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" fillcolor="moccasin" label="logger\nWithError" ]
-        "(*github.com/go-i2p/logger.Logger).Warn" [ label="logger\nWarn" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Warn | defined in log.go:30" fillcolor="moccasin" ]
+        "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" ]
+        "(*github.com/go-i2p/logger.Logger).Warn" [ penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Warn | defined in log.go:30" fillcolor="moccasin" label="logger\nWarn" ]
         
     }
 
         subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        labelloc="b";
-style="rounded,filled";
-fillcolor="wheat2";
+        fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/sirupsen/logrus.Logger";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
         
         "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
         
@@ -108,115 +108,116 @@ fontcolor="#222222";
         subgraph "cluster_github.com/go-i2p/crypto/ecdsa.ECP256PublicKey" {
         penwidth="0.5";
 fontsize="15";
-fillcolor="lightsteelblue";
-label="(ECP256PublicKey)";
-fontcolor="#222222";
 labelloc="b";
-style="rounded,filled";
+label="(ECP256PublicKey)";
 tooltip="type: github.com/go-i2p/crypto/ecdsa.ECP256PublicKey";
+fontcolor="#222222";
+style="rounded,filled";
+fillcolor="lightsteelblue";
         
-        "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" [ label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify | defined in ecdsa_p256_public.go:16\nat ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p256_public.go:20: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p256_public.go:17: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p256_public.go:20: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p256_public.go:18: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]" fillcolor="lightblue" ]
-        "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" [ fillcolor="lightblue" label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier | defined in ecdsa_p256_public.go:51\nat ecdsa_p256_public.go:56: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p256_public.go:54: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]\nat ecdsa_p256_public.go:56: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" [ tooltip="(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash | defined in ecdsa_p256_public.go:27\nat ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p256_public.go:29: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]\nat ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p256_public.go:28: calling [(*github.com/go-i2p/logger.Logger).WithField]" fillcolor="lightblue" label="VerifyHash" penwidth="1.5" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash | defined in ecdsa_p256_public.go:27\nat ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p256_public.go:28: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p256_public.go:29: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" [ fillcolor="lightblue" label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier | defined in ecdsa_p256_public.go:51\nat ecdsa_p256_public.go:56: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p256_public.go:56: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p256_public.go:54: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify | defined in ecdsa_p256_public.go:16\nat ecdsa_p256_public.go:17: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p256_public.go:20: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p256_public.go:18: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]\nat ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p256_public.go:20: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/ecdsa.ECP384PublicKey" {
         penwidth="0.5";
-label="(ECP384PublicKey)";
-tooltip="type: github.com/go-i2p/crypto/ecdsa.ECP384PublicKey";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
-style="rounded,filled";
 fillcolor="lightsteelblue";
+label="(ECP384PublicKey)";
+style="rounded,filled";
+tooltip="type: github.com/go-i2p/crypto/ecdsa.ECP384PublicKey";
         
-        "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" [ tooltip="(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash | defined in ecdsa_p384_public.go:26\nat ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p384_public.go:27: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p384_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]" fillcolor="lightblue" label="VerifyHash" penwidth="1.5" ]
-        "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" [ fillcolor="lightblue" label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier | defined in ecdsa_p384_public.go:44\nat ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p384_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p384_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
-        "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify | defined in ecdsa_p384_public.go:15\nat ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p384_public.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p384_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]\nat ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify | defined in ecdsa_p384_public.go:15\nat ecdsa_p384_public.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p384_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]\nat ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier | defined in ecdsa_p384_public.go:44\nat ecdsa_p384_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p384_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]\nat ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]" fillcolor="lightblue" label="NewVerifier" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash | defined in ecdsa_p384_public.go:26\nat ecdsa_p384_public.go:27: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p384_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/ecdsa.ECP521PublicKey" {
         fontsize="15";
 fontcolor="#222222";
+style="rounded,filled";
 label="(ECP521PublicKey)";
+tooltip="type: github.com/go-i2p/crypto/ecdsa.ECP521PublicKey";
 penwidth="0.5";
 labelloc="b";
-style="rounded,filled";
 fillcolor="lightsteelblue";
-tooltip="type: github.com/go-i2p/crypto/ecdsa.ECP521PublicKey";
         
-        "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" [ fillcolor="lightblue" label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier | defined in ecdsa_p521_public.go:44\nat ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p521_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]\nat ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-        "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash | defined in ecdsa_p521_public.go:26\nat ecdsa_p521_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p521_public.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p521_public.go:27: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p521_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]" fillcolor="lightblue" label="VerifyHash" ]
-        "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify | defined in ecdsa_p521_public.go:15\nat ecdsa_p521_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]\nat ecdsa_p521_public.go:19: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p521_public.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p521_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" [ label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier | defined in ecdsa_p521_public.go:44\nat ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p521_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" fillcolor="lightblue" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify | defined in ecdsa_p521_public.go:15\nat ecdsa_p521_public.go:19: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecdsa_p521_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]\nat ecdsa_p521_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p521_public.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash | defined in ecdsa_p521_public.go:26\nat ecdsa_p521_public.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecdsa_p521_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]\nat ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_p521_public.go:27: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat ecdsa_p521_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
         
     }
 
     }
 
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:56: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ tooltip="at ecdsa_p521_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:80: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" [ tooltip="at ecdsa_p256_public.go:29: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:34: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Warn" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:44: calling [(*github.com/go-i2p/logger.Logger).Warn]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:27: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Generate" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ tooltip="at ecdsa_verifier.go:68: calling [(*github.com/go-i2p/logger.Logger).WithFields]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:20: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" [ tooltip="at ecdsa_p521_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
     "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:19: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:74: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" -> "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ tooltip="at ecdsa_p256_public.go:54: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:56: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="at ecdsa_p256_public.go:17: calling [(*github.com/go-i2p/logger.Logger).WithField]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Sign" -> "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" [ tooltip="at ecdsa_p256_private.go:27: calling [(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:95: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]" ]
     "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:56: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
     "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:40: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" -> "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" [ tooltip="at ecdsa_verifier.go:63: calling [(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:17: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:82: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:27: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:55: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
     "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:20: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:36: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" [ tooltip="at ecdsa_p256_public.go:18: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" [ tooltip="at ecdsa_p521_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" -> "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ tooltip="at ecdsa_p384_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" [ tooltip="at ecdsa_p384_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:80: calling [github.com/samber/oops.Errorf]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" [ tooltip="at ecdsa_p521_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:69: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:39: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:22: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:32: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:40: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" -> "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" [ tooltip="at ecdsa_verifier.go:64: calling [(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:20: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:28: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:31: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:16: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
     "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Generate" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:113: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Generate" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" [ tooltip="at ecdsa_p384_public.go:17: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" [ tooltip="at ecdsa_p384_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Sign" -> "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash" [ tooltip="at ecdsa_p256_private.go:27: calling [(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).SignHash]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:21: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecdsa_verifier.go:31: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/ecdsa.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" -> "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ tooltip="at ecdsa_p384_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).WithError" [ tooltip="at ecdsa_p521_public.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Verify" -> "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" [ tooltip="at ecdsa_p256_public.go:18: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).Encrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:39: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at ecdsa_p521_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p256_public.go:28: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:72: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecdsa_verifier.go:83: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:75: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Warn" [ color="saddlebrown" tooltip="at ecdsa_verifier.go:45: calling [(*github.com/go-i2p/logger.Logger).Warn]" ]
     "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:27: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" [ tooltip="at ecdsa_p521_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]" ]
-    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:95: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:30: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(*github.com/go-i2p/crypto/ecdsa.ECP256PrivateKey).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash" -> "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" [ tooltip="at ecdsa_p256_public.go:29: calling [(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).Verify" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at ecdsa_p384_public.go:19: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash" -> "(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier" [ tooltip="at ecdsa_p384_public.go:28: calling [(github.com/go-i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]" ]
+    "github.com/go-i2p/crypto/ecdsa.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier" -> "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ tooltip="at ecdsa_p256_public.go:54: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier" -> "github.com/go-i2p/crypto/ecdsa.CreateECVerifier" [ tooltip="at ecdsa_p521_public.go:46: calling [github.com/go-i2p/crypto/ecdsa.CreateECVerifier]" ]
+    "(github.com/go-i2p/crypto/ecdsa.ECP521PublicKey).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
 }

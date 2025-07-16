@@ -14,40 +14,40 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        fontsize="18";
+        labelloc="t";
+labeljust="c";
+fontsize="18";
 bgcolor="#e6ecfa";
 label="tunnel";
-labelloc="t";
-labeljust="c";
         
-        "github.com/go-i2p/crypto/tunnel.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/tunnel.init | defined in .:0\nat constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
-        "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" [ fillcolor="lightblue" label="NewTunnelCrypto" penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewTunnelCrypto | defined in tunnel_struct.go:18\nat tunnel_struct.go:19: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" [ fillcolor="lightblue" label="NewTunnelCrypto" penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewTunnelCrypto | defined in tunnel_struct.go:33\nat tunnel_struct.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "github.com/go-i2p/crypto/tunnel.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/tunnel.init | defined in .:0\nat constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/tunnel.Tunnel" {
-        fontsize="15";
-fontcolor="#222222";
-labelloc="b";
-label="(*Tunnel)";
-penwidth="0.5";
-style="rounded,filled";
+        fontcolor="#222222";
 fillcolor="lightsteelblue";
+labelloc="b";
+style="rounded,filled";
+label="(*Tunnel)";
 tooltip="type: *github.com/go-i2p/crypto/tunnel.Tunnel";
+penwidth="0.5";
+fontsize="15";
         
-        "(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt | defined in tunnel_struct.go:38\nat tunnel_struct.go:39: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt | defined in tunnel_struct.go:50\nat tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt | defined in tunnel_struct.go:86\nat tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt | defined in tunnel_struct.go:63\nat tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
         
     }
 
         subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        fillcolor="wheat2";
-label="(*Logger)";
-tooltip="type: *github.com/sirupsen/logrus.Logger";
-penwidth="0.5";
+        penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
 style="rounded,filled";
+fillcolor="wheat2";
+label="(*Logger)";
+tooltip="type: *github.com/sirupsen/logrus.Logger";
         
         "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
         
@@ -55,8 +55,8 @@ style="rounded,filled";
 
     }
 
-    "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:19: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/tunnel.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:7: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:39: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/tunnel.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
 }

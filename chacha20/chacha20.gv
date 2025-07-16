@@ -14,99 +14,99 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        labeljust="c";
+        labelloc="t";
+labeljust="c";
 fontsize="18";
 bgcolor="#e6ecfa";
 label="chacha20";
-labelloc="t";
         
-        "github.com/go-i2p/crypto/chacha20.GenerateKey" [ fillcolor="lightblue" label="GenerateKey" penwidth="1.5" tooltip="github.com/go-i2p/crypto/chacha20.GenerateKey | defined in chacha20_key.go:10\nat chacha20_key.go:12: calling [github.com/go-i2p/crypto/rand.Read]\nat chacha20_key.go:14: calling [github.com/samber/oops.Errorf]" ]
+        "github.com/samber/oops.Errorf" [ label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" ]
+        "golang.org/x/crypto/chacha20poly1305.New" [ tooltip="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40" fillcolor="moccasin" label="chacha20poly1305\nNew" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/chacha20.init" [ label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/chacha20.init | defined in .:0\nat constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat constants.go:23: calling [github.com/samber/oops.Errorf]\nat constants.go:24: calling [github.com/samber/oops.Errorf]\nat constants.go:25: calling [github.com/samber/oops.Errorf]\nat constants.go:26: calling [github.com/samber/oops.Errorf]\nat constants.go:27: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" ]
+        "github.com/go-i2p/crypto/chacha20.NewRandomNonce" [ tooltip="github.com/go-i2p/crypto/chacha20.NewRandomNonce | defined in utils.go:11\nat utils.go:15: calling [github.com/samber/oops.Errorf]\nat utils.go:13: calling [github.com/go-i2p/crypto/rand.Read]" fillcolor="lightblue" label="NewRandomNonce" penwidth="1.5" ]
         "github.com/go-i2p/crypto/rand.Read" [ fillcolor="moccasin" label="rand\nRead" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Read | defined in secure_reader.go:150" ]
-        "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
-        "golang.org/x/crypto/chacha20poly1305.New" [ fillcolor="moccasin" label="chacha20poly1305\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40" ]
-        "github.com/go-i2p/crypto/chacha20.NewRandomNonce" [ fillcolor="lightblue" label="NewRandomNonce" penwidth="1.5" tooltip="github.com/go-i2p/crypto/chacha20.NewRandomNonce | defined in utils.go:11\nat utils.go:13: calling [github.com/go-i2p/crypto/rand.Read]\nat utils.go:15: calling [github.com/samber/oops.Errorf]" ]
-        "github.com/go-i2p/crypto/chacha20.init" [ tooltip="github.com/go-i2p/crypto/chacha20.init | defined in .:0\nat constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat constants.go:23: calling [github.com/samber/oops.Errorf]\nat constants.go:24: calling [github.com/samber/oops.Errorf]\nat constants.go:25: calling [github.com/samber/oops.Errorf]\nat constants.go:26: calling [github.com/samber/oops.Errorf]\nat constants.go:27: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="init" penwidth="0.5" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
+        "github.com/go-i2p/crypto/chacha20.GenerateKey" [ tooltip="github.com/go-i2p/crypto/chacha20.GenerateKey | defined in chacha20_key.go:10\nat chacha20_key.go:12: calling [github.com/go-i2p/crypto/rand.Read]\nat chacha20_key.go:14: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="GenerateKey" penwidth="1.5" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter" {
-        penwidth="0.5";
-fontcolor="#222222";
+        fontsize="15";
 labelloc="b";
+style="rounded,filled";
 fillcolor="lightsteelblue";
 tooltip="type: *github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter";
-fontsize="15";
-style="rounded,filled";
+penwidth="0.5";
+fontcolor="#222222";
 label="(*ChaCha20PolyDecrypter)";
         
-        "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" [ fillcolor="lightblue" label="DecryptWithAd" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd | defined in chacha20_decrypter.go:20\nat chacha20_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_decrypter.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]\nat chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]\nat chacha20_decrypter.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]\nat chacha20_decrypter.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_decrypter.go:45: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]\nat chacha20_decrypter.go:41: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+        "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" [ tooltip="(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd | defined in chacha20_decrypter.go:20\nat chacha20_decrypter.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_decrypter.go:45: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_decrypter.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]\nat chacha20_decrypter.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]\nat chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]\nat chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]\nat chacha20_decrypter.go:41: calling [(*github.com/go-i2p/logger.Logger).WithError]" fillcolor="lightblue" label="DecryptWithAd" penwidth="1.5" ]
         "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).Decrypt | defined in chacha20_decrypter.go:15\nat chacha20_decrypter.go:16: calling [(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd]" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter" {
-        fontcolor="#222222";
-labelloc="b";
-style="rounded,filled";
-fillcolor="lightsteelblue";
+        style="rounded,filled";
 label="(*ChaCha20PolyEncrypter)";
 penwidth="0.5";
 fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+fillcolor="lightsteelblue";
 tooltip="type: *github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter";
         
-        "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" [ tooltip="(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd | defined in chacha20_encrypter.go:21\nat chacha20_encrypter.go:25: calling [golang.org/x/crypto/chacha20poly1305.New]\nat chacha20_encrypter.go:27: calling [github.com/samber/oops.Errorf]\nat chacha20_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_encrypter.go:44: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_encrypter.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_encrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_encrypter.go:31: calling [github.com/go-i2p/crypto/chacha20.NewRandomNonce]" fillcolor="lightblue" label="EncryptWithAd" penwidth="1.5" ]
+        "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" [ fillcolor="lightblue" label="EncryptWithAd" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd | defined in chacha20_encrypter.go:21\nat chacha20_encrypter.go:27: calling [github.com/samber/oops.Errorf]\nat chacha20_encrypter.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_encrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_encrypter.go:25: calling [golang.org/x/crypto/chacha20poly1305.New]\nat chacha20_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_encrypter.go:44: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_encrypter.go:31: calling [github.com/go-i2p/crypto/chacha20.NewRandomNonce]" ]
         "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).Encrypt" [ tooltip="(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).Encrypt | defined in chacha20_encrypter.go:15\nat chacha20_encrypter.go:16: calling [(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd]" fillcolor="lightblue" label="Encrypt" penwidth="1.5" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/logger.Logger" {
-        fontsize="15";
+        penwidth="0.5";
+fontsize="15";
 fontcolor="#222222";
 labelloc="b";
 style="rounded,filled";
 fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/go-i2p/logger.Logger";
-penwidth="0.5";
         
-        "(*github.com/go-i2p/logger.Logger).WithField" [ penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" fillcolor="moccasin" label="logger\nWithField" ]
-        "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" ]
+        "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" ]
+        "(*github.com/go-i2p/logger.Logger).WithError" [ label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" fillcolor="moccasin" ]
         "(*github.com/go-i2p/logger.Logger).Error" [ penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" fillcolor="moccasin" label="logger\nError" ]
         
     }
 
         subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        fontsize="15";
+        tooltip="type: *github.com/sirupsen/logrus.Logger";
+penwidth="0.5";
+fontsize="15";
 fontcolor="#222222";
 labelloc="b";
 style="rounded,filled";
 fillcolor="wheat2";
 label="(*Logger)";
-tooltip="type: *github.com/sirupsen/logrus.Logger";
-penwidth="0.5";
         
-        "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
+        "(*github.com/sirupsen/logrus.Logger).Debug" [ penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" fillcolor="moccasin" label="logrus\nDebug" ]
         
     }
 
     }
 
-    "github.com/go-i2p/crypto/chacha20.GenerateKey" -> "github.com/go-i2p/crypto/rand.Read" [ color="saddlebrown" tooltip="at chacha20_key.go:12: calling [github.com/go-i2p/crypto/rand.Read]" ]
+    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="at chacha20_decrypter.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_decrypter.go:45: calling [(*github.com/go-i2p/logger.Logger).WithField]" color="saddlebrown" ]
     "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_decrypter.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]\nat chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at chacha20_encrypter.go:25: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
-    "github.com/go-i2p/crypto/chacha20.NewRandomNonce" -> "github.com/go-i2p/crypto/rand.Read" [ color="saddlebrown" tooltip="at utils.go:13: calling [github.com/go-i2p/crypto/rand.Read]" ]
+    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
     "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).Encrypt" -> "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" [ tooltip="at chacha20_encrypter.go:16: calling [(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd]" ]
-    "github.com/go-i2p/crypto/chacha20.GenerateKey" -> "github.com/samber/oops.Errorf" [ tooltip="at chacha20_key.go:14: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
     "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at chacha20_encrypter.go:27: calling [github.com/samber/oops.Errorf]" ]
     "github.com/go-i2p/crypto/chacha20.NewRandomNonce" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:15: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/chacha20.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "github.com/go-i2p/crypto/chacha20.init" -> "github.com/samber/oops.Errorf" [ tooltip="at constants.go:23: calling [github.com/samber/oops.Errorf]\nat constants.go:24: calling [github.com/samber/oops.Errorf]\nat constants.go:25: calling [github.com/samber/oops.Errorf]\nat constants.go:26: calling [github.com/samber/oops.Errorf]\nat constants.go:27: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:21: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_decrypter.go:45: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
-    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:41: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "github.com/go-i2p/crypto/chacha20.GenerateKey" -> "github.com/go-i2p/crypto/rand.Read" [ color="saddlebrown" tooltip="at chacha20_key.go:12: calling [github.com/go-i2p/crypto/rand.Read]" ]
+    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]\nat chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]" ]
     "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).Decrypt" -> "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" [ tooltip="at chacha20_decrypter.go:16: calling [(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd]" ]
-    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at chacha20_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_encrypter.go:44: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
     "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at chacha20_encrypter.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat chacha20_encrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at chacha20_encrypter.go:25: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
+    "github.com/go-i2p/crypto/chacha20.GenerateKey" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at chacha20_key.go:14: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd" -> "(*github.com/go-i2p/logger.Logger).WithError" [ tooltip="at chacha20_decrypter.go:41: calling [(*github.com/go-i2p/logger.Logger).WithError]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/chacha20.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "github.com/go-i2p/crypto/chacha20.init" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at constants.go:23: calling [github.com/samber/oops.Errorf]\nat constants.go:24: calling [github.com/samber/oops.Errorf]\nat constants.go:25: calling [github.com/samber/oops.Errorf]\nat constants.go:26: calling [github.com/samber/oops.Errorf]\nat constants.go:27: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at chacha20_encrypter.go:22: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat chacha20_encrypter.go:44: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).Encrypt" -> "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" [ tooltip="at chacha20_encrypter.go:16: calling [(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd]" ]
+    "github.com/go-i2p/crypto/chacha20.NewRandomNonce" -> "github.com/go-i2p/crypto/rand.Read" [ color="saddlebrown" tooltip="at utils.go:13: calling [github.com/go-i2p/crypto/rand.Read]" ]
     "(*github.com/go-i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd" -> "github.com/go-i2p/crypto/chacha20.NewRandomNonce" [ tooltip="at chacha20_encrypter.go:31: calling [github.com/go-i2p/crypto/chacha20.NewRandomNonce]" ]
 }
