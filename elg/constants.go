@@ -23,8 +23,8 @@ var (
 var (
 	// ElgDecryptFail indicates that ElGamal decryption failed due to invalid ciphertext or corrupted data.
 	// This error occurs when the integrity check fails during the decryption process.
-	ElgDecryptFail   = oops.Errorf("failed to decrypt elgamal encrypted data")
-	
+	ElgDecryptFail = oops.Errorf("failed to decrypt elgamal encrypted data")
+
 	// ElgEncryptTooBig indicates that the input data exceeds the maximum size for ElGamal encryption.
 	// ElGamal can only encrypt data smaller than the modulus size (222 bytes for I2P).
 	ElgEncryptTooBig = oops.Errorf("failed to encrypt data, too big for elgamal")
