@@ -5,6 +5,10 @@ import (
 	"math/big"
 )
 
+// dsap represents the DSA prime modulus (p) parameter for I2P DSA operations.
+// This 1024-bit prime number defines the finite field for DSA calculations and is
+// part of the I2P-standard DSA parameter set. The value follows FIPS 186-2 requirements
+// for DSA prime generation and provides the security foundation for I2P signatures.
 var dsap = new(big.Int).SetBytes([]byte{
 	0x9c, 0x05, 0xb2, 0xaa, 0x96, 0x0d, 0x9b, 0x97, 0xb8, 0x93, 0x19, 0x63, 0xc9, 0xcc, 0x9e, 0x8c,
 	0x30, 0x26, 0xe9, 0xb8, 0xed, 0x92, 0xfa, 0xd0, 0xa6, 0x9c, 0xc8, 0x86, 0xd5, 0xbf, 0x80, 0x15,
@@ -16,11 +20,19 @@ var dsap = new(big.Int).SetBytes([]byte{
 	0x28, 0x5d, 0x4c, 0xf2, 0x95, 0x38, 0xd9, 0xe3, 0xb6, 0x05, 0x1f, 0x5b, 0x22, 0xcc, 0x1c, 0x93,
 })
 
+// dsaq represents the DSA prime divisor (q) parameter for I2P DSA operations.
+// This 160-bit prime number divides (p-1) and defines the order of the DSA subgroup.
+// The q parameter determines the size of DSA signatures and private keys, following
+// FIPS 186-2 specifications for cryptographic security in the I2P network.
 var dsaq = new(big.Int).SetBytes([]byte{
 	0xa5, 0xdf, 0xc2, 0x8f, 0xef, 0x4c, 0xa1, 0xe2, 0x86, 0x74, 0x4c, 0xd8, 0xee, 0xd9, 0xd2, 0x9d,
 	0x68, 0x40, 0x46, 0xb7,
 })
 
+// dsag represents the DSA generator (g) parameter for I2P DSA operations.
+// This generator element has order q in the multiplicative group modulo p and is used
+// to compute public keys (Y = g^X mod p) and verify signatures. The generator follows
+// FIPS 186-2 requirements and ensures cryptographic correctness for I2P DSA signatures.
 var dsag = new(big.Int).SetBytes([]byte{
 	0x0c, 0x1f, 0x4d, 0x27, 0xd4, 0x00, 0x93, 0xb4, 0x29, 0xe9, 0x62, 0xd7, 0x22, 0x38, 0x24, 0xe0,
 	0xbb, 0xc4, 0x7e, 0x7c, 0x83, 0x2a, 0x39, 0x23, 0x6f, 0xc6, 0x83, 0xaf, 0x84, 0x88, 0x95, 0x81,
@@ -32,6 +44,10 @@ var dsag = new(big.Int).SetBytes([]byte{
 	0xb3, 0xdb, 0xb1, 0x4a, 0x90, 0x5e, 0x7b, 0x2b, 0x3e, 0x93, 0xbe, 0x47, 0x08, 0xcb, 0xcc, 0x82,
 })
 
+// param contains the complete DSA parameter set (p, q, g) for I2P operations.
+// This structure combines all three DSA domain parameters into a single object that
+// can be used for key generation, signing, and verification. The parameters follow
+// I2P network standards and provide consistent DSA operations across the ecosystem.
 var param = dsa.Parameters{
 	P: dsap,
 	Q: dsaq,
