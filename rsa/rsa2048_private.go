@@ -11,6 +11,11 @@ import (
 	"github.com/samber/oops"
 )
 
+// RSA2048PrivateKey represents a 2048-bit RSA private key in I2P format.
+// The key data is stored as a 512-byte array containing both the modulus (256 bytes)
+// and private exponent (256 bytes) as specified by I2P cryptographic standards.
+// This type implements types.Signer for creating digital signatures.
+// Example usage: privKey := RSA2048PrivateKey{}; sig, err := privKey.Sign(data)
 type RSA2048PrivateKey struct {
 	RSA2048PrivateKey [512]byte // I2P-compliant: 256 bytes modulus + 256 bytes private exponent
 }
@@ -62,10 +67,12 @@ func (r RSA2048PrivateKey) Public() (types.SigningPublicKey, error) {
 
 	// Create and return the RSA2048PublicKey
 	var publicKey RSA2048PublicKey
-	// Pad with zeros if necessary (big-endian format)
+	// Pad with zeros if necessary to maintain I2P 256-byte format (big-endian)
+	// This ensures consistent key size regardless of leading zero bytes in the modulus
 	if len(pubBytes) <= 256 {
 		copy(publicKey[256-len(pubBytes):], pubBytes)
 	} else {
+		// Truncate if modulus is larger than expected (rare edge case)
 		copy(publicKey[:], pubBytes[len(pubBytes)-256:])
 	}
 
@@ -76,7 +83,8 @@ func (r RSA2048PrivateKey) Public() (types.SigningPublicKey, error) {
 // Zero implements types.PrivateKey.
 // Securely erases key material
 func (r *RSA2048PrivateKey) Zero() {
-	// Overwrite private key material with zeros
+	// Overwrite private key material with zeros to prevent memory leakage
+	// This is critical for security as private keys contain sensitive cryptographic material
 	for i := range r.RSA2048PrivateKey {
 		r.RSA2048PrivateKey[i] = 0
 	}
@@ -102,23 +110,24 @@ func (r RSA2048PrivateKey) Generate() (types.SigningPrivateKey, error) {
 		return nil, oops.Errorf("failed to generate RSA2048 key: %w", err)
 	}
 
-	// I2P-compliant format: Store modulus (256 bytes) + private exponent (256 bytes)
+	// I2P-compliant format requires storing modulus (256 bytes) + private exponent (256 bytes)
+	// This follows I2P's standard key representation for network compatibility
 	var privKey RSA2048PrivateKey
 
-	// Store the modulus (N) - first 256 bytes
+	// Store the modulus (N) in the first 256 bytes with proper padding
 	modulusBytes := stdPrivKey.N.Bytes()
 	if len(modulusBytes) > 256 {
 		return nil, ErrInvalidKeySize
 	}
-	// Pad with leading zeros if needed
+	// Pad with leading zeros to maintain exact 256-byte size requirement
 	copy(privKey.RSA2048PrivateKey[256-len(modulusBytes):256], modulusBytes)
 
-	// Store the private exponent (D) - next 256 bytes
+	// Store the private exponent (D) in the next 256 bytes with proper padding
 	dBytes := stdPrivKey.D.Bytes()
 	if len(dBytes) > 256 {
 		return nil, ErrInvalidKeySize
 	}
-	// Pad with leading zeros if needed
+	// Pad with leading zeros to maintain exact 256-byte size requirement
 	copy(privKey.RSA2048PrivateKey[512-len(dBytes):512], dBytes)
 
 	log.Debug("New RSA2048 private key generated successfully")
@@ -127,18 +136,18 @@ func (r RSA2048PrivateKey) Generate() (types.SigningPrivateKey, error) {
 
 // Helper method to convert I2P format to rsa.PrivateKey
 func (r RSA2048PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
-	// Extract modulus (N) from first 256 bytes
+	// Extract modulus (N) from first 256 bytes of I2P key format
 	nBytes := r.RSA2048PrivateKey[:256]
 	n := new(big.Int).SetBytes(nBytes)
 
-	// Extract private exponent (D) from next 256 bytes
+	// Extract private exponent (D) from next 256 bytes of I2P key format
 	dBytes := r.RSA2048PrivateKey[256:512]
 	d := new(big.Int).SetBytes(dBytes)
 
-	// Standard RSA public exponent
+	// Standard RSA public exponent as defined in RFC 3447 and used by I2P
 	e := 65537
 
-	// Create RSA private key
+	// Create RSA private key structure compatible with Go's crypto/rsa package
 	privKey := &rsa.PrivateKey{
 		PublicKey: rsa.PublicKey{
 			N: n,
@@ -147,7 +156,7 @@ func (r RSA2048PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 		D: d,
 	}
 
-	// Validate key size is 2048 bits
+	// Validate key size is exactly 2048 bits (256 bytes) as expected for RSA-2048
 	if privKey.Size() != 256 {
 		return nil, oops.Errorf("unexpected RSA key size: got %d, want 256", privKey.Size())
 	}

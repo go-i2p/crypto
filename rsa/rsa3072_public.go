@@ -10,6 +10,10 @@ import (
 )
 
 type (
+	// RSA3072PublicKey represents a 3072-bit RSA public key in I2P format.
+	// The key is stored as a 384-byte array containing the public key modulus.
+	// This type implements types.Verifier for signature verification with enhanced security.
+	// RSA-3072 provides equivalent security to 128-bit symmetric encryption.
 	RSA3072PublicKey [384]byte
 )
 

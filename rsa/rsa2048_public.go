@@ -10,6 +10,10 @@ import (
 )
 
 type (
+	// RSA2048PublicKey represents a 2048-bit RSA public key in I2P format.
+	// The key is stored as a 256-byte array containing the public key modulus.
+	// This type implements types.Verifier for signature verification operations.
+	// Example usage: pubKey := RSA2048PublicKey{}; err := pubKey.Verify(data, signature)
 	RSA2048PublicKey [256]byte
 )
 

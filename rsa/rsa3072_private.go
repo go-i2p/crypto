@@ -11,6 +11,11 @@ import (
 	"github.com/samber/oops"
 )
 
+// RSA3072PrivateKey represents a 3072-bit RSA private key in I2P format.
+// The key data is stored as a 768-byte array containing the modulus (384 bytes)
+// and private exponent (384 bytes) following I2P cryptographic specifications.
+// This type implements types.Signer and provides enhanced security over RSA-2048.
+// RSA-3072 offers equivalent security to 128-bit symmetric encryption.
 type RSA3072PrivateKey struct {
 	RSA3072PrivateKey [768]byte // I2P-compliant: 384 bytes modulus + 384 bytes private exponent
 }
@@ -57,22 +62,23 @@ func (r RSA3072PrivateKey) Bytes() []byte {
 
 // Public implements types.PrivateKey - derives public key from private key
 func (r RSA3072PrivateKey) Public() (types.SigningPublicKey, error) {
-	// Convert byte array to rsa.PrivateKey
+	// Convert I2P byte array format to standard RSA private key structure
 	privKey, err := r.toRSAPrivateKey()
 	if err != nil {
 		return nil, oops.Errorf("failed to parse RSA private key: %w", err)
 	}
 
-	// Extract public key and convert to bytes
+	// Extract public key components from the private key structure
 	pubKey := privKey.Public().(*rsa.PublicKey)
 	pubBytes := pubKey.N.Bytes()
 
-	// Create and return the RSA3072PublicKey
+	// Create and return the RSA3072PublicKey in I2P format
 	var publicKey RSA3072PublicKey
-	// Pad with zeros if necessary (big-endian format)
+	// Pad with zeros if necessary to maintain I2P 384-byte format (big-endian)
 	if len(pubBytes) <= 384 {
 		copy(publicKey[384-len(pubBytes):], pubBytes)
 	} else {
+		// Truncate if modulus is larger than expected (rare edge case for RSA-3072)
 		copy(publicKey[:], pubBytes[len(pubBytes)-384:])
 	}
 
@@ -82,7 +88,8 @@ func (r RSA3072PrivateKey) Public() (types.SigningPublicKey, error) {
 
 // Zero implements types.PrivateKey - securely erases key material
 func (r *RSA3072PrivateKey) Zero() {
-	// Overwrite private key material with zeros
+	// Overwrite private key material with zeros to prevent memory leakage
+	// This is critical for security as RSA-3072 keys contain highly sensitive cryptographic material
 	for i := range r.RSA3072PrivateKey {
 		r.RSA3072PrivateKey[i] = 0
 	}

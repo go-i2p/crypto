@@ -11,6 +11,11 @@ import (
 	"github.com/samber/oops"
 )
 
+// RSA4096PrivateKey represents a 4096-bit RSA private key in I2P format.
+// The key data is stored as a 1024-byte array containing the modulus (512 bytes)
+// and private exponent (512 bytes) following I2P cryptographic specifications.
+// This type implements types.Signer and provides maximum security in the RSA family.
+// RSA-4096 offers equivalent security to 192-bit symmetric encryption.
 type RSA4096PrivateKey struct {
 	RSA4096PrivateKey [1024]byte // I2P-compliant: 512 bytes modulus + 512 bytes private exponent
 }
