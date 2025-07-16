@@ -64,20 +64,20 @@ func (r RSA4096PrivateKey) Bytes() []byte {
 func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
 	log.Debug("Extracting public key from RSA-4096 private key")
 
-	// Convert I2P format to rsa.PrivateKey
+	// Convert I2P format to standard RSA private key structure
 	privKey, err := r.toRSAPrivateKey()
 	if err != nil {
 		log.WithError(err).Error("Failed to parse RSA-4096 private key")
 		return nil, oops.Errorf("invalid RSA-4096 private key: %w", err)
 	}
 
-	// Get the public key bytes (modulus n) in the correct format
+	// Get the public key bytes (modulus n) in the correct I2P format
 	pubKeyBytes := privKey.N.Bytes()
 
-	// The RSA4096PublicKey is exactly 512 bytes
+	// The RSA4096PublicKey is exactly 512 bytes in I2P format
 	var pubKey RSA4096PublicKey
 
-	// Ensure proper padding if the modulus has leading zeros
+	// Ensure proper padding if the modulus has leading zeros for consistent 512-byte size
 	copy(pubKey[512-len(pubKeyBytes):], pubKeyBytes)
 
 	log.Debug("RSA-4096 public key extracted successfully")
