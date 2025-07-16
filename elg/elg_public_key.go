@@ -5,6 +5,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/samber/oops"
 	"golang.org/x/crypto/openpgp/elgamal"
 )
 
@@ -42,6 +43,37 @@ func (elg ElgPublicKey) NewEncrypter() (enc types.Encrypter, err error) {
 		log.Debug("ElGamal encrypter created successfully")
 	}
 	return
+}
+
+// Generate creates a new ElGamal key pair and returns the public key component.
+// This method generates a complete ElGamal key pair using I2P-standard parameters
+// and returns only the public key portion. The private key is discarded for security.
+// Returns an error if key generation fails due to entropy or parameter issues.
+func (elg ElgPublicKey) Generate() (types.PublicEncryptionKey, error) {
+	log.Debug("Generating new ElGamal public key")
+	var privKey elgamal.PrivateKey
+
+	// Generate complete key pair using secure parameters
+	err := ElgamalGenerate(&privKey, nil)
+	if err != nil {
+		log.WithError(err).Error("ElGamal public key generation failed")
+		return nil, oops.Errorf("failed to generate ElGamal public key: %w", err)
+	}
+
+	// Extract public component and convert to I2P format
+	var result ElgPublicKey
+	yBytes := privKey.Y.Bytes()
+
+	// Ensure Y is exactly 256 bytes with leading zeros if necessary
+	if len(yBytes) > 256 {
+		log.Error("Generated public key Y component too large")
+		return nil, oops.Errorf("invalid public key size: %d bytes", len(yBytes))
+	}
+
+	// Copy Y bytes to fixed-size array with proper padding
+	copy(result[256-len(yBytes):], yBytes)
+	log.Debug("ElGamal public key generated successfully")
+	return result, nil
 }
 
 // createElgamalPublicKey converts a 256-byte slice to an ElGamal public key structure.
