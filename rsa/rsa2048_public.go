@@ -28,17 +28,19 @@ func (r RSA2048PublicKey) Verify(data []byte, sig []byte) error {
 // VerifyHash implements types.Verifier.
 // This method verifies a pre-computed hash against the signature
 func (r RSA2048PublicKey) VerifyHash(h []byte, sig []byte) error {
+	// Convert I2P byte format to standard RSA public key structure
 	pubKey, err := rsaPublicKeyFromBytes(r[:], 256)
 	if err != nil {
 		return oops.Errorf("failed to parse RSA2048 public key: %w", err)
 	}
 
-	// For RSA2048, we use SHA-256
+	// For RSA2048, we use SHA-256 hash algorithm as per I2P specifications
 	if len(h) != sha256.Size {
 		return oops.Errorf("RSA2048 verification requires SHA-256 hash (expected %d bytes, got %d)",
 			sha256.Size, len(h))
 	}
 
+	// Perform PKCS#1 v1.5 signature verification using Go's crypto/rsa
 	err = rsa.VerifyPKCS1v15(pubKey, crypto.SHA256, h, sig)
 	if err != nil {
 		return oops.Errorf("RSA signature verification failed: %w", err)

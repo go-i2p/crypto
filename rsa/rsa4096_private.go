@@ -86,18 +86,18 @@ func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
 
 // Helper method to convert I2P format to rsa.PrivateKey
 func (r RSA4096PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
-	// Extract modulus (N) from first 512 bytes
+	// Extract modulus (N) from first 512 bytes of I2P key format
 	nBytes := r.RSA4096PrivateKey[:512]
 	n := new(big.Int).SetBytes(nBytes)
 
-	// Extract private exponent (D) from next 512 bytes
+	// Extract private exponent (D) from next 512 bytes of I2P key format
 	dBytes := r.RSA4096PrivateKey[512:1024]
 	d := new(big.Int).SetBytes(dBytes)
 
-	// Standard RSA public exponent
+	// Standard RSA public exponent as defined in RFC 3447 and used by I2P
 	e := 65537
 
-	// Create RSA private key
+	// Create RSA private key structure compatible with Go's crypto/rsa package
 	privKey := &rsa.PrivateKey{
 		PublicKey: rsa.PublicKey{
 			N: n,
@@ -106,7 +106,7 @@ func (r RSA4096PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 		D: d,
 	}
 
-	// Validate key size is 4096 bits
+	// Validate key size is exactly 4096 bits (512 bytes) as expected for RSA-4096
 	if privKey.Size() != 512 {
 		return nil, oops.Errorf("unexpected RSA key size: got %d, want 512", privKey.Size())
 	}
@@ -118,7 +118,8 @@ func (r RSA4096PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 // Securely clears the private key from memory
 func (r *RSA4096PrivateKey) Zero() {
 	log.Debug("Securely clearing RSA-4096 private key from memory")
-	// Overwrite the key material with zeros
+	// Overwrite the key material with zeros to prevent memory leakage
+	// This is critical for security as RSA-4096 keys contain the most sensitive cryptographic material
 	for i := range r.RSA4096PrivateKey {
 		r.RSA4096PrivateKey[i] = 0
 	}

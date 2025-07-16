@@ -26,18 +26,20 @@ func (r RSA3072PublicKey) Verify(data []byte, sig []byte) error {
 
 // VerifyHash implements types.Verifier.
 func (r RSA3072PublicKey) VerifyHash(h []byte, sig []byte) error {
+	// Convert I2P byte format to standard RSA public key structure
 	pubKey, err := rsaPublicKeyFromBytes(r[:], 384)
 	if err != nil {
 		return oops.Errorf("failed to parse RSA3072 public key: %w", err)
 	}
 
-	// For RSA3072, SHA512 is often used
+	// For RSA3072, SHA512 is often used as per I2P enhanced security specifications
 	hashed := h
 	if len(h) != sha512.Size {
 		return oops.Errorf("RSA3072 verification requires SHA-512 hash (expected %d bytes, got %d)",
 			sha512.Size, len(h))
 	}
 
+	// Perform PKCS#1 v1.5 signature verification using Go's crypto/rsa with SHA-512
 	err = rsa.VerifyPKCS1v15(pubKey, crypto.SHA512, hashed, sig)
 	if err != nil {
 		return oops.Errorf("RSA signature verification failed: %w", err)
