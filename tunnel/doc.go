@@ -14,5 +14,6 @@
 //   - Fixed 1028-byte tunnel message format for network compatibility
 //   - CBC mode encryption with IV-based randomization
 //   - Secure in-place encryption/decryption operations
+//
 // package for i2p specific crpytography
 package tunnel
