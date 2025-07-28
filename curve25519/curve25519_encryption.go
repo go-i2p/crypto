@@ -38,6 +38,11 @@ func (c *Curve25519Encryption) EncryptPadding(data []byte, zeroPadding bool) ([]
 		return nil, err
 	}
 
+	return c.performEncryption(data, zeroPadding)
+}
+
+// performEncryption executes the core encryption workflow with shared secret derivation and AEAD encryption.
+func (c *Curve25519Encryption) performEncryption(data []byte, zeroPadding bool) ([]byte, error) {
 	sharedSecret, err := c.deriveSharedSecret()
 	if err != nil {
 		return nil, err
