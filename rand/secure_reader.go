@@ -114,24 +114,43 @@ func (sr *SecureReader) ReadBigIntInRange(min, max *big.Int) (*big.Int, error) {
 
 // validateEntropy performs basic entropy validation on random data
 func (sr *SecureReader) validateEntropy(data []byte) bool {
-	if len(data) < 32 {
-		return true // Skip validation for small samples
+	if !sr.shouldValidateEntropy(data) {
+		return true
 	}
 
-	// For crypto/rand, we can trust the entropy but still do basic validation
-	// Calculate Shannon entropy
+	frequency := sr.calculateByteFrequency(data)
+
+	if !sr.hasValidDistribution(frequency) {
+		return false
+	}
+
+	entropy := sr.calculateShannonEntropy(frequency, len(data))
+	return entropy >= MinEntropyThreshold
+}
+
+// shouldValidateEntropy determines if entropy validation should be performed
+func (sr *SecureReader) shouldValidateEntropy(data []byte) bool {
+	return len(data) >= 32
+}
+
+// calculateByteFrequency builds a frequency map of bytes in the data
+func (sr *SecureReader) calculateByteFrequency(data []byte) map[byte]int {
 	frequency := make(map[byte]int)
 	for _, b := range data {
 		frequency[b]++
 	}
+	return frequency
+}
 
-	// Check for obvious patterns (e.g., all same byte)
-	if len(frequency) <= 1 {
-		return false
-	}
+// hasValidDistribution checks for obvious patterns in byte distribution
+func (sr *SecureReader) hasValidDistribution(frequency map[byte]int) bool {
+	return len(frequency) > 1
+}
 
+// calculateShannonEntropy computes the Shannon entropy of the byte frequency
+func (sr *SecureReader) calculateShannonEntropy(frequency map[byte]int, dataLength int) float64 {
 	entropy := 0.0
-	length := float64(len(data))
+	length := float64(dataLength)
 
 	for _, count := range frequency {
 		if count > 0 {
@@ -140,7 +159,7 @@ func (sr *SecureReader) validateEntropy(data []byte) bool {
 		}
 	}
 
-	return entropy >= MinEntropyThreshold
+	return entropy
 }
 
 // Global secure reader instance
