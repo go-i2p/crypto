@@ -381,8 +381,9 @@ math/rand.Source interface
 ```go
 func NewSource(seed int64) Source
 ```
-NewSource returns a new pseudo-random Source seeded with the given value.
-Compatible with math/rand.NewSource
+NewSource returns a new pseudo-random Source seeded with the given value. Note:
+Since we use crypto/rand, the seed is used for compatibility but doesn't affect
+randomness Compatible with math/rand.NewSource
 
 #### type Source64
 

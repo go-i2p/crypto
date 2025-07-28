@@ -14,202 +14,207 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        fontsize="18";
-bgcolor="#e6ecfa";
+        bgcolor="#e6ecfa";
 label="rand";
 labelloc="t";
 labeljust="c";
+fontsize="18";
         
-        "github.com/go-i2p/crypto/rand.Int" [ fillcolor="lightblue" label="Int" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int | defined in prng.go:280\nat prng.go:281: calling [(*github.com/go-i2p/crypto/rand.Rand).Int]" ]
-        "github.com/samber/oops.Errorf" [ label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" ]
-        "github.com/go-i2p/crypto/rand.Seed" [ tooltip="github.com/go-i2p/crypto/rand.Seed | defined in prng.go:255\nat prng.go:256: calling [(*github.com/go-i2p/crypto/rand.Rand).Seed]" fillcolor="lightblue" label="Seed" penwidth="1.5" ]
-        "github.com/go-i2p/crypto/rand.Shuffle" [ fillcolor="lightblue" label="Shuffle" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Shuffle | defined in prng.go:315\nat prng.go:316: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" ]
-        "github.com/go-i2p/crypto/rand.ExpFloat64" [ label="ExpFloat64" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.ExpFloat64 | defined in prng.go:325\nat prng.go:326: calling [(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64]" fillcolor="lightblue" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
-        "github.com/go-i2p/crypto/rand.Int31n" [ fillcolor="lightblue" label="Int31n" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int31n | defined in prng.go:290\nat prng.go:291: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]" ]
-        "github.com/go-i2p/crypto/rand.ReadBigIntInRange" [ fillcolor="lightblue" label="ReadBigIntInRange" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.ReadBigIntInRange | defined in secure_reader.go:199\nat secure_reader.go:200: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange]" ]
-        "github.com/go-i2p/crypto/rand.ReadBigInt" [ fillcolor="lightblue" label="ReadBigInt" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.ReadBigInt | defined in secure_reader.go:194\nat secure_reader.go:195: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" ]
-        "github.com/go-i2p/crypto/rand.Perm" [ tooltip="github.com/go-i2p/crypto/rand.Perm | defined in prng.go:310\nat prng.go:311: calling [(*github.com/go-i2p/crypto/rand.Rand).Perm]" fillcolor="lightblue" label="Perm" penwidth="1.5" ]
-        "github.com/go-i2p/crypto/rand.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/rand.init | defined in .:0\nat prng.go:250: calling [github.com/go-i2p/crypto/rand.New]\nat constants.go:13: calling [github.com/samber/oops.Errorf]\nat constants.go:14: calling [github.com/samber/oops.Errorf]\nat constants.go:15: calling [github.com/samber/oops.Errorf]\nat constants.go:9: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat prng.go:250: calling [github.com/go-i2p/crypto/rand.NewSource]\nat secure_reader.go:147: calling [github.com/go-i2p/crypto/rand.NewSecureReader]" ]
-        "github.com/go-i2p/crypto/rand.NewSource" [ fillcolor="lightblue" label="NewSource" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.NewSource | defined in prng.go:34\nat prng.go:35: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat prng.go:36: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat prng.go:36: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-        "github.com/go-i2p/crypto/rand.New" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.New | defined in prng.go:68\nat prng.go:70: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat prng.go:69: calling [github.com/go-i2p/logger.GetGoI2PLogger]" fillcolor="lightblue" label="New" ]
-        "github.com/go-i2p/crypto/rand.NewSecureReader" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.NewSecureReader | defined in secure_reader.go:20" fillcolor="lightblue" label="NewSecureReader" ]
-        "github.com/go-i2p/crypto/rand.Uint32" [ fillcolor="lightblue" label="Uint32" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Uint32 | defined in prng.go:265\nat prng.go:266: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint32]" ]
-        "github.com/go-i2p/crypto/rand.Float32" [ fillcolor="lightblue" label="Float32" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Float32 | defined in prng.go:305\nat prng.go:306: calling [(*github.com/go-i2p/crypto/rand.Rand).Float32]" ]
-        "github.com/go-i2p/crypto/rand.Prime" [ fillcolor="lightblue" label="Prime" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Prime | defined in secure_reader.go:170\nat secure_reader.go:174: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:181: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:171: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:184: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:184: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-        "github.com/go-i2p/crypto/rand.Int63" [ fillcolor="lightblue" label="Int63" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int63 | defined in prng.go:260\nat prng.go:261: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-        "github.com/go-i2p/crypto/rand.Read" [ fillcolor="lightblue" label="Read" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Read | defined in secure_reader.go:189\nat secure_reader.go:190: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" ]
-        "github.com/go-i2p/crypto/rand.Uint64" [ tooltip="github.com/go-i2p/crypto/rand.Uint64 | defined in prng.go:270\nat prng.go:271: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint64]" fillcolor="lightblue" label="Uint64" penwidth="1.5" ]
-        "github.com/go-i2p/crypto/rand.Int31" [ fillcolor="lightblue" label="Int31" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int31 | defined in prng.go:275\nat prng.go:276: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
-        "github.com/go-i2p/crypto/rand.CryptoInt" [ fillcolor="lightblue" label="CryptoInt" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.CryptoInt | defined in secure_reader.go:155\nat secure_reader.go:161: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]\nat secure_reader.go:157: calling [github.com/samber/oops.Errorf]" ]
-        "github.com/go-i2p/crypto/rand.Float64" [ fillcolor="lightblue" label="Float64" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Float64 | defined in prng.go:300\nat prng.go:301: calling [(*github.com/go-i2p/crypto/rand.Rand).Float64]" ]
-        "github.com/go-i2p/crypto/rand.Intn" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Intn | defined in prng.go:295\nat prng.go:296: calling [(*github.com/go-i2p/crypto/rand.Rand).Intn]" fillcolor="lightblue" label="Intn" ]
-        "github.com/go-i2p/crypto/rand.Int63n" [ fillcolor="lightblue" label="Int63n" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int63n | defined in prng.go:285\nat prng.go:286: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
-        "github.com/go-i2p/crypto/rand.NormFloat64" [ fillcolor="lightblue" label="NormFloat64" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.NormFloat64 | defined in prng.go:320\nat prng.go:321: calling [(*github.com/go-i2p/crypto/rand.Rand).NormFloat64]" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" ]
+        "github.com/samber/oops.Errorf" [ tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/rand.ReadBigInt" [ label="ReadBigInt" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.ReadBigInt | defined in secure_reader.go:194\nat secure_reader.go:195: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" fillcolor="lightblue" ]
+        "github.com/go-i2p/crypto/rand.Perm" [ fillcolor="lightblue" label="Perm" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Perm | defined in prng.go:352\nat prng.go:353: calling [(*github.com/go-i2p/crypto/rand.Rand).Perm]" ]
+        "github.com/go-i2p/crypto/rand.Uint64" [ tooltip="github.com/go-i2p/crypto/rand.Uint64 | defined in prng.go:312\nat prng.go:313: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint64]" fillcolor="lightblue" label="Uint64" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/rand.Float32" [ fillcolor="lightblue" label="Float32" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Float32 | defined in prng.go:347\nat prng.go:348: calling [(*github.com/go-i2p/crypto/rand.Rand).Float32]" ]
+        "github.com/go-i2p/crypto/rand.NormFloat64" [ fillcolor="lightblue" label="NormFloat64" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.NormFloat64 | defined in prng.go:362\nat prng.go:363: calling [(*github.com/go-i2p/crypto/rand.Rand).NormFloat64]" ]
+        "github.com/go-i2p/crypto/rand.Int" [ tooltip="github.com/go-i2p/crypto/rand.Int | defined in prng.go:322\nat prng.go:323: calling [(*github.com/go-i2p/crypto/rand.Rand).Int]" fillcolor="lightblue" label="Int" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/rand.CryptoInt" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.CryptoInt | defined in secure_reader.go:155\nat secure_reader.go:161: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]\nat secure_reader.go:157: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="CryptoInt" ]
+        "github.com/go-i2p/crypto/rand.Shuffle" [ fillcolor="lightblue" label="Shuffle" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Shuffle | defined in prng.go:357\nat prng.go:358: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" ]
+        "github.com/go-i2p/crypto/rand.NewSource" [ fillcolor="lightblue" label="NewSource" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.NewSource | defined in prng.go:49\nat prng.go:51: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat prng.go:50: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat prng.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "github.com/go-i2p/crypto/rand.Int31" [ label="Int31" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int31 | defined in prng.go:317\nat prng.go:318: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" fillcolor="lightblue" ]
+        "github.com/go-i2p/crypto/rand.Float64" [ fillcolor="lightblue" label="Float64" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Float64 | defined in prng.go:342\nat prng.go:343: calling [(*github.com/go-i2p/crypto/rand.Rand).Float64]" ]
+        "github.com/go-i2p/crypto/rand.Int63n" [ fillcolor="lightblue" label="Int63n" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int63n | defined in prng.go:327\nat prng.go:328: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
+        "github.com/go-i2p/crypto/rand.ReadBigIntInRange" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.ReadBigIntInRange | defined in secure_reader.go:199\nat secure_reader.go:200: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange]" fillcolor="lightblue" label="ReadBigIntInRange" ]
+        "github.com/go-i2p/crypto/rand.ExpFloat64" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.ExpFloat64 | defined in prng.go:367\nat prng.go:368: calling [(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64]" fillcolor="lightblue" label="ExpFloat64" ]
+        "github.com/go-i2p/crypto/rand.Int63" [ fillcolor="lightblue" label="Int63" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int63 | defined in prng.go:302\nat prng.go:303: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+        "github.com/go-i2p/crypto/rand.Prime" [ fillcolor="lightblue" label="Prime" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Prime | defined in secure_reader.go:170\nat secure_reader.go:174: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:181: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:184: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:171: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:184: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+        "github.com/go-i2p/crypto/rand.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/rand.init | defined in .:0\nat constants.go:9: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat prng.go:292: calling [github.com/go-i2p/crypto/rand.New]\nat secure_reader.go:147: calling [github.com/go-i2p/crypto/rand.NewSecureReader]\nat prng.go:292: calling [github.com/go-i2p/crypto/rand.NewSource]\nat constants.go:13: calling [github.com/samber/oops.Errorf]\nat constants.go:14: calling [github.com/samber/oops.Errorf]\nat constants.go:15: calling [github.com/samber/oops.Errorf]" ]
+        "github.com/go-i2p/crypto/rand.New" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.New | defined in prng.go:110\nat prng.go:112: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat prng.go:111: calling [github.com/go-i2p/logger.GetGoI2PLogger]" fillcolor="lightblue" label="New" ]
+        "github.com/go-i2p/crypto/rand.NewSecureReader" [ fillcolor="lightblue" label="NewSecureReader" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.NewSecureReader | defined in secure_reader.go:20" ]
+        "github.com/go-i2p/crypto/rand.Uint32" [ fillcolor="lightblue" label="Uint32" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Uint32 | defined in prng.go:307\nat prng.go:308: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint32]" ]
+        "github.com/go-i2p/crypto/rand.Intn" [ tooltip="github.com/go-i2p/crypto/rand.Intn | defined in prng.go:337\nat prng.go:338: calling [(*github.com/go-i2p/crypto/rand.Rand).Intn]" fillcolor="lightblue" label="Intn" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/rand.Int31n" [ fillcolor="lightblue" label="Int31n" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Int31n | defined in prng.go:332\nat prng.go:333: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]" ]
+        "github.com/go-i2p/crypto/rand.Read" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Read | defined in secure_reader.go:189\nat secure_reader.go:190: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" fillcolor="lightblue" label="Read" ]
+        "github.com/go-i2p/crypto/rand.Seed" [ fillcolor="lightblue" label="Seed" penwidth="1.5" tooltip="github.com/go-i2p/crypto/rand.Seed | defined in prng.go:297\nat prng.go:298: calling [(*github.com/go-i2p/crypto/rand.Rand).Seed]" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/rand.Rand" {
-        fontsize="15";
-fontcolor="#222222";
-labelloc="b";
-style="rounded,filled";
-label="(*Rand)";
-penwidth="0.5";
-fillcolor="lightsteelblue";
-tooltip="type: *github.com/go-i2p/crypto/rand.Rand";
-        
-        "(*github.com/go-i2p/crypto/rand.Rand).Int" [ fillcolor="lightblue" label="Int" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int | defined in prng.go:121\nat prng.go:122: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int63 | defined in prng.go:90" fillcolor="lightblue" label="Int63" penwidth="1.5" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" [ fillcolor="lightblue" label="Shuffle" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Shuffle | defined in prng.go:199\nat prng.go:206: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]\nat prng.go:201: calling [github.com/samber/oops.Errorf]" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ fillcolor="lightblue" label="Int63n" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int63n | defined in prng.go:128\nat prng.go:133: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:136: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:138: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:130: calling [github.com/samber/oops.Errorf]" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Perm" [ label="Perm" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Perm | defined in prng.go:188\nat prng.go:193: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" fillcolor="lightblue" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Seed" [ fillcolor="lightblue" label="Seed" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Seed | defined in prng.go:81" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Uint32" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Uint32 | defined in prng.go:98\nat prng.go:99: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" fillcolor="lightblue" label="Uint32" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64" [ fillcolor="lightblue" label="ExpFloat64" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64 | defined in prng.go:239\nat prng.go:242: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ fillcolor="lightblue" label="Int31" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int31 | defined in prng.go:115\nat prng.go:116: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Float32" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Float32 | defined in prng.go:181\nat prng.go:183: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" fillcolor="lightblue" label="Float32" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Int31n" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int31n | defined in prng.go:145\nat prng.go:150: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:153: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:155: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:147: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="Int31n" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Uint64" [ fillcolor="lightblue" label="Uint64" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Uint64 | defined in prng.go:104\nat prng.go:110: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:110: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Intn" [ fillcolor="lightblue" label="Intn" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Intn | defined in prng.go:162\nat prng.go:167: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]\nat prng.go:164: calling [github.com/samber/oops.Errorf]\nat prng.go:169: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).Float64" [ tooltip="(*github.com/go-i2p/crypto/rand.Rand).Float64 | defined in prng.go:174\nat prng.go:176: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" fillcolor="lightblue" label="Float64" penwidth="1.5" ]
-        "(*github.com/go-i2p/crypto/rand.Rand).NormFloat64" [ label="NormFloat64" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).NormFloat64 | defined in prng.go:213" fillcolor="lightblue" ]
-        
-    }
-
-        subgraph "cluster_*github.com/go-i2p/crypto/rand.SecureReader" {
         penwidth="0.5";
 fontsize="15";
 labelloc="b";
 style="rounded,filled";
 fillcolor="lightsteelblue";
-tooltip="type: *github.com/go-i2p/crypto/rand.SecureReader";
+label="(*Rand)";
 fontcolor="#222222";
-label="(*SecureReader)";
+tooltip="type: *github.com/go-i2p/crypto/rand.Rand";
         
-        "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt | defined in secure_reader.go:57\nat secure_reader.go:61: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:81: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:69: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:74: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:78: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:82: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:68: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:58: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:82: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:68: calling [(*github.com/go-i2p/logger.Logger).Error]" fillcolor="lightblue" label="ReadBigInt" ]
-        "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" [ label="ReadBigIntInRange" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange | defined in secure_reader.go:87\nat secure_reader.go:110: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:88: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:98: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]\nat secure_reader.go:106: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat secure_reader.go:91: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:100: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
-        "(*github.com/go-i2p/crypto/rand.SecureReader).Read" [ label="Read" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).Read | defined in secure_reader.go:28\nat secure_reader.go:29: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:47: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:42: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:41: calling [(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy]\nat secure_reader.go:51: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:36: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
-        "(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy" [ fillcolor="lightblue" label="validateEntropy" penwidth="0.5" tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy | defined in secure_reader.go:116" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" [ fillcolor="lightblue" label="Shuffle" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Shuffle | defined in prng.go:241\nat prng.go:243: calling [github.com/samber/oops.Errorf]\nat prng.go:248: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int63n | defined in prng.go:170\nat prng.go:175: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:178: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:180: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:172: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="Int63n" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ label="Int63" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int63 | defined in prng.go:132" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Perm" [ fillcolor="lightblue" label="Perm" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Perm | defined in prng.go:230\nat prng.go:235: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Uint64" [ fillcolor="lightblue" label="Uint64" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Uint64 | defined in prng.go:146\nat prng.go:152: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:152: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ label="Int31" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int31 | defined in prng.go:157\nat prng.go:158: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Float32" [ fillcolor="lightblue" label="Float32" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Float32 | defined in prng.go:223\nat prng.go:225: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).NormFloat64" [ fillcolor="lightblue" label="NormFloat64" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).NormFloat64 | defined in prng.go:255" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Intn" [ fillcolor="lightblue" label="Intn" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Intn | defined in prng.go:204\nat prng.go:206: calling [github.com/samber/oops.Errorf]\nat prng.go:209: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]\nat prng.go:211: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Int31n" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int31n | defined in prng.go:187\nat prng.go:189: calling [github.com/samber/oops.Errorf]\nat prng.go:192: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:195: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:197: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" fillcolor="lightblue" label="Int31n" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Int" [ label="Int" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Int | defined in prng.go:163\nat prng.go:164: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Float64" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Float64 | defined in prng.go:216\nat prng.go:218: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" fillcolor="lightblue" label="Float64" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64 | defined in prng.go:281\nat prng.go:284: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" fillcolor="lightblue" label="ExpFloat64" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Uint32" [ fillcolor="lightblue" label="Uint32" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Uint32 | defined in prng.go:140\nat prng.go:141: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+        "(*github.com/go-i2p/crypto/rand.Rand).Seed" [ label="Seed" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.Rand).Seed | defined in prng.go:123" fillcolor="lightblue" ]
         
     }
 
-        subgraph "cluster_*github.com/go-i2p/crypto/rand.pcgSource" {
-        tooltip="type: *github.com/go-i2p/crypto/rand.pcgSource";
+        subgraph "cluster_*github.com/go-i2p/crypto/rand.SecureReader" {
+        fontcolor="#222222";
+labelloc="b";
+label="(*SecureReader)";
+tooltip="type: *github.com/go-i2p/crypto/rand.SecureReader";
+penwidth="0.5";
 fontsize="15";
 style="rounded,filled";
 fillcolor="lightsteelblue";
-penwidth="0.5";
+        
+        "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ fillcolor="lightblue" label="ReadBigInt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt | defined in secure_reader.go:57\nat secure_reader.go:82: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:68: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:82: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:68: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:61: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:81: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:69: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:58: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:74: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:78: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+        "(*github.com/go-i2p/crypto/rand.SecureReader).Read" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).Read | defined in secure_reader.go:28\nat secure_reader.go:47: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:42: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:29: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:41: calling [(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy]\nat secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:51: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:36: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="Read" ]
+        "(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy" [ label="validateEntropy" penwidth="0.5" tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy | defined in secure_reader.go:116" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" [ tooltip="(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange | defined in secure_reader.go:87\nat secure_reader.go:91: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:100: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:88: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat secure_reader.go:98: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]\nat secure_reader.go:106: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat secure_reader.go:110: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="ReadBigIntInRange" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/crypto/rand.cryptoSource" {
+        penwidth="0.5";
+fontsize="15";
 fontcolor="#222222";
 labelloc="b";
-label="(*pcgSource)";
+fillcolor="lightsteelblue";
+tooltip="type: *github.com/go-i2p/crypto/rand.cryptoSource";
+style="rounded,filled";
+label="(*cryptoSource)";
         
-        "(*github.com/go-i2p/crypto/rand.pcgSource).Uint64" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.pcgSource).Uint64 | defined in prng.go:49\nat prng.go:54: calling [(*github.com/go-i2p/crypto/rand.pcgSource).Int63]\nat prng.go:54: calling [(*github.com/go-i2p/crypto/rand.pcgSource).Int63]" fillcolor="lightblue" label="Uint64" ]
-        "(*github.com/go-i2p/crypto/rand.pcgSource).Int63" [ fillcolor="lightblue" label="Int63" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.pcgSource).Int63 | defined in prng.go:41" ]
+        "(*github.com/go-i2p/crypto/rand.cryptoSource).Uint64" [ fillcolor="lightblue" label="Uint64" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.cryptoSource).Uint64 | defined in prng.go:81\nat prng.go:89: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" ]
+        "(*github.com/go-i2p/crypto/rand.cryptoSource).Int63" [ fillcolor="lightblue" label="Int63" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.cryptoSource).Int63 | defined in prng.go:56\nat prng.go:64: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" ]
+        "(*github.com/go-i2p/crypto/rand.cryptoSource).Seed" [ fillcolor="lightblue" label="Seed" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/rand.cryptoSource).Seed | defined in prng.go:75\nat prng.go:78: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat prng.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat prng.go:77: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/logger.Logger" {
-        fillcolor="wheat2";
+        style="rounded,filled";
+fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/go-i2p/logger.Logger";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
-style="rounded,filled";
         
-        "(*github.com/go-i2p/logger.Logger).WithError" [ tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" ]
-        "(*github.com/go-i2p/logger.Logger).Error" [ fillcolor="moccasin" label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" ]
+        "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" ]
+        "(*github.com/go-i2p/logger.Logger).Error" [ label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" fillcolor="moccasin" ]
         "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" ]
-        "(*github.com/go-i2p/logger.Logger).WithFields" [ fillcolor="moccasin" label="logger\nWithFields" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithFields | defined in log.go:60" ]
+        "(*github.com/go-i2p/logger.Logger).WithFields" [ label="logger\nWithFields" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithFields | defined in log.go:60" fillcolor="moccasin" ]
         
     }
 
         subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        fontcolor="#222222";
-labelloc="b";
-style="rounded,filled";
-fillcolor="wheat2";
-label="(*Logger)";
+        label="(*Logger)";
 tooltip="type: *github.com/sirupsen/logrus.Logger";
 penwidth="0.5";
 fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+fillcolor="wheat2";
         
-        "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
+        "(*github.com/sirupsen/logrus.Logger).Debug" [ label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" fillcolor="moccasin" ]
         
     }
 
     }
 
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at secure_reader.go:110: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at secure_reader.go:61: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:81: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:69: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at secure_reader.go:74: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:78: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/crypto/rand.New" [ tooltip="at prng.go:250: calling [github.com/go-i2p/crypto/rand.New]" ]
-    "github.com/go-i2p/crypto/rand.Prime" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at secure_reader.go:174: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:181: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/rand.Seed" -> "(*github.com/go-i2p/crypto/rand.Rand).Seed" [ tooltip="at prng.go:256: calling [(*github.com/go-i2p/crypto/rand.Rand).Seed]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Int31" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:116: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at secure_reader.go:82: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:68: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "github.com/go-i2p/crypto/rand.init" -> "github.com/samber/oops.Errorf" [ tooltip="at constants.go:13: calling [github.com/samber/oops.Errorf]\nat constants.go:14: calling [github.com/samber/oops.Errorf]\nat constants.go:15: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/rand.New" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at prng.go:70: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/rand.Uint32" -> "(*github.com/go-i2p/crypto/rand.Rand).Uint32" [ tooltip="at prng.go:266: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint32]" ]
-    "github.com/go-i2p/crypto/rand.Intn" -> "(*github.com/go-i2p/crypto/rand.Rand).Intn" [ tooltip="at prng.go:296: calling [(*github.com/go-i2p/crypto/rand.Rand).Intn]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at secure_reader.go:88: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "github.com/go-i2p/crypto/rand.Int63" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:261: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at secure_reader.go:29: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "github.com/go-i2p/crypto/rand.Int31" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ tooltip="at prng.go:276: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
-    "github.com/go-i2p/crypto/rand.Int63n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ tooltip="at prng.go:286: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at secure_reader.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at constants.go:9: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/rand.Prime" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at secure_reader.go:171: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Intn" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31n" [ tooltip="at prng.go:167: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Float64" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:176: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ tooltip="at secure_reader.go:98: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" ]
-    "github.com/go-i2p/crypto/rand.Shuffle" -> "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" [ tooltip="at prng.go:316: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" ]
-    "github.com/go-i2p/crypto/rand.ReadBigIntInRange" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" [ tooltip="at secure_reader.go:200: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange]" ]
-    "github.com/go-i2p/crypto/rand.NormFloat64" -> "(*github.com/go-i2p/crypto/rand.Rand).NormFloat64" [ tooltip="at prng.go:321: calling [(*github.com/go-i2p/crypto/rand.Rand).NormFloat64]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Int31n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ tooltip="at prng.go:150: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:153: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:155: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
-    "github.com/go-i2p/crypto/rand.Uint64" -> "(*github.com/go-i2p/crypto/rand.Rand).Uint64" [ tooltip="at prng.go:271: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint64]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Int63n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:133: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:136: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:138: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Perm" -> "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" [ tooltip="at prng.go:193: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Uint32" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:99: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "github.com/go-i2p/crypto/rand.Int31n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31n" [ tooltip="at prng.go:291: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]" ]
-    "github.com/go-i2p/crypto/rand.Prime" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at secure_reader.go:58: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/rand.NewSource" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at prng.go:35: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "github.com/go-i2p/crypto/rand.Prime" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Intn" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:164: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "github.com/go-i2p/crypto/rand.ExpFloat64" -> "(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64" [ tooltip="at prng.go:326: calling [(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Float32" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ tooltip="at prng.go:183: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
-    "github.com/go-i2p/crypto/rand.Perm" -> "(*github.com/go-i2p/crypto/rand.Rand).Perm" [ tooltip="at prng.go:311: calling [(*github.com/go-i2p/crypto/rand.Rand).Perm]" ]
-    "github.com/go-i2p/crypto/rand.New" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at prng.go:69: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at secure_reader.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/rand.CryptoInt" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ tooltip="at secure_reader.go:161: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" ]
-    "github.com/go-i2p/crypto/rand.NewSource" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at prng.go:36: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/rand.Read" -> "(*github.com/go-i2p/crypto/rand.SecureReader).Read" [ tooltip="at secure_reader.go:190: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Intn" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ tooltip="at prng.go:169: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at secure_reader.go:47: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:42: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "github.com/go-i2p/crypto/rand.ReadBigInt" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ tooltip="at secure_reader.go:195: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy" [ tooltip="at secure_reader.go:41: calling [(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Uint64" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:110: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:110: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "github.com/go-i2p/crypto/rand.CryptoInt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at secure_reader.go:157: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at secure_reader.go:106: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Int63n" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:130: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ tooltip="at prng.go:206: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:242: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Int31n" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:147: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/rand.NewSource" -> "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="at prng.go:36: calling [(*github.com/go-i2p/logger.Logger).WithField]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/crypto/rand.NewSource" [ tooltip="at prng.go:250: calling [github.com/go-i2p/crypto/rand.NewSource]" ]
+    "github.com/go-i2p/crypto/rand.Prime" -> "github.com/samber/oops.Errorf" [ tooltip="at secure_reader.go:174: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:181: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
     "github.com/go-i2p/crypto/rand.Prime" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at secure_reader.go:184: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at secure_reader.go:91: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:100: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Int" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:122: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
-    "github.com/go-i2p/crypto/rand.Int" -> "(*github.com/go-i2p/crypto/rand.Rand).Int" [ tooltip="at prng.go:281: calling [(*github.com/go-i2p/crypto/rand.Rand).Int]" ]
-    "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:201: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/rand.Float32" -> "(*github.com/go-i2p/crypto/rand.Rand).Float32" [ tooltip="at prng.go:306: calling [(*github.com/go-i2p/crypto/rand.Rand).Float32]" ]
-    "github.com/go-i2p/crypto/rand.Prime" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at secure_reader.go:184: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "github.com/go-i2p/crypto/rand.Float64" -> "(*github.com/go-i2p/crypto/rand.Rand).Float64" [ tooltip="at prng.go:301: calling [(*github.com/go-i2p/crypto/rand.Rand).Float64]" ]
-    "(*github.com/go-i2p/crypto/rand.pcgSource).Uint64" -> "(*github.com/go-i2p/crypto/rand.pcgSource).Int63" [ tooltip="at prng.go:54: calling [(*github.com/go-i2p/crypto/rand.pcgSource).Int63]\nat prng.go:54: calling [(*github.com/go-i2p/crypto/rand.pcgSource).Int63]" ]
-    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/crypto/rand.NewSecureReader" [ tooltip="at secure_reader.go:147: calling [github.com/go-i2p/crypto/rand.NewSecureReader]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Intn" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:206: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Int31n" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:189: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/rand.New" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at prng.go:112: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Uint32" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:141: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "github.com/go-i2p/crypto/rand.Int" -> "(*github.com/go-i2p/crypto/rand.Rand).Int" [ tooltip="at prng.go:323: calling [(*github.com/go-i2p/crypto/rand.Rand).Int]" ]
+    "github.com/go-i2p/crypto/rand.CryptoInt" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ tooltip="at secure_reader.go:161: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Int63n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:175: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:178: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:180: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "github.com/go-i2p/crypto/rand.NormFloat64" -> "(*github.com/go-i2p/crypto/rand.Rand).NormFloat64" [ tooltip="at prng.go:363: calling [(*github.com/go-i2p/crypto/rand.Rand).NormFloat64]" ]
+    "(*github.com/go-i2p/crypto/rand.cryptoSource).Seed" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at prng.go:78: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/rand.cryptoSource).Seed" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at prng.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:9: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "github.com/go-i2p/crypto/rand.Read" -> "(*github.com/go-i2p/crypto/rand.SecureReader).Read" [ tooltip="at secure_reader.go:190: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at secure_reader.go:82: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:68: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
     "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at secure_reader.go:82: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:68: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Float32" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ tooltip="at prng.go:225: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
+    "github.com/go-i2p/crypto/rand.Uint32" -> "(*github.com/go-i2p/crypto/rand.Rand).Uint32" [ tooltip="at prng.go:308: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint32]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Float64" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:218: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:284: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "github.com/go-i2p/crypto/rand.ExpFloat64" -> "(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64" [ tooltip="at prng.go:368: calling [(*github.com/go-i2p/crypto/rand.Rand).ExpFloat64]" ]
+    "github.com/go-i2p/crypto/rand.Perm" -> "(*github.com/go-i2p/crypto/rand.Rand).Perm" [ tooltip="at prng.go:353: calling [(*github.com/go-i2p/crypto/rand.Rand).Perm]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Uint64" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:152: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]\nat prng.go:152: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at secure_reader.go:47: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:42: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/rand.Int63" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:303: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "(*github.com/go-i2p/crypto/rand.cryptoSource).Seed" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at prng.go:77: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/crypto/rand.New" [ tooltip="at prng.go:292: calling [github.com/go-i2p/crypto/rand.New]" ]
+    "github.com/go-i2p/crypto/rand.Seed" -> "(*github.com/go-i2p/crypto/rand.Rand).Seed" [ tooltip="at prng.go:298: calling [(*github.com/go-i2p/crypto/rand.Rand).Seed]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at secure_reader.go:61: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:81: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:69: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at secure_reader.go:74: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:78: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Int" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:164: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at secure_reader.go:91: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:100: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/rand.New" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at prng.go:111: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "github.com/go-i2p/crypto/rand.ReadBigIntInRange" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" [ tooltip="at secure_reader.go:200: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:243: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/rand.cryptoSource).Uint64" -> "(*github.com/go-i2p/crypto/rand.SecureReader).Read" [ tooltip="at prng.go:89: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" ]
+    "github.com/go-i2p/crypto/rand.Shuffle" -> "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" [ tooltip="at prng.go:358: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at secure_reader.go:88: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/crypto/rand.NewSecureReader" [ tooltip="at secure_reader.go:147: calling [github.com/go-i2p/crypto/rand.NewSecureReader]" ]
+    "github.com/go-i2p/crypto/rand.CryptoInt" -> "github.com/samber/oops.Errorf" [ tooltip="at secure_reader.go:157: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at secure_reader.go:29: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "github.com/go-i2p/crypto/rand.NewSource" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at prng.go:51: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/rand.init" -> "github.com/go-i2p/crypto/rand.NewSource" [ tooltip="at prng.go:292: calling [github.com/go-i2p/crypto/rand.NewSource]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Intn" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31n" [ tooltip="at prng.go:209: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Intn" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ tooltip="at prng.go:211: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ tooltip="at secure_reader.go:98: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ tooltip="at secure_reader.go:106: calling [(*github.com/go-i2p/logger.Logger).WithFields]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/rand.NewSource" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at prng.go:50: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/rand.Float64" -> "(*github.com/go-i2p/crypto/rand.Rand).Float64" [ tooltip="at prng.go:343: calling [(*github.com/go-i2p/crypto/rand.Rand).Float64]" ]
+    "github.com/go-i2p/crypto/rand.Int31n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31n" [ tooltip="at prng.go:333: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31n]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigIntInRange" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at secure_reader.go:110: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/rand.Prime" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at secure_reader.go:171: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at secure_reader.go:58: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "(*github.com/go-i2p/crypto/rand.cryptoSource).Int63" -> "(*github.com/go-i2p/crypto/rand.SecureReader).Read" [ tooltip="at prng.go:64: calling [(*github.com/go-i2p/crypto/rand.SecureReader).Read]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy" [ tooltip="at secure_reader.go:41: calling [(*github.com/go-i2p/crypto/rand.SecureReader).validateEntropy]" ]
+    "github.com/go-i2p/crypto/rand.Int31" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ tooltip="at prng.go:318: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
+    "github.com/go-i2p/crypto/rand.ReadBigInt" -> "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" [ tooltip="at secure_reader.go:195: calling [(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt]" ]
+    "github.com/go-i2p/crypto/rand.Float32" -> "(*github.com/go-i2p/crypto/rand.Rand).Float32" [ tooltip="at prng.go:348: calling [(*github.com/go-i2p/crypto/rand.Rand).Float32]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at secure_reader.go:52: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat secure_reader.go:35: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "github.com/go-i2p/crypto/rand.Prime" -> "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="at secure_reader.go:184: calling [(*github.com/go-i2p/logger.Logger).WithField]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/rand.init" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at constants.go:13: calling [github.com/samber/oops.Errorf]\nat constants.go:14: calling [github.com/samber/oops.Errorf]\nat constants.go:15: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).ReadBigInt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="at secure_reader.go:74: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat secure_reader.go:78: calling [(*github.com/go-i2p/logger.Logger).WithField]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ tooltip="at prng.go:248: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
+    "github.com/go-i2p/crypto/rand.Uint64" -> "(*github.com/go-i2p/crypto/rand.Rand).Uint64" [ tooltip="at prng.go:313: calling [(*github.com/go-i2p/crypto/rand.Rand).Uint64]" ]
+    "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at secure_reader.go:47: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat secure_reader.go:42: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/rand.NewSource" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at prng.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/rand.Prime" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "github.com/go-i2p/crypto/rand.Prime" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at secure_reader.go:180: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/rand.Intn" -> "(*github.com/go-i2p/crypto/rand.Rand).Intn" [ tooltip="at prng.go:338: calling [(*github.com/go-i2p/crypto/rand.Rand).Intn]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Int63n" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at prng.go:172: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Perm" -> "(*github.com/go-i2p/crypto/rand.Rand).Shuffle" [ tooltip="at prng.go:235: calling [(*github.com/go-i2p/crypto/rand.Rand).Shuffle]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Int31" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63" [ tooltip="at prng.go:158: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63]" ]
+    "(*github.com/go-i2p/crypto/rand.Rand).Int31n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int31" [ tooltip="at prng.go:192: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:195: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]\nat prng.go:197: calling [(*github.com/go-i2p/crypto/rand.Rand).Int31]" ]
     "(*github.com/go-i2p/crypto/rand.SecureReader).Read" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at secure_reader.go:51: calling [github.com/samber/oops.Errorf]\nat secure_reader.go:36: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/rand.Int63n" -> "(*github.com/go-i2p/crypto/rand.Rand).Int63n" [ tooltip="at prng.go:328: calling [(*github.com/go-i2p/crypto/rand.Rand).Int63n]" ]
 }

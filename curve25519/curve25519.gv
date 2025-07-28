@@ -14,156 +14,156 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        labelloc="t";
+        label="curve25519";
+labelloc="t";
 labeljust="c";
 fontsize="18";
 bgcolor="#e6ecfa";
-label="curve25519";
         
-        "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
-        "golang.org/x/crypto/hkdf.New" [ fillcolor="moccasin" label="hkdf\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/hkdf.New | defined in hkdf.go:92" ]
-        "golang.org/x/crypto/chacha20poly1305.New" [ fillcolor="moccasin" label="chacha20poly1305\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40" ]
         "go.step.sm/crypto/x25519.Sign" [ fillcolor="moccasin" label="x25519\nSign" penwidth="1.5" tooltip="go.step.sm/crypto/x25519.Sign | defined in x25519.go:139" ]
-        "github.com/go-i2p/crypto/curve25519.init" [ label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/curve25519.init | defined in .:0\nat constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat constants.go:19: calling [github.com/samber/oops.Errorf]\nat constants.go:23: calling [github.com/samber/oops.Errorf]\nat constants.go:27: calling [github.com/samber/oops.Errorf]\nat constants.go:31: calling [github.com/samber/oops.Errorf]\nat constants.go:35: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" ]
-        "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/curve25519.GenerateKeyPair | defined in utils.go:15\nat utils.go:19: calling [github.com/samber/oops.Errorf]\nat utils.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat utils.go:17: calling [go.step.sm/crypto/x25519.GenerateKey]" fillcolor="lightblue" label="GenerateKeyPair" ]
-        "go.step.sm/crypto/x25519.GenerateKey" [ label="x25519\nGenerateKey" penwidth="1.5" tooltip="go.step.sm/crypto/x25519.GenerateKey | defined in x25519.go:37" fillcolor="moccasin" ]
-        "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" [ fillcolor="lightblue" label="CreateCurve25519PublicKey" penwidth="1.5" tooltip="github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey | defined in curve25519_public_key.go:74\nat curve25519_public_key.go:75: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_public_key.go:82: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_public_key.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:80: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:83: calling [(*github.com/go-i2p/logger.Logger).Warn]" ]
+        "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
         "go.step.sm/crypto/x25519.Verify" [ fillcolor="moccasin" label="x25519\nVerify" penwidth="1.5" tooltip="go.step.sm/crypto/x25519.Verify | defined in x25519.go:217" ]
-        "github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption" [ label="NewCurve25519Encryption" penwidth="1.5" tooltip="github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption | defined in curve25519_encryption.go:102\nat curve25519_encryption.go:108: calling [go.step.sm/crypto/x25519.GenerateKey]\nat curve25519_encryption.go:110: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
+        "github.com/go-i2p/crypto/curve25519.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/curve25519.init | defined in .:0\nat constants.go:19: calling [github.com/samber/oops.Errorf]\nat constants.go:23: calling [github.com/samber/oops.Errorf]\nat constants.go:27: calling [github.com/samber/oops.Errorf]\nat constants.go:31: calling [github.com/samber/oops.Errorf]\nat constants.go:35: calling [github.com/samber/oops.Errorf]\nat constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" ]
+        "golang.org/x/crypto/hkdf.New" [ label="hkdf\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/hkdf.New | defined in hkdf.go:92" fillcolor="moccasin" ]
+        "golang.org/x/crypto/chacha20poly1305.New" [ label="chacha20poly1305\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40" fillcolor="moccasin" ]
+        "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" [ tooltip="github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey | defined in curve25519_public_key.go:74\nat curve25519_public_key.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:80: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:83: calling [(*github.com/go-i2p/logger.Logger).Warn]\nat curve25519_public_key.go:75: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_public_key.go:82: calling [(*github.com/go-i2p/logger.Logger).WithField]" fillcolor="lightblue" label="CreateCurve25519PublicKey" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" [ fillcolor="lightblue" label="GenerateKeyPair" penwidth="1.5" tooltip="github.com/go-i2p/crypto/curve25519.GenerateKeyPair | defined in utils.go:15\nat utils.go:17: calling [go.step.sm/crypto/x25519.GenerateKey]\nat utils.go:19: calling [github.com/samber/oops.Errorf]\nat utils.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "go.step.sm/crypto/x25519.GenerateKey" [ fillcolor="moccasin" label="x25519\nGenerateKey" penwidth="1.5" tooltip="go.step.sm/crypto/x25519.GenerateKey | defined in x25519.go:37" ]
+        "github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption" [ fillcolor="lightblue" label="NewCurve25519Encryption" penwidth="1.5" tooltip="github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption | defined in curve25519_encryption.go:102\nat curve25519_encryption.go:108: calling [go.step.sm/crypto/x25519.GenerateKey]\nat curve25519_encryption.go:110: calling [github.com/samber/oops.Errorf]" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter" {
-        tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Decrypter";
-penwidth="0.5";
-style="rounded,filled";
-fontsize="15";
-fontcolor="#222222";
+        fontcolor="#222222";
 labelloc="b";
 fillcolor="lightsteelblue";
+tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Decrypter";
+penwidth="0.5";
+fontsize="15";
+style="rounded,filled";
 label="(*Curve25519Decrypter)";
         
-        "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt | defined in curve25519_decrypter.go:25\nat curve25519_decrypter.go:55: calling [golang.org/x/crypto/chacha20poly1305.New]\nat curve25519_decrypter.go:31: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:44: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:51: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:57: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:62: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:72: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:26: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_decrypter.go:42: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]\nat curve25519_decrypter.go:48: calling [golang.org/x/crypto/hkdf.New]\nat curve25519_decrypter.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_decrypter.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" [ tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt | defined in curve25519_decrypter.go:25\nat curve25519_decrypter.go:26: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_decrypter.go:31: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:44: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:51: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:57: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:62: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:72: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:48: calling [golang.org/x/crypto/hkdf.New]\nat curve25519_decrypter.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_decrypter.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_decrypter.go:55: calling [golang.org/x/crypto/chacha20poly1305.New]\nat curve25519_decrypter.go:42: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" fillcolor="lightblue" label="Decrypt" penwidth="1.5" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/crypto/curve25519.Curve25519Encryption" {
-        tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Encryption";
-penwidth="0.5";
+        penwidth="0.5";
 fontsize="15";
-fontcolor="#222222";
+labelloc="b";
 style="rounded,filled";
 fillcolor="lightsteelblue";
+fontcolor="#222222";
 label="(*Curve25519Encryption)";
-labelloc="b";
+tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Encryption";
         
-        "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" [ label="EncryptPadding" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding | defined in curve25519_encryption.go:35\nat curve25519_encryption.go:71: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]\nat curve25519_encryption.go:56: calling [golang.org/x/crypto/chacha20poly1305.New]\nat curve25519_encryption.go:43: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]\nat curve25519_encryption.go:49: calling [golang.org/x/crypto/hkdf.New]\nat curve25519_encryption.go:45: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:52: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:58: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:64: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" [ fillcolor="lightblue" label="EncryptPadding" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding | defined in curve25519_encryption.go:35\nat curve25519_encryption.go:49: calling [golang.org/x/crypto/hkdf.New]\nat curve25519_encryption.go:45: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:52: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:58: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:64: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:56: calling [golang.org/x/crypto/chacha20poly1305.New]\nat curve25519_encryption.go:43: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]\nat curve25519_encryption.go:71: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]" ]
         "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).Encrypt | defined in curve25519_encryption.go:26\nat curve25519_encryption.go:27: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding]" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/crypto/curve25519.Curve25519Signer" {
-        penwidth="0.5";
-fontsize="15";
+        fillcolor="lightsteelblue";
+penwidth="0.5";
 labelloc="b";
 style="rounded,filled";
-tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Signer";
-fontcolor="#222222";
-fillcolor="lightsteelblue";
 label="(*Curve25519Signer)";
+tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Signer";
+fontsize="15";
+fontcolor="#222222";
         
-        "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" [ fillcolor="lightblue" label="SignHash" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash | defined in curve25519_signer.go:39\nat curve25519_signer.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_signer.go:42: calling [go.step.sm/crypto/x25519.Sign]\nat curve25519_signer.go:45: calling [github.com/samber/oops.Errorf]\nat curve25519_signer.go:40: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_signer.go:48: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-        "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign | defined in curve25519_signer.go:22\nat curve25519_signer.go:32: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash]\nat curve25519_signer.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:26: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_signer.go:23: calling [(*github.com/go-i2p/logger.Logger).WithField]" fillcolor="lightblue" label="Sign" ]
+        "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" [ tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash | defined in curve25519_signer.go:39\nat curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat curve25519_signer.go:42: calling [go.step.sm/crypto/x25519.Sign]\nat curve25519_signer.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:45: calling [github.com/samber/oops.Errorf]\nat curve25519_signer.go:40: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_signer.go:48: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).Error]" fillcolor="lightblue" label="SignHash" penwidth="1.5" ]
+        "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign | defined in curve25519_signer.go:22\nat curve25519_signer.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:26: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_signer.go:32: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash]\nat curve25519_signer.go:23: calling [(*github.com/go-i2p/logger.Logger).WithField]" fillcolor="lightblue" label="Sign" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/crypto/curve25519.Curve25519Verifier" {
         penwidth="0.5";
+fontcolor="#222222";
+style="rounded,filled";
+fillcolor="lightsteelblue";
+label="(*Curve25519Verifier)";
+tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Verifier";
 fontsize="15";
 labelloc="b";
-style="rounded,filled";
-label="(*Curve25519Verifier)";
-fontcolor="#222222";
-fillcolor="lightsteelblue";
-tooltip="type: *github.com/go-i2p/crypto/curve25519.Curve25519Verifier";
         
-        "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" [ fillcolor="lightblue" label="VerifyHash" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash | defined in curve25519_verifier.go:23\nat curve25519_verifier.go:24: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat curve25519_verifier.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:40: calling [go.step.sm/crypto/x25519.Verify]\nat curve25519_verifier.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_verifier.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify | defined in curve25519_verifier.go:53\nat curve25519_verifier.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_verifier.go:61: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash]\nat curve25519_verifier.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+        "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" [ tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash | defined in curve25519_verifier.go:23\nat curve25519_verifier.go:24: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat curve25519_verifier.go:40: calling [go.step.sm/crypto/x25519.Verify]\nat curve25519_verifier.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_verifier.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_verifier.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]" fillcolor="lightblue" label="VerifyHash" penwidth="1.5" ]
+        "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" [ fillcolor="lightblue" label="Verify" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify | defined in curve25519_verifier.go:53\nat curve25519_verifier.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat curve25519_verifier.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_verifier.go:61: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash]" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/logger.Logger" {
-        fillcolor="wheat2";
-label="(*Logger)";
-tooltip="type: *github.com/go-i2p/logger.Logger";
+        tooltip="type: *github.com/go-i2p/logger.Logger";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
 style="rounded,filled";
+fillcolor="wheat2";
+label="(*Logger)";
         
+        "(*github.com/go-i2p/logger.Logger).WithField" [ penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" fillcolor="moccasin" label="logger\nWithField" ]
+        "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" ]
         "(*github.com/go-i2p/logger.Logger).Error" [ fillcolor="moccasin" label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" ]
-        "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:54" ]
-        "(*github.com/go-i2p/logger.Logger).WithError" [ label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" fillcolor="moccasin" ]
-        "(*github.com/go-i2p/logger.Logger).Warn" [ fillcolor="moccasin" label="logger\nWarn" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Warn | defined in log.go:30" ]
         "(*github.com/go-i2p/logger.Logger).WithFields" [ tooltip="(*github.com/go-i2p/logger.Logger).WithFields | defined in log.go:60" fillcolor="moccasin" label="logger\nWithFields" penwidth="1.5" ]
+        "(*github.com/go-i2p/logger.Logger).Warn" [ label="logger\nWarn" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Warn | defined in log.go:30" fillcolor="moccasin" ]
         
     }
 
         subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        fillcolor="wheat2";
-label="(*Logger)";
+        label="(*Logger)";
 tooltip="type: *github.com/sirupsen/logrus.Logger";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
 style="rounded,filled";
+fillcolor="wheat2";
         
         "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey" {
-        fontsize="15";
-fontcolor="#222222";
-labelloc="b";
+        fontcolor="#222222";
 style="rounded,filled";
-fillcolor="lightsteelblue";
-penwidth="0.5";
 label="(Curve25519PrivateKey)";
+labelloc="b";
+fillcolor="lightsteelblue";
 tooltip="type: github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey";
+penwidth="0.5";
+fontsize="15";
         
-        "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public" [ label="Public" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public | defined in curve25519_private_key.go:25\nat curve25519_private_key.go:38: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_private_key.go:35: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]" fillcolor="lightblue" ]
-        "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter" [ label="NewDecrypter" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter | defined in curve25519_private_key.go:60\nat curve25519_private_key.go:63: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_private_key.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
-        "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewSigner" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewSigner | defined in curve25519_private_key.go:80\nat curve25519_private_key.go:81: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_private_key.go:83: calling [(*github.com/go-i2p/logger.Logger).Error]" fillcolor="lightblue" label="NewSigner" ]
+        "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public" [ fillcolor="lightblue" label="Public" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public | defined in curve25519_private_key.go:25\nat curve25519_private_key.go:35: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]\nat curve25519_private_key.go:38: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+        "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewSigner" [ label="NewSigner" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewSigner | defined in curve25519_private_key.go:80\nat curve25519_private_key.go:83: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_private_key.go:81: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
+        "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter" [ fillcolor="lightblue" label="NewDecrypter" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter | defined in curve25519_private_key.go:60\nat curve25519_private_key.go:63: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_private_key.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/curve25519.Curve25519PublicKey" {
-        style="rounded,filled";
-tooltip="type: github.com/go-i2p/crypto/curve25519.Curve25519PublicKey";
-penwidth="0.5";
-fontcolor="#222222";
+        penwidth="0.5";
+fontsize="15";
 labelloc="b";
+style="rounded,filled";
+fontcolor="#222222";
 fillcolor="lightsteelblue";
 label="(Curve25519PublicKey)";
-fontsize="15";
+tooltip="type: github.com/go-i2p/crypto/curve25519.Curve25519PublicKey";
         
-        "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier" [ fillcolor="lightblue" label="NewVerifier" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier | defined in curve25519_public_key.go:26\nat curve25519_public_key.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:29: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-        "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len | defined in curve25519_public_key.go:38\nat curve25519_public_key.go:40: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_public_key.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="Len" ]
-        "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" [ label="NewEncrypter" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter | defined in curve25519_public_key.go:48\nat curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat curve25519_public_key.go:60: calling [github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption]\nat curve25519_public_key.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:66: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).Error]" fillcolor="lightblue" ]
+        "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier | defined in curve25519_public_key.go:26\nat curve25519_public_key.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:29: calling [(*github.com/go-i2p/logger.Logger).Error]" fillcolor="lightblue" label="NewVerifier" ]
+        "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" [ penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter | defined in curve25519_public_key.go:48\nat curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat curve25519_public_key.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_public_key.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:66: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:60: calling [github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption]" fillcolor="lightblue" label="NewEncrypter" ]
+        "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len" [ label="Len" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len | defined in curve25519_public_key.go:38\nat curve25519_public_key.go:40: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_public_key.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
         
     }
 
         subgraph "cluster_go.step.sm/crypto/x25519.PrivateKey" {
-        style="rounded,filled";
-fillcolor="wheat2";
-label="(PrivateKey)";
+        label="(PrivateKey)";
 tooltip="type: go.step.sm/crypto/x25519.PrivateKey";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
+style="rounded,filled";
+fillcolor="wheat2";
         
         "(go.step.sm/crypto/x25519.PrivateKey).Public" [ fillcolor="moccasin" label="x25519\nPublic" penwidth="1.5" tooltip="(go.step.sm/crypto/x25519.PrivateKey).Public | defined in x25519.go:74" ]
         "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ label="x25519\nSharedKey" penwidth="1.5" tooltip="(go.step.sm/crypto/x25519.PrivateKey).SharedKey | defined in x25519.go:101" fillcolor="moccasin" ]
@@ -172,57 +172,57 @@ labelloc="b";
 
     }
 
-    "github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption" -> "go.step.sm/crypto/x25519.GenerateKey" [ color="saddlebrown" tooltip="at curve25519_encryption.go:108: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_signer.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:55: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
-    "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_public_key.go:75: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_public_key.go:82: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ tooltip="at curve25519_verifier.go:24: calling [(*github.com/go-i2p/logger.Logger).WithFields]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_verifier.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "go.step.sm/crypto/x25519.Verify" [ color="saddlebrown" tooltip="at curve25519_verifier.go:40: calling [go.step.sm/crypto/x25519.Verify]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_verifier.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).Encrypt" -> "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" [ tooltip="at curve25519_encryption.go:27: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewSigner" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at curve25519_private_key.go:81: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" -> "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" [ tooltip="at curve25519_signer.go:32: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_private_key.go:38: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "(go.step.sm/crypto/x25519.PrivateKey).Public" [ color="saddlebrown" tooltip="at curve25519_encryption.go:71: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "go.step.sm/crypto/x25519.Sign" [ color="saddlebrown" tooltip="at curve25519_signer.go:42: calling [go.step.sm/crypto/x25519.Sign]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_public_key.go:40: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:19: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption" -> "github.com/samber/oops.Errorf" [ tooltip="at curve25519_encryption.go:110: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public" -> "(go.step.sm/crypto/x25519.PrivateKey).Public" [ color="saddlebrown" tooltip="at curve25519_private_key.go:35: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at curve25519_encryption.go:56: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at curve25519_signer.go:45: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/curve25519.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-    "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at utils.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewSigner" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_private_key.go:83: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" -> "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" [ tooltip="at curve25519_verifier.go:61: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_public_key.go:29: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "github.com/samber/oops.Errorf" [ tooltip="at curve25519_decrypter.go:31: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:44: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:51: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:57: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:62: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:72: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at curve25519_private_key.go:63: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:80: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_signer.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_signer.go:26: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at curve25519_encryption.go:43: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:26: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:42: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
     "github.com/go-i2p/crypto/curve25519.init" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at constants.go:19: calling [github.com/samber/oops.Errorf]\nat constants.go:23: calling [github.com/samber/oops.Errorf]\nat constants.go:27: calling [github.com/samber/oops.Errorf]\nat constants.go:31: calling [github.com/samber/oops.Errorf]\nat constants.go:35: calling [github.com/samber/oops.Errorf]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_private_key.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:26: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:80: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" -> "(*github.com/go-i2p/logger.Logger).Warn" [ color="saddlebrown" tooltip="at curve25519_public_key.go:83: calling [(*github.com/go-i2p/logger.Logger).Warn]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_public_key.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption" -> "go.step.sm/crypto/x25519.GenerateKey" [ tooltip="at curve25519_encryption.go:108: calling [go.step.sm/crypto/x25519.GenerateKey]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_public_key.go:40: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at curve25519_verifier.go:24: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public" -> "(go.step.sm/crypto/x25519.PrivateKey).Public" [ color="saddlebrown" tooltip="at curve25519_private_key.go:35: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]" ]
+    "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" -> "go.step.sm/crypto/x25519.GenerateKey" [ color="saddlebrown" tooltip="at utils.go:17: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_signer.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewSigner" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_private_key.go:81: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:66: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "go.step.sm/crypto/x25519.Sign" [ tooltip="at curve25519_signer.go:42: calling [go.step.sm/crypto/x25519.Sign]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:19: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at curve25519_signer.go:26: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_private_key.go:63: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:31: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:44: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:51: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:57: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:62: calling [github.com/samber/oops.Errorf]\nat curve25519_decrypter.go:72: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_signer.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_signer.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "go.step.sm/crypto/x25519.Verify" [ color="saddlebrown" tooltip="at curve25519_verifier.go:40: calling [go.step.sm/crypto/x25519.Verify]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at curve25519_verifier.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at curve25519_verifier.go:57: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:48: calling [golang.org/x/crypto/hkdf.New]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_verifier.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_verifier.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/curve25519.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at curve25519_encryption.go:49: calling [golang.org/x/crypto/hkdf.New]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_decrypter.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_public_key.go:75: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_public_key.go:82: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" -> "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" [ tooltip="at curve25519_signer.go:32: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash]" ]
+    "github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at curve25519_encryption.go:110: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at curve25519_signer.go:45: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at curve25519_encryption.go:45: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:52: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:58: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:64: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at curve25519_encryption.go:56: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:55: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
+    "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at utils.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).Sign" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_signer.go:23: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
     "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" -> "github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption" [ tooltip="at curve25519_public_key.go:60: calling [github.com/go-i2p/crypto/curve25519.NewCurve25519Encryption]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:48: calling [golang.org/x/crypto/hkdf.New]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at curve25519_encryption.go:49: calling [golang.org/x/crypto/hkdf.New]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).Len" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:40: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at curve25519_signer.go:40: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat curve25519_signer.go:48: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
-    "github.com/go-i2p/crypto/curve25519.GenerateKeyPair" -> "go.step.sm/crypto/x25519.GenerateKey" [ color="saddlebrown" tooltip="at utils.go:17: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
-    "github.com/go-i2p/crypto/curve25519.CreateCurve25519PublicKey" -> "(*github.com/go-i2p/logger.Logger).Warn" [ tooltip="at curve25519_public_key.go:83: calling [(*github.com/go-i2p/logger.Logger).Warn]" color="saddlebrown" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at curve25519_verifier.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_public_key.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_public_key.go:66: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewEncrypter" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_public_key.go:52: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_public_key.go:62: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at curve25519_encryption.go:45: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:52: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:58: calling [github.com/samber/oops.Errorf]\nat curve25519_encryption.go:64: calling [github.com/samber/oops.Errorf]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_decrypter.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_verifier.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat curve25519_verifier.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Signer).SignHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_signer.go:44: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_private_key.go:38: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Decrypter).Decrypt" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at curve25519_decrypter.go:42: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PrivateKey).NewDecrypter" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at curve25519_private_key.go:61: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).Verify" -> "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" [ tooltip="at curve25519_verifier.go:61: calling [(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash]" ]
+    "(github.com/go-i2p/crypto/curve25519.Curve25519PublicKey).NewVerifier" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at curve25519_public_key.go:29: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Verifier).VerifyHash" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at curve25519_verifier.go:30: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:35: calling [(*github.com/go-i2p/logger.Logger).Error]\nat curve25519_verifier.go:41: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at curve25519_encryption.go:43: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
+    "(*github.com/go-i2p/crypto/curve25519.Curve25519Encryption).EncryptPadding" -> "(go.step.sm/crypto/x25519.PrivateKey).Public" [ color="saddlebrown" tooltip="at curve25519_encryption.go:71: calling [(go.step.sm/crypto/x25519.PrivateKey).Public]" ]
 }

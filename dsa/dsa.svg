@@ -17,24 +17,24 @@
 <g id="clust8" class="cluster">
 <title>cluster_github.com/go&#45;i2p/crypto/dsa.DSAPublicKey</title>
 <g id="a_clust8"><a xlink:title="type: github.com/go&#45;i2p/crypto/dsa.DSAPublicKey">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-582C28,-582 301.2568,-582 301.2568,-582 307.2568,-582 313.2568,-588 313.2568,-594 313.2568,-594 313.2568,-709 313.2568,-709 313.2568,-715 307.2568,-721 301.2568,-721 301.2568,-721 28,-721 28,-721 22,-721 16,-715 16,-709 16,-709 16,-594 16,-594 16,-588 22,-582 28,-582"/>
-<text text-anchor="middle" x="164.6284" y="-590.5" font-family="Arial" font-size="15.00" fill="#222222">(DSAPublicKey)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-574C28,-574 301.2568,-574 301.2568,-574 307.2568,-574 313.2568,-580 313.2568,-586 313.2568,-586 313.2568,-701 313.2568,-701 313.2568,-707 307.2568,-713 301.2568,-713 301.2568,-713 28,-713 28,-713 22,-713 16,-707 16,-701 16,-701 16,-586 16,-586 16,-580 22,-574 28,-574"/>
+<text text-anchor="middle" x="164.6284" y="-582.5" font-family="Arial" font-size="15.00" fill="#222222">(DSAPublicKey)</text>
 </a>
 </g>
 </g>
 <g id="clust7" class="cluster">
 <title>cluster_github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey</title>
 <g id="a_clust7"><a xlink:title="type: github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M205.4054,-334C205.4054,-334 310.3816,-334 310.3816,-334 316.3816,-334 322.3816,-340 322.3816,-346 322.3816,-346 322.3816,-522 322.3816,-522 322.3816,-528 316.3816,-534 310.3816,-534 310.3816,-534 205.4054,-534 205.4054,-534 199.4054,-534 193.4054,-528 193.4054,-522 193.4054,-522 193.4054,-346 193.4054,-346 193.4054,-340 199.4054,-334 205.4054,-334"/>
-<text text-anchor="middle" x="257.8935" y="-342.5" font-family="Arial" font-size="15.00" fill="#222222">(DSAPrivateKey)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M205.4054,-354C205.4054,-354 310.3816,-354 310.3816,-354 316.3816,-354 322.3816,-360 322.3816,-366 322.3816,-366 322.3816,-542 322.3816,-542 322.3816,-548 316.3816,-554 310.3816,-554 310.3816,-554 205.4054,-554 205.4054,-554 199.4054,-554 193.4054,-548 193.4054,-542 193.4054,-542 193.4054,-366 193.4054,-366 193.4054,-360 199.4054,-354 205.4054,-354"/>
+<text text-anchor="middle" x="257.8935" y="-362.5" font-family="Arial" font-size="15.00" fill="#222222">(DSAPrivateKey)</text>
 </a>
 </g>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_*github.com/sirupsen/logrus.Logger</title>
 <g id="a_clust6"><a xlink:title="type: *github.com/sirupsen/logrus.Logger">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M641.442,-491C641.442,-491 695.7632,-491 695.7632,-491 701.7632,-491 707.7632,-497 707.7632,-503 707.7632,-503 707.7632,-557 707.7632,-557 707.7632,-563 701.7632,-569 695.7632,-569 695.7632,-569 641.442,-569 641.442,-569 635.442,-569 629.442,-563 629.442,-557 629.442,-557 629.442,-503 629.442,-503 629.442,-497 635.442,-491 641.442,-491"/>
-<text text-anchor="middle" x="668.6026" y="-499.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M641.442,-478C641.442,-478 695.7632,-478 695.7632,-478 701.7632,-478 707.7632,-484 707.7632,-490 707.7632,-490 707.7632,-544 707.7632,-544 707.7632,-550 701.7632,-556 695.7632,-556 695.7632,-556 641.442,-556 641.442,-556 635.442,-556 629.442,-550 629.442,-544 629.442,-544 629.442,-490 629.442,-490 629.442,-484 635.442,-478 641.442,-478"/>
+<text text-anchor="middle" x="668.6026" y="-486.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
 </a>
 </g>
 </g>
@@ -70,31 +70,12 @@
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey -->
+<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey -->
 <g id="node1" class="node">
-<title>github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey</title>
-<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey | defined in utils.go:48&#10;at utils.go:66: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at utils.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M529.1945,-502C529.1945,-502 424.2869,-502 424.2869,-502 418.2869,-502 412.2869,-496 412.2869,-490 412.2869,-490 412.2869,-478 412.2869,-478 412.2869,-472 418.2869,-466 424.2869,-466 424.2869,-466 529.1945,-466 529.1945,-466 535.1945,-466 541.1945,-472 541.1945,-478 541.1945,-478 541.1945,-490 541.1945,-490 541.1945,-496 535.1945,-502 529.1945,-502"/>
-<text text-anchor="middle" x="476.7407" y="-479.8" font-family="Verdana" font-size="14.00" fill="#000000">createDSAPrivkey</text>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="node14" class="node">
-<title>(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Warn | defined in log.go:30">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M685.8689,-147C685.8689,-147 650.3363,-147 650.3363,-147 644.3363,-147 638.3363,-141 638.3363,-135 638.3363,-135 638.3363,-123 638.3363,-123 638.3363,-117 644.3363,-111 650.3363,-111 650.3363,-111 685.8689,-111 685.8689,-111 691.8689,-111 697.8689,-117 697.8689,-123 697.8689,-123 697.8689,-135 697.8689,-135 697.8689,-141 691.8689,-147 685.8689,-147"/>
-<text text-anchor="middle" x="668.1026" y="-133.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="668.1026" y="-116.4" font-family="Verdana" font-size="14.00" fill="#000000">Warn</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="edge1" class="edge">
-<title>github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_edge1"><a xlink:title="at utils.go:66: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
-<path fill="none" stroke="#8b4513" d="M490.8984,-465.6596C506.8006,-444.3584 532.5324,-407.6925 548.9932,-373 591.592,-283.2197 555.4939,-238.0576 616.9932,-160 620.5256,-155.5166 624.8992,-151.5287 629.5896,-148.0305"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="631.8742,-150.7143 638.2611,-142.261 627.9967,-144.8864 631.8742,-150.7143"/>
+<title>github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey</title>
+<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey | defined in utils.go:34&#10;at utils.go:35: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M536.7465,-695C536.7465,-695 416.7349,-695 416.7349,-695 410.7349,-695 404.7349,-689 404.7349,-683 404.7349,-683 404.7349,-671 404.7349,-671 404.7349,-665 410.7349,-659 416.7349,-659 416.7349,-659 536.7465,-659 536.7465,-659 542.7465,-659 548.7465,-665 548.7465,-671 548.7465,-671 548.7465,-683 548.7465,-683 548.7465,-689 542.7465,-695 536.7465,-695"/>
+<text text-anchor="middle" x="476.7407" y="-672.8" font-family="Verdana" font-size="14.00" fill="#000000">createDSAPublicKey</text>
 </a>
 </g>
 </g>
@@ -102,92 +83,111 @@
 <g id="node16" class="node">
 <title>(*github.com/sirupsen/logrus.Logger).Debug</title>
 <g id="a_node16"><a xlink:title="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M686.9246,-561C686.9246,-561 649.2806,-561 649.2806,-561 643.2806,-561 637.2806,-555 637.2806,-549 637.2806,-549 637.2806,-537 637.2806,-537 637.2806,-531 643.2806,-525 649.2806,-525 649.2806,-525 686.9246,-525 686.9246,-525 692.9246,-525 698.9246,-531 698.9246,-537 698.9246,-537 698.9246,-549 698.9246,-549 698.9246,-555 692.9246,-561 686.9246,-561"/>
-<text text-anchor="middle" x="668.1026" y="-547.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
-<text text-anchor="middle" x="668.1026" y="-530.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M686.9246,-548C686.9246,-548 649.2806,-548 649.2806,-548 643.2806,-548 637.2806,-542 637.2806,-536 637.2806,-536 637.2806,-524 637.2806,-524 637.2806,-518 643.2806,-512 649.2806,-512 649.2806,-512 686.9246,-512 686.9246,-512 692.9246,-512 698.9246,-518 698.9246,-524 698.9246,-524 698.9246,-536 698.9246,-536 698.9246,-542 692.9246,-548 686.9246,-548"/>
+<text text-anchor="middle" x="668.1026" y="-534.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
+<text text-anchor="middle" x="668.1026" y="-517.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge28" class="edge">
+<title>github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge28"><a xlink:title="at utils.go:35: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M524.5704,-658.9039C532.8033,-655.4771 541.2105,-651.7764 548.9932,-648 567.4431,-639.0476 573.2969,-638.1973 588.9932,-625 612.9982,-604.8167 635.374,-576.7224 650.1593,-556.3243"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="653.0665,-558.2756 656.0138,-548.099 647.3635,-554.2165 653.0665,-558.2756"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey -->
+<g id="node2" class="node">
+<title>github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey</title>
+<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey | defined in utils.go:48&#10;at utils.go:66: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at utils.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M529.1945,-502C529.1945,-502 424.2869,-502 424.2869,-502 418.2869,-502 412.2869,-496 412.2869,-490 412.2869,-490 412.2869,-478 412.2869,-478 412.2869,-472 418.2869,-466 424.2869,-466 424.2869,-466 529.1945,-466 529.1945,-466 535.1945,-466 541.1945,-472 541.1945,-478 541.1945,-478 541.1945,-490 541.1945,-490 541.1945,-496 535.1945,-502 529.1945,-502"/>
+<text text-anchor="middle" x="476.7407" y="-479.8" font-family="Verdana" font-size="14.00" fill="#000000">createDSAPrivkey</text>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/logger.Logger).Warn -->
+<g id="node11" class="node">
+<title>(*github.com/go&#45;i2p/logger.Logger).Warn</title>
+<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Warn | defined in log.go:30">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M685.8689,-269C685.8689,-269 650.3363,-269 650.3363,-269 644.3363,-269 638.3363,-263 638.3363,-257 638.3363,-257 638.3363,-245 638.3363,-245 638.3363,-239 644.3363,-233 650.3363,-233 650.3363,-233 685.8689,-233 685.8689,-233 691.8689,-233 697.8689,-239 697.8689,-245 697.8689,-245 697.8689,-257 697.8689,-257 697.8689,-263 691.8689,-269 685.8689,-269"/>
+<text text-anchor="middle" x="668.1026" y="-255.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="668.1026" y="-238.4" font-family="Verdana" font-size="14.00" fill="#000000">Warn</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
+<g id="edge9" class="edge">
+<title>github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
+<g id="a_edge9"><a xlink:title="at utils.go:66: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<path fill="none" stroke="#8b4513" d="M518.4603,-465.9553C528.8964,-460.5663 539.7433,-454.1598 548.9932,-447 570.1538,-430.6207 576.6854,-425.7606 588.9932,-402 614.1827,-353.3708 584.843,-326.3359 616.9932,-282 620.4667,-277.2099 624.9282,-273.0158 629.7653,-269.3898"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="631.7589,-272.2674 638.1522,-263.8189 627.8858,-266.4365 631.7589,-272.2674"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge21" class="edge">
+<g id="edge34" class="edge">
 <title>github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge21"><a xlink:title="at utils.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M510.9962,-502.0305C537.6638,-515.7405 572.6404,-532.9212 587.9932,-537 600.4194,-540.3013 614.2844,-542.003 626.9406,-542.8291"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="627.0702,-546.3395 637.2294,-543.3329 627.4126,-539.3479 627.0702,-546.3395"/>
+<g id="a_edge34"><a xlink:title="at utils.go:49: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M512.6898,-502.1027C542.0808,-516.7382 580.0373,-535.2017 587.9932,-537 600.5467,-539.8374 614.4474,-539.7236 627.097,-538.416"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="627.9084,-541.8399 637.3715,-537.0755 627.0027,-534.8987 627.9084,-541.8399"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/dsa.generateDSA -->
-<g id="node2" class="node">
+<g id="node3" class="node">
 <title>github.com/go&#45;i2p/crypto/dsa.generateDSA</title>
-<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/dsa.generateDSA | defined in utils.go:14&#10;at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at utils.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/dsa.generateDSA | defined in utils.go:14&#10;at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M514.6469,-360C514.6469,-360 438.8345,-360 438.8345,-360 432.8345,-360 426.8345,-354 426.8345,-348 426.8345,-348 426.8345,-336 426.8345,-336 426.8345,-330 432.8345,-324 438.8345,-324 438.8345,-324 514.6469,-324 514.6469,-324 520.6469,-324 526.6469,-330 526.6469,-336 526.6469,-336 526.6469,-348 526.6469,-348 526.6469,-354 520.6469,-360 514.6469,-360"/>
 <text text-anchor="middle" x="476.7407" y="-337.8" font-family="Verdana" font-size="14.00" fill="#000000">generateDSA</text>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="node12" class="node">
-<title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M696.6341,-269C696.6341,-269 639.5711,-269 639.5711,-269 633.5711,-269 627.5711,-263 627.5711,-257 627.5711,-257 627.5711,-245 627.5711,-245 627.5711,-239 633.5711,-233 639.5711,-233 639.5711,-233 696.6341,-233 696.6341,-233 702.6341,-233 708.6341,-239 708.6341,-245 708.6341,-245 708.6341,-257 708.6341,-257 708.6341,-263 702.6341,-269 696.6341,-269"/>
-<text text-anchor="middle" x="668.1026" y="-255.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="668.1026" y="-238.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge6" class="edge">
-<title>github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge6"><a xlink:title="at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M526.6722,-340.7212C547.2784,-338.2284 570.5915,-332.7051 588.9932,-321 606.9975,-309.5477 601.3321,-296.4927 616.9932,-282 619.7043,-279.4911 622.6496,-277.0807 625.7114,-274.7897"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="627.797,-277.6025 634.008,-269.0191 623.7999,-271.8559 627.797,-277.6025"/>
-</a>
-</g>
-</g>
 <!-- (*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="node13" class="node">
+<g id="node12" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_node13"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M685.8689,-330C685.8689,-330 650.3363,-330 650.3363,-330 644.3363,-330 638.3363,-324 638.3363,-318 638.3363,-318 638.3363,-306 638.3363,-306 638.3363,-300 644.3363,-294 650.3363,-294 650.3363,-294 685.8689,-294 685.8689,-294 691.8689,-294 697.8689,-300 697.8689,-306 697.8689,-306 697.8689,-318 697.8689,-318 697.8689,-324 691.8689,-330 685.8689,-330"/>
-<text text-anchor="middle" x="668.1026" y="-316.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="668.1026" y="-299.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
+<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M685.8689,-208C685.8689,-208 650.3363,-208 650.3363,-208 644.3363,-208 638.3363,-202 638.3363,-196 638.3363,-196 638.3363,-184 638.3363,-184 638.3363,-178 644.3363,-172 650.3363,-172 650.3363,-172 685.8689,-172 685.8689,-172 691.8689,-172 697.8689,-178 697.8689,-184 697.8689,-184 697.8689,-196 697.8689,-196 697.8689,-202 691.8689,-208 685.8689,-208"/>
+<text text-anchor="middle" x="668.1026" y="-194.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="668.1026" y="-177.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge32" class="edge">
+<g id="edge20" class="edge">
 <title>github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge32"><a xlink:title="at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M526.6501,-350.3068C546.27,-352.1111 568.8713,-352.3631 588.9932,-348 602.5073,-345.0697 616.4834,-339.6241 628.859,-333.8396"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="630.5273,-336.92 637.9766,-329.3862 627.455,-330.6302 630.5273,-336.92"/>
+<g id="a_edge20"><a xlink:title="at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M497.4367,-323.8102C533.365,-292.2829 604.637,-229.9812 616.9932,-221 620.9308,-218.1379 625.1412,-215.284 629.3924,-212.5312"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="631.5006,-215.34 638.1014,-207.0527 627.7732,-209.4149 631.5006,-215.34"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="node14" class="node">
+<title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M696.6341,-330C696.6341,-330 639.5711,-330 639.5711,-330 633.5711,-330 627.5711,-324 627.5711,-318 627.5711,-318 627.5711,-306 627.5711,-306 627.5711,-300 633.5711,-294 639.5711,-294 639.5711,-294 696.6341,-294 696.6341,-294 702.6341,-294 708.6341,-300 708.6341,-306 708.6341,-306 708.6341,-318 708.6341,-318 708.6341,-324 702.6341,-330 696.6341,-330"/>
+<text text-anchor="middle" x="668.1026" y="-316.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="668.1026" y="-299.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge10" class="edge">
+<title>github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge10"><a xlink:title="at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M526.5192,-334.1962C554.4313,-329.8204 589.1734,-324.3738 617.2569,-319.9711"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="617.9399,-323.4069 627.2771,-318.4002 616.8557,-316.4914 617.9399,-323.4069"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge31" class="edge">
+<g id="edge26" class="edge">
 <title>github.com/go&#45;i2p/crypto/dsa.generateDSA&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge31"><a xlink:title="at utils.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M498.5887,-360.0589C513.2787,-372.5093 532.8351,-389.6918 548.9932,-406 585.3345,-442.679 623.9425,-488.5194 647.0327,-516.7738"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="644.3744,-519.0523 653.3999,-524.6012 649.8047,-514.635 644.3744,-519.0523"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey -->
-<g id="node3" class="node">
-<title>github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey</title>
-<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey | defined in utils.go:34&#10;at utils.go:35: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M536.7465,-722C536.7465,-722 416.7349,-722 416.7349,-722 410.7349,-722 404.7349,-716 404.7349,-710 404.7349,-710 404.7349,-698 404.7349,-698 404.7349,-692 410.7349,-686 416.7349,-686 416.7349,-686 536.7465,-686 536.7465,-686 542.7465,-686 548.7465,-692 548.7465,-698 548.7465,-698 548.7465,-710 548.7465,-710 548.7465,-716 542.7465,-722 536.7465,-722"/>
-<text text-anchor="middle" x="476.7407" y="-699.8" font-family="Verdana" font-size="14.00" fill="#000000">createDSAPublicKey</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge7" class="edge">
-<title>github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge7"><a xlink:title="at utils.go:35: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M548.7511,-692.0321C563.0183,-687.388 577.2094,-680.9432 588.9932,-672 623.2509,-646.0005 646.044,-600.5041 658.0267,-571.0765"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="661.43,-571.9839 661.8153,-561.3961 654.9115,-569.4327 661.43,-571.9839"/>
+<g id="a_edge26"><a xlink:title="at utils.go:15: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M519.5087,-360.0685C529.7042,-365.3844 540.1754,-371.7505 548.9932,-379 593.0791,-415.2449 631.394,-470.4069 651.9903,-503.0658"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="649.0702,-504.9981 657.3197,-511.6461 655.0165,-501.3047 649.0702,-504.9981"/>
 </a>
 </g>
 </g>
@@ -211,9 +211,9 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/dsa.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge33" class="edge">
+<g id="edge27" class="edge">
 <title>github.com/go&#45;i2p/crypto/dsa.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge33"><a xlink:title="at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<g id="a_edge27"><a xlink:title="at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
 <path fill="none" stroke="#8b4513" d="M95.7635,-34C119.5567,-34 155.2327,-34 187.0662,-34"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="187.2469,-37.5001 197.2468,-34 187.2468,-30.5001 187.2469,-37.5001"/>
 </a>
@@ -229,129 +229,129 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge8" class="edge">
+<g id="edge6" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge8"><a xlink:title="at dsa_private_key.go:96: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M504.1043,-622.2343C527.512,-626.2453 561.6539,-628.8997 588.9932,-618 613.4676,-608.2425 634.7186,-586.9169 649.014,-569.491"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="652.0149,-571.3377 655.4566,-561.3175 646.5174,-567.0044 652.0149,-571.3377"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash -->
-<g id="node7" class="node">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash</title>
-<g id="a_node7"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash | defined in dsa_signer.go:36&#10;at dsa_signer.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at dsa_signer.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at dsa_signer.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M504.1809,-245C504.1809,-245 449.3005,-245 449.3005,-245 443.3005,-245 437.3005,-239 437.3005,-233 437.3005,-233 437.3005,-221 437.3005,-221 437.3005,-215 443.3005,-209 449.3005,-209 449.3005,-209 504.1809,-209 504.1809,-209 510.1809,-209 516.1809,-215 516.1809,-221 516.1809,-221 516.1809,-233 516.1809,-233 516.1809,-239 510.1809,-245 504.1809,-245"/>
-<text text-anchor="middle" x="476.7407" y="-222.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="node11" class="node">
-<title>(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:54">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M696.3771,-208C696.3771,-208 639.8281,-208 639.8281,-208 633.8281,-208 627.8281,-202 627.8281,-196 627.8281,-196 627.8281,-184 627.8281,-184 627.8281,-178 633.8281,-172 639.8281,-172 639.8281,-172 696.3771,-172 696.3771,-172 702.3771,-172 708.3771,-178 708.3771,-184 708.3771,-184 708.3771,-196 708.3771,-196 708.3771,-202 702.3771,-208 696.3771,-208"/>
-<text text-anchor="middle" x="668.1026" y="-194.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="668.1026" y="-177.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge27" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge27"><a xlink:title="at dsa_signer.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at dsa_signer.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M516.391,-219.3336C545.7298,-213.6609 585.9208,-205.8899 617.565,-199.7715"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="618.3605,-203.1826 627.5142,-197.8478 617.0316,-196.3099 618.3605,-203.1826"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge20" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge20"><a xlink:title="at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M516.1862,-223.5515C537.8078,-222.4364 565.0129,-222.3011 588.9932,-226 598.3963,-227.4504 608.2139,-229.8168 617.6059,-232.5299"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="616.618,-235.8877 627.2042,-235.4588 618.6612,-229.1925 616.618,-235.8877"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge35" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge35"><a xlink:title="at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M516.391,-244.6121C549.3716,-259.2615 596.0656,-280.0023 628.9166,-294.5942"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="627.654,-297.863 638.2138,-298.7239 630.4956,-291.4657 627.654,-297.863"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge10" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge10"><a xlink:title="at dsa_signer.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M516.0684,-241.0586C527.8169,-246.7496 539.9584,-254.3116 548.9932,-264 618.5307,-338.5676 651.0121,-459.9091 662.716,-514.6377"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="659.3357,-515.5754 664.7846,-524.6617 666.1912,-514.1606 659.3357,-515.5754"/>
+<g id="a_edge6"><a xlink:title="at dsa_private_key.go:96: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M503.8682,-622.6937C527.433,-627.0945 561.9325,-630.0611 588.9932,-618 616.905,-605.5596 639.0895,-577.8654 652.7788,-556.8441"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="655.7825,-558.6418 658.1174,-548.3074 649.8476,-554.9302 655.7825,-558.6418"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign -->
-<g id="node8" class="node">
+<g id="node7" class="node">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign</title>
-<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign | defined in dsa_signer.go:23&#10;at dsa_signer.go:27: calling [(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash]&#10;at dsa_signer.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_node7"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign | defined in dsa_signer.go:23&#10;at dsa_signer.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at dsa_signer.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:27: calling [(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M272.8935,-245C272.8935,-245 242.8935,-245 242.8935,-245 236.8935,-245 230.8935,-239 230.8935,-233 230.8935,-233 230.8935,-221 230.8935,-221 230.8935,-215 236.8935,-209 242.8935,-209 242.8935,-209 272.8935,-209 272.8935,-209 278.8935,-209 284.8935,-215 284.8935,-221 284.8935,-221 284.8935,-233 284.8935,-233 284.8935,-239 278.8935,-245 272.8935,-245"/>
 <text text-anchor="middle" x="257.8935" y="-222.8" font-family="Verdana" font-size="14.00" fill="#000000">Sign</text>
 </a>
 </g>
 </g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash -->
+<g id="node8" class="node">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash</title>
+<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash | defined in dsa_signer.go:36&#10;at dsa_signer.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at dsa_signer.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at dsa_signer.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M504.1809,-245C504.1809,-245 449.3005,-245 449.3005,-245 443.3005,-245 437.3005,-239 437.3005,-233 437.3005,-233 437.3005,-221 437.3005,-221 437.3005,-215 443.3005,-209 449.3005,-209 449.3005,-209 504.1809,-209 504.1809,-209 510.1809,-209 516.1809,-215 516.1809,-221 516.1809,-221 516.1809,-233 516.1809,-233 516.1809,-239 510.1809,-245 504.1809,-245"/>
+<text text-anchor="middle" x="476.7407" y="-222.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
+</a>
+</g>
+</g>
 <!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign&#45;&gt;(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash -->
-<g id="edge19" class="edge">
+<g id="edge25" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign&#45;&gt;(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash</title>
-<g id="a_edge19"><a xlink:title="at dsa_signer.go:27: calling [(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash]">
+<g id="a_edge25"><a xlink:title="at dsa_signer.go:27: calling [(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash]">
 <path fill="none" stroke="#000000" d="M285.1682,-227C320.5981,-227 383.1058,-227 427.0629,-227"/>
 <polygon fill="#000000" stroke="#000000" points="427.2537,-230.5001 437.2537,-227 427.2536,-223.5001 427.2537,-230.5001"/>
 </a>
 </g>
 </g>
+<!-- (*github.com/go&#45;i2p/logger.Logger).WithField -->
+<g id="node13" class="node">
+<title>(*github.com/go&#45;i2p/logger.Logger).WithField</title>
+<g id="a_node13"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:54">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M696.3771,-147C696.3771,-147 639.8281,-147 639.8281,-147 633.8281,-147 627.8281,-141 627.8281,-135 627.8281,-135 627.8281,-123 627.8281,-123 627.8281,-117 633.8281,-111 639.8281,-111 639.8281,-111 696.3771,-111 696.3771,-111 702.3771,-111 708.3771,-117 708.3771,-123 708.3771,-123 708.3771,-135 708.3771,-135 708.3771,-141 702.3771,-147 696.3771,-147"/>
+<text text-anchor="middle" x="668.1026" y="-133.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="668.1026" y="-116.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
+</a>
+</g>
+</g>
 <!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge34" class="edge">
+<g id="edge12" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge34"><a xlink:title="at dsa_signer.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M284.9523,-219.976C314.1979,-212.7348 362.291,-201.8401 404.4882,-197 478.258,-188.5384 564.3642,-187.9888 617.5658,-188.7222"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="617.6996,-192.2247 627.7539,-188.8841 617.8108,-185.2256 617.6996,-192.2247"/>
+<g id="a_edge12"><a xlink:title="at dsa_signer.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M285.1261,-220.4941C352.9442,-204.2921 530.2056,-161.9439 617.7258,-141.0351"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="618.7742,-144.3833 627.6872,-138.6553 617.1476,-137.5748 618.7742,-144.3833"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge26" class="edge">
+<g id="edge14" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).Sign&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge26"><a xlink:title="at dsa_signer.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M285.0507,-233.4618C314.3795,-240.2714 362.5422,-250.9654 404.4882,-258 436.4029,-263.3523 522.9899,-256.738 548.9932,-276 589.8623,-306.2739 639.738,-452.7753 659.4729,-514.977"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="656.2502,-516.3968 662.5878,-524.8871 662.9282,-514.2978 656.2502,-516.3968"/>
+<g id="a_edge14"><a xlink:title="at dsa_signer.go:24: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M269.1847,-245.1787C290.872,-278.3594 341.8067,-348.323 404.4882,-381 462.0947,-411.0313 495.3968,-366.2874 548.9932,-403 577.7366,-422.6887 564.802,-445.0001 587.9932,-471 599.7998,-484.2365 615.0242,-496.3472 629.0248,-506.1054"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="627.2983,-509.1631 637.5425,-511.8664 631.22,-503.3648 627.2983,-509.1631"/>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify -->
-<g id="node9" class="node">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify</title>
-<g id="a_node9"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify | defined in dsa_verifier.go:25&#10;at dsa_verifier.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:32: calling [(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash]&#10;at dsa_verifier.go:26: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M275.9283,-130C275.9283,-130 239.8587,-130 239.8587,-130 233.8587,-130 227.8587,-124 227.8587,-118 227.8587,-118 227.8587,-106 227.8587,-106 227.8587,-100 233.8587,-94 239.8587,-94 239.8587,-94 275.9283,-94 275.9283,-94 281.9283,-94 287.9283,-100 287.9283,-106 287.9283,-106 287.9283,-118 287.9283,-118 287.9283,-124 281.9283,-130 275.9283,-130"/>
-<text text-anchor="middle" x="257.8935" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge31" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge31"><a xlink:title="at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M516.391,-219.3336C549.0885,-213.0115 595.265,-204.0832 628.0676,-197.7408"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="629.0601,-201.1138 638.2138,-195.779 627.7312,-194.2411 629.0601,-201.1138"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
+<g id="edge1" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
+<g id="a_edge1"><a xlink:title="at dsa_signer.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at dsa_signer.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M512.2859,-208.7966C543.7037,-192.707 589.669,-169.1673 623.5379,-151.8224"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="625.4424,-154.7794 632.7477,-147.1059 622.2516,-148.5489 625.4424,-154.7794"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge24" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge24"><a xlink:title="at dsa_signer.go:54: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M516.391,-244.6121C545.8568,-257.7003 586.269,-275.6508 617.9755,-289.7343"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="616.9544,-293.1104 627.5142,-293.9712 619.796,-286.7131 616.9544,-293.1104"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge15" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSASigner).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge15"><a xlink:title="at dsa_signer.go:37: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_signer.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M516.0431,-232.2347C527.7903,-235.4514 539.9373,-240.6386 548.9932,-249 583.7387,-281.081 569.7971,-304.3497 587.9932,-348 611.0017,-403.1947 639.5495,-467.02 655.6069,-502.5277"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="652.4751,-504.0964 659.7897,-511.7611 658.8513,-501.2079 652.4751,-504.0964"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash -->
-<g id="node10" class="node">
+<g id="node9" class="node">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash</title>
-<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash | defined in dsa_verifier.go:42&#10;at dsa_verifier.go:63: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at dsa_verifier.go:43: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at dsa_verifier.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:58: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<g id="a_node9"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash | defined in dsa_verifier.go:42&#10;at dsa_verifier.go:58: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at dsa_verifier.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:63: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at dsa_verifier.go:43: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M509.54,-130C509.54,-130 443.9414,-130 443.9414,-130 437.9414,-130 431.9414,-124 431.9414,-118 431.9414,-118 431.9414,-106 431.9414,-106 431.9414,-100 437.9414,-94 443.9414,-94 443.9414,-94 509.54,-94 509.54,-94 515.54,-94 521.54,-100 521.54,-106 521.54,-106 521.54,-118 521.54,-118 521.54,-124 515.54,-130 509.54,-130"/>
 <text text-anchor="middle" x="476.7407" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash -->
-<g id="edge11" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash</title>
-<g id="a_edge11"><a xlink:title="at dsa_verifier.go:32: calling [(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash]">
-<path fill="none" stroke="#000000" d="M288.3233,-112C322.7182,-112 379.4095,-112 421.6384,-112"/>
-<polygon fill="#000000" stroke="#000000" points="421.7685,-115.5001 431.7684,-112 421.7684,-108.5001 421.7685,-115.5001"/>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
+<g id="edge3" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
+<g id="a_edge3"><a xlink:title="at dsa_verifier.go:58: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<path fill="none" stroke="#8b4513" d="M517.9366,-130.0428C528.4893,-135.4704 539.5236,-141.8961 548.9932,-149 584.2027,-175.4136 582.5577,-193.585 616.9932,-221 620.9663,-224.1631 625.3074,-227.2217 629.7267,-230.0986"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="627.9037,-233.0864 638.2458,-235.3865 631.5954,-227.139 627.9037,-233.0864"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge22" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge22"><a xlink:title="at dsa_verifier.go:63: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M521.124,-130.0908C553.7434,-143.3867 597.6562,-161.2857 628.9683,-174.0487"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="627.6734,-177.3004 638.2548,-177.8339 630.3157,-170.8182 627.6734,-177.3004"/>
 </a>
 </g>
 </g>
@@ -365,12 +365,48 @@
 </a>
 </g>
 </g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
+<g id="edge32" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
+<g id="a_edge32"><a xlink:title="at dsa_verifier.go:43: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M509.169,-93.8163C530.7645,-82.778 560.1819,-69.7437 587.9932,-64 596.6135,-62.2197 605.861,-61.5624 614.9003,-61.5822"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="614.8776,-65.0828 624.973,-61.8683 615.0764,-58.0857 614.8776,-65.0828"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge17" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge17"><a xlink:title="at dsa_verifier.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M521.5577,-127.9944C531.7025,-133.3617 541.637,-140.271 548.9932,-149 572.6022,-177.0148 638.4746,-418.6964 660.6834,-501.9534"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="657.3331,-502.9737 663.2867,-511.7375 664.0977,-501.1738 657.3331,-502.9737"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify -->
+<g id="node10" class="node">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify</title>
+<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify | defined in dsa_verifier.go:25&#10;at dsa_verifier.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:32: calling [(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash]&#10;at dsa_verifier.go:26: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M275.9283,-130C275.9283,-130 239.8587,-130 239.8587,-130 233.8587,-130 227.8587,-124 227.8587,-118 227.8587,-118 227.8587,-106 227.8587,-106 227.8587,-100 233.8587,-94 239.8587,-94 239.8587,-94 275.9283,-94 275.9283,-94 281.9283,-94 287.9283,-100 287.9283,-106 287.9283,-106 287.9283,-118 287.9283,-118 287.9283,-124 281.9283,-130 275.9283,-130"/>
+<text text-anchor="middle" x="257.8935" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash -->
+<g id="edge23" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash</title>
+<g id="a_edge23"><a xlink:title="at dsa_verifier.go:32: calling [(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash]">
+<path fill="none" stroke="#000000" d="M288.3233,-112C322.7182,-112 379.4095,-112 421.6384,-112"/>
+<polygon fill="#000000" stroke="#000000" points="421.7685,-115.5001 431.7684,-112 421.7684,-108.5001 421.7685,-115.5001"/>
+</a>
+</g>
+</g>
 <!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge16" class="edge">
+<g id="edge33" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge16"><a xlink:title="at dsa_verifier.go:26: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M287.9955,-104.4706C317.477,-97.4222 363.776,-87.2174 404.4882,-82 476.7256,-72.7426 560.8548,-69.5836 614.2795,-68.519"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="614.6075,-72.0137 624.5424,-68.3328 614.4805,-65.0149 614.6075,-72.0137"/>
+<g id="a_edge33"><a xlink:title="at dsa_verifier.go:26: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M288.1581,-105.0216C346.0046,-92.1369 476.4433,-65.2637 587.9932,-58 596.7324,-57.4309 605.978,-57.7354 614.9621,-58.5209"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="614.6375,-62.0061 624.9535,-59.5912 615.3832,-55.0459 614.6375,-62.0061"/>
 </a>
 </g>
 </g>
@@ -378,80 +414,44 @@
 <g id="edge4" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
 <g id="a_edge4"><a xlink:title="at dsa_verifier.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M288.1608,-118.6811C317.7648,-125.1493 364.1519,-135.1082 404.4882,-143 468.5297,-155.5297 499.9443,-125.9592 548.9932,-169 576.07,-192.7601 639.6814,-432.4399 660.9984,-515.129"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="657.6171,-516.0335 663.4953,-524.8481 664.3969,-514.2917 657.6171,-516.0335"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge5" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge5"><a xlink:title="at dsa_verifier.go:63: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M521.6378,-102.2489C544.4524,-100.0271 571.0662,-102.0358 588.9932,-118 644.2148,-167.1755 574.964,-221.1625 616.9932,-282 620.365,-286.8807 624.8105,-291.0847 629.675,-294.6691"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="627.8402,-297.6505 638.1416,-300.1268 631.6328,-291.767 627.8402,-297.6505"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="edge29" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_edge29"><a xlink:title="at dsa_verifier.go:58: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
-<path fill="none" stroke="#8b4513" d="M521.426,-95.2252C542.0684,-89.6289 566.8587,-85.9595 588.9932,-91 602.726,-94.1272 616.8558,-99.9506 629.3054,-106.1152"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="627.9742,-109.3673 638.4638,-110.8569 631.1927,-103.151 627.9742,-109.3673"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge17" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge17"><a xlink:title="at dsa_verifier.go:43: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M521.6,-100.7996C541.8504,-95.8243 566.0932,-89.9801 587.9932,-85 596.6558,-83.0301 605.8622,-81.0091 614.8308,-79.0792"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="615.7659,-82.4585 624.814,-76.9467 614.3035,-75.613 615.7659,-82.4585"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge22" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/dsa.DSAVerifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge22"><a xlink:title="at dsa_verifier.go:46: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_verifier.go:55: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M521.5465,-128.5307C531.5722,-133.8592 541.455,-140.6163 548.9932,-149 574.3344,-177.1834 639.4751,-429.2424 661.0467,-514.7627"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="657.6789,-515.7219 663.5125,-524.5661 664.4675,-514.0144 657.6789,-515.7219"/>
+<path fill="none" stroke="#8b4513" d="M288.1608,-118.6811C317.7648,-125.1493 364.1519,-135.1082 404.4882,-143 468.5297,-155.5297 499.7216,-126.2142 548.9932,-169 562.1646,-180.4376 634.8424,-419.282 659.7354,-502.0535"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="656.4303,-503.2168 662.6588,-511.7874 663.1344,-501.2032 656.4303,-503.2168"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public -->
 <g id="node17" class="node">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public</title>
-<g id="a_node17"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public | defined in dsa_private_key.go:35&#10;at dsa_private_key.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:40: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at dsa_private_key.go:38: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M275.6723,-465C275.6723,-465 240.1147,-465 240.1147,-465 234.1147,-465 228.1147,-459 228.1147,-453 228.1147,-453 228.1147,-441 228.1147,-441 228.1147,-435 234.1147,-429 240.1147,-429 240.1147,-429 275.6723,-429 275.6723,-429 281.6723,-429 287.6723,-435 287.6723,-441 287.6723,-441 287.6723,-453 287.6723,-453 287.6723,-459 281.6723,-465 275.6723,-465"/>
-<text text-anchor="middle" x="257.8935" y="-442.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
+<g id="a_node17"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public | defined in dsa_private_key.go:35&#10;at dsa_private_key.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:38: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey]&#10;at dsa_private_key.go:40: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M275.6723,-485C275.6723,-485 240.1147,-485 240.1147,-485 234.1147,-485 228.1147,-479 228.1147,-473 228.1147,-473 228.1147,-461 228.1147,-461 228.1147,-455 234.1147,-449 240.1147,-449 240.1147,-449 275.6723,-449 275.6723,-449 281.6723,-449 287.6723,-455 287.6723,-461 287.6723,-461 287.6723,-473 287.6723,-473 287.6723,-479 281.6723,-485 275.6723,-485"/>
+<text text-anchor="middle" x="257.8935" y="-462.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public&#45;&gt;github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey -->
-<g id="edge28" class="edge">
+<g id="edge29" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public&#45;&gt;github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey</title>
-<g id="a_edge28"><a xlink:title="at dsa_private_key.go:38: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey]">
-<path fill="none" stroke="#000000" d="M287.8644,-452.0671C317.0938,-457.0089 362.7337,-464.7251 401.8267,-471.3345"/>
-<polygon fill="#000000" stroke="#000000" points="401.6902,-474.861 412.1338,-473.0771 402.8572,-467.9589 401.6902,-474.861"/>
+<g id="a_edge29"><a xlink:title="at dsa_private_key.go:38: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey]">
+<path fill="none" stroke="#000000" d="M287.8644,-469.3281C317.0938,-471.5987 362.7337,-475.144 401.8267,-478.1807"/>
+<polygon fill="#000000" stroke="#000000" points="401.8927,-481.6963 412.1338,-478.9814 402.4349,-474.7173 401.8927,-481.6963"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge23" class="edge">
+<g id="edge30" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge23"><a xlink:title="at dsa_private_key.go:40: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M287.8915,-446.3761C364.4969,-444.578 563.1323,-438.5537 588.9932,-424 622.2519,-405.2831 644.879,-366.0869 657.1474,-339.4005"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="660.3737,-340.7584 661.1992,-330.1957 653.967,-337.9382 660.3737,-340.7584"/>
+<g id="a_edge30"><a xlink:title="at dsa_private_key.go:40: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M287.8407,-459.6422C309.3176,-454.6691 339.0142,-448.4091 365.4882,-445 405.9932,-439.7842 512.207,-452.7379 548.9932,-435 638.8859,-391.6548 561.0655,-303.6535 616.9932,-221 620.3464,-216.0444 624.7817,-211.7486 629.6415,-208.0667"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="631.7138,-210.892 638.105,-202.4419 627.8392,-205.0621 631.7138,-210.892"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge2" class="edge">
+<g id="edge11" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge2"><a xlink:title="at dsa_private_key.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M287.7142,-458.6398C299.077,-463.7509 311.8229,-470.342 322.3816,-478 344.8013,-494.2605 340.353,-511.3695 365.4882,-523 402.5636,-540.1554 512.3566,-515.9265 548.9932,-534 572.7281,-545.7089 563.9185,-568.0068 587.9932,-579 605.6645,-587.0692 625.5885,-578.19 641.1459,-567.2335"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="643.4614,-569.8696 649.2977,-561.0272 639.221,-564.3 643.4614,-569.8696"/>
+<g id="a_edge11"><a xlink:title="at dsa_private_key.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M287.7935,-480.9431C316.9341,-493.9221 362.8187,-512.7585 404.4882,-523 467.2866,-538.4345 490.7989,-511.7991 548.9932,-540 571.0525,-550.6899 565.3461,-569.6193 587.9932,-579 609.351,-587.8467 631.6264,-571.86 647.2503,-555.8359"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="650.1834,-557.8152 654.3527,-548.0752 645.0194,-553.0892 650.1834,-557.8152"/>
 </a>
 </g>
 </g>
@@ -459,71 +459,71 @@
 <g id="node18" class="node">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).NewSigner</title>
 <g id="a_node18"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).NewSigner | defined in dsa_private_key.go:22&#10;at dsa_private_key.go:26: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey]&#10;at dsa_private_key.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M289.3697,-526C289.3697,-526 226.4173,-526 226.4173,-526 220.4173,-526 214.4173,-520 214.4173,-514 214.4173,-514 214.4173,-502 214.4173,-502 214.4173,-496 220.4173,-490 226.4173,-490 226.4173,-490 289.3697,-490 289.3697,-490 295.3697,-490 301.3697,-496 301.3697,-502 301.3697,-502 301.3697,-514 301.3697,-514 301.3697,-520 295.3697,-526 289.3697,-526"/>
-<text text-anchor="middle" x="257.8935" y="-503.8" font-family="Verdana" font-size="14.00" fill="#000000">NewSigner</text>
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M289.3697,-546C289.3697,-546 226.4173,-546 226.4173,-546 220.4173,-546 214.4173,-540 214.4173,-534 214.4173,-534 214.4173,-522 214.4173,-522 214.4173,-516 220.4173,-510 226.4173,-510 226.4173,-510 289.3697,-510 289.3697,-510 295.3697,-510 301.3697,-516 301.3697,-522 301.3697,-522 301.3697,-534 301.3697,-534 301.3697,-540 295.3697,-546 289.3697,-546"/>
+<text text-anchor="middle" x="257.8935" y="-523.8" font-family="Verdana" font-size="14.00" fill="#000000">NewSigner</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).NewSigner&#45;&gt;github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey -->
-<g id="edge24" class="edge">
+<g id="edge2" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).NewSigner&#45;&gt;github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey</title>
-<g id="a_edge24"><a xlink:title="at dsa_private_key.go:26: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey]">
-<path fill="none" stroke="#000000" d="M301.3923,-503.2297C330.0859,-500.083 368.4217,-495.8789 401.9299,-492.2042"/>
-<polygon fill="#000000" stroke="#000000" points="402.5992,-495.6518 412.158,-491.0825 401.8361,-488.6936 402.5992,-495.6518"/>
+<g id="a_edge2"><a xlink:title="at dsa_private_key.go:26: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPrivkey]">
+<path fill="none" stroke="#000000" d="M301.3923,-519.2544C330.0859,-513.4855 368.4217,-505.7779 401.9299,-499.041"/>
+<polygon fill="#000000" stroke="#000000" points="403.0441,-502.3871 412.158,-496.9846 401.6643,-495.5244 403.0441,-502.3871"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).NewSigner&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge30" class="edge">
+<g id="edge13" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).NewSigner&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge30"><a xlink:title="at dsa_private_key.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M301.6217,-520.1385C321.0674,-525.2341 344.3091,-530.9129 365.4882,-535 446.3082,-550.5964 473.2924,-527.681 548.9932,-560 569.3571,-568.6939 567.0878,-583.7036 587.9932,-591 609.3045,-598.4381 631.1285,-583.5905 646.6049,-568.4964"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="649.2498,-570.7955 653.6624,-561.1633 644.2062,-565.9414 649.2498,-570.7955"/>
+<g id="a_edge13"><a xlink:title="at dsa_private_key.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M301.6216,-538.463C321.0673,-542.7209 344.309,-547.2727 365.4882,-550 446.4981,-560.4317 472.6376,-530.9957 548.9932,-560 569.6922,-567.8627 567.0878,-583.7036 587.9932,-591 612.977,-599.7199 636.4244,-576.7991 651.417,-556.6075"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="654.4231,-558.4168 657.3045,-548.2213 648.694,-554.3947 654.4231,-558.4168"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate -->
 <g id="node19" class="node">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate</title>
-<g id="a_node19"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate | defined in dsa_private_key.go:62&#10;at dsa_private_key.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at dsa_private_key.go:66: calling [github.com/go&#45;i2p/crypto/dsa.generateDSA]&#10;at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M282.9113,-404C282.9113,-404 232.8757,-404 232.8757,-404 226.8757,-404 220.8757,-398 220.8757,-392 220.8757,-392 220.8757,-380 220.8757,-380 220.8757,-374 226.8757,-368 232.8757,-368 232.8757,-368 282.9113,-368 282.9113,-368 288.9113,-368 294.9113,-374 294.9113,-380 294.9113,-380 294.9113,-392 294.9113,-392 294.9113,-398 288.9113,-404 282.9113,-404"/>
-<text text-anchor="middle" x="257.8935" y="-381.8" font-family="Verdana" font-size="14.00" fill="#000000">Generate</text>
+<g id="a_node19"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate | defined in dsa_private_key.go:62&#10;at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at dsa_private_key.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at dsa_private_key.go:66: calling [github.com/go&#45;i2p/crypto/dsa.generateDSA]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M282.9113,-424C282.9113,-424 232.8757,-424 232.8757,-424 226.8757,-424 220.8757,-418 220.8757,-412 220.8757,-412 220.8757,-400 220.8757,-400 220.8757,-394 226.8757,-388 232.8757,-388 232.8757,-388 282.9113,-388 282.9113,-388 288.9113,-388 294.9113,-394 294.9113,-400 294.9113,-400 294.9113,-412 294.9113,-412 294.9113,-418 288.9113,-424 282.9113,-424"/>
+<text text-anchor="middle" x="257.8935" y="-401.8" font-family="Verdana" font-size="14.00" fill="#000000">Generate</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;github.com/go&#45;i2p/crypto/dsa.generateDSA -->
-<g id="edge18" class="edge">
+<g id="edge35" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;github.com/go&#45;i2p/crypto/dsa.generateDSA</title>
-<g id="a_edge18"><a xlink:title="at dsa_private_key.go:66: calling [github.com/go&#45;i2p/crypto/dsa.generateDSA]">
-<path fill="none" stroke="#000000" d="M295.0179,-378.536C328.2658,-371.8514 377.6325,-361.926 416.5243,-354.1067"/>
-<polygon fill="#000000" stroke="#000000" points="417.5668,-357.4673 426.6807,-352.0647 416.1869,-350.6046 417.5668,-357.4673"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge14" class="edge">
-<title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge14"><a xlink:title="at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M275.5027,-367.9238C295.4507,-348.6029 329.8445,-318.6455 365.4882,-303 409.7765,-283.5601 543.3304,-265.5519 617.3453,-256.7135"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="617.8583,-260.1773 627.3785,-255.5281 617.0369,-253.2257 617.8583,-260.1773"/>
+<g id="a_edge35"><a xlink:title="at dsa_private_key.go:66: calling [github.com/go&#45;i2p/crypto/dsa.generateDSA]">
+<path fill="none" stroke="#000000" d="M295.0179,-395.1433C328.4073,-385.3788 378.053,-370.8604 417.0202,-359.4648"/>
+<polygon fill="#000000" stroke="#000000" points="418.0651,-362.8059 426.6807,-356.6396 416.1002,-356.0873 418.0651,-362.8059"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge25" class="edge">
+<g id="edge16" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge25"><a xlink:title="at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M294.9476,-386.1089C350.5405,-386.8201 458.6526,-390.3293 548.9932,-406 567.1597,-409.1512 572.493,-425.2276 588.9932,-417 621.232,-400.9246 643.7892,-364.7581 656.3482,-339.3854"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="659.5556,-340.7898 660.6713,-330.2539 653.2288,-337.7945 659.5556,-340.7898"/>
+<g id="a_edge16"><a xlink:title="at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M272.8796,-387.7533C292.4784,-364.6613 328.6713,-324.5789 365.4882,-297 432.148,-247.0663 469.9616,-285.2852 548.9932,-259 557.6471,-256.1218 598.3304,-232.1429 629.769,-213.2506"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="631.5961,-216.236 638.3568,-208.0786 627.9847,-210.2395 631.5961,-216.236"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge21" class="edge">
+<title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge21"><a xlink:title="at dsa_private_key.go:74: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M269.876,-387.9172C287.4411,-363.2469 322.7732,-320.1497 365.4882,-303 448.6551,-269.6091 555.2811,-284.6905 617.2221,-298.4875"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="616.6093,-301.9379 627.1397,-300.7712 618.1802,-295.1164 616.6093,-301.9379"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge9" class="edge">
+<g id="edge19" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPrivateKey).Generate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge9"><a xlink:title="at dsa_private_key.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M295.2019,-391.2453C324.8,-395.3075 367.2433,-400.9126 404.4882,-405 436.5377,-408.5172 523.4336,-398.3468 548.9932,-418 589.1187,-448.8532 549.9782,-491.5809 587.9932,-525 598.6573,-534.3748 613.151,-539.1794 626.8797,-541.5508"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="626.7769,-545.0682 637.1528,-542.9255 627.7053,-538.13 626.7769,-545.0682"/>
+<g id="a_edge19"><a xlink:title="at dsa_private_key.go:63: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_private_key.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M295.1561,-406.6C371.2504,-407.9535 538.2695,-411.6331 548.9932,-418 577.9621,-435.1994 564.0539,-459.2951 587.9932,-483 599.5541,-494.4477 614.4462,-504.1726 628.2478,-511.7544"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="626.6351,-514.8608 637.114,-516.4239 629.897,-508.6672 626.6351,-514.8608"/>
 </a>
 </g>
 </g>
@@ -531,62 +531,62 @@
 <g id="node20" class="node">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier</title>
 <g id="a_node20"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier | defined in dsa_public_key.go:28&#10;at dsa_public_key.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at dsa_public_key.go:32: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M293.1205,-695C293.1205,-695 222.6665,-695 222.6665,-695 216.6665,-695 210.6665,-689 210.6665,-683 210.6665,-683 210.6665,-671 210.6665,-671 210.6665,-665 216.6665,-659 222.6665,-659 222.6665,-659 293.1205,-659 293.1205,-659 299.1205,-659 305.1205,-665 305.1205,-671 305.1205,-671 305.1205,-683 305.1205,-683 305.1205,-689 299.1205,-695 293.1205,-695"/>
-<text text-anchor="middle" x="257.8935" y="-672.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M293.1205,-698C293.1205,-698 222.6665,-698 222.6665,-698 216.6665,-698 210.6665,-692 210.6665,-686 210.6665,-686 210.6665,-674 210.6665,-674 210.6665,-668 216.6665,-662 222.6665,-662 222.6665,-662 293.1205,-662 293.1205,-662 299.1205,-662 305.1205,-668 305.1205,-674 305.1205,-674 305.1205,-686 305.1205,-686 305.1205,-692 299.1205,-698 293.1205,-698"/>
+<text text-anchor="middle" x="257.8935" y="-675.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey -->
-<g id="edge12" class="edge">
+<g id="edge8" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey</title>
-<g id="a_edge12"><a xlink:title="at dsa_public_key.go:32: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey]">
-<path fill="none" stroke="#000000" d="M305.3801,-682.8586C331.3574,-686.0635 364.2788,-690.1252 394.3077,-693.8299"/>
-<polygon fill="#000000" stroke="#000000" points="394.013,-697.32 404.3663,-695.0709 394.8702,-690.3727 394.013,-697.32"/>
+<g id="a_edge8"><a xlink:title="at dsa_public_key.go:32: calling [github.com/go&#45;i2p/crypto/dsa.createDSAPublicKey]">
+<path fill="none" stroke="#000000" d="M305.3801,-679.349C331.3574,-678.9929 364.2788,-678.5416 394.3077,-678.13"/>
+<polygon fill="#000000" stroke="#000000" points="394.4153,-681.629 404.3663,-677.9921 394.3192,-674.6296 394.4153,-681.629"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge3" class="edge">
+<g id="edge7" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge3"><a xlink:title="at dsa_public_key.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M305.276,-671.5221C324.0207,-669.4056 345.7615,-667.0136 365.4882,-665 446.9718,-656.6825 470.9184,-672.7606 548.9932,-648 591.6724,-634.4648 628.1413,-595.838 649.1003,-569.4073"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="652.0153,-571.3586 655.3484,-561.3017 646.4712,-567.085 652.0153,-571.3586"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify -->
-<g id="node21" class="node">
-<title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify</title>
-<g id="a_node21"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify | defined in dsa_public_key.go:50&#10;at dsa_public_key.go:52: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-652C86.6842,-652 50.6146,-652 50.6146,-652 44.6146,-652 38.6146,-646 38.6146,-640 38.6146,-640 38.6146,-628 38.6146,-628 38.6146,-622 44.6146,-616 50.6146,-616 50.6146,-616 86.6842,-616 86.6842,-616 92.6842,-616 98.6842,-622 98.6842,-628 98.6842,-628 98.6842,-640 98.6842,-640 98.6842,-646 92.6842,-652 86.6842,-652"/>
-<text text-anchor="middle" x="68.6494" y="-629.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier -->
-<g id="edge13" class="edge">
-<title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier</title>
-<g id="a_edge13"><a xlink:title="at dsa_public_key.go:52: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
-<path fill="none" stroke="#000000" d="M99.0547,-640.9087C126.3246,-647.1049 167.068,-656.3626 200.4618,-663.9504"/>
-<polygon fill="#000000" stroke="#000000" points="200.0395,-667.4436 210.5664,-666.2464 201.5905,-660.6176 200.0395,-667.4436"/>
+<g id="a_edge7"><a xlink:title="at dsa_public_key.go:29: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M294.2961,-698.0291C359.3613,-727.4183 497.3603,-776.6034 588.9932,-716 642.5529,-680.5771 659.9638,-600.7576 665.5385,-558.1116"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="669.0214,-558.4608 666.7155,-548.1199 662.0695,-557.6418 669.0214,-558.4608"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).VerifyHash -->
-<g id="node22" class="node">
+<g id="node21" class="node">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).VerifyHash</title>
-<g id="a_node22"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).VerifyHash | defined in dsa_public_key.go:63&#10;at dsa_public_key.go:65: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M101.4487,-713C101.4487,-713 35.8501,-713 35.8501,-713 29.8501,-713 23.8501,-707 23.8501,-701 23.8501,-701 23.8501,-689 23.8501,-689 23.8501,-683 29.8501,-677 35.8501,-677 35.8501,-677 101.4487,-677 101.4487,-677 107.4487,-677 113.4487,-683 113.4487,-689 113.4487,-689 113.4487,-701 113.4487,-701 113.4487,-707 107.4487,-713 101.4487,-713"/>
-<text text-anchor="middle" x="68.6494" y="-690.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
+<g id="a_node21"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).VerifyHash | defined in dsa_public_key.go:63&#10;at dsa_public_key.go:65: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M101.4487,-705C101.4487,-705 35.8501,-705 35.8501,-705 29.8501,-705 23.8501,-699 23.8501,-693 23.8501,-693 23.8501,-681 23.8501,-681 23.8501,-675 29.8501,-669 35.8501,-669 35.8501,-669 101.4487,-669 101.4487,-669 107.4487,-669 113.4487,-675 113.4487,-681 113.4487,-681 113.4487,-693 113.4487,-693 113.4487,-699 107.4487,-705 101.4487,-705"/>
+<text text-anchor="middle" x="68.6494" y="-682.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier -->
-<g id="edge15" class="edge">
+<g id="edge18" class="edge">
 <title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier</title>
-<g id="a_edge15"><a xlink:title="at dsa_public_key.go:65: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
-<path fill="none" stroke="#000000" d="M113.4976,-690.7343C139.489,-688.2621 172.4849,-685.1237 200.3723,-682.4711"/>
-<polygon fill="#000000" stroke="#000000" points="200.7694,-685.9493 210.393,-681.518 200.1065,-678.9807 200.7694,-685.9493"/>
+<g id="a_edge18"><a xlink:title="at dsa_public_key.go:65: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
+<path fill="none" stroke="#000000" d="M113.4976,-685.3411C139.489,-684.3797 172.4849,-683.1592 200.3723,-682.1277"/>
+<polygon fill="#000000" stroke="#000000" points="200.5293,-685.6244 210.393,-681.757 200.2705,-678.6291 200.5293,-685.6244"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify -->
+<g id="node22" class="node">
+<title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify</title>
+<g id="a_node22"><a xlink:title="(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify | defined in dsa_public_key.go:50&#10;at dsa_public_key.go:52: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-644C86.6842,-644 50.6146,-644 50.6146,-644 44.6146,-644 38.6146,-638 38.6146,-632 38.6146,-632 38.6146,-620 38.6146,-620 38.6146,-614 44.6146,-608 50.6146,-608 50.6146,-608 86.6842,-608 86.6842,-608 92.6842,-608 98.6842,-614 98.6842,-620 98.6842,-620 98.6842,-632 98.6842,-632 98.6842,-638 92.6842,-644 86.6842,-644"/>
+<text text-anchor="middle" x="68.6494" y="-621.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier -->
+<g id="edge5" class="edge">
+<title>(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier</title>
+<g id="a_edge5"><a xlink:title="at dsa_public_key.go:52: calling [(github.com/go&#45;i2p/crypto/dsa.DSAPublicKey).NewVerifier]">
+<path fill="none" stroke="#000000" d="M99.0547,-634.676C126.4422,-642.4909 167.4195,-654.1836 200.8933,-663.7352"/>
+<polygon fill="#000000" stroke="#000000" points="199.9899,-667.1171 210.5664,-666.4954 201.9107,-660.3858 199.9899,-667.1171"/>
 </a>
 </g>
 </g>

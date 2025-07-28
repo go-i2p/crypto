@@ -25,32 +25,32 @@
 <g id="clust8" class="cluster">
 <title>cluster_github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey</title>
 <g id="a_clust8"><a xlink:title="type: github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-1248C28,-1248 314.2568,-1248 314.2568,-1248 320.2568,-1248 326.2568,-1254 326.2568,-1260 326.2568,-1260 326.2568,-1375 326.2568,-1375 326.2568,-1381 320.2568,-1387 314.2568,-1387 314.2568,-1387 28,-1387 28,-1387 22,-1387 16,-1381 16,-1375 16,-1375 16,-1260 16,-1260 16,-1254 22,-1248 28,-1248"/>
-<text text-anchor="middle" x="171.1284" y="-1256.5" font-family="Arial" font-size="15.00" fill="#222222">(ECP384PublicKey)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-1231C28,-1231 314.2568,-1231 314.2568,-1231 320.2568,-1231 326.2568,-1237 326.2568,-1243 326.2568,-1243 326.2568,-1358 326.2568,-1358 326.2568,-1364 320.2568,-1370 314.2568,-1370 314.2568,-1370 28,-1370 28,-1370 22,-1370 16,-1364 16,-1358 16,-1358 16,-1243 16,-1243 16,-1237 22,-1231 28,-1231"/>
+<text text-anchor="middle" x="171.1284" y="-1239.5" font-family="Arial" font-size="15.00" fill="#222222">(ECP384PublicKey)</text>
 </a>
 </g>
 </g>
 <g id="clust7" class="cluster">
 <title>cluster_github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey</title>
 <g id="a_clust7"><a xlink:title="type: github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-971C28,-971 314.2568,-971 314.2568,-971 320.2568,-971 326.2568,-977 326.2568,-983 326.2568,-983 326.2568,-1098 326.2568,-1098 326.2568,-1104 320.2568,-1110 314.2568,-1110 314.2568,-1110 28,-1110 28,-1110 22,-1110 16,-1104 16,-1098 16,-1098 16,-983 16,-983 16,-977 22,-971 28,-971"/>
-<text text-anchor="middle" x="171.1284" y="-979.5" font-family="Arial" font-size="15.00" fill="#222222">(ECP256PublicKey)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M28,-954C28,-954 314.2568,-954 314.2568,-954 320.2568,-954 326.2568,-960 326.2568,-966 326.2568,-966 326.2568,-1081 326.2568,-1081 326.2568,-1087 320.2568,-1093 314.2568,-1093 314.2568,-1093 28,-1093 28,-1093 22,-1093 16,-1087 16,-1081 16,-1081 16,-966 16,-966 16,-960 22,-954 28,-954"/>
+<text text-anchor="middle" x="171.1284" y="-962.5" font-family="Arial" font-size="15.00" fill="#222222">(ECP256PublicKey)</text>
 </a>
 </g>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_*github.com/sirupsen/logrus.Logger</title>
 <g id="a_clust6"><a xlink:title="type: *github.com/sirupsen/logrus.Logger">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M463.1874,-505C463.1874,-505 517.5086,-505 517.5086,-505 523.5086,-505 529.5086,-511 529.5086,-517 529.5086,-517 529.5086,-571 529.5086,-571 529.5086,-577 523.5086,-583 517.5086,-583 517.5086,-583 463.1874,-583 463.1874,-583 457.1874,-583 451.1874,-577 451.1874,-571 451.1874,-571 451.1874,-517 451.1874,-517 451.1874,-511 457.1874,-505 463.1874,-505"/>
-<text text-anchor="middle" x="490.348" y="-513.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M463.1874,-316C463.1874,-316 517.5086,-316 517.5086,-316 523.5086,-316 529.5086,-322 529.5086,-328 529.5086,-328 529.5086,-382 529.5086,-382 529.5086,-388 523.5086,-394 517.5086,-394 517.5086,-394 463.1874,-394 463.1874,-394 457.1874,-394 451.1874,-388 451.1874,-382 451.1874,-382 451.1874,-328 451.1874,-328 451.1874,-322 457.1874,-316 463.1874,-316"/>
+<text text-anchor="middle" x="490.348" y="-324.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
 </a>
 </g>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_*github.com/go&#45;i2p/logger.Logger</title>
 <g id="a_clust5"><a xlink:title="type: *github.com/go&#45;i2p/logger.Logger">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M450.7386,-632C450.7386,-632 528.9574,-632 528.9574,-632 534.9574,-632 540.9574,-638 540.9574,-644 540.9574,-644 540.9574,-942 540.9574,-942 540.9574,-948 534.9574,-954 528.9574,-954 528.9574,-954 450.7386,-954 450.7386,-954 444.7386,-954 438.7386,-948 438.7386,-942 438.7386,-942 438.7386,-644 438.7386,-644 438.7386,-638 444.7386,-632 450.7386,-632"/>
-<text text-anchor="middle" x="489.848" y="-640.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M450.7386,-754C450.7386,-754 528.9574,-754 528.9574,-754 534.9574,-754 540.9574,-760 540.9574,-766 540.9574,-766 540.9574,-1064 540.9574,-1064 540.9574,-1070 534.9574,-1076 528.9574,-1076 528.9574,-1076 450.7386,-1076 450.7386,-1076 444.7386,-1076 438.7386,-1070 438.7386,-1064 438.7386,-1064 438.7386,-766 438.7386,-766 438.7386,-760 444.7386,-754 450.7386,-754"/>
+<text text-anchor="middle" x="489.848" y="-762.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
 </a>
 </g>
 </g>
@@ -73,17 +73,27 @@
 <g id="clust2" class="cluster">
 <title>cluster_*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier</title>
 <g id="a_clust2"><a xlink:title="type: *github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M42.3829,-755C42.3829,-755 311.5429,-755 311.5429,-755 317.5429,-755 323.5429,-761 323.5429,-767 323.5429,-767 323.5429,-821 323.5429,-821 323.5429,-827 317.5429,-833 311.5429,-833 311.5429,-833 42.3829,-833 42.3829,-833 36.3829,-833 30.3829,-827 30.3829,-821 30.3829,-821 30.3829,-767 30.3829,-767 30.3829,-761 36.3829,-755 42.3829,-755"/>
-<text text-anchor="middle" x="176.9629" y="-763.5" font-family="Arial" font-size="15.00" fill="#222222">(*ECDSAVerifier)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M42.3829,-738C42.3829,-738 311.5429,-738 311.5429,-738 317.5429,-738 323.5429,-744 323.5429,-750 323.5429,-750 323.5429,-804 323.5429,-804 323.5429,-810 317.5429,-816 311.5429,-816 311.5429,-816 42.3829,-816 42.3829,-816 36.3829,-816 30.3829,-810 30.3829,-804 30.3829,-804 30.3829,-750 30.3829,-750 30.3829,-744 36.3829,-738 42.3829,-738"/>
+<text text-anchor="middle" x="176.9629" y="-746.5" font-family="Arial" font-size="15.00" fill="#222222">(*ECDSAVerifier)</text>
+</a>
+</g>
+</g>
+<!-- github.com/samber/oops.Errorf -->
+<g id="node1" class="node">
+<title>github.com/samber/oops.Errorf</title>
+<g id="a_node1"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M507.0433,-102C507.0433,-102 472.6527,-102 472.6527,-102 466.6527,-102 460.6527,-96 460.6527,-90 460.6527,-90 460.6527,-78 460.6527,-78 460.6527,-72 466.6527,-66 472.6527,-66 472.6527,-66 507.0433,-66 507.0433,-66 513.0433,-66 519.0433,-72 519.0433,-78 519.0433,-78 519.0433,-90 519.0433,-90 519.0433,-96 513.0433,-102 507.0433,-102"/>
+<text text-anchor="middle" x="489.848" y="-88.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
+<text text-anchor="middle" x="489.848" y="-71.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier -->
-<g id="node1" class="node">
+<g id="node2" class="node">
 <title>github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier</title>
-<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier | defined in ecdsa_verifier.go:68&#10;at ecdsa_verifier.go:72: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:83: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:69: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:75: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M539.0679,-1007C539.0679,-1007 440.6281,-1007 440.6281,-1007 434.6281,-1007 428.6281,-1001 428.6281,-995 428.6281,-995 428.6281,-983 428.6281,-983 428.6281,-977 434.6281,-971 440.6281,-971 440.6281,-971 539.0679,-971 539.0679,-971 545.0679,-971 551.0679,-977 551.0679,-983 551.0679,-983 551.0679,-995 551.0679,-995 551.0679,-1001 545.0679,-1007 539.0679,-1007"/>
-<text text-anchor="middle" x="489.848" y="-984.8" font-family="Verdana" font-size="14.00" fill="#000000">CreateECVerifier</text>
+<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier | defined in ecdsa_verifier.go:68&#10;at ecdsa_verifier.go:69: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:72: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:83: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:75: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M539.0679,-1243C539.0679,-1243 440.6281,-1243 440.6281,-1243 434.6281,-1243 428.6281,-1237 428.6281,-1231 428.6281,-1231 428.6281,-1219 428.6281,-1219 428.6281,-1213 434.6281,-1207 440.6281,-1207 440.6281,-1207 539.0679,-1207 539.0679,-1207 545.0679,-1207 551.0679,-1213 551.0679,-1219 551.0679,-1219 551.0679,-1231 551.0679,-1231 551.0679,-1237 545.0679,-1243 539.0679,-1243"/>
+<text text-anchor="middle" x="489.848" y="-1220.8" font-family="Verdana" font-size="14.00" fill="#000000">CreateECVerifier</text>
 </a>
 </g>
 </g>
@@ -91,18 +101,18 @@
 <g id="node14" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
 <g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithFields | defined in log.go:60">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M521.0671,-763C521.0671,-763 458.6289,-763 458.6289,-763 452.6289,-763 446.6289,-757 446.6289,-751 446.6289,-751 446.6289,-739 446.6289,-739 446.6289,-733 452.6289,-727 458.6289,-727 458.6289,-727 521.0671,-727 521.0671,-727 527.0671,-727 533.0671,-733 533.0671,-739 533.0671,-739 533.0671,-751 533.0671,-751 533.0671,-757 527.0671,-763 521.0671,-763"/>
-<text text-anchor="middle" x="489.848" y="-749.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="489.848" y="-732.4" font-family="Verdana" font-size="14.00" fill="#000000">WithFields</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M521.0671,-885C521.0671,-885 458.6289,-885 458.6289,-885 452.6289,-885 446.6289,-879 446.6289,-873 446.6289,-873 446.6289,-861 446.6289,-861 446.6289,-855 452.6289,-849 458.6289,-849 458.6289,-849 521.0671,-849 521.0671,-849 527.0671,-849 533.0671,-855 533.0671,-861 533.0671,-861 533.0671,-873 533.0671,-873 533.0671,-879 527.0671,-885 521.0671,-885"/>
+<text text-anchor="middle" x="489.848" y="-871.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="489.848" y="-854.4" font-family="Verdana" font-size="14.00" fill="#000000">WithFields</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge23" class="edge">
+<g id="edge24" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge23"><a xlink:title="at ecdsa_verifier.go:69: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M433.8304,-970.875C424.2238,-965.0421 415.6765,-957.4196 410.4882,-947.5 394.1123,-916.1906 394.1123,-819.8094 410.4882,-788.5 416.4065,-777.1848 426.5656,-768.6698 437.6764,-762.3174"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="439.4278,-765.3527 446.7282,-757.6745 436.233,-759.1243 439.4278,-765.3527"/>
+<g id="a_edge24"><a xlink:title="at ecdsa_verifier.go:69: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M477.0208,-1206.9768C458.0541,-1179.1019 423.3832,-1123.1341 410.4882,-1069.5 402.2285,-1035.1456 394.1123,-941.8094 410.4882,-910.5 416.4065,-899.1848 426.5656,-890.6698 437.6764,-884.3174"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="439.4278,-887.3527 446.7282,-879.6745 436.233,-881.1243 439.4278,-887.3527"/>
 </a>
 </g>
 </g>
@@ -110,9 +120,9 @@
 <g id="node15" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
 <g id="a_node15"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M507.6143,-885C507.6143,-885 472.0817,-885 472.0817,-885 466.0817,-885 460.0817,-879 460.0817,-873 460.0817,-873 460.0817,-861 460.0817,-861 460.0817,-855 466.0817,-849 472.0817,-849 472.0817,-849 507.6143,-849 507.6143,-849 513.6143,-849 519.6143,-855 519.6143,-861 519.6143,-861 519.6143,-873 519.6143,-873 519.6143,-879 513.6143,-885 507.6143,-885"/>
-<text text-anchor="middle" x="489.848" y="-871.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="489.848" y="-854.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M507.6143,-946C507.6143,-946 472.0817,-946 472.0817,-946 466.0817,-946 460.0817,-940 460.0817,-934 460.0817,-934 460.0817,-922 460.0817,-922 460.0817,-916 466.0817,-910 472.0817,-910 472.0817,-910 507.6143,-910 507.6143,-910 513.6143,-910 519.6143,-916 519.6143,-922 519.6143,-922 519.6143,-934 519.6143,-934 519.6143,-940 513.6143,-946 507.6143,-946"/>
+<text text-anchor="middle" x="489.848" y="-932.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="489.848" y="-915.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
 </a>
 </g>
 </g>
@@ -120,8 +130,8 @@
 <g id="edge47" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
 <g id="a_edge47"><a xlink:title="at ecdsa_verifier.go:75: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M433.8304,-970.875C424.2238,-965.0421 415.6765,-957.4196 410.4882,-947.5 402.8667,-932.9283 402.8667,-925.0717 410.4882,-910.5 418.6291,-894.9352 434.7946,-884.6689 450.4233,-878.0417"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="451.9216,-881.2158 460.0084,-874.3708 449.418,-874.6788 451.9216,-881.2158"/>
+<path fill="none" stroke="#8b4513" d="M477.0208,-1206.9768C458.0541,-1179.1019 423.3832,-1123.1341 410.4882,-1069.5 400.3065,-1027.1512 390.3016,-1010.0952 410.4882,-971.5 418.6291,-955.9352 434.7946,-945.6689 450.4233,-939.0417"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="451.9216,-942.2158 460.0084,-935.3708 449.418,-935.6788 451.9216,-942.2158"/>
 </a>
 </g>
 </g>
@@ -129,28 +139,18 @@
 <g id="node19" class="node">
 <title>(*github.com/sirupsen/logrus.Logger).Debug</title>
 <g id="a_node19"><a xlink:title="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M508.67,-575C508.67,-575 471.026,-575 471.026,-575 465.026,-575 459.026,-569 459.026,-563 459.026,-563 459.026,-551 459.026,-551 459.026,-545 465.026,-539 471.026,-539 471.026,-539 508.67,-539 508.67,-539 514.67,-539 520.67,-545 520.67,-551 520.67,-551 520.67,-563 520.67,-563 520.67,-569 514.67,-575 508.67,-575"/>
-<text text-anchor="middle" x="489.848" y="-561.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
-<text text-anchor="middle" x="489.848" y="-544.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M508.67,-386C508.67,-386 471.026,-386 471.026,-386 465.026,-386 459.026,-380 459.026,-374 459.026,-374 459.026,-362 459.026,-362 459.026,-356 465.026,-350 471.026,-350 471.026,-350 508.67,-350 508.67,-350 514.67,-350 520.67,-356 520.67,-362 520.67,-362 520.67,-374 520.67,-374 520.67,-380 514.67,-386 508.67,-386"/>
+<text text-anchor="middle" x="489.848" y="-372.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
+<text text-anchor="middle" x="489.848" y="-355.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge17" class="edge">
+<g id="edge43" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge17"><a xlink:title="at ecdsa_verifier.go:72: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:83: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M433.8304,-970.875C424.2238,-965.0421 415.6765,-957.4196 410.4882,-947.5 394.5758,-917.0768 397.5607,-670.3066 410.4882,-638.5 419.6904,-615.8591 438.5403,-596.0629 455.5602,-581.6517"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="458.1657,-584.0443 463.7181,-575.0209 453.7505,-578.6123 458.1657,-584.0443"/>
-</a>
-</g>
-</g>
-<!-- github.com/samber/oops.Errorf -->
-<g id="node2" class="node">
-<title>github.com/samber/oops.Errorf</title>
-<g id="a_node2"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M507.0433,-102C507.0433,-102 472.6527,-102 472.6527,-102 466.6527,-102 460.6527,-96 460.6527,-90 460.6527,-90 460.6527,-78 460.6527,-78 460.6527,-72 466.6527,-66 472.6527,-66 472.6527,-66 507.0433,-66 507.0433,-66 513.0433,-66 519.0433,-72 519.0433,-78 519.0433,-78 519.0433,-90 519.0433,-90 519.0433,-96 513.0433,-102 507.0433,-102"/>
-<text text-anchor="middle" x="489.848" y="-88.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
-<text text-anchor="middle" x="489.848" y="-71.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
+<g id="a_edge43"><a xlink:title="at ecdsa_verifier.go:72: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:83: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M477.0208,-1206.9768C458.0541,-1179.1019 423.3832,-1123.1341 410.4882,-1069.5 378.3846,-935.9717 396.8118,-897.1507 410.4882,-760.5 424.3588,-621.9088 465.1245,-459.8475 482.1935,-395.9346"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="485.5958,-396.76 484.8152,-386.1939 478.8364,-394.9406 485.5958,-396.76"/>
 </a>
 </g>
 </g>
@@ -174,9 +174,9 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecdsa.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge54" class="edge">
+<g id="edge17" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecdsa.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge54"><a xlink:title="at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<g id="a_edge17"><a xlink:title="at constants.go:7: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
 <path fill="none" stroke="#8b4513" d="M95.9249,-34C122.4209,-34 163.7895,-34 199.6503,-34"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="200.0894,-37.5001 210.0894,-34 200.0893,-30.5001 200.0894,-37.5001"/>
 </a>
@@ -185,172 +185,172 @@
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash -->
 <g id="node5" class="node">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash</title>
-<g id="a_node5"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash | defined in ecdsa_verifier.go:21&#10;at ecdsa_verifier.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_verifier.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:36: calling [github.com/samber/oops.Errorf]&#10;at ecdsa_verifier.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M303.6928,-825C303.6928,-825 238.0942,-825 238.0942,-825 232.0942,-825 226.0942,-819 226.0942,-813 226.0942,-813 226.0942,-801 226.0942,-801 226.0942,-795 232.0942,-789 238.0942,-789 238.0942,-789 303.6928,-789 303.6928,-789 309.6928,-789 315.6928,-795 315.6928,-801 315.6928,-801 315.6928,-813 315.6928,-813 315.6928,-819 309.6928,-825 303.6928,-825"/>
-<text text-anchor="middle" x="270.8935" y="-802.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
+<g id="a_node5"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash | defined in ecdsa_verifier.go:21&#10;at ecdsa_verifier.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]&#10;at ecdsa_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_verifier.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:36: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M303.6928,-808C303.6928,-808 238.0942,-808 238.0942,-808 232.0942,-808 226.0942,-802 226.0942,-796 226.0942,-796 226.0942,-784 226.0942,-784 226.0942,-778 232.0942,-772 238.0942,-772 238.0942,-772 303.6928,-772 303.6928,-772 309.6928,-772 315.6928,-778 315.6928,-784 315.6928,-784 315.6928,-796 315.6928,-796 315.6928,-802 309.6928,-808 303.6928,-808"/>
+<text text-anchor="middle" x="270.8935" y="-785.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge55" class="edge">
+<g id="edge56" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge55"><a xlink:title="at ecdsa_verifier.go:36: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M290.0481,-788.8293C307.7607,-770.9397 333.4796,-742.0074 348.0527,-712 452.3349,-497.2725 481.308,-203.7459 488.0476,-112.3418"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="491.5495,-112.4376 488.7628,-102.2158 484.5669,-111.9443 491.5495,-112.4376"/>
+<g id="a_edge56"><a xlink:title="at ecdsa_verifier.go:36: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M296.0082,-771.783C313.5925,-757.5718 336.0162,-736.2222 348.0527,-712 408.5927,-590.1694 362.0476,-541.8195 391.4882,-409 416.3486,-296.8437 460.3552,-167.1168 479.9539,-111.5581"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="483.2757,-112.6629 483.3193,-102.0681 476.6782,-110.3232 483.2757,-112.6629"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge34" class="edge">
+<g id="edge53" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge34"><a xlink:title="at ecdsa_verifier.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M310.6247,-788.9605C333.7905,-779.0936 363.8122,-767.4063 391.4882,-760 405.8595,-756.1541 421.6937,-753.1982 436.3798,-750.9687"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="436.9309,-754.4256 446.3316,-749.5393 435.9356,-747.4967 436.9309,-754.4256"/>
+<g id="a_edge53"><a xlink:title="at ecdsa_verifier.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:32: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M315.638,-776.1773C327.5655,-770.6253 339.4979,-763.0816 348.0527,-753 392.7639,-700.3092 340.0259,-559.0209 392.4882,-604 472.0379,-672.2027 366.3601,-752.6208 428.4882,-837 431.2115,-840.6986 434.5154,-843.9648 438.1619,-846.8447"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="436.3552,-849.8481 446.5996,-852.5503 440.2763,-844.0494 436.3552,-849.8481"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge35" class="edge">
+<g id="edge31" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge35"><a xlink:title="at ecdsa_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M292.8142,-788.8531C318.1957,-770.1912 360.5958,-746.413 392.4882,-766 422.6365,-784.5158 403.2897,-812.1648 428.4882,-837 434.8698,-843.2895 442.8299,-848.4799 450.8808,-852.6719"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="449.3969,-855.8418 459.9298,-856.986 452.4094,-849.5232 449.3969,-855.8418"/>
+<g id="a_edge31"><a xlink:title="at ecdsa_verifier.go:35: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M301.1393,-771.8964C327.7517,-758.5742 366.2396,-745.9514 392.4882,-766 440.8138,-802.9109 389.7268,-851.1457 428.4882,-898 434.3643,-905.103 442.3302,-910.6585 450.5748,-914.9515"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.3604,-918.2463 459.9049,-919.277 452.3046,-911.8956 449.3604,-918.2463"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="node17" class="node">
+<g id="node16" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_node17"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Warn | defined in log.go:30">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M507.6143,-702C507.6143,-702 472.0817,-702 472.0817,-702 466.0817,-702 460.0817,-696 460.0817,-690 460.0817,-690 460.0817,-678 460.0817,-678 460.0817,-672 466.0817,-666 472.0817,-666 472.0817,-666 507.6143,-666 507.6143,-666 513.6143,-666 519.6143,-672 519.6143,-678 519.6143,-678 519.6143,-690 519.6143,-690 519.6143,-696 513.6143,-702 507.6143,-702"/>
-<text text-anchor="middle" x="489.848" y="-688.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="489.848" y="-671.4" font-family="Verdana" font-size="14.00" fill="#000000">Warn</text>
+<g id="a_node16"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Warn | defined in log.go:30">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M507.6143,-824C507.6143,-824 472.0817,-824 472.0817,-824 466.0817,-824 460.0817,-818 460.0817,-812 460.0817,-812 460.0817,-800 460.0817,-800 460.0817,-794 466.0817,-788 472.0817,-788 472.0817,-788 507.6143,-788 507.6143,-788 513.6143,-788 519.6143,-794 519.6143,-800 519.6143,-800 519.6143,-812 519.6143,-812 519.6143,-818 513.6143,-824 507.6143,-824"/>
+<text text-anchor="middle" x="489.848" y="-810.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="489.848" y="-793.4" font-family="Verdana" font-size="14.00" fill="#000000">Warn</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn -->
-<g id="edge57" class="edge">
+<g id="edge23" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Warn</title>
-<g id="a_edge57"><a xlink:title="at ecdsa_verifier.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
-<path fill="none" stroke="#8b4513" d="M300.5058,-788.9904C331.9527,-770.0361 383.2621,-739.5962 428.4882,-715 435.6392,-711.1109 443.3351,-707.0938 450.778,-703.2928"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="452.6688,-706.2586 460.0104,-698.6198 449.5075,-700.0131 452.6688,-706.2586"/>
+<g id="a_edge23"><a xlink:title="at ecdsa_verifier.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Warn]">
+<path fill="none" stroke="#8b4513" d="M315.9087,-776.4021C327.8422,-770.8551 339.7099,-763.2577 348.0527,-753 398.9577,-690.4107 325.2002,-532.4908 392.4882,-577 461.1355,-622.4084 481.5295,-727.064 487.471,-777.6307"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="484.0193,-778.2704 488.5589,-787.8434 490.9799,-777.5289 484.0193,-778.2704"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge48" class="edge">
+<g id="edge6" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge48"><a xlink:title="at ecdsa_verifier.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M289.1202,-788.7529C305.0487,-772.6 328.6037,-748.2084 348.0527,-726 385.6306,-683.0907 391.6509,-669.5468 428.4882,-626 440.7487,-611.5064 454.7962,-595.6569 466.3539,-582.8073"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="469.0881,-585.0017 473.1902,-575.2332 463.8917,-580.3115 469.0881,-585.0017"/>
+<g id="a_edge6"><a xlink:title="at ecdsa_verifier.go:25: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:48: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M315.8671,-777.3581C328.0961,-771.8005 340.1346,-763.9577 348.0527,-753 436.7602,-630.2386 302.6963,-537.7004 391.4882,-415 405.2185,-396.0263 428.6585,-384.4136 449.2125,-377.479"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="450.5012,-380.7439 459.0156,-374.4388 448.4276,-374.058 450.5012,-380.7439"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify -->
 <g id="node6" class="node">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify</title>
-<g id="a_node6"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify | defined in ecdsa_verifier.go:54&#10;at ecdsa_verifier.go:64: calling [(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]&#10;at ecdsa_verifier.go:55: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at ecdsa_verifier.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-825C86.6842,-825 50.6146,-825 50.6146,-825 44.6146,-825 38.6146,-819 38.6146,-813 38.6146,-813 38.6146,-801 38.6146,-801 38.6146,-795 44.6146,-789 50.6146,-789 50.6146,-789 86.6842,-789 86.6842,-789 92.6842,-789 98.6842,-795 98.6842,-801 98.6842,-801 98.6842,-813 98.6842,-813 98.6842,-819 92.6842,-825 86.6842,-825"/>
-<text text-anchor="middle" x="68.6494" y="-802.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
+<g id="a_node6"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify | defined in ecdsa_verifier.go:54&#10;at ecdsa_verifier.go:64: calling [(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]&#10;at ecdsa_verifier.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_verifier.go:55: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-808C86.6842,-808 50.6146,-808 50.6146,-808 44.6146,-808 38.6146,-802 38.6146,-796 38.6146,-796 38.6146,-784 38.6146,-784 38.6146,-778 44.6146,-772 50.6146,-772 50.6146,-772 86.6842,-772 86.6842,-772 92.6842,-772 98.6842,-778 98.6842,-784 98.6842,-784 98.6842,-796 98.6842,-796 98.6842,-802 92.6842,-808 86.6842,-808"/>
+<text text-anchor="middle" x="68.6494" y="-785.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash -->
-<g id="edge10" class="edge">
+<g id="edge7" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash</title>
-<g id="a_edge10"><a xlink:title="at ecdsa_verifier.go:64: calling [(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]">
-<path fill="none" stroke="#000000" d="M98.9274,-807C129.749,-807 178.2165,-807 215.8518,-807"/>
-<polygon fill="#000000" stroke="#000000" points="216.156,-810.5001 226.156,-807 216.156,-803.5001 216.156,-810.5001"/>
+<g id="a_edge7"><a xlink:title="at ecdsa_verifier.go:64: calling [(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).VerifyHash]">
+<path fill="none" stroke="#000000" d="M98.9274,-790C129.749,-790 178.2165,-790 215.8518,-790"/>
+<polygon fill="#000000" stroke="#000000" points="216.156,-793.5001 226.156,-790 216.156,-786.5001 216.156,-793.5001"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge21" class="edge">
+<g id="edge62" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge21"><a xlink:title="at ecdsa_verifier.go:55: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M98.8757,-822.0359C153.5039,-846.8541 270.2159,-888.8486 348.0527,-838 388.2785,-811.7216 351.2624,-765.2784 391.4882,-739 404.6472,-730.4036 421.0297,-728.7503 436.6272,-730.1637"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="436.3503,-733.6573 446.7217,-731.4932 437.2644,-726.7173 436.3503,-733.6573"/>
+<g id="a_edge62"><a xlink:title="at ecdsa_verifier.go:55: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M98.9883,-803.5234C152.3099,-825.1555 265.041,-861.2194 348.0527,-821 376.3336,-807.2978 365.7098,-749.5538 392.4882,-766 422.6365,-784.5158 403.2897,-812.1648 428.4882,-837 431.3517,-839.8222 434.5331,-842.4231 437.8979,-844.8118"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="436.2457,-847.9088 446.5631,-850.3176 439.9997,-842.0005 436.2457,-847.9088"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge31" class="edge">
+<g id="edge26" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECDSAVerifier).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge31"><a xlink:title="at ecdsa_verifier.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M99.117,-798.7204C162.3983,-781.1918 305.6993,-739.6763 348.0527,-712 349.8618,-710.8178 426.7818,-626.3518 466.5532,-582.6246"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="469.1523,-584.9687 473.2909,-575.2157 463.9735,-580.2591 469.1523,-584.9687"/>
+<g id="a_edge26"><a xlink:title="at ecdsa_verifier.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M98.7942,-782.5245C169.2934,-764.916 339.632,-721.5918 348.0527,-712 437.8057,-609.7641 308.1723,-516.5464 391.4882,-409 405.4118,-391.027 428.6337,-380.8615 449.0181,-375.1494"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.908,-378.5346 458.7438,-372.6883 448.1908,-371.7485 449.908,-378.5346"/>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash -->
+<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero -->
 <g id="node7" class="node">
-<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash</title>
-<g id="a_node7"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash | defined in ecdsa_p256_private.go:31&#10;at ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M298.3337,-194C298.3337,-194 243.4533,-194 243.4533,-194 237.4533,-194 231.4533,-188 231.4533,-182 231.4533,-182 231.4533,-170 231.4533,-170 231.4533,-164 237.4533,-158 243.4533,-158 243.4533,-158 298.3337,-158 298.3337,-158 304.3337,-158 310.3337,-164 310.3337,-170 310.3337,-170 310.3337,-182 310.3337,-182 310.3337,-188 304.3337,-194 298.3337,-194"/>
-<text text-anchor="middle" x="270.8935" y="-171.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
+<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero</title>
+<g id="a_node7"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero | defined in ecdsa_p256_private.go:100&#10;at ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M83.6494,-374C83.6494,-374 53.6494,-374 53.6494,-374 47.6494,-374 41.6494,-368 41.6494,-362 41.6494,-362 41.6494,-350 41.6494,-350 41.6494,-344 47.6494,-338 53.6494,-338 53.6494,-338 83.6494,-338 83.6494,-338 89.6494,-338 95.6494,-344 95.6494,-350 95.6494,-350 95.6494,-362 95.6494,-362 95.6494,-368 89.6494,-374 83.6494,-374"/>
+<text text-anchor="middle" x="68.6494" y="-351.8" font-family="Verdana" font-size="14.00" fill="#000000">Zero</text>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge56" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge56"><a xlink:title="at ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M310.1702,-168.1595C322.7012,-164.7882 336.3452,-160.1683 348.0527,-154 370.2355,-142.3126 369.6355,-130.2935 391.4882,-118 410.042,-107.5623 432.3526,-99.5303 451.0316,-93.9005"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="452.0765,-97.2418 460.708,-91.0979 450.1291,-90.5181 452.0765,-97.2418"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge36" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge36"><a xlink:title="at ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M310.3414,-165.1217C345.2436,-155.6219 390.9036,-143.555 392.4882,-145 456.7976,-203.6465 375.1743,-466.2051 428.4882,-535 433.7696,-541.815 441.3421,-546.5222 449.3742,-549.7725"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="448.3108,-553.1074 458.9046,-552.9579 450.5299,-546.4684 448.3108,-553.1074"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt -->
-<g id="node8" class="node">
-<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt</title>
-<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt | defined in ecdsa_p256_private.go:61&#10;at ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M91.2365,-130C91.2365,-130 46.0623,-130 46.0623,-130 40.0623,-130 34.0623,-124 34.0623,-118 34.0623,-118 34.0623,-106 34.0623,-106 34.0623,-100 40.0623,-94 46.0623,-94 46.0623,-94 91.2365,-94 91.2365,-94 97.2365,-94 103.2365,-100 103.2365,-106 103.2365,-106 103.2365,-118 103.2365,-118 103.2365,-124 97.2365,-130 91.2365,-130"/>
-<text text-anchor="middle" x="68.6494" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">Decrypt</text>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge62" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge62"><a xlink:title="at ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M103.5735,-105.8799C117.7588,-103.4091 134.3076,-100.5457 149.2988,-98 237.5794,-83.009 264.5216,-97.2607 348.0527,-65 369.4784,-56.7251 369.455,-43.4862 391.4882,-37 417.0646,-29.4707 444.2775,-44.4607 463.5807,-59.4656"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="461.39,-62.1955 471.3414,-65.8316 465.8295,-56.7834 461.39,-62.1955"/>
+<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge46" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge46"><a xlink:title="at ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M95.8658,-344.6657C169.2137,-314.4932 367.1807,-235.6591 392.4882,-253 429.0505,-278.0529 396.7574,-315.0549 428.4882,-346 434.2987,-351.6667 441.6694,-355.8849 449.2701,-359.0216"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="448.3257,-362.4002 458.9204,-362.4439 450.6653,-355.8028 448.3257,-362.4002"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate -->
-<g id="node9" class="node">
+<g id="node8" class="node">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate</title>
-<g id="a_node9"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate | defined in ecdsa_p256_private.go:109&#10;at ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p256_private.go:113: calling [github.com/samber/oops.Errorf]">
+<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate | defined in ecdsa_p256_private.go:109&#10;at ecdsa_p256_private.go:113: calling [github.com/samber/oops.Errorf]&#10;at ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M93.6672,-313C93.6672,-313 43.6316,-313 43.6316,-313 37.6316,-313 31.6316,-307 31.6316,-301 31.6316,-301 31.6316,-289 31.6316,-289 31.6316,-283 37.6316,-277 43.6316,-277 43.6316,-277 93.6672,-277 93.6672,-277 99.6672,-277 105.6672,-283 105.6672,-289 105.6672,-289 105.6672,-301 105.6672,-301 105.6672,-307 99.6672,-313 93.6672,-313"/>
 <text text-anchor="middle" x="68.6494" y="-290.8" font-family="Verdana" font-size="14.00" fill="#000000">Generate</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge50" class="edge">
+<g id="edge19" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge50"><a xlink:title="at ecdsa_p256_private.go:113: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge19"><a xlink:title="at ecdsa_p256_private.go:113: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M99.1806,-276.8095C104.16,-273.2057 109.0667,-269.2204 113.2988,-265 158.5012,-219.9226 140.739,-181.5911 193.7343,-146 235.3117,-118.077 379.2753,-97.3492 450.0035,-88.5926"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="450.7898,-92.0228 460.2932,-87.3393 449.9434,-85.0741 450.7898,-92.0228"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge44" class="edge">
+<g id="edge61" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Generate&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge44"><a xlink:title="at ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M105.7543,-280.5743C130.2995,-271.8233 163.4271,-261.502 193.7343,-257 281.2211,-244.0043 332.7527,-201.7734 392.4882,-267 473.6564,-355.6295 352.9164,-441.5529 428.4882,-535 433.9098,-541.704 441.5391,-546.3663 449.5817,-549.6082"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="448.5116,-552.9409 459.1055,-552.7989 450.7353,-546.3034 448.5116,-552.9409"/>
+<g id="a_edge61"><a xlink:title="at ecdsa_p256_private.go:123: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M105.891,-278.8358C130.3532,-269.0661 163.3375,-257.4746 193.7343,-252 237.2162,-244.1687 356.3006,-221.6532 392.4882,-247 430.836,-273.8598 395.3078,-312.9688 428.4882,-346 434.3611,-351.8465 441.8946,-356.1483 449.6583,-359.3108"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="448.5514,-362.6315 459.1462,-362.6306 450.8632,-356.0243 448.5514,-362.6315"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash -->
+<g id="node9" class="node">
+<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash</title>
+<g id="a_node9"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash | defined in ecdsa_p256_private.go:31&#10;at ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M298.3337,-194C298.3337,-194 243.4533,-194 243.4533,-194 237.4533,-194 231.4533,-188 231.4533,-182 231.4533,-182 231.4533,-170 231.4533,-170 231.4533,-164 237.4533,-158 243.4533,-158 243.4533,-158 298.3337,-158 298.3337,-158 304.3337,-158 310.3337,-164 310.3337,-170 310.3337,-170 310.3337,-182 310.3337,-182 310.3337,-188 304.3337,-194 298.3337,-194"/>
+<text text-anchor="middle" x="270.8935" y="-171.8" font-family="Verdana" font-size="14.00" fill="#000000">SignHash</text>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge38" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge38"><a xlink:title="at ecdsa_p256_private.go:44: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M310.1702,-168.1595C322.7012,-164.7882 336.3452,-160.1683 348.0527,-154 370.2355,-142.3126 369.6355,-130.2935 391.4882,-118 410.042,-107.5623 432.3526,-99.5303 451.0316,-93.9005"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="452.0765,-97.2418 460.708,-91.0979 450.1291,-90.5181 452.0765,-97.2418"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge4" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge4"><a xlink:title="at ecdsa_p256_private.go:56: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M310.1742,-162.503C336.3177,-156.1956 369.8859,-153.5953 392.4882,-172 453.7254,-221.8643 376.6969,-286.3837 428.4882,-346 434.0285,-352.3773 441.555,-356.9061 449.4383,-360.1221"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="448.5272,-363.5093 459.1217,-363.4298 450.79,-356.8851 448.5272,-363.5093"/>
 </a>
 </g>
 </g>
@@ -364,29 +364,29 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Sign&#45;&gt;(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash -->
-<g id="edge46" class="edge">
+<g id="edge50" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Sign&#45;&gt;(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash</title>
-<g id="a_edge46"><a xlink:title="at ecdsa_p256_private.go:27: calling [(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash]">
+<g id="a_edge50"><a xlink:title="at ecdsa_p256_private.go:27: calling [(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).SignHash]">
 <path fill="none" stroke="#000000" d="M95.9249,-173.4046C127.993,-173.8803 181.847,-174.6791 221.3545,-175.2652"/>
 <polygon fill="#000000" stroke="#000000" points="221.5256,-178.768 231.5765,-175.4168 221.6295,-171.7688 221.5256,-178.768"/>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero -->
+<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt -->
 <g id="node11" class="node">
-<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero</title>
-<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero | defined in ecdsa_p256_private.go:100&#10;at ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M83.6494,-374C83.6494,-374 53.6494,-374 53.6494,-374 47.6494,-374 41.6494,-368 41.6494,-362 41.6494,-362 41.6494,-350 41.6494,-350 41.6494,-344 47.6494,-338 53.6494,-338 53.6494,-338 83.6494,-338 83.6494,-338 89.6494,-338 95.6494,-344 95.6494,-350 95.6494,-350 95.6494,-362 95.6494,-362 95.6494,-368 89.6494,-374 83.6494,-374"/>
-<text text-anchor="middle" x="68.6494" y="-351.8" font-family="Verdana" font-size="14.00" fill="#000000">Zero</text>
+<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt</title>
+<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt | defined in ecdsa_p256_private.go:61&#10;at ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M91.2365,-130C91.2365,-130 46.0623,-130 46.0623,-130 40.0623,-130 34.0623,-124 34.0623,-118 34.0623,-118 34.0623,-106 34.0623,-106 34.0623,-100 40.0623,-94 46.0623,-94 46.0623,-94 91.2365,-94 91.2365,-94 97.2365,-94 103.2365,-100 103.2365,-106 103.2365,-106 103.2365,-118 103.2365,-118 103.2365,-124 97.2365,-130 91.2365,-130"/>
+<text text-anchor="middle" x="68.6494" y="-107.8" font-family="Verdana" font-size="14.00" fill="#000000">Decrypt</text>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge53" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge53"><a xlink:title="at ecdsa_p256_private.go:105: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M95.7306,-343.3461C165.2043,-311.7655 347.4549,-234.7518 392.4882,-274 480.765,-350.9364 354.6939,-444.0802 428.4882,-535 433.9217,-541.6944 441.5557,-546.3528 449.5993,-549.594"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="448.5286,-552.9265 459.1225,-552.7851 450.7527,-546.2892 448.5286,-552.9265"/>
+<!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge51" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Decrypt&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge51"><a xlink:title="at ecdsa_p256_private.go:65: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M103.5735,-105.8799C117.7588,-103.4091 134.3076,-100.5457 149.2988,-98 237.5794,-83.009 264.5216,-97.2607 348.0527,-65 369.4784,-56.7251 369.455,-43.4862 391.4882,-37 417.0646,-29.4707 444.2775,-44.4607 463.5807,-59.4656"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="461.39,-62.1955 471.3414,-65.8316 465.8295,-56.7834 461.39,-62.1955"/>
 </a>
 </g>
 </g>
@@ -400,20 +400,20 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge27" class="edge">
+<g id="edge60" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Public&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge27"><a xlink:title="at ecdsa_p256_private.go:80: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge60"><a xlink:title="at ecdsa_p256_private.go:80: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M98.8759,-217.0616C104.1157,-213.2302 109.1913,-208.8432 113.2988,-204 138.2554,-174.5729 119.0769,-148.9881 149.2988,-125 219.8752,-68.9812 262.6483,-113.7265 348.0527,-85 368.7564,-78.0361 370.7567,-61.791 392.4882,-64 411.8617,-65.9693 433.0742,-70.0889 450.7396,-74.0804"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="450.1567,-77.5382 460.6901,-76.3984 451.745,-70.7208 450.1567,-77.5382"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge5" class="edge">
+<g id="edge13" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge5"><a xlink:title="at ecdsa_p256_private.go:95: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M98.6082,-226.3319C150.8722,-214.4035 261.4035,-195.6527 348.0527,-225 482.8702,-270.6615 339.1942,-424.1519 428.4882,-535 433.897,-541.7144 441.521,-546.3808 449.5627,-549.6236"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="448.4933,-552.9564 459.0871,-552.8137 450.7165,-546.3188 448.4933,-552.9564"/>
+<g id="a_edge13"><a xlink:title="at ecdsa_p256_private.go:95: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M98.6061,-229.7697C170.5724,-220.3323 350.3534,-201.2921 392.4882,-240 429.128,-273.6598 393.6047,-310.5233 428.4882,-346 434.2983,-351.9089 441.805,-356.2375 449.5623,-359.4063"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="448.4567,-362.7275 459.0516,-362.7247 450.7674,-356.1198 448.4567,-362.7275"/>
 </a>
 </g>
 </g>
@@ -427,407 +427,407 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Encrypt&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge51" class="edge">
+<g id="edge29" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Encrypt&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge51"><a xlink:title="at ecdsa_p256_public.go:40: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge29"><a xlink:title="at ecdsa_p256_public.go:40: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M280.9483,-514.8484C295.9814,-487.5466 325.0128,-434.1859 348.0527,-388 398.3449,-287.184 453.6022,-165.1325 477.5994,-111.5148"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="480.8237,-112.8781 481.7082,-102.3202 474.4328,-110.0221 480.8237,-112.8781"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge2" class="edge">
+<g id="edge8" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge2"><a xlink:title="at ecdsa_p256_public.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M296.488,-514.8497C329.7474,-491.7857 384.5324,-455.7732 392.4882,-463 454.292,-519.1404 380.9302,-768.3728 428.4882,-837 433.9442,-844.8732 442.0667,-850.7647 450.6296,-855.1414"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="449.4304,-858.4388 459.9887,-859.3179 452.2831,-852.0465 449.4304,-858.4388"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="node16" class="node">
-<title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_node16"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M518.3795,-946C518.3795,-946 461.3165,-946 461.3165,-946 455.3165,-946 449.3165,-940 449.3165,-934 449.3165,-934 449.3165,-922 449.3165,-922 449.3165,-916 455.3165,-910 461.3165,-910 461.3165,-910 518.3795,-910 518.3795,-910 524.3795,-910 530.3795,-916 530.3795,-922 530.3795,-922 530.3795,-934 530.3795,-934 530.3795,-940 524.3795,-946 518.3795,-946"/>
-<text text-anchor="middle" x="489.848" y="-932.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="489.848" y="-915.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
+<g id="a_edge8"><a xlink:title="at ecdsa_p256_public.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M305.0551,-538.3153C320.0451,-542.265 336.7623,-549.1217 348.0527,-561 394.4891,-609.8546 376.3776,-640.5511 392.4882,-706 413.24,-790.3039 375.8973,-828.9205 428.4882,-898 434.1851,-905.483 442.2416,-911.2088 450.6489,-915.5481"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.2636,-918.7631 459.8143,-919.7299 452.1694,-912.3946 449.2636,-918.7631"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="node18" class="node">
+<g id="node17" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_node18"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:54">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M518.1225,-824C518.1225,-824 461.5735,-824 461.5735,-824 455.5735,-824 449.5735,-818 449.5735,-812 449.5735,-812 449.5735,-800 449.5735,-800 449.5735,-794 455.5735,-788 461.5735,-788 461.5735,-788 518.1225,-788 518.1225,-788 524.1225,-788 530.1225,-794 530.1225,-800 530.1225,-800 530.1225,-812 530.1225,-812 530.1225,-818 524.1225,-824 518.1225,-824"/>
-<text text-anchor="middle" x="489.848" y="-810.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="489.848" y="-793.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
+<g id="a_node17"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:54">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M518.1225,-1007C518.1225,-1007 461.5735,-1007 461.5735,-1007 455.5735,-1007 449.5735,-1001 449.5735,-995 449.5735,-995 449.5735,-983 449.5735,-983 449.5735,-977 455.5735,-971 461.5735,-971 461.5735,-971 518.1225,-971 518.1225,-971 524.1225,-971 530.1225,-977 530.1225,-983 530.1225,-983 530.1225,-995 530.1225,-995 530.1225,-1001 524.1225,-1007 518.1225,-1007"/>
+<text text-anchor="middle" x="489.848" y="-993.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="489.848" y="-976.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="node18" class="node">
+<title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_node18"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M518.3795,-1068C518.3795,-1068 461.3165,-1068 461.3165,-1068 455.3165,-1068 449.3165,-1062 449.3165,-1056 449.3165,-1056 449.3165,-1044 449.3165,-1044 449.3165,-1038 455.3165,-1032 461.3165,-1032 461.3165,-1032 518.3795,-1032 518.3795,-1032 524.3795,-1032 530.3795,-1038 530.3795,-1044 530.3795,-1044 530.3795,-1056 530.3795,-1056 530.3795,-1062 524.3795,-1068 518.3795,-1068"/>
+<text text-anchor="middle" x="489.848" y="-1054.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="489.848" y="-1037.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify -->
 <g id="node20" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify</title>
-<g id="a_node20"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify | defined in ecdsa_p256_public.go:16&#10;at ecdsa_p256_public.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p256_public.go:18: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]&#10;at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-1102C86.6842,-1102 50.6146,-1102 50.6146,-1102 44.6146,-1102 38.6146,-1096 38.6146,-1090 38.6146,-1090 38.6146,-1078 38.6146,-1078 38.6146,-1072 44.6146,-1066 50.6146,-1066 50.6146,-1066 86.6842,-1066 86.6842,-1066 92.6842,-1066 98.6842,-1072 98.6842,-1078 98.6842,-1078 98.6842,-1090 98.6842,-1090 98.6842,-1096 92.6842,-1102 86.6842,-1102"/>
-<text text-anchor="middle" x="68.6494" y="-1079.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
+<g id="a_node20"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify | defined in ecdsa_p256_public.go:16&#10;at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p256_public.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p256_public.go:18: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]&#10;at ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-1085C86.6842,-1085 50.6146,-1085 50.6146,-1085 44.6146,-1085 38.6146,-1079 38.6146,-1073 38.6146,-1073 38.6146,-1061 38.6146,-1061 38.6146,-1055 44.6146,-1049 50.6146,-1049 50.6146,-1049 86.6842,-1049 86.6842,-1049 92.6842,-1049 98.6842,-1055 98.6842,-1061 98.6842,-1061 98.6842,-1073 98.6842,-1073 98.6842,-1079 92.6842,-1085 86.6842,-1085"/>
+<text text-anchor="middle" x="68.6494" y="-1062.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge58" class="edge">
+<g id="edge63" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge58"><a xlink:title="at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M98.7416,-1099.278C153.6649,-1124.7806 271.5356,-1168.2419 348.0527,-1115 432.4819,-1056.2527 359.9746,-974.7164 428.4882,-898 434.611,-891.1442 442.6032,-885.6077 450.7859,-881.2173"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="452.5474,-884.2528 460.0159,-876.738 449.4912,-877.9552 452.5474,-884.2528"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge14" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge14"><a xlink:title="at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M99.0385,-1073.7504C150.5808,-1056.2267 258.292,-1019.0019 348.0527,-984 384.2124,-969.8996 392.3325,-964.1106 428.4882,-950 432.1204,-948.5825 435.8863,-947.148 439.6841,-945.7269"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="440.9633,-948.9856 449.1323,-942.2389 438.539,-942.4188 440.9633,-948.9856"/>
+<g id="a_edge63"><a xlink:title="at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M98.8648,-1083.1588C155.0448,-1110.736 276.3657,-1158.3471 348.0527,-1098 434.6635,-1025.0899 304.8774,-919.9101 391.4882,-847 412.9115,-828.9656 407.1684,-879.8434 428.4882,-898 435.1066,-903.6364 442.9665,-908.5049 450.8141,-912.5831"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.42,-915.7968 459.9456,-917.0061 452.4715,-909.4968 449.42,-915.7968"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge9" class="edge">
+<g id="edge30" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge9"><a xlink:title="at ecdsa_p256_public.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M96.2575,-1065.9071C101.9456,-1062.0521 107.8578,-1057.9507 113.2988,-1054 150.0434,-1027.3198 152.1343,-1009.2055 193.7343,-991 257.386,-963.144 290.2004,-1004.4787 348.0527,-966 404.3108,-928.5816 378.6174,-882.5853 428.4882,-837 432.246,-833.5652 436.455,-830.4143 440.8607,-827.5481"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="442.7149,-830.5175 449.5084,-822.3874 439.1276,-824.5065 442.7149,-830.5175"/>
+<g id="a_edge30"><a xlink:title="at ecdsa_p256_public.go:17: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M95.5391,-1048.849C119.9541,-1033.5251 157.5703,-1012.7263 193.7343,-1004 277.9938,-983.6684 379.524,-983.594 439.1484,-985.9242"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="439.281,-989.4331 449.4222,-986.3661 439.5819,-982.4396 439.281,-989.4331"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge28" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge28"><a xlink:title="at ecdsa_p256_public.go:20: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M99.1138,-1051.3789C154.6423,-1025.34 273.4604,-981.1533 348.0527,-1037 403.03,-1078.1612 337.0422,-1225.5276 392.4882,-1185 435.0418,-1153.896 391.891,-1109.9331 428.4882,-1072 431.8473,-1068.5183 435.7956,-1065.586 440.0426,-1063.1166"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="441.6568,-1066.2232 449.0868,-1058.6703 438.5685,-1059.9412 441.6568,-1066.2232"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge13" class="edge">
+<g id="edge58" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge13"><a xlink:title="at ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M97.7736,-1065.9737C103.115,-1062.2426 108.51,-1058.1708 113.2988,-1054 153.7531,-1018.7659 152.6676,-998.5185 193.7343,-964 255.5668,-912.0268 294.311,-928.3018 348.0527,-868 423.4621,-783.3855 375.8751,-726.3895 428.4882,-626 436.9308,-609.891 449.9416,-594.5083 461.8135,-582.372"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="464.3582,-584.7779 469.0072,-575.2575 459.4359,-579.8008 464.3582,-584.7779"/>
+<g id="a_edge58"><a xlink:title="at ecdsa_p256_public.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M96.8591,-1048.7565C102.3902,-1044.9815 108.0892,-1040.9491 113.2988,-1037 167.9138,-995.6 315.5066,-897.3118 348.0527,-837 421.864,-700.2189 330.7441,-633.064 391.4882,-490 407.6331,-451.9757 439.2275,-416.1395 462.2655,-393.272"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="464.9849,-395.5097 469.7156,-386.0297 460.1056,-390.4904 464.9849,-395.5097"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier -->
 <g id="node21" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier</title>
-<g id="a_node21"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier | defined in ecdsa_p256_public.go:51&#10;at ecdsa_p256_public.go:54: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]&#10;at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M306.1205,-1102C306.1205,-1102 235.6665,-1102 235.6665,-1102 229.6665,-1102 223.6665,-1096 223.6665,-1090 223.6665,-1090 223.6665,-1078 223.6665,-1078 223.6665,-1072 229.6665,-1066 235.6665,-1066 235.6665,-1066 306.1205,-1066 306.1205,-1066 312.1205,-1066 318.1205,-1072 318.1205,-1078 318.1205,-1078 318.1205,-1090 318.1205,-1090 318.1205,-1096 312.1205,-1102 306.1205,-1102"/>
-<text text-anchor="middle" x="270.8935" y="-1079.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
+<g id="a_node21"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier | defined in ecdsa_p256_public.go:51&#10;at ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p256_public.go:54: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]&#10;at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M306.1205,-1085C306.1205,-1085 235.6665,-1085 235.6665,-1085 229.6665,-1085 223.6665,-1079 223.6665,-1073 223.6665,-1073 223.6665,-1061 223.6665,-1061 223.6665,-1055 229.6665,-1049 235.6665,-1049 235.6665,-1049 306.1205,-1049 306.1205,-1049 312.1205,-1049 318.1205,-1055 318.1205,-1061 318.1205,-1061 318.1205,-1073 318.1205,-1073 318.1205,-1079 312.1205,-1085 306.1205,-1085"/>
+<text text-anchor="middle" x="270.8935" y="-1062.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier -->
-<g id="edge38" class="edge">
+<g id="edge32" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier</title>
-<g id="a_edge38"><a xlink:title="at ecdsa_p256_public.go:18: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]">
-<path fill="none" stroke="#000000" d="M98.9274,-1084C129.0439,-1084 176.0083,-1084 213.2523,-1084"/>
-<polygon fill="#000000" stroke="#000000" points="213.4773,-1087.5001 223.4772,-1084 213.4772,-1080.5001 213.4773,-1087.5001"/>
+<g id="a_edge32"><a xlink:title="at ecdsa_p256_public.go:18: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]">
+<path fill="none" stroke="#000000" d="M98.9274,-1067C129.0439,-1067 176.0083,-1067 213.2523,-1067"/>
+<polygon fill="#000000" stroke="#000000" points="213.4773,-1070.5001 223.4772,-1067 213.4772,-1063.5001 213.4773,-1070.5001"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier -->
-<g id="edge18" class="edge">
+<g id="edge27" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier</title>
-<g id="a_edge18"><a xlink:title="at ecdsa_p256_public.go:54: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
-<path fill="none" stroke="#000000" d="M277.5531,-1102.252C294.2471,-1145.1278 340.2999,-1246.1604 392.4882,-1212 459.6641,-1168.0293 480.7579,-1066.4378 487.1677,-1017.0159"/>
-<polygon fill="#000000" stroke="#000000" points="490.6507,-1017.3658 488.3539,-1007.0229 483.6995,-1016.5406 490.6507,-1017.3658"/>
+<g id="a_edge27"><a xlink:title="at ecdsa_p256_public.go:54: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
+<path fill="none" stroke="#000000" d="M280.6025,-1085.1774C295.942,-1114.2533 326.2747,-1173.2246 348.0527,-1225 370.3685,-1278.054 344.4572,-1313.8216 391.4882,-1347 433.1508,-1376.3913 466.5253,-1297.3736 481.4199,-1252.9162"/>
+<polygon fill="#000000" stroke="#000000" points="484.8075,-1253.8157 484.5594,-1243.2238 478.1481,-1251.6587 484.8075,-1253.8157"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge19" class="edge">
+<g id="edge39" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge19"><a xlink:title="at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M286.2688,-1065.8743C301.8443,-1047.5109 326.6285,-1018.2853 348.0527,-993 383.8167,-950.7904 385.0563,-932.2693 428.4882,-898 435.29,-892.6332 443.1682,-887.8173 450.9655,-883.6715"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="452.6525,-886.7408 460.0123,-879.1196 449.5062,-880.4877 452.6525,-886.7408"/>
+<g id="a_edge39"><a xlink:title="at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M285.0138,-1048.6703C301.8177,-1026.1859 329.8805,-986.4332 348.0527,-949 374.4724,-894.5777 342.3576,-855.2982 391.4882,-820 422.6489,-797.6124 401.6617,-870.5676 428.4882,-898 434.813,-904.4677 442.8173,-909.7448 450.9385,-913.9665"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.5379,-917.1758 460.0738,-918.2917 452.5334,-910.8491 449.5379,-917.1758"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge37" class="edge">
+<g id="edge44" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge37"><a xlink:title="at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M290.0746,-1102.3042C315.7713,-1124.5789 361.6972,-1156.27 392.4882,-1131 455.8902,-1078.9664 374.9356,-1012.1243 428.4882,-950 431.7347,-946.2338 435.6743,-943.1124 439.9734,-940.5253"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="441.8065,-943.5225 449.1961,-935.9301 438.6847,-937.2571 441.8065,-943.5225"/>
+<g id="a_edge44"><a xlink:title="at ecdsa_p256_public.go:56: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M276.5319,-1085.1392C292.1893,-1132.5649 338.615,-1253.7727 392.4882,-1212 443.26,-1172.6321 385.2098,-1119.4824 428.4882,-1072 431.7924,-1068.3748 435.7367,-1065.3465 440.0097,-1062.8169"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="441.7346,-1065.8684 449.1421,-1058.2936 438.6276,-1059.5957 441.7346,-1065.8684"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge61" class="edge">
+<g id="edge15" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge61"><a xlink:title="at ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M285.0142,-1065.6706C301.8185,-1043.1864 329.8818,-1003.4338 348.0527,-966 375.0842,-910.3125 377.2906,-894.007 392.4882,-834 415.5219,-743.0526 387.7548,-710.5149 428.4882,-626 436.3846,-609.6164 449.3334,-594.2024 461.3055,-582.1166"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="463.8507,-584.5235 468.5797,-575.0426 458.9705,-579.5051 463.8507,-584.5235"/>
+<g id="a_edge15"><a xlink:title="at ecdsa_p256_public.go:52: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M286.8268,-1048.9029C305.1202,-1026.9565 334.361,-988.0346 348.0527,-949 414.997,-758.1434 317.333,-684.1722 391.4882,-496 407.343,-455.7678 439.8186,-417.5331 463.1191,-393.504"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="465.7837,-395.7872 470.3291,-386.2169 460.8077,-390.8638 465.7837,-395.7872"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash -->
 <g id="node22" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash</title>
-<g id="a_node22"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash | defined in ecdsa_p256_public.go:27&#10;at ecdsa_p256_public.go:29: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]&#10;at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p256_public.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M101.4487,-1041C101.4487,-1041 35.8501,-1041 35.8501,-1041 29.8501,-1041 23.8501,-1035 23.8501,-1029 23.8501,-1029 23.8501,-1017 23.8501,-1017 23.8501,-1011 29.8501,-1005 35.8501,-1005 35.8501,-1005 101.4487,-1005 101.4487,-1005 107.4487,-1005 113.4487,-1011 113.4487,-1017 113.4487,-1017 113.4487,-1029 113.4487,-1029 113.4487,-1035 107.4487,-1041 101.4487,-1041"/>
-<text text-anchor="middle" x="68.6494" y="-1018.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
+<g id="a_node22"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash | defined in ecdsa_p256_public.go:27&#10;at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p256_public.go:29: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]&#10;at ecdsa_p256_public.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M101.4487,-1024C101.4487,-1024 35.8501,-1024 35.8501,-1024 29.8501,-1024 23.8501,-1018 23.8501,-1012 23.8501,-1012 23.8501,-1000 23.8501,-1000 23.8501,-994 29.8501,-988 35.8501,-988 35.8501,-988 101.4487,-988 101.4487,-988 107.4487,-988 113.4487,-994 113.4487,-1000 113.4487,-1000 113.4487,-1012 113.4487,-1012 113.4487,-1018 107.4487,-1024 101.4487,-1024"/>
+<text text-anchor="middle" x="68.6494" y="-1001.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge28" class="edge">
+<g id="edge55" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge28"><a xlink:title="at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M96.9988,-1004.7953C121.7427,-989.5409 159.0248,-968.0614 193.7343,-954 259.6143,-927.3109 279.8696,-932.0883 348.0527,-912 382.7353,-901.7817 421.8889,-889.2821 450.2518,-880.052"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="451.3886,-883.3627 459.809,-876.9326 449.2166,-876.7082 451.3886,-883.3627"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge22" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge22"><a xlink:title="at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M113.3263,-1012.9233C192.2861,-995.1141 355.9901,-958.1912 439.0874,-939.4489"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="440.0675,-942.8158 449.0524,-937.2013 438.5274,-935.9874 440.0675,-942.8158"/>
+<g id="a_edge55"><a xlink:title="at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M97.6603,-987.7744C112.9642,-978.2208 132.0875,-966.3787 149.2988,-956 162.6554,-947.9457 376.4361,-818.0873 391.4882,-814 430.8571,-803.3096 400.37,-868.4439 428.4882,-898 434.7234,-904.5541 442.6916,-909.8661 450.806,-914.0942"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.4087,-917.305 459.9451,-918.4158 452.4011,-910.9768 449.4087,-917.305"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge32" class="edge">
+<g id="edge36" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge32"><a xlink:title="at ecdsa_p256_public.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M82.9742,-1004.6347C104.1716,-978.8866 146.5109,-932.6745 193.7343,-910 256.3685,-879.9259 282.7687,-908.78 348.0527,-885 387.1691,-870.7516 392.0123,-857.0654 428.4882,-837 433.39,-834.3035 438.554,-831.5551 443.7198,-828.8643"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="445.6741,-831.7949 452.9639,-824.1066 442.4707,-825.5708 445.6741,-831.7949"/>
+<g id="a_edge36"><a xlink:title="at ecdsa_p256_public.go:28: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M94.1372,-987.784C109.3539,-978.0454 129.5162,-967.0454 149.2988,-962 234.8939,-940.1697 260.1083,-953.7016 348.0527,-962 357.2031,-962.8634 402.4334,-971.6044 439.3855,-978.9106"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="439.0618,-982.4144 449.5515,-980.9255 440.4228,-975.548 439.0618,-982.4144"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge10" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge10"><a xlink:title="at ecdsa_p256_public.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M113.4765,-990.7536C173.1347,-973.5102 279.0982,-953.8647 348.0527,-1004 398.6893,-1040.8167 340.8516,-1101.1833 391.4882,-1138 418.6872,-1157.7758 402.9388,-1093.8654 428.4882,-1072 431.9677,-1069.0222 435.8805,-1066.4361 440.0026,-1064.1923"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="441.7303,-1067.2469 449.2741,-1059.8077 438.7376,-1060.9189 441.7303,-1067.2469"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge33" class="edge">
+<g id="edge54" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge33"><a xlink:title="at ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M79.7292,-1004.9816C99.0836,-975.0425 141.9643,-915.1682 193.7343,-883 254.3117,-845.3592 295.5657,-887.2863 348.0527,-839 422.5241,-770.4888 376.118,-712.586 428.4882,-626 438.0381,-610.2107 451.4057,-594.67 463.2269,-582.3467"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="465.822,-584.6996 470.3395,-575.1161 460.8317,-579.7907 465.822,-584.6996"/>
+<g id="a_edge54"><a xlink:title="at ecdsa_p256_public.go:28: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M76.2445,-987.7655C92.1327,-952.1855 132.5502,-873.9362 193.7343,-839 223.6946,-821.8926 323.6074,-846.3455 348.0527,-822 408.2755,-762.023 349.2706,-515.7679 391.4882,-442 404.9553,-418.4686 429.2332,-400.0856 450.2984,-387.5277"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="452.143,-390.5048 459.0887,-382.5043 448.6698,-384.4272 452.143,-390.5048"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier -->
-<g id="edge16" class="edge">
+<g id="edge22" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier</title>
-<g id="a_edge16"><a xlink:title="at ecdsa_p256_public.go:29: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]">
-<path fill="none" stroke="#000000" d="M113.5339,-1036.5379C143.0635,-1045.4445 181.9744,-1057.1806 213.7146,-1066.754"/>
-<polygon fill="#000000" stroke="#000000" points="212.7318,-1070.1132 223.3165,-1069.65 214.7532,-1063.4114 212.7318,-1070.1132"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier -->
-<g id="node23" class="node">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier</title>
-<g id="a_node23"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier | defined in ecdsa_p384_public.go:44&#10;at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p384_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p384_public.go:46: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M306.1205,-1379C306.1205,-1379 235.6665,-1379 235.6665,-1379 229.6665,-1379 223.6665,-1373 223.6665,-1367 223.6665,-1367 223.6665,-1355 223.6665,-1355 223.6665,-1349 229.6665,-1343 235.6665,-1343 235.6665,-1343 306.1205,-1343 306.1205,-1343 312.1205,-1343 318.1205,-1349 318.1205,-1355 318.1205,-1355 318.1205,-1367 318.1205,-1367 318.1205,-1373 312.1205,-1379 306.1205,-1379"/>
-<text text-anchor="middle" x="270.8935" y="-1356.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier -->
-<g id="edge24" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier</title>
-<g id="a_edge24"><a xlink:title="at ecdsa_p384_public.go:46: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
-<path fill="none" stroke="#000000" d="M292.3509,-1379.0996C318.4449,-1398.8111 362.687,-1424.5797 392.4882,-1401 453.5035,-1352.7227 480.1879,-1102.4997 487.5936,-1017.382"/>
-<polygon fill="#000000" stroke="#000000" points="491.1018,-1017.4312 488.4575,-1007.1717 484.1267,-1016.8409 491.1018,-1017.4312"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge12" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge12"><a xlink:title="at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M297.4983,-1342.984C326.3536,-1321.8101 371.1442,-1283.8179 392.4882,-1239 458.0145,-1101.4086 341.9251,-1023.4269 428.4882,-898 434.0228,-889.9806 442.2678,-883.9233 450.9316,-879.3922"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="452.3994,-882.5697 460.0157,-875.2047 449.4689,-876.2126 452.3994,-882.5697"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge8" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge8"><a xlink:title="at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M309.9692,-1379.0749C336.5314,-1388.3762 370.6783,-1394.0366 392.4882,-1374 462.1241,-1310.026 370.839,-1024.956 428.4882,-950 431.6834,-945.8455 435.7307,-942.4742 440.2172,-939.7387"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="441.8891,-942.8161 449.2779,-935.2229 438.7666,-936.5511 441.8891,-942.8161"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge11" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge11"><a xlink:title="at ecdsa_p384_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M286.3142,-1342.9916C313.9958,-1309.354 371.2087,-1233.5257 392.4882,-1158 424.6225,-1043.9479 382.6495,-735.2672 428.4882,-626 435.4726,-609.3512 448.1876,-593.9965 460.2392,-582.0197"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="462.7669,-584.4458 467.6001,-575.0175 457.9423,-579.3739 462.7669,-584.4458"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify -->
-<g id="node24" class="node">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify</title>
-<g id="a_node24"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify | defined in ecdsa_p384_public.go:15&#10;at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p384_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]&#10;at ecdsa_p384_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-1379C86.6842,-1379 50.6146,-1379 50.6146,-1379 44.6146,-1379 38.6146,-1373 38.6146,-1367 38.6146,-1367 38.6146,-1355 38.6146,-1355 38.6146,-1349 44.6146,-1343 50.6146,-1343 50.6146,-1343 86.6842,-1343 86.6842,-1343 92.6842,-1343 98.6842,-1349 98.6842,-1355 98.6842,-1355 98.6842,-1367 98.6842,-1367 98.6842,-1373 92.6842,-1379 86.6842,-1379"/>
-<text text-anchor="middle" x="68.6494" y="-1356.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge30" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge30"><a xlink:title="at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M99.0545,-1376.7138C154.4866,-1402.9249 273.1538,-1447.4953 348.0527,-1392 402.551,-1351.6202 379.0619,-1312.4856 392.4882,-1246 407.8778,-1169.7924 384.3951,-962.0331 428.4882,-898 434.0144,-889.9748 442.2563,-883.9154 450.9198,-879.3842"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="452.3878,-882.5615 460.0046,-875.197 449.4577,-876.2042 452.3878,-882.5615"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge3" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge3"><a xlink:title="at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M98.9608,-1352.849C163.3158,-1335.041 310.7633,-1291.4211 348.0527,-1256 383.9045,-1221.9444 378.2176,-1201.3443 392.4882,-1154 419.0586,-1065.8498 369.1342,-1020.3814 428.4882,-950 431.6937,-946.1989 435.6064,-943.0545 439.8891,-940.4534"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="441.7199,-943.4508 449.0914,-935.8409 438.5832,-937.1929 441.7199,-943.4508"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge65" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge65"><a xlink:title="at ecdsa_p384_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M96.2575,-1342.9071C101.9456,-1339.0521 107.8578,-1334.9507 113.2988,-1331 150.0434,-1304.3198 152.1343,-1286.2055 193.7343,-1268 257.386,-1240.144 291.7009,-1283.6444 348.0527,-1243 382.6265,-1218.0633 380.0255,-1198.766 392.4882,-1158 413.4737,-1089.3556 387.5245,-895.9442 428.4882,-837 431.848,-832.1655 436.1912,-828.0431 441.0141,-824.5378"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="442.8926,-827.4911 449.4947,-819.2047 439.1662,-821.5654 442.8926,-827.4911"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge49" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge49"><a xlink:title="at ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M97.7736,-1342.9737C103.115,-1339.2426 108.51,-1335.1708 113.2988,-1331 153.7531,-1295.7659 152.6676,-1275.5185 193.7343,-1241 255.5668,-1189.0268 293.3939,-1204.4718 348.0527,-1145 377.4332,-1113.0324 380.5863,-1099.755 392.4882,-1058 445.3021,-872.7146 352.5746,-803.0794 428.4882,-626 435.602,-609.4061 448.3326,-594.058 460.361,-582.0713"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="462.8873,-584.4983 467.7031,-575.0612 458.0534,-579.4354 462.8873,-584.4983"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier -->
-<g id="edge52" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier</title>
-<g id="a_edge52"><a xlink:title="at ecdsa_p384_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]">
-<path fill="none" stroke="#000000" d="M98.9274,-1361C129.0439,-1361 176.0083,-1361 213.2523,-1361"/>
-<polygon fill="#000000" stroke="#000000" points="213.4773,-1364.5001 223.4772,-1361 213.4772,-1357.5001 213.4773,-1364.5001"/>
+<g id="a_edge22"><a xlink:title="at ecdsa_p256_public.go:29: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP256PublicKey).NewVerifier]">
+<path fill="none" stroke="#000000" d="M113.5339,-1019.5379C143.0635,-1028.4445 181.9744,-1040.1806 213.7146,-1049.754"/>
+<polygon fill="#000000" stroke="#000000" points="212.7318,-1053.1132 223.3165,-1052.65 214.7532,-1046.4114 212.7318,-1053.1132"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash -->
-<g id="node25" class="node">
+<g id="node23" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash</title>
-<g id="a_node25"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash | defined in ecdsa_p384_public.go:26&#10;at ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p384_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p384_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]&#10;at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M101.4487,-1318C101.4487,-1318 35.8501,-1318 35.8501,-1318 29.8501,-1318 23.8501,-1312 23.8501,-1306 23.8501,-1306 23.8501,-1294 23.8501,-1294 23.8501,-1288 29.8501,-1282 35.8501,-1282 35.8501,-1282 101.4487,-1282 101.4487,-1282 107.4487,-1282 113.4487,-1288 113.4487,-1294 113.4487,-1294 113.4487,-1306 113.4487,-1306 113.4487,-1312 107.4487,-1318 101.4487,-1318"/>
-<text text-anchor="middle" x="68.6494" y="-1295.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
+<g id="a_node23"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash | defined in ecdsa_p384_public.go:26&#10;at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p384_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]&#10;at ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p384_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M101.4487,-1362C101.4487,-1362 35.8501,-1362 35.8501,-1362 29.8501,-1362 23.8501,-1356 23.8501,-1350 23.8501,-1350 23.8501,-1338 23.8501,-1338 23.8501,-1332 29.8501,-1326 35.8501,-1326 35.8501,-1326 101.4487,-1326 101.4487,-1326 107.4487,-1326 113.4487,-1332 113.4487,-1338 113.4487,-1338 113.4487,-1350 113.4487,-1350 113.4487,-1356 107.4487,-1362 101.4487,-1362"/>
+<text text-anchor="middle" x="68.6494" y="-1339.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge63" class="edge">
+<g id="edge12" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge63"><a xlink:title="at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M88.6816,-1281.985C112.1026,-1261.9895 152.8872,-1230.384 193.7343,-1214 258.2204,-1188.1343 293.8896,-1232.5184 348.0527,-1189 452.6548,-1104.9554 347.2048,-1004.762 428.4882,-898 434.2224,-890.4684 442.2931,-884.6281 450.7022,-880.154"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="452.322,-883.2597 459.8652,-875.8199 449.3289,-876.9318 452.322,-883.2597"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge59" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge59"><a xlink:title="at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M113.5288,-1296.7328C173.0067,-1290.3046 278.5136,-1271.3767 348.0527,-1216 444.6694,-1139.0604 348.1809,-1043.8362 428.4882,-950 431.7213,-946.2223 435.652,-943.0933 439.9457,-940.5015"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="441.7781,-943.4988 449.1617,-935.9006 438.6514,-937.2358 441.7781,-943.4988"/>
+<g id="a_edge12"><a xlink:title="at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M103.2593,-1362.2017C161.0206,-1389.7714 277.6586,-1433.0869 348.0527,-1375 493.3006,-1255.1462 314.9752,-1109.2554 428.4882,-959 434.1942,-951.4471 442.2542,-945.5986 450.6619,-941.1234"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="452.282,-944.229 459.8268,-936.7908 449.2902,-937.9006 452.282,-944.229"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge42" class="edge">
+<g id="edge48" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge42"><a xlink:title="at ecdsa_p384_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M82.9742,-1281.6347C104.1716,-1255.8866 146.5109,-1209.6745 193.7343,-1187 256.3685,-1156.9259 293.8896,-1205.5184 348.0527,-1162 410.6437,-1111.71 427.9303,-837.7569 428.4882,-837 431.852,-832.4366 436.0799,-828.4994 440.7356,-825.1131"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="442.8918,-827.8913 449.4834,-819.5966 439.1579,-821.9703 442.8918,-827.8913"/>
+<g id="a_edge48"><a xlink:title="at ecdsa_p384_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M99.583,-1325.8886C124.4909,-1311.7465 160.6769,-1292.1821 193.7343,-1278 260.2469,-1249.4652 295.6813,-1275.9539 348.0527,-1226 419.1745,-1158.1612 362.387,-1092.7396 428.4882,-1020 432.0099,-1016.1246 436.1268,-1012.667 440.5315,-1009.5979"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="442.6275,-1012.4162 449.2756,-1004.1667 438.9342,-1006.4698 442.6275,-1012.4162"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge57" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge57"><a xlink:title="at ecdsa_p384_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M113.47,-1333.0377C137.2869,-1327.2663 167.0741,-1320.1334 193.7343,-1314 262.1773,-1298.254 288.163,-1316.6824 348.0527,-1280 374.5572,-1263.7661 378.7152,-1253.8627 392.4882,-1226 423.6358,-1162.9884 381.7144,-1124.4676 428.4882,-1072 431.7523,-1068.3386 435.67,-1065.2864 439.9265,-1062.742"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="441.65,-1065.7937 449.0384,-1058.2001 438.5272,-1059.5288 441.65,-1065.7937"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge1" class="edge">
+<g id="edge37" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge1"><a xlink:title="at ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M79.7292,-1281.9816C99.0836,-1252.0425 141.9643,-1192.1682 193.7343,-1160 254.3117,-1122.3592 300.6052,-1169.2464 348.0527,-1116 494.8756,-951.2329 333.5333,-825.2203 428.4882,-626 436.3134,-609.5823 449.2541,-594.1645 461.2393,-582.0848"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="463.7848,-584.4917 468.524,-575.0159 458.91,-579.4681 463.7848,-584.4917"/>
+<g id="a_edge37"><a xlink:title="at ecdsa_p384_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M97.7736,-1325.9737C103.115,-1322.2426 108.51,-1318.1708 113.2988,-1314 153.7531,-1278.7659 153.771,-1259.7901 193.7343,-1224 256.4775,-1167.8088 302.624,-1184.9253 348.0527,-1114 368.0662,-1082.754 462.5722,-529.3361 485.0446,-396.4931"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="488.5506,-396.751 486.7658,-386.3075 481.6484,-395.5845 488.5506,-396.751"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier -->
+<g id="node24" class="node">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier</title>
+<g id="a_node24"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier | defined in ecdsa_p384_public.go:44&#10;at ecdsa_p384_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p384_public.go:46: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]&#10;at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M306.1205,-1362C306.1205,-1362 235.6665,-1362 235.6665,-1362 229.6665,-1362 223.6665,-1356 223.6665,-1350 223.6665,-1350 223.6665,-1338 223.6665,-1338 223.6665,-1332 229.6665,-1326 235.6665,-1326 235.6665,-1326 306.1205,-1326 306.1205,-1326 312.1205,-1326 318.1205,-1332 318.1205,-1338 318.1205,-1338 318.1205,-1350 318.1205,-1350 318.1205,-1356 312.1205,-1362 306.1205,-1362"/>
+<text text-anchor="middle" x="270.8935" y="-1339.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier -->
-<g id="edge45" class="edge">
+<g id="edge20" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier</title>
-<g id="a_edge45"><a xlink:title="at ecdsa_p384_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]">
-<path fill="none" stroke="#000000" d="M113.5339,-1313.5379C143.0635,-1322.4445 181.9744,-1334.1806 213.7146,-1343.754"/>
-<polygon fill="#000000" stroke="#000000" points="212.7318,-1347.1132 223.3165,-1346.65 214.7532,-1340.4114 212.7318,-1347.1132"/>
+<g id="a_edge20"><a xlink:title="at ecdsa_p384_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]">
+<path fill="none" stroke="#000000" d="M113.5339,-1344C142.9362,-1344 181.6391,-1344 213.3038,-1344"/>
+<polygon fill="#000000" stroke="#000000" points="213.3165,-1347.5001 223.3165,-1344 213.3165,-1340.5001 213.3165,-1347.5001"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier -->
+<g id="edge14" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier</title>
+<g id="a_edge14"><a xlink:title="at ecdsa_p384_public.go:46: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
+<path fill="none" stroke="#000000" d="M299.396,-1362.0822C325.0184,-1375.8426 363.0389,-1389.936 392.4882,-1374 439.8561,-1348.3677 467.8546,-1288.5705 480.9015,-1253.0117"/>
+<polygon fill="#000000" stroke="#000000" points="484.3198,-1253.841 484.3323,-1243.2462 477.7155,-1251.5207 484.3198,-1253.841"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge25" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge25"><a xlink:title="at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M285.2184,-1325.7677C302.2238,-1303.3791 330.4851,-1263.7207 348.0527,-1226 400.3764,-1113.6523 348.8564,-1053.9661 428.4882,-959 434.5141,-951.8137 442.6218,-946.1184 450.9656,-941.6757"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="452.5187,-944.8126 460.0248,-937.3354 449.4941,-938.4998 452.5187,-944.8126"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge49" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge49"><a xlink:title="at ecdsa_p384_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M318.3892,-1335.6763C344.1869,-1328.6616 374.4191,-1315.9215 392.4882,-1293 454.0968,-1214.8464 364.8351,-1148.4976 428.4882,-1072 431.6686,-1068.1778 435.5648,-1065.0196 439.8373,-1062.41"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="441.6667,-1065.4077 449.0272,-1057.7871 438.521,-1059.1544 441.6667,-1065.4077"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge3" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge3"><a xlink:title="at ecdsa_p384_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M286.3686,-1325.7334C304.2212,-1303.6238 333.0384,-1264.5452 348.0527,-1226 351.9579,-1215.9745 461.4221,-542.9756 485.2839,-396.1039"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="488.7627,-396.5165 486.9115,-386.0846 481.8533,-395.394 488.7627,-396.5165"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify -->
+<g id="node25" class="node">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify</title>
+<g id="a_node25"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify | defined in ecdsa_p384_public.go:15&#10;at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p384_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p384_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-1301C86.6842,-1301 50.6146,-1301 50.6146,-1301 44.6146,-1301 38.6146,-1295 38.6146,-1289 38.6146,-1289 38.6146,-1277 38.6146,-1277 38.6146,-1271 44.6146,-1265 50.6146,-1265 50.6146,-1265 86.6842,-1265 86.6842,-1265 92.6842,-1265 98.6842,-1271 98.6842,-1277 98.6842,-1277 98.6842,-1289 98.6842,-1289 98.6842,-1295 92.6842,-1301 86.6842,-1301"/>
+<text text-anchor="middle" x="68.6494" y="-1278.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge52" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge52"><a xlink:title="at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M84.2418,-1264.8006C106.305,-1240.0961 148.9612,-1196.0493 193.7343,-1170 256.1703,-1133.6743 295.387,-1168.4382 348.0527,-1119 385.7735,-1083.5908 366.6659,-1056.393 391.4882,-1011 405.097,-986.1134 406.9793,-977.4909 428.4882,-959 435.1233,-953.2959 442.9903,-948.3165 450.8396,-944.1145"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="452.5964,-947.1491 459.9708,-939.542 449.4621,-940.89 452.5964,-947.1491"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
+<g id="edge5" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
+<g id="a_edge5"><a xlink:title="at ecdsa_p384_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M99.0576,-1274.257C163.603,-1255.1832 311.4027,-1208.6116 348.0527,-1172 384.9471,-1135.1443 364.4589,-1107.5976 391.4882,-1063 404.5559,-1041.4387 408.6333,-1035.5383 428.4882,-1020 432.2831,-1017.0302 436.4072,-1014.226 440.6623,-1011.6092"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="442.5994,-1014.5325 449.5169,-1006.5077 439.1049,-1008.4672 442.5994,-1014.5325"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge1" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge1"><a xlink:title="at ecdsa_p384_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M98.8354,-1286.7538C162.3501,-1292.8371 310.6709,-1297.2115 392.4882,-1219 441.1104,-1172.5207 383.4641,-1121.9728 428.4882,-1072 431.7715,-1068.3558 435.702,-1065.315 439.9663,-1062.7777"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="441.6905,-1065.8292 449.0881,-1058.2446 438.5753,-1059.5606 441.6905,-1065.8292"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge9" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge9"><a xlink:title="at ecdsa_p384_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M76.2445,-1264.7655C92.1327,-1229.1855 132.5502,-1150.9362 193.7343,-1116 223.6946,-1098.8926 324.0811,-1123.8121 348.0527,-1099 437.2424,-1006.6833 351.0652,-644.8325 391.4882,-523 408.022,-473.1682 444.0076,-423.2847 467.5636,-394.0516"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="470.5151,-395.9717 474.1453,-386.0182 465.1004,-391.5354 470.5151,-395.9717"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier -->
+<g id="edge65" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier</title>
+<g id="a_edge65"><a xlink:title="at ecdsa_p384_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP384PublicKey).NewVerifier]">
+<path fill="none" stroke="#000000" d="M98.9274,-1292.1323C129.1726,-1301.2548 176.41,-1315.5023 213.7293,-1326.7584"/>
+<polygon fill="#000000" stroke="#000000" points="212.8925,-1330.1617 223.4772,-1329.6985 214.914,-1323.4599 212.8925,-1330.1617"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify -->
 <g id="node26" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify</title>
-<g id="a_node26"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify | defined in ecdsa_p521_public.go:15&#10;at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p521_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p521_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]">
+<g id="a_node26"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify | defined in ecdsa_p521_public.go:15&#10;at ecdsa_p521_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]&#10;at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p521_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M86.6842,-698C86.6842,-698 50.6146,-698 50.6146,-698 44.6146,-698 38.6146,-692 38.6146,-686 38.6146,-686 38.6146,-674 38.6146,-674 38.6146,-668 44.6146,-662 50.6146,-662 50.6146,-662 86.6842,-662 86.6842,-662 92.6842,-662 98.6842,-668 98.6842,-674 98.6842,-674 98.6842,-686 98.6842,-686 98.6842,-692 92.6842,-698 86.6842,-698"/>
 <text text-anchor="middle" x="68.6494" y="-675.8" font-family="Verdana" font-size="14.00" fill="#000000">Verify</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge29" class="edge">
+<g id="edge21" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge29"><a xlink:title="at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M99.009,-677.9272C162.8569,-675.3454 311.7797,-678.9561 392.4882,-760 419.1457,-786.7682 402.0088,-810.0556 428.4882,-837 434.7685,-843.3906 442.6872,-848.6223 450.73,-852.8225"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="449.249,-855.9938 459.7824,-857.1332 452.2586,-849.6738 449.249,-855.9938"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge20" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge20"><a xlink:title="at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M98.7338,-687.2755C169.9385,-704.5438 343.2177,-746.8715 348.0527,-751 385.2126,-782.7305 366.2916,-810.1334 391.4882,-852 405.0174,-874.4801 407.9894,-881.6233 428.4882,-898 432.0767,-900.8669 435.984,-903.553 440.0315,-906.0474"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="438.6276,-909.2763 449.0467,-911.1978 442.1,-903.1982 438.6276,-909.2763"/>
+<g id="a_edge21"><a xlink:title="at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M99.0144,-680.8355C162.099,-682.9943 305.0443,-690.208 348.0527,-712 373.985,-725.1397 378.5247,-734.5018 392.4882,-760 422.9337,-815.5954 388.3553,-848.9375 428.4882,-898 434.3249,-905.1354 442.2754,-910.7037 450.5174,-914.9986"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.305,-918.2942 459.8498,-919.3224 452.2477,-911.9428 449.305,-918.2942"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge25" class="edge">
+<g id="edge40" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge25"><a xlink:title="at ecdsa_p521_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M98.8461,-663.0361C104.0886,-659.2071 109.1729,-654.8275 113.2988,-650 115.0204,-647.9857 191.5788,-478.5411 193.7343,-477 229.8636,-451.1693 359.3742,-426.4025 392.4882,-456 445.8421,-503.6881 387.2573,-717.5124 428.4882,-776 431.7762,-780.6641 435.9964,-784.6348 440.6821,-788.008"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="439.1692,-791.187 449.5184,-793.4551 442.8425,-785.2282 439.1692,-791.187"/>
+<g id="a_edge40"><a xlink:title="at ecdsa_p521_public.go:16: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M98.6866,-686.2142C124.0002,-691.4005 161.193,-698.9022 193.7343,-705 262.171,-717.824 298.0673,-683.5285 348.0527,-732 416.4744,-798.3495 332.7147,-866.9703 391.4882,-942 403.6003,-957.4622 422.057,-968.112 439.7236,-975.3102"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="438.82,-978.7099 449.4118,-978.9627 441.2894,-972.1599 438.82,-978.7099"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge45" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge45"><a xlink:title="at ecdsa_p521_public.go:19: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M98.8461,-663.0361C104.0886,-659.2071 109.1729,-654.8275 113.2988,-650 114.1596,-648.9928 192.6173,-477.7125 193.7343,-477 251.5585,-440.1164 296.1233,-432.1963 348.0527,-477 394.2322,-516.8427 392.4786,-970.7731 428.4882,-1020 431.7699,-1024.4862 435.907,-1028.3353 440.4763,-1031.6303"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="438.7365,-1034.6699 449.0763,-1036.9806 442.4342,-1028.7263 438.7365,-1034.6699"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge39" class="edge">
+<g id="edge33" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge39"><a xlink:title="at ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M98.9446,-663.1192C104.178,-659.2826 109.2338,-654.8789 113.2988,-650 170.6905,-581.1183 129.6265,-527.6792 193.7343,-465 246.7046,-413.2102 294.6003,-453.2921 348.0527,-402 381.5509,-369.8557 352.4265,-332.0913 391.4882,-307 477.8626,-251.5173 363.0179,-455.9272 428.4882,-535 433.8757,-541.5069 441.3386,-546.0896 449.2084,-549.3171"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="448.303,-552.7062 458.8975,-552.62 450.5616,-546.0806 448.303,-552.7062"/>
+<g id="a_edge33"><a xlink:title="at ecdsa_p521_public.go:16: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M98.9446,-663.1192C104.178,-659.2826 109.2338,-654.8789 113.2988,-650 170.6905,-581.1183 129.6265,-527.6792 193.7343,-465 246.7046,-413.2102 292.1983,-450.6654 348.0527,-402 377.0952,-376.6955 358.1161,-346.2376 391.4882,-327 407.5037,-317.7678 411.571,-338.5476 428.4882,-346 435.181,-348.9483 442.405,-351.8101 449.4655,-354.4411"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="448.3326,-357.7532 458.9268,-357.8723 450.7192,-351.1726 448.3326,-357.7532"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier -->
 <g id="node27" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier</title>
-<g id="a_node27"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier | defined in ecdsa_p521_public.go:44&#10;at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p521_public.go:46: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
+<g id="a_node27"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier | defined in ecdsa_p521_public.go:44&#10;at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p521_public.go:46: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M306.1205,-666C306.1205,-666 235.6665,-666 235.6665,-666 229.6665,-666 223.6665,-660 223.6665,-654 223.6665,-654 223.6665,-642 223.6665,-642 223.6665,-636 229.6665,-630 235.6665,-630 235.6665,-630 306.1205,-630 306.1205,-630 312.1205,-630 318.1205,-636 318.1205,-642 318.1205,-642 318.1205,-654 318.1205,-654 318.1205,-660 312.1205,-666 306.1205,-666"/>
 <text text-anchor="middle" x="270.8935" y="-643.8" font-family="Verdana" font-size="14.00" fill="#000000">NewVerifier</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier -->
-<g id="edge41" class="edge">
+<g id="edge11" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).Verify&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier</title>
-<g id="a_edge41"><a xlink:title="at ecdsa_p521_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]">
+<g id="a_edge11"><a xlink:title="at ecdsa_p521_public.go:17: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]">
 <path fill="none" stroke="#000000" d="M98.9274,-675.2093C129.0439,-670.4441 176.0083,-663.0132 213.2523,-657.1203"/>
 <polygon fill="#000000" stroke="#000000" points="214.1471,-660.5223 223.4772,-655.5024 213.0531,-653.6083 214.1471,-660.5223"/>
 </a>
@@ -837,87 +837,87 @@
 <g id="edge64" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier&#45;&gt;github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier</title>
 <g id="a_edge64"><a xlink:title="at ecdsa_p521_public.go:46: calling [github.com/go&#45;i2p/crypto/ecdsa.CreateECVerifier]">
-<path fill="none" stroke="#000000" d="M287.4261,-666.2211C304.3779,-685.6214 330.6553,-717.7722 348.0527,-749 396.8965,-836.673 360.3177,-886.3451 428.4882,-960 430.0489,-961.6862 431.7278,-963.2838 433.4979,-964.7965"/>
-<polygon fill="#000000" stroke="#000000" points="431.6354,-967.772 441.759,-970.8966 435.7935,-962.1408 431.6354,-967.772"/>
+<path fill="none" stroke="#000000" d="M294.4218,-666.2926C312.3956,-681.7178 336.0564,-705.478 348.0527,-732 422.8415,-897.3466 308.2362,-976.7487 391.4882,-1138 404.9683,-1164.1097 429.8079,-1185.9817 451.1513,-1201.2647"/>
+<polygon fill="#000000" stroke="#000000" points="449.2171,-1204.1826 459.4313,-1206.997 453.2016,-1198.4272 449.2171,-1204.1826"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge15" class="edge">
+<g id="edge59" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge15"><a xlink:title="at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M299.393,-629.8686C315.5219,-618.3841 335.0124,-602.2759 348.0527,-584 379.8785,-539.3963 351.9007,-432.1893 392.4882,-469 453.3526,-524.2008 381.6336,-769.5 428.4882,-837 433.9504,-844.8689 442.0751,-850.7589 450.6382,-855.1354"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="449.4386,-858.4327 459.9968,-859.3123 452.2915,-852.0405 449.4386,-858.4327"/>
+<g id="a_edge59"><a xlink:title="at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M318.3042,-661.0887C344.4095,-670.8117 374.9777,-686.8387 392.4882,-712 440.5851,-781.112 377.2888,-831.1539 428.4882,-898 434.2069,-905.4663 442.2717,-911.1858 450.68,-915.5243"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.2936,-918.7387 459.844,-919.7072 452.2003,-912.3707 449.2936,-918.7387"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge26" class="edge">
+<g id="edge16" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge26"><a xlink:title="at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M288.5199,-666.1442C305.1261,-683.8153 330.0733,-711.9023 348.0527,-739 391.8373,-804.99 372.1097,-842.3831 428.4882,-898 431.9967,-901.4611 435.9834,-904.5892 440.2004,-907.401"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="438.7237,-910.5964 449.1006,-912.7342 442.3217,-904.5919 438.7237,-910.5964"/>
+<g id="a_edge16"><a xlink:title="at ecdsa_p521_public.go:48: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M294.4084,-666.2987C312.3747,-681.7273 336.0318,-705.4891 348.0527,-732 384.8851,-813.2301 325.096,-1071.4431 391.4882,-1131 414.5284,-1151.6682 404.491,-1091.5489 428.4882,-1072 431.9882,-1069.1488 435.8873,-1066.652 439.9761,-1064.4684"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="441.5776,-1067.5832 449.1491,-1060.1723 438.6086,-1061.244 441.5776,-1067.5832"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge40" class="edge">
+<g id="edge34" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge40"><a xlink:title="at ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M292.1097,-629.7656C309.2268,-614.0825 332.8752,-590.0801 348.0527,-565 378.0686,-515.4 344.158,-475.4808 391.4882,-442 427.8048,-416.3101 396.6411,-503.9415 428.4882,-535 434.2987,-540.6667 441.6694,-544.8849 449.2701,-548.0216"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="448.3257,-551.4002 458.9204,-551.4439 450.6653,-544.8028 448.3257,-551.4002"/>
+<g id="a_edge34"><a xlink:title="at ecdsa_p521_public.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M293.859,-629.7147C311.5144,-614.3542 335.0215,-590.8194 348.0527,-565 395.1219,-471.739 311.0836,-400.695 391.4882,-334 391.8303,-333.7162 392.05,-333.9257 392.4882,-334 395.5599,-334.5209 424.0827,-344.53 449.4672,-353.5537"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="448.3881,-356.8847 458.9828,-356.9421 450.7363,-350.2903 448.3881,-356.8847"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash -->
 <g id="node28" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash</title>
-<g id="a_node28"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash | defined in ecdsa_p521_public.go:26&#10;at ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p521_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]&#10;at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p521_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<g id="a_node28"><a xlink:title="(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash | defined in ecdsa_p521_public.go:26&#10;at ecdsa_p521_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecdsa_p521_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]&#10;at ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M101.4487,-637C101.4487,-637 35.8501,-637 35.8501,-637 29.8501,-637 23.8501,-631 23.8501,-625 23.8501,-625 23.8501,-613 23.8501,-613 23.8501,-607 29.8501,-601 35.8501,-601 35.8501,-601 101.4487,-601 101.4487,-601 107.4487,-601 113.4487,-607 113.4487,-613 113.4487,-613 113.4487,-625 113.4487,-625 113.4487,-631 107.4487,-637 101.4487,-637"/>
 <text text-anchor="middle" x="68.6494" y="-614.8" font-family="Verdana" font-size="14.00" fill="#000000">VerifyHash</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge7" class="edge">
+<g id="edge18" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge7"><a xlink:title="at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M78.1515,-600.9667C95.9918,-569.178 137.8013,-503.813 193.7343,-475 272.6205,-434.3631 326.8562,-396.2771 392.4882,-456 455.3881,-513.2368 380.1094,-767.0576 428.4882,-837 433.9373,-844.8779 442.0573,-850.7713 450.6199,-855.1481"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="449.4212,-858.4458 459.9795,-859.3243 452.2735,-852.0532 449.4212,-858.4458"/>
-</a>
-</g>
-</g>
-<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge60" class="edge">
-<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge60"><a xlink:title="at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M113.4734,-603.7204C173.3691,-586.371 279.8577,-566.6373 348.0527,-618 451.4769,-695.8964 345.2852,-798.7948 428.4882,-898 431.8779,-902.0416 435.9423,-905.5844 440.3446,-908.6798"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="438.7879,-911.8316 449.1383,-914.0945 442.4582,-905.8709 438.7879,-911.8316"/>
+<g id="a_edge18"><a xlink:title="at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M76.7418,-600.8024C93.0967,-566.5939 133.7115,-493.5749 193.7343,-465 255.6608,-435.5188 295.1726,-421.3225 348.0527,-465 423.5097,-527.3254 369.5554,-819.8646 428.4882,-898 434.1514,-905.5085 442.1951,-911.244 450.6008,-915.5845"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="449.2174,-918.8004 459.7683,-919.7647 452.1217,-912.4313 449.2174,-918.8004"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge43" class="edge">
+<g id="edge2" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge43"><a xlink:title="at ecdsa_p521_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M111.5924,-600.8916C123.6157,-596.4108 136.8139,-592.0307 149.2988,-589 235.7644,-568.0103 276.9083,-618.4353 348.0527,-565 387.5908,-535.3036 355.5793,-430.0929 392.4882,-463 444.7476,-509.5933 388.0768,-718.8258 428.4882,-776 431.782,-780.66 436.0058,-784.6282 440.6936,-787.9999"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="439.1823,-791.1798 449.532,-793.4455 442.8542,-785.2201 439.1823,-791.1798"/>
+<g id="a_edge2"><a xlink:title="at ecdsa_p521_public.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M95.3343,-600.9476C110.454,-591.8154 130.1315,-581.6918 149.2988,-577 192.4164,-566.4455 314.8697,-567.5142 348.0527,-597 409.6533,-651.7373 377.4864,-894.2727 428.4882,-959 431.9283,-963.3659 436.1658,-967.1388 440.7935,-970.3894"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="439.1001,-973.4565 449.4565,-975.6919 442.7545,-967.4861 439.1001,-973.4565"/>
+</a>
+</g>
+</g>
+<!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge42" class="edge">
+<title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge42"><a xlink:title="at ecdsa_p521_public.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M113.4784,-612.2093C183.2436,-602.7083 313.3987,-589.593 348.0527,-618 383.2812,-646.878 400.676,-983.9241 428.4882,-1020 431.8367,-1024.3434 435.978,-1028.0965 440.5164,-1031.331"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="438.6854,-1034.3139 449.0289,-1036.6082 442.3738,-1028.3644 438.6854,-1034.3139"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge4" class="edge">
+<g id="edge41" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge4"><a xlink:title="at ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M69.7215,-600.9579C73.2172,-559.8145 87.9433,-458.9155 149.2988,-411 219.4677,-356.2016 277.3661,-440.129 348.0527,-386 388.4752,-355.046 349.2095,-308.3661 391.4882,-280 486.5872,-216.1952 356.1772,-446.197 428.4882,-535 433.9323,-541.6858 441.5707,-546.3406 449.615,-549.5812"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="448.5439,-552.9135 459.1378,-552.7727 450.7683,-546.2763 448.5439,-552.9135"/>
+<g id="a_edge41"><a xlink:title="at ecdsa_p521_public.go:27: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M69.7215,-600.9579C73.2172,-559.8145 87.9433,-458.9155 149.2988,-411 219.4677,-356.2016 277.3661,-440.129 348.0527,-386 388.4752,-355.046 349.2095,-308.3661 391.4882,-280 419.4136,-261.264 402.9388,-324.1346 428.4882,-346 434.5941,-351.2255 442.0343,-355.2448 449.5985,-358.325"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="448.5606,-361.6709 459.1552,-361.7445 450.9189,-355.0801 448.5606,-361.6709"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier -->
-<g id="edge6" class="edge">
+<g id="edge35" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).VerifyHash&#45;&gt;(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier</title>
-<g id="a_edge6"><a xlink:title="at ecdsa_p521_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]">
+<g id="a_edge35"><a xlink:title="at ecdsa_p521_public.go:28: calling [(github.com/go&#45;i2p/crypto/ecdsa.ECP521PublicKey).NewVerifier]">
 <path fill="none" stroke="#000000" d="M113.5339,-625.436C142.9362,-629.6521 181.6391,-635.2017 213.3038,-639.7421"/>
 <polygon fill="#000000" stroke="#000000" points="212.9209,-643.223 223.3165,-641.1779 213.9146,-636.2938 212.9209,-643.223"/>
 </a>

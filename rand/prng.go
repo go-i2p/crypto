@@ -1,14 +1,27 @@
 package rand
 
 import (
+	"crypto/rand"
+	"encoding/binary"
+	"io"
 	"math"
-	mathrand "math/rand"
 	"sync"
-	"time"
 
 	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
+
+// PRNG Implementation using crypto/rand
+//
+// This implementation provides math/rand compatible API but uses ONLY crypto/rand
+// as the underlying source. This ensures all random operations are cryptographically
+// secure, unlike standard math/rand which uses predictable pseudo-random algorithms.
+//
+// Key differences from standard math/rand:
+// - Seeding is ignored (no-op) for security - crypto/rand doesn't use seeds
+// - All randomness comes from cryptographically secure sources
+// - Performance is slower but security is guaranteed
+// - Suitable for cryptographic applications and I2P networking
 
 // Source is the interface for a source of random data
 // Compatible with math/rand.Source interface
@@ -24,34 +37,63 @@ type Source64 interface {
 	Uint64() uint64
 }
 
-// pcgSource implements Source64 using math/rand PCG
-type pcgSource struct {
-	src mathrand.Source
+// cryptoSource implements Source64 using crypto/rand
+type cryptoSource struct {
+	reader io.Reader
+	mu     sync.Mutex
 }
 
 // NewSource returns a new pseudo-random Source seeded with the given value.
+// Note: Since we use crypto/rand, the seed is used for compatibility but doesn't affect randomness
 // Compatible with math/rand.NewSource
 func NewSource(seed int64) Source {
 	log := logger.GetGoI2PLogger()
-	log.WithField("seed", seed).Debug("Creating new PRNG source")
+	log.WithField("seed", seed).Debug("Creating new crypto-based PRNG source")
 
-	return &pcgSource{src: mathrand.NewSource(seed)}
+	return &cryptoSource{reader: rand.Reader}
 }
 
-func (p *pcgSource) Int63() int64 {
-	return p.src.Int63()
-}
+func (c *cryptoSource) Int63() int64 {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 
-func (p *pcgSource) Seed(seed int64) {
-	p.src.Seed(seed)
-}
-
-func (p *pcgSource) Uint64() uint64 {
-	if s64, ok := p.src.(mathrand.Source64); ok {
-		return s64.Uint64()
+	var buf [8]byte
+	_, err := c.reader.Read(buf[:])
+	if err != nil {
+		// Fallback to DefaultSecureReader if crypto/rand fails
+		_, err = DefaultSecureReader.Read(buf[:])
+		if err != nil {
+			// This should never happen, but if it does, return a deterministic value
+			return 1
+		}
 	}
-	// Fallback: combine two Int63 calls
-	return uint64(p.Int63())>>31 | uint64(p.Int63())<<32
+
+	// Convert to int64 and mask to 63 bits (non-negative)
+	return int64(binary.BigEndian.Uint64(buf[:]) >> 1)
+}
+
+func (c *cryptoSource) Seed(seed int64) {
+	// For crypto/rand, seeding doesn't apply, but we implement for compatibility
+	log := logger.GetGoI2PLogger()
+	log.WithField("seed", seed).Debug("Seed called on crypto source (no-op for security)")
+}
+
+func (c *cryptoSource) Uint64() uint64 {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	var buf [8]byte
+	_, err := c.reader.Read(buf[:])
+	if err != nil {
+		// Fallback to DefaultSecureReader if crypto/rand fails
+		_, err = DefaultSecureReader.Read(buf[:])
+		if err != nil {
+			// This should never happen, but if it does, return a deterministic value
+			return 1
+		}
+	}
+
+	return binary.BigEndian.Uint64(buf[:])
 }
 
 // Rand represents a source of random numbers with math/rand compatibility
@@ -246,8 +288,8 @@ func (r *Rand) ExpFloat64() float64 {
 	}
 }
 
-// Global PRNG instance initialized with current time
-var globalRand = New(NewSource(time.Now().UnixNano()))
+// Global PRNG instance initialized with crypto/rand
+var globalRand = New(NewSource(0)) // Seed doesn't matter for crypto/rand
 
 // Global functions that use the global PRNG - compatible with math/rand
 
