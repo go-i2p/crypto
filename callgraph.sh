@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-dirs=$(find aes/  chacha20/  curve25519/  dsa/  ecdsa/  ecies/  ed25519/  elg/  hkdf/ rand/  hmac/  rsa/  tunnel/ types/ -type d)
+dirs=$(find aes/  chacha20/  curve25519/  dsa/  ecdsa/  ecies/  ed25519/  elg/  hkdf/ rand/  hmac/  rsa/  siphash/  tunnel/ types/ -type d)
 for dir in $dirs; do
     files=$(find "$dir" -maxdepth 2 -type f -name "*.go" -not -name "fuzz")
     #echo "Files in $dir: $files"

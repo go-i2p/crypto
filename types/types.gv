@@ -14,14 +14,14 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        fontsize="18";
+        labelloc="t";
+labeljust="c";
+fontsize="18";
 bgcolor="#e6ecfa";
 label="types";
-labelloc="t";
-labeljust="c";
         
-        "github.com/go-i2p/crypto/types.init" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/types.init | defined in .:0\nat sign.go:11: calling [github.com/samber/oops.Errorf]\nat sign.go:15: calling [github.com/samber/oops.Errorf]\nat sign.go:19: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="init" ]
-        "github.com/samber/oops.Errorf" [ penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" ]
+        "github.com/go-i2p/crypto/types.init" [ tooltip="github.com/go-i2p/crypto/types.init | defined in .:0\nat sign.go:11: calling [github.com/samber/oops.Errorf]\nat sign.go:15: calling [github.com/samber/oops.Errorf]\nat sign.go:19: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="init" penwidth="0.5" ]
+        "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
         
     }
 

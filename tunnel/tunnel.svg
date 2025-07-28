@@ -50,9 +50,9 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/tunnel.NewTunnelCrypto&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge2" class="edge">
+<g id="edge3" class="edge">
 <title>github.com/go&#45;i2p/crypto/tunnel.NewTunnelCrypto&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge2"><a xlink:title="at tunnel_struct.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge3"><a xlink:title="at tunnel_struct.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M134.826,-113.0689C138.2744,-114.3602 141.6809,-115.676 144.9734,-117 178.1802,-130.3528 184.8984,-137.3241 217.9734,-151 224.4359,-153.6721 231.3536,-156.3505 238.1192,-158.8728"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="237.2585,-162.2849 247.8522,-162.4378 239.6661,-155.7119 237.2585,-162.2849"/>
 </a>
@@ -78,47 +78,47 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/tunnel.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge1" class="edge">
+<g id="edge4" class="edge">
 <title>github.com/go&#45;i2p/crypto/tunnel.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge1"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<g id="a_edge4"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
 <path fill="none" stroke="#8b4513" d="M107.6137,-34C133.2659,-34 172.8825,-34 207.5216,-34"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="207.6159,-37.5001 217.6159,-34 207.6158,-30.5001 207.6159,-37.5001"/>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt -->
-<g id="node4" class="node">
-<title>(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt</title>
-<g id="a_node4"><a xlink:title="(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt | defined in tunnel_struct.go:86&#10;at tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M103.0738,-191C103.0738,-191 57.8996,-191 57.8996,-191 51.8996,-191 45.8996,-185 45.8996,-179 45.8996,-179 45.8996,-167 45.8996,-167 45.8996,-161 51.8996,-155 57.8996,-155 57.8996,-155 103.0738,-155 103.0738,-155 109.0738,-155 115.0738,-161 115.0738,-167 115.0738,-167 115.0738,-179 115.0738,-179 115.0738,-185 109.0738,-191 103.0738,-191"/>
-<text text-anchor="middle" x="80.4867" y="-168.8" font-family="Verdana" font-size="14.00" fill="#000000">Decrypt</text>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge3" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge3"><a xlink:title="at tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M115.4437,-173C149.6109,-173 201.6101,-173 237.6778,-173"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="237.8607,-176.5001 247.8606,-173 237.8606,-169.5001 237.8607,-176.5001"/>
-</a>
-</g>
-</g>
 <!-- (*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Encrypt -->
-<g id="node5" class="node">
+<g id="node4" class="node">
 <title>(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Encrypt</title>
-<g id="a_node5"><a xlink:title="(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Encrypt | defined in tunnel_struct.go:63&#10;at tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M102.8058,-252C102.8058,-252 58.1676,-252 58.1676,-252 52.1676,-252 46.1676,-246 46.1676,-240 46.1676,-240 46.1676,-228 46.1676,-228 46.1676,-222 52.1676,-216 58.1676,-216 58.1676,-216 102.8058,-216 102.8058,-216 108.8058,-216 114.8058,-222 114.8058,-228 114.8058,-228 114.8058,-240 114.8058,-240 114.8058,-246 108.8058,-252 102.8058,-252"/>
-<text text-anchor="middle" x="80.4867" y="-229.8" font-family="Verdana" font-size="14.00" fill="#000000">Encrypt</text>
+<g id="a_node4"><a xlink:title="(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Encrypt | defined in tunnel_struct.go:63&#10;at tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M102.8058,-191C102.8058,-191 58.1676,-191 58.1676,-191 52.1676,-191 46.1676,-185 46.1676,-179 46.1676,-179 46.1676,-167 46.1676,-167 46.1676,-161 52.1676,-155 58.1676,-155 58.1676,-155 102.8058,-155 102.8058,-155 108.8058,-155 114.8058,-161 114.8058,-167 114.8058,-167 114.8058,-179 114.8058,-179 114.8058,-185 108.8058,-191 102.8058,-191"/>
+<text text-anchor="middle" x="80.4867" y="-168.8" font-family="Verdana" font-size="14.00" fill="#000000">Encrypt</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Encrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge4" class="edge">
+<g id="edge1" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Encrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge4"><a xlink:title="at tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M114.9898,-223.3746C149.2352,-212.8286 201.7138,-196.6676 237.9515,-185.5081"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="239.1861,-188.7901 247.713,-182.5019 237.1258,-182.1002 239.1861,-188.7901"/>
+<g id="a_edge1"><a xlink:title="at tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M114.9898,-173C149.0888,-173 201.2656,-173 237.486,-173"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="237.7131,-176.5001 247.713,-173 237.713,-169.5001 237.7131,-176.5001"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt -->
+<g id="node5" class="node">
+<title>(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt</title>
+<g id="a_node5"><a xlink:title="(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt | defined in tunnel_struct.go:86&#10;at tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M103.0738,-252C103.0738,-252 57.8996,-252 57.8996,-252 51.8996,-252 45.8996,-246 45.8996,-240 45.8996,-240 45.8996,-228 45.8996,-228 45.8996,-222 51.8996,-216 57.8996,-216 57.8996,-216 103.0738,-216 103.0738,-216 109.0738,-216 115.0738,-222 115.0738,-228 115.0738,-228 115.0738,-240 115.0738,-240 115.0738,-246 109.0738,-252 103.0738,-252"/>
+<text text-anchor="middle" x="80.4867" y="-229.8" font-family="Verdana" font-size="14.00" fill="#000000">Decrypt</text>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge2" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/tunnel.Tunnel).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge2"><a xlink:title="at tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M115.4437,-223.2348C149.7576,-212.6677 202.0568,-196.562 238.1413,-185.4496"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="239.3337,-188.7447 247.8606,-182.4565 237.2734,-182.0547 239.3337,-188.7447"/>
 </a>
 </g>
 </g>
