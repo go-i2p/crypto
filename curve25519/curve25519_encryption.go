@@ -1,6 +1,7 @@
 package curve25519
 
 import (
+	"crypto/cipher"
 	"crypto/rand"
 	"crypto/sha256"
 	"io"
@@ -33,41 +34,89 @@ func (c *Curve25519Encryption) Encrypt(data []byte) ([]byte, error) {
 // The zeroPadding parameter controls whether to prepend a zero byte to the output format.
 // Maximum data size is 1024 bytes to support I2P tunnel data minus overhead requirements.
 func (c *Curve25519Encryption) EncryptPadding(data []byte, zeroPadding bool) ([]byte, error) {
+	if err := c.validateDataSize(data); err != nil {
+		return nil, err
+	}
+
+	sharedSecret, err := c.deriveSharedSecret()
+	if err != nil {
+		return nil, err
+	}
+
+	key, err := c.deriveEncryptionKey(sharedSecret)
+	if err != nil {
+		return nil, err
+	}
+
+	aead, err := c.createAEADCipher(key)
+	if err != nil {
+		return nil, err
+	}
+
+	nonce, err := c.generateNonce(aead)
+	if err != nil {
+		return nil, err
+	}
+
+	ciphertext := c.encryptWithAEAD(aead, nonce, data)
+
+	return c.formatCiphertext(ciphertext, nonce, zeroPadding), nil
+}
+
+// validateDataSize checks if the data size is within I2P tunnel limits.
+func (c *Curve25519Encryption) validateDataSize(data []byte) error {
 	// Maximum data size is 1024 bytes to support I2P tunnel build records
 	// This allows for tunnel data (1028 bytes) minus overhead
 	if len(data) > 1024 {
-		return nil, ErrDataTooBig
+		return ErrDataTooBig
 	}
+	return nil
+}
 
-	// Derive shared secret using X25519 Elliptic Curve Diffie-Hellman key exchange
+// deriveSharedSecret performs X25519 Elliptic Curve Diffie-Hellman key exchange.
+func (c *Curve25519Encryption) deriveSharedSecret() ([]byte, error) {
 	sharedSecret, err := c.ephemeral.SharedKey(c.publicKey)
 	if err != nil {
 		return nil, oops.Errorf("failed to derive shared secret: %w", err)
 	}
+	return sharedSecret, nil
+}
 
-	// Derive encryption key using HKDF-SHA256 key derivation function
+// deriveEncryptionKey derives encryption key using HKDF-SHA256 key derivation function.
+func (c *Curve25519Encryption) deriveEncryptionKey(sharedSecret []byte) ([]byte, error) {
 	hkdfReader := hkdf.New(sha256.New, sharedSecret, nil, []byte("ChaCha20-Poly1305"))
 	key := make([]byte, chacha20poly1305.KeySize)
 	if _, err := io.ReadFull(hkdfReader, key); err != nil {
 		return nil, oops.Errorf("failed to derive encryption key: %w", err)
 	}
+	return key, nil
+}
 
-	// Create ChaCha20-Poly1305 AEAD cipher for authenticated encryption
+// createAEADCipher creates ChaCha20-Poly1305 AEAD cipher for authenticated encryption.
+func (c *Curve25519Encryption) createAEADCipher(key []byte) (cipher.AEAD, error) {
 	aead, err := chacha20poly1305.New(key)
 	if err != nil {
 		return nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
 	}
+	return aead, nil
+}
 
-	// Create cryptographically secure random nonce for encryption
+// generateNonce creates cryptographically secure random nonce for encryption.
+func (c *Curve25519Encryption) generateNonce(aead cipher.AEAD) ([]byte, error) {
 	nonce := make([]byte, aead.NonceSize())
 	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
 		return nil, oops.Errorf("failed to generate nonce: %w", err)
 	}
+	return nonce, nil
+}
 
-	// Encrypt data using ChaCha20-Poly1305 authenticated encryption
-	ciphertext := aead.Seal(nil, nonce, data, nil)
+// encryptWithAEAD encrypts data using ChaCha20-Poly1305 authenticated encryption.
+func (c *Curve25519Encryption) encryptWithAEAD(aead cipher.AEAD, nonce, data []byte) []byte {
+	return aead.Seal(nil, nonce, data, nil)
+}
 
-	// Calculate final size and prepare buffer for formatted output
+// formatCiphertext formats the final ciphertext with ephemeral key, nonce, and optional zero padding.
+func (c *Curve25519Encryption) formatCiphertext(ciphertext, nonce []byte, zeroPadding bool) []byte {
 	ephemeralPub := c.ephemeral.Public().(x25519.PublicKey)
 	totalSize := x25519.PublicKeySize + len(nonce) + len(ciphertext)
 	if zeroPadding {
@@ -91,7 +140,7 @@ func (c *Curve25519Encryption) EncryptPadding(data []byte, zeroPadding bool) ([]
 	offset += len(nonce)
 	copy(result[offset:], ciphertext)
 
-	return result, nil
+	return result
 }
 
 // NewCurve25519Encryption creates a new Curve25519 encryption instance for encrypting data.
