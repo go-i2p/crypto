@@ -17,32 +17,32 @@
 <g id="clust7" class="cluster">
 <title>cluster_go.step.sm/crypto/x25519.PrivateKey</title>
 <g id="a_clust7"><a xlink:title="type: go.step.sm/crypto/x25519.PrivateKey">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M798.7107,-619C798.7107,-619 876.9043,-619 876.9043,-619 882.9043,-619 888.9043,-625 888.9043,-631 888.9043,-631 888.9043,-685 888.9043,-685 888.9043,-691 882.9043,-697 876.9043,-697 876.9043,-697 798.7107,-697 798.7107,-697 792.7107,-697 786.7107,-691 786.7107,-685 786.7107,-685 786.7107,-631 786.7107,-631 786.7107,-625 792.7107,-619 798.7107,-619"/>
-<text text-anchor="middle" x="837.8075" y="-627.5" font-family="Arial" font-size="15.00" fill="#222222">(PrivateKey)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M798.7107,-811C798.7107,-811 876.9043,-811 876.9043,-811 882.9043,-811 888.9043,-817 888.9043,-823 888.9043,-823 888.9043,-877 888.9043,-877 888.9043,-883 882.9043,-889 876.9043,-889 876.9043,-889 798.7107,-889 798.7107,-889 792.7107,-889 786.7107,-883 786.7107,-877 786.7107,-877 786.7107,-823 786.7107,-823 786.7107,-817 792.7107,-811 798.7107,-811"/>
+<text text-anchor="middle" x="837.8075" y="-819.5" font-family="Arial" font-size="15.00" fill="#222222">(PrivateKey)</text>
 </a>
 </g>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey</title>
 <g id="a_clust6"><a xlink:title="type: github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey">
-<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M249.8332,-506C249.8332,-506 368.6116,-506 368.6116,-506 374.6116,-506 380.6116,-512 380.6116,-518 380.6116,-518 380.6116,-572 380.6116,-572 380.6116,-578 374.6116,-584 368.6116,-584 368.6116,-584 249.8332,-584 249.8332,-584 243.8332,-584 237.8332,-578 237.8332,-572 237.8332,-572 237.8332,-518 237.8332,-518 237.8332,-512 243.8332,-506 249.8332,-506"/>
-<text text-anchor="middle" x="309.2224" y="-514.5" font-family="Arial" font-size="15.00" fill="#222222">(ECIESPrivateKey)</text>
+<path fill="#b0c4de" stroke="#000000" stroke-width=".5" d="M249.8332,-454C249.8332,-454 368.6116,-454 368.6116,-454 374.6116,-454 380.6116,-460 380.6116,-466 380.6116,-466 380.6116,-520 380.6116,-520 380.6116,-526 374.6116,-532 368.6116,-532 368.6116,-532 249.8332,-532 249.8332,-532 243.8332,-532 237.8332,-526 237.8332,-520 237.8332,-520 237.8332,-466 237.8332,-466 237.8332,-460 243.8332,-454 249.8332,-454"/>
+<text text-anchor="middle" x="309.2224" y="-462.5" font-family="Arial" font-size="15.00" fill="#222222">(ECIESPrivateKey)</text>
 </a>
 </g>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_*github.com/sirupsen/logrus.Logger</title>
 <g id="a_clust5"><a xlink:title="type: *github.com/sirupsen/logrus.Logger">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M553.9848,-365C553.9848,-365 608.306,-365 608.306,-365 614.306,-365 620.306,-371 620.306,-377 620.306,-377 620.306,-431 620.306,-431 620.306,-437 614.306,-443 608.306,-443 608.306,-443 553.9848,-443 553.9848,-443 547.9848,-443 541.9848,-437 541.9848,-431 541.9848,-431 541.9848,-377 541.9848,-377 541.9848,-371 547.9848,-365 553.9848,-365"/>
-<text text-anchor="middle" x="581.1454" y="-373.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M553.9848,-304C553.9848,-304 608.306,-304 608.306,-304 614.306,-304 620.306,-310 620.306,-316 620.306,-316 620.306,-370 620.306,-370 620.306,-376 614.306,-382 608.306,-382 608.306,-382 553.9848,-382 553.9848,-382 547.9848,-382 541.9848,-376 541.9848,-370 541.9848,-370 541.9848,-316 541.9848,-316 541.9848,-310 547.9848,-304 553.9848,-304"/>
+<text text-anchor="middle" x="581.1454" y="-312.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
 </a>
 </g>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_*github.com/go&#45;i2p/logger.Logger</title>
 <g id="a_clust4"><a xlink:title="type: *github.com/go&#45;i2p/logger.Logger">
-<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M543.8803,-451C543.8803,-451 617.4105,-451 617.4105,-451 623.4105,-451 629.4105,-457 629.4105,-463 629.4105,-463 629.4105,-578 629.4105,-578 629.4105,-584 623.4105,-590 617.4105,-590 617.4105,-590 543.8803,-590 543.8803,-590 537.8803,-590 531.8803,-584 531.8803,-578 531.8803,-578 531.8803,-463 531.8803,-463 531.8803,-457 537.8803,-451 543.8803,-451"/>
-<text text-anchor="middle" x="580.6454" y="-459.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
+<path fill="#eed8ae" stroke="#000000" stroke-width=".5" d="M543.8803,-390C543.8803,-390 617.4105,-390 617.4105,-390 623.4105,-390 629.4105,-396 629.4105,-402 629.4105,-402 629.4105,-517 629.4105,-517 629.4105,-523 623.4105,-529 617.4105,-529 617.4105,-529 543.8803,-529 543.8803,-529 537.8803,-529 531.8803,-523 531.8803,-517 531.8803,-517 531.8803,-402 531.8803,-402 531.8803,-396 537.8803,-390 543.8803,-390"/>
+<text text-anchor="middle" x="580.6454" y="-398.5" font-family="Arial" font-size="15.00" fill="#222222">(*Logger)</text>
 </a>
 </g>
 </g>
@@ -62,270 +62,168 @@
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair -->
-<g id="node1" class="node">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair</title>
-<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair | defined in ecies.go:101&#10;at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecies.go:104: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]&#10;at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M376.4934,-490C376.4934,-490 240.9514,-490 240.9514,-490 234.9514,-490 228.9514,-484 228.9514,-478 228.9514,-478 228.9514,-466 228.9514,-466 228.9514,-460 234.9514,-454 240.9514,-454 240.9514,-454 376.4934,-454 376.4934,-454 382.4934,-454 388.4934,-460 388.4934,-466 388.4934,-466 388.4934,-478 388.4934,-478 388.4934,-484 382.4934,-490 376.4934,-490"/>
-<text text-anchor="middle" x="308.7224" y="-467.8" font-family="Verdana" font-size="14.00" fill="#000000">GenerateECIESKeyPair</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair -->
-<g id="node2" class="node">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair</title>
-<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair | defined in utils.go:215&#10;at utils.go:218: calling [github.com/samber/oops.Errorf]&#10;at utils.go:216: calling [go.step.sm/crypto/x25519.GenerateKey]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M629.0318,-704C629.0318,-704 532.259,-704 532.259,-704 526.259,-704 520.259,-698 520.259,-692 520.259,-692 520.259,-680 520.259,-680 520.259,-674 526.259,-668 532.259,-668 532.259,-668 629.0318,-668 629.0318,-668 635.0318,-668 641.0318,-674 641.0318,-680 641.0318,-680 641.0318,-692 641.0318,-692 641.0318,-698 635.0318,-704 629.0318,-704"/>
-<text text-anchor="middle" x="580.6454" y="-681.8" font-family="Verdana" font-size="14.00" fill="#000000">GenerateKeyPair</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair -->
-<g id="edge17" class="edge">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair</title>
-<g id="a_edge17"><a xlink:title="at ecies.go:104: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]">
-<path fill="none" stroke="#000000" d="M374.6322,-490.2025C379.571,-493.0184 384.2288,-496.263 388.3578,-500 445.1129,-551.3674 402.3075,-607.2885 461.3578,-656 475.1971,-667.4162 492.7998,-674.5704 510.2055,-679.0304"/>
-<polygon fill="#000000" stroke="#000000" points="509.873,-682.5444 520.4011,-681.3569 511.4303,-675.7198 509.873,-682.5444"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="node23" class="node">
-<title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_node23"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M609.1769,-582C609.1769,-582 552.1139,-582 552.1139,-582 546.1139,-582 540.1139,-576 540.1139,-570 540.1139,-570 540.1139,-558 540.1139,-558 540.1139,-552 546.1139,-546 552.1139,-546 552.1139,-546 609.1769,-546 609.1769,-546 615.1769,-546 621.1769,-552 621.1769,-558 621.1769,-558 621.1769,-570 621.1769,-570 621.1769,-576 615.1769,-582 609.1769,-582"/>
-<text text-anchor="middle" x="580.6454" y="-568.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="580.6454" y="-551.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge1" class="edge">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge1"><a xlink:title="at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M362.5378,-490.1156C371.2243,-493.2703 380.0792,-496.6261 388.3578,-500 421.5019,-513.5076 427.6293,-522.0261 461.3578,-534 483.508,-541.8635 508.6626,-548.511 530.1435,-553.5344"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="529.5179,-556.9816 540.0464,-555.7972 531.0773,-550.1575 529.5179,-556.9816"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="node24" class="node">
-<title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_node24"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M598.4117,-521C598.4117,-521 562.8791,-521 562.8791,-521 556.8791,-521 550.8791,-515 550.8791,-509 550.8791,-509 550.8791,-497 550.8791,-497 550.8791,-491 556.8791,-485 562.8791,-485 562.8791,-485 598.4117,-485 598.4117,-485 604.4117,-485 610.4117,-491 610.4117,-497 610.4117,-497 610.4117,-509 610.4117,-509 610.4117,-515 604.4117,-521 598.4117,-521"/>
-<text text-anchor="middle" x="580.6454" y="-507.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="580.6454" y="-490.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge21" class="edge">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge21"><a xlink:title="at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M388.4709,-481.0916C438.3893,-486.7824 500.5778,-493.8721 540.4477,-498.4173"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="540.2448,-501.9168 550.5769,-499.5721 541.0377,-494.9619 540.2448,-501.9168"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="node25" class="node">
-<title>(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_node25"><a xlink:title="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M599.4674,-435C599.4674,-435 561.8234,-435 561.8234,-435 555.8234,-435 549.8234,-429 549.8234,-423 549.8234,-423 549.8234,-411 549.8234,-411 549.8234,-405 555.8234,-399 561.8234,-399 561.8234,-399 599.4674,-399 599.4674,-399 605.4674,-399 611.4674,-405 611.4674,-411 611.4674,-411 611.4674,-423 611.4674,-423 611.4674,-429 605.4674,-435 599.4674,-435"/>
-<text text-anchor="middle" x="580.6454" y="-421.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
-<text text-anchor="middle" x="580.6454" y="-404.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge32" class="edge">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge32"><a xlink:title="at ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M388.4709,-455.8698C438.2072,-445.81 500.1242,-433.2865 540.0105,-425.219"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="540.7956,-428.6311 549.9032,-423.218 539.4078,-421.77 540.7956,-428.6311"/>
-</a>
-</g>
-</g>
-<!-- go.step.sm/crypto/x25519.GenerateKey -->
-<g id="node3" class="node">
-<title>go.step.sm/crypto/x25519.GenerateKey</title>
-<g id="a_node3"><a xlink:title="go.step.sm/crypto/x25519.GenerateKey | defined in x25519.go:37">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M874.645,-875C874.645,-875 800.97,-875 800.97,-875 794.97,-875 788.97,-869 788.97,-863 788.97,-863 788.97,-851 788.97,-851 788.97,-845 794.97,-839 800.97,-839 800.97,-839 874.645,-839 874.645,-839 880.645,-839 886.645,-845 886.645,-851 886.645,-851 886.645,-863 886.645,-863 886.645,-869 880.645,-875 874.645,-875"/>
-<text text-anchor="middle" x="837.8075" y="-861.2" font-family="Verdana" font-size="14.00" fill="#000000">x25519</text>
-<text text-anchor="middle" x="837.8075" y="-844.4" font-family="Verdana" font-size="14.00" fill="#000000">GenerateKey</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;go.step.sm/crypto/x25519.GenerateKey -->
-<g id="edge26" class="edge">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;go.step.sm/crypto/x25519.GenerateKey</title>
-<g id="a_edge26"><a xlink:title="at utils.go:216: calling [go.step.sm/crypto/x25519.GenerateKey]">
-<path fill="none" stroke="#8b4513" d="M641.0373,-695.0818C660.7007,-699.7289 682.0513,-706.6748 699.933,-717 750.4293,-746.1575 794.96,-798.7925 818.9795,-830.5547"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="816.4242,-832.9841 825.1982,-838.9229 822.0427,-828.8088 816.4242,-832.9841"/>
-</a>
-</g>
-</g>
-<!-- github.com/samber/oops.Errorf -->
-<g id="node4" class="node">
-<title>github.com/samber/oops.Errorf</title>
-<g id="a_node4"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M855.0028,-603C855.0028,-603 820.6122,-603 820.6122,-603 814.6122,-603 808.6122,-597 808.6122,-591 808.6122,-591 808.6122,-579 808.6122,-579 808.6122,-573 814.6122,-567 820.6122,-567 820.6122,-567 855.0028,-567 855.0028,-567 861.0028,-567 867.0028,-573 867.0028,-579 867.0028,-579 867.0028,-591 867.0028,-591 867.0028,-597 861.0028,-603 855.0028,-603"/>
-<text text-anchor="middle" x="837.8075" y="-589.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
-<text text-anchor="middle" x="837.8075" y="-572.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge7" class="edge">
-<title>github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge7"><a xlink:title="at utils.go:218: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M641.142,-675.0086C660.4006,-670.4049 681.4838,-664.1769 699.933,-656 717.5133,-648.2082 719.3532,-641.7411 735.933,-632 751.8715,-622.6356 756.2151,-620.8893 772.933,-613 781.406,-609.0015 790.5976,-604.8966 799.3248,-601.1048"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="800.754,-604.3002 808.5566,-597.1329 797.9875,-597.87 800.754,-604.3002"/>
-</a>
-</g>
-</g>
 <!-- github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519 -->
-<g id="node5" class="node">
+<g id="node1" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519</title>
-<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519 | defined in utils.go:21&#10;at utils.go:26: calling [github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair]&#10;at utils.go:36: calling [github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD]&#10;at utils.go:41: calling [github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult]&#10;at utils.go:22: calling [github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs]&#10;at utils.go:31: calling [github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey]">
+<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519 | defined in utils.go:21&#10;at utils.go:22: calling [github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs]&#10;at utils.go:31: calling [github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey]&#10;at utils.go:26: calling [github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair]&#10;at utils.go:41: calling [github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult]&#10;at utils.go:36: calling [github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M373.0327,-826C373.0327,-826 244.4121,-826 244.4121,-826 238.4121,-826 232.4121,-820 232.4121,-814 232.4121,-814 232.4121,-802 232.4121,-802 232.4121,-796 238.4121,-790 244.4121,-790 244.4121,-790 373.0327,-790 373.0327,-790 379.0327,-790 385.0327,-796 385.0327,-802 385.0327,-802 385.0327,-814 385.0327,-814 385.0327,-820 379.0327,-826 373.0327,-826"/>
 <text text-anchor="middle" x="308.7224" y="-803.8" font-family="Verdana" font-size="14.00" fill="#000000">EncryptECIESX25519</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs -->
-<g id="node6" class="node">
+<g id="node2" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs</title>
-<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs | defined in utils.go:46">
+<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs | defined in utils.go:46">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M651.1665,-826C651.1665,-826 510.1243,-826 510.1243,-826 504.1243,-826 498.1243,-820 498.1243,-814 498.1243,-814 498.1243,-802 498.1243,-802 498.1243,-796 504.1243,-790 510.1243,-790 510.1243,-790 651.1665,-790 651.1665,-790 657.1665,-790 663.1665,-796 663.1665,-802 663.1665,-802 663.1665,-814 663.1665,-814 663.1665,-820 657.1665,-826 651.1665,-826"/>
 <text text-anchor="middle" x="580.6454" y="-803.8" font-family="Verdana" font-size="14.00" fill="#000000">validateEncryptionInputs</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs -->
-<g id="edge22" class="edge">
+<g id="edge1" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs</title>
-<g id="a_edge22"><a xlink:title="at utils.go:22: calling [github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs]">
+<g id="a_edge1"><a xlink:title="at utils.go:22: calling [github.com/go&#45;i2p/crypto/ecies.validateEncryptionInputs]">
 <path fill="none" stroke="#000000" d="M385.1918,-808C417.0802,-808 454.4074,-808 487.8477,-808"/>
 <polygon fill="#000000" stroke="#000000" points="488.0907,-811.5001 498.0907,-808 488.0906,-804.5001 488.0907,-811.5001"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair -->
-<g id="node7" class="node">
+<g id="node3" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair</title>
-<g id="a_node7"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair | defined in utils.go:59&#10;at utils.go:62: calling [github.com/samber/oops.Errorf]&#10;at utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M657.5628,-948C657.5628,-948 503.728,-948 503.728,-948 497.728,-948 491.728,-942 491.728,-936 491.728,-936 491.728,-924 491.728,-924 491.728,-918 497.728,-912 503.728,-912 503.728,-912 657.5628,-912 657.5628,-912 663.5628,-912 669.5628,-918 669.5628,-924 669.5628,-924 669.5628,-936 669.5628,-936 669.5628,-942 663.5628,-948 657.5628,-948"/>
-<text text-anchor="middle" x="580.6454" y="-925.8" font-family="Verdana" font-size="14.00" fill="#000000">generateEphemeralKeyPair</text>
+<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair | defined in utils.go:59&#10;at utils.go:62: calling [github.com/samber/oops.Errorf]&#10;at utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M657.5628,-704C657.5628,-704 503.728,-704 503.728,-704 497.728,-704 491.728,-698 491.728,-692 491.728,-692 491.728,-680 491.728,-680 491.728,-674 497.728,-668 503.728,-668 503.728,-668 657.5628,-668 657.5628,-668 663.5628,-668 669.5628,-674 669.5628,-680 669.5628,-680 669.5628,-692 669.5628,-692 669.5628,-698 663.5628,-704 657.5628,-704"/>
+<text text-anchor="middle" x="580.6454" y="-681.8" font-family="Verdana" font-size="14.00" fill="#000000">generateEphemeralKeyPair</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair -->
-<g id="edge2" class="edge">
+<g id="edge17" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair</title>
-<g id="a_edge2"><a xlink:title="at utils.go:26: calling [github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair]">
-<path fill="none" stroke="#000000" d="M333.4188,-826.0588C362.6305,-846.6468 413.3685,-880.026 461.3578,-900 469.3077,-903.3089 477.7129,-906.3197 486.2326,-909.0443"/>
-<polygon fill="#000000" stroke="#000000" points="485.2955,-912.4177 495.8821,-911.9994 487.3453,-905.7246 485.2955,-912.4177"/>
+<g id="a_edge17"><a xlink:title="at utils.go:26: calling [github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair]">
+<path fill="none" stroke="#000000" d="M334.0036,-789.8563C363.3512,-769.5414 413.822,-736.8704 461.3578,-717 470.076,-713.3557 479.3359,-710.0463 488.6914,-707.0646"/>
+<polygon fill="#000000" stroke="#000000" points="489.9188,-710.3493 498.4565,-704.0757 487.87,-703.6558 489.9188,-710.3493"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey -->
-<g id="node8" class="node">
+<g id="node6" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey</title>
-<g id="a_node8"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey | defined in utils.go:69&#10;at utils.go:76: calling [github.com/samber/oops.Errorf]&#10;at utils.go:84: calling [github.com/samber/oops.Errorf]&#10;at utils.go:81: calling [golang.org/x/crypto/hkdf.New]&#10;at utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M640.6568,-765C640.6568,-765 520.634,-765 520.634,-765 514.634,-765 508.634,-759 508.634,-753 508.634,-753 508.634,-741 508.634,-741 508.634,-735 514.634,-729 520.634,-729 520.634,-729 640.6568,-729 640.6568,-729 646.6568,-729 652.6568,-735 652.6568,-741 652.6568,-741 652.6568,-753 652.6568,-753 652.6568,-759 646.6568,-765 640.6568,-765"/>
-<text text-anchor="middle" x="580.6454" y="-742.8" font-family="Verdana" font-size="14.00" fill="#000000">deriveEncryptionKey</text>
+<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey | defined in utils.go:69&#10;at utils.go:81: calling [golang.org/x/crypto/hkdf.New]&#10;at utils.go:76: calling [github.com/samber/oops.Errorf]&#10;at utils.go:84: calling [github.com/samber/oops.Errorf]&#10;at utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M640.6568,-887C640.6568,-887 520.634,-887 520.634,-887 514.634,-887 508.634,-881 508.634,-875 508.634,-875 508.634,-863 508.634,-863 508.634,-857 514.634,-851 520.634,-851 520.634,-851 640.6568,-851 640.6568,-851 646.6568,-851 652.6568,-857 652.6568,-863 652.6568,-863 652.6568,-875 652.6568,-875 652.6568,-881 646.6568,-887 640.6568,-887"/>
+<text text-anchor="middle" x="580.6454" y="-864.8" font-family="Verdana" font-size="14.00" fill="#000000">deriveEncryptionKey</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey -->
-<g id="edge35" class="edge">
+<g id="edge3" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey</title>
-<g id="a_edge35"><a xlink:title="at utils.go:31: calling [github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey]">
-<path fill="none" stroke="#000000" d="M385.1918,-790.8458C420.514,-782.922 462.5094,-773.5012 498.5036,-765.4267"/>
-<polygon fill="#000000" stroke="#000000" points="499.4948,-768.7914 508.4862,-763.1874 497.9625,-761.9612 499.4948,-768.7914"/>
+<g id="a_edge3"><a xlink:title="at utils.go:31: calling [github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey]">
+<path fill="none" stroke="#000000" d="M385.1918,-825.1542C420.514,-833.078 462.5094,-842.4988 498.5036,-850.5733"/>
+<polygon fill="#000000" stroke="#000000" points="497.9625,-854.0388 508.4862,-852.8126 499.4948,-847.2086 497.9625,-854.0388"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD -->
-<g id="node10" class="node">
+<g id="node8" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD</title>
-<g id="a_node10"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD | defined in utils.go:91&#10;at utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]&#10;at utils.go:95: calling [github.com/samber/oops.Errorf]&#10;at utils.go:101: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M634.9941,-643C634.9941,-643 526.2967,-643 526.2967,-643 520.2967,-643 514.2967,-637 514.2967,-631 514.2967,-631 514.2967,-619 514.2967,-619 514.2967,-613 520.2967,-607 526.2967,-607 526.2967,-607 634.9941,-607 634.9941,-607 640.9941,-607 646.9941,-613 646.9941,-619 646.9941,-619 646.9941,-631 646.9941,-631 646.9941,-637 640.9941,-643 634.9941,-643"/>
-<text text-anchor="middle" x="580.6454" y="-620.8" font-family="Verdana" font-size="14.00" fill="#000000">encryptWithAEAD</text>
+<g id="a_node8"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD | defined in utils.go:91&#10;at utils.go:95: calling [github.com/samber/oops.Errorf]&#10;at utils.go:101: calling [github.com/samber/oops.Errorf]&#10;at utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M634.9941,-582C634.9941,-582 526.2967,-582 526.2967,-582 520.2967,-582 514.2967,-576 514.2967,-570 514.2967,-570 514.2967,-558 514.2967,-558 514.2967,-552 520.2967,-546 526.2967,-546 526.2967,-546 634.9941,-546 634.9941,-546 640.9941,-546 646.9941,-552 646.9941,-558 646.9941,-558 646.9941,-570 646.9941,-570 646.9941,-576 640.9941,-582 634.9941,-582"/>
+<text text-anchor="middle" x="580.6454" y="-559.8" font-family="Verdana" font-size="14.00" fill="#000000">encryptWithAEAD</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD -->
-<g id="edge4" class="edge">
+<g id="edge34" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD</title>
-<g id="a_edge4"><a xlink:title="at utils.go:36: calling [github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD]">
-<path fill="none" stroke="#000000" d="M321.6227,-789.9254C345.4625,-757.894 399.6516,-691.2309 461.3578,-656 474.5431,-648.4719 489.5836,-642.7354 504.4378,-638.3756"/>
-<polygon fill="#000000" stroke="#000000" points="505.4369,-641.7309 514.1509,-635.7045 503.5808,-634.9815 505.4369,-641.7309"/>
+<g id="a_edge34"><a xlink:title="at utils.go:36: calling [github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD]">
+<path fill="none" stroke="#000000" d="M316.3921,-789.8964C334.8702,-748.5468 385.9719,-646.7554 461.3578,-595 474.092,-586.2575 489.1295,-579.9805 504.1589,-575.4738"/>
+<polygon fill="#000000" stroke="#000000" points="505.2988,-578.7902 514.01,-572.7597 503.4395,-572.0416 505.2988,-578.7902"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult -->
-<g id="node12" class="node">
+<g id="node10" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult</title>
-<g id="a_node12"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult | defined in utils.go:111">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M642.3022,-887C642.3022,-887 518.9886,-887 518.9886,-887 512.9886,-887 506.9886,-881 506.9886,-875 506.9886,-875 506.9886,-863 506.9886,-863 506.9886,-857 512.9886,-851 518.9886,-851 518.9886,-851 642.3022,-851 642.3022,-851 648.3022,-851 654.3022,-857 654.3022,-863 654.3022,-863 654.3022,-875 654.3022,-875 654.3022,-881 648.3022,-887 642.3022,-887"/>
-<text text-anchor="middle" x="580.6454" y="-864.8" font-family="Verdana" font-size="14.00" fill="#000000">buildCiphertextResult</text>
+<g id="a_node10"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult | defined in utils.go:111">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M642.3022,-948C642.3022,-948 518.9886,-948 518.9886,-948 512.9886,-948 506.9886,-942 506.9886,-936 506.9886,-936 506.9886,-924 506.9886,-924 506.9886,-918 512.9886,-912 518.9886,-912 518.9886,-912 642.3022,-912 642.3022,-912 648.3022,-912 654.3022,-918 654.3022,-924 654.3022,-924 654.3022,-936 654.3022,-936 654.3022,-942 648.3022,-948 642.3022,-948"/>
+<text text-anchor="middle" x="580.6454" y="-925.8" font-family="Verdana" font-size="14.00" fill="#000000">buildCiphertextResult</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult -->
-<g id="edge5" class="edge">
+<g id="edge31" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult</title>
-<g id="a_edge5"><a xlink:title="at utils.go:41: calling [github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult]">
-<path fill="none" stroke="#000000" d="M385.1918,-825.1542C419.9397,-832.9492 461.1454,-842.1928 496.7431,-850.1783"/>
-<polygon fill="#000000" stroke="#000000" points="496.1011,-853.6212 506.6247,-852.3951 497.6333,-846.791 496.1011,-853.6212"/>
+<g id="a_edge31"><a xlink:title="at utils.go:41: calling [github.com/go&#45;i2p/crypto/ecies.buildCiphertextResult]">
+<path fill="none" stroke="#000000" d="M333.4188,-826.0588C362.6305,-846.6468 413.3685,-880.026 461.3578,-900 472.714,-904.7266 484.999,-908.8451 497.2199,-912.3897"/>
+<polygon fill="#000000" stroke="#000000" points="496.4157,-915.7989 506.9881,-915.11 498.2937,-909.0555 496.4157,-915.7989"/>
+</a>
+</g>
+</g>
+<!-- go.step.sm/crypto/x25519.GenerateKey -->
+<g id="node4" class="node">
+<title>go.step.sm/crypto/x25519.GenerateKey</title>
+<g id="a_node4"><a xlink:title="go.step.sm/crypto/x25519.GenerateKey | defined in x25519.go:37">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M874.645,-708C874.645,-708 800.97,-708 800.97,-708 794.97,-708 788.97,-702 788.97,-696 788.97,-696 788.97,-684 788.97,-684 788.97,-678 794.97,-672 800.97,-672 800.97,-672 874.645,-672 874.645,-672 880.645,-672 886.645,-678 886.645,-684 886.645,-684 886.645,-696 886.645,-696 886.645,-702 880.645,-708 874.645,-708"/>
+<text text-anchor="middle" x="837.8075" y="-694.2" font-family="Verdana" font-size="14.00" fill="#000000">x25519</text>
+<text text-anchor="middle" x="837.8075" y="-677.4" font-family="Verdana" font-size="14.00" fill="#000000">GenerateKey</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair&#45;&gt;go.step.sm/crypto/x25519.GenerateKey -->
-<g id="edge18" class="edge">
+<g id="edge10" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair&#45;&gt;go.step.sm/crypto/x25519.GenerateKey</title>
-<g id="a_edge18"><a xlink:title="at utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]">
-<path fill="none" stroke="#8b4513" d="M654.9482,-911.9972C669.8843,-908.1862 685.4411,-904.0787 699.933,-900 726.0253,-892.6564 754.6673,-883.847 779.0528,-876.1193"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="780.4048,-879.362 788.8719,-872.9934 778.2813,-872.6919 780.4048,-879.362"/>
+<g id="a_edge10"><a xlink:title="at utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]">
+<path fill="none" stroke="#8b4513" d="M669.8665,-687.3878C705.8642,-687.9477 746.4169,-688.5785 778.6538,-689.0799"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="778.7586,-692.5819 788.8118,-689.2379 778.8675,-685.5827 778.7586,-692.5819"/>
+</a>
+</g>
+</g>
+<!-- github.com/samber/oops.Errorf -->
+<g id="node5" class="node">
+<title>github.com/samber/oops.Errorf</title>
+<g id="a_node5"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M855.0028,-616C855.0028,-616 820.6122,-616 820.6122,-616 814.6122,-616 808.6122,-610 808.6122,-604 808.6122,-604 808.6122,-592 808.6122,-592 808.6122,-586 814.6122,-580 820.6122,-580 820.6122,-580 855.0028,-580 855.0028,-580 861.0028,-580 867.0028,-586 867.0028,-592 867.0028,-592 867.0028,-604 867.0028,-604 867.0028,-610 861.0028,-616 855.0028,-616"/>
+<text text-anchor="middle" x="837.8075" y="-602.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
+<text text-anchor="middle" x="837.8075" y="-585.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge8" class="edge">
+<g id="edge2" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.generateEphemeralKeyPair&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge8"><a xlink:title="at utils.go:62: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M669.8018,-919.1411C680.9947,-914.6302 691.4657,-908.4446 699.933,-900 793.1254,-807.0579 687.5194,-713.1378 772.933,-613 779.7395,-605.0201 789.236,-599.2473 798.8663,-595.0973"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="800.3359,-598.2834 808.4466,-591.4668 797.8552,-591.7376 800.3359,-598.2834"/>
+<g id="a_edge2"><a xlink:title="at utils.go:62: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M659.4189,-667.9925C673.0327,-664.3683 686.9698,-660.3289 699.933,-656 734.195,-644.5588 771.9297,-628.4271 799.2478,-616.0801"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="800.8054,-619.2166 808.4534,-611.8845 797.9023,-612.847 800.8054,-619.2166"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge9" class="edge">
+<g id="edge18" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge9"><a xlink:title="at utils.go:76: calling [github.com/samber/oops.Errorf]&#10;at utils.go:84: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M652.9321,-737.5199C669.3537,-733.0786 686.0342,-726.5615 699.933,-717 746.4592,-684.993 729.1324,-648.6461 772.933,-613 780.6301,-606.7359 789.941,-601.6347 799.0771,-597.5869"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="800.5314,-600.7736 808.4596,-593.7455 797.8791,-594.2955 800.5314,-600.7736"/>
+<g id="a_edge18"><a xlink:title="at utils.go:76: calling [github.com/samber/oops.Errorf]&#10;at utils.go:84: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M652.7314,-862.1726C669.7197,-857.6836 686.7105,-850.48 699.933,-839 764.8098,-782.673 724.5881,-731.0246 772.933,-660 782.1925,-646.3967 794.8551,-633.4641 806.5363,-622.9645"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="809.1696,-625.3125 814.4126,-616.1059 804.5726,-620.0334 809.1696,-625.3125"/>
 </a>
 </g>
 </g>
 <!-- golang.org/x/crypto/hkdf.New -->
-<g id="node9" class="node">
+<g id="node7" class="node">
 <title>golang.org/x/crypto/hkdf.New</title>
-<g id="a_node9"><a xlink:title="golang.org/x/crypto/hkdf.New | defined in hkdf.go:92">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M852.8075,-760C852.8075,-760 822.8075,-760 822.8075,-760 816.8075,-760 810.8075,-754 810.8075,-748 810.8075,-748 810.8075,-736 810.8075,-736 810.8075,-730 816.8075,-724 822.8075,-724 822.8075,-724 852.8075,-724 852.8075,-724 858.8075,-724 864.8075,-730 864.8075,-736 864.8075,-736 864.8075,-748 864.8075,-748 864.8075,-754 858.8075,-760 852.8075,-760"/>
-<text text-anchor="middle" x="837.8075" y="-746.2" font-family="Verdana" font-size="14.00" fill="#000000">hkdf</text>
-<text text-anchor="middle" x="837.8075" y="-729.4" font-family="Verdana" font-size="14.00" fill="#000000">New</text>
+<g id="a_node7"><a xlink:title="golang.org/x/crypto/hkdf.New | defined in hkdf.go:92">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M852.8075,-796C852.8075,-796 822.8075,-796 822.8075,-796 816.8075,-796 810.8075,-790 810.8075,-784 810.8075,-784 810.8075,-772 810.8075,-772 810.8075,-766 816.8075,-760 822.8075,-760 822.8075,-760 852.8075,-760 852.8075,-760 858.8075,-760 864.8075,-766 864.8075,-772 864.8075,-772 864.8075,-784 864.8075,-784 864.8075,-790 858.8075,-796 852.8075,-796"/>
+<text text-anchor="middle" x="837.8075" y="-782.2" font-family="Verdana" font-size="14.00" fill="#000000">hkdf</text>
+<text text-anchor="middle" x="837.8075" y="-765.4" font-family="Verdana" font-size="14.00" fill="#000000">New</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey&#45;&gt;golang.org/x/crypto/hkdf.New -->
-<g id="edge19" class="edge">
+<g id="edge11" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey&#45;&gt;golang.org/x/crypto/hkdf.New</title>
-<g id="a_edge19"><a xlink:title="at utils.go:81: calling [golang.org/x/crypto/hkdf.New]">
-<path fill="none" stroke="#8b4513" d="M652.9637,-745.5939C700.8983,-744.6619 761.8277,-743.4773 800.3356,-742.7286"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="800.6428,-746.2234 810.5728,-742.5295 800.5066,-739.2247 800.6428,-746.2234"/>
+<g id="a_edge11"><a xlink:title="at utils.go:81: calling [golang.org/x/crypto/hkdf.New]">
+<path fill="none" stroke="#8b4513" d="M652.8973,-853.1695C668.5718,-849.0878 684.9406,-844.3224 699.933,-839 733.6615,-827.0261 740.1821,-819.4348 772.933,-805 782.0468,-800.9832 791.9455,-796.7824 801.2017,-792.9235"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="802.6566,-796.1092 810.5552,-789.0479 799.977,-789.6424 802.6566,-796.1092"/>
 </a>
 </g>
 </g>
@@ -333,145 +231,145 @@
 <g id="node27" class="node">
 <title>(go.step.sm/crypto/x25519.PrivateKey).SharedKey</title>
 <g id="a_node27"><a xlink:title="(go.step.sm/crypto/x25519.PrivateKey).SharedKey | defined in x25519.go:101">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M869.0013,-689C869.0013,-689 806.6137,-689 806.6137,-689 800.6137,-689 794.6137,-683 794.6137,-677 794.6137,-677 794.6137,-665 794.6137,-665 794.6137,-659 800.6137,-653 806.6137,-653 806.6137,-653 869.0013,-653 869.0013,-653 875.0013,-653 881.0013,-659 881.0013,-665 881.0013,-665 881.0013,-677 881.0013,-677 881.0013,-683 875.0013,-689 869.0013,-689"/>
-<text text-anchor="middle" x="837.8075" y="-675.2" font-family="Verdana" font-size="14.00" fill="#000000">x25519</text>
-<text text-anchor="middle" x="837.8075" y="-658.4" font-family="Verdana" font-size="14.00" fill="#000000">SharedKey</text>
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M869.0013,-881C869.0013,-881 806.6137,-881 806.6137,-881 800.6137,-881 794.6137,-875 794.6137,-869 794.6137,-869 794.6137,-857 794.6137,-857 794.6137,-851 800.6137,-845 806.6137,-845 806.6137,-845 869.0013,-845 869.0013,-845 875.0013,-845 881.0013,-851 881.0013,-857 881.0013,-857 881.0013,-869 881.0013,-869 881.0013,-875 875.0013,-881 869.0013,-881"/>
+<text text-anchor="middle" x="837.8075" y="-867.2" font-family="Verdana" font-size="14.00" fill="#000000">x25519</text>
+<text text-anchor="middle" x="837.8075" y="-850.4" font-family="Verdana" font-size="14.00" fill="#000000">SharedKey</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey&#45;&gt;(go.step.sm/crypto/x25519.PrivateKey).SharedKey -->
-<g id="edge33" class="edge">
+<g id="edge30" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.deriveEncryptionKey&#45;&gt;(go.step.sm/crypto/x25519.PrivateKey).SharedKey</title>
-<g id="a_edge33"><a xlink:title="at utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]">
-<path fill="none" stroke="#8b4513" d="M652.7935,-729.7895C668.398,-725.8069 684.7645,-721.4309 699.933,-717 708.4845,-714.502 749.5589,-700.7614 784.6713,-688.9423"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="786.025,-692.1796 794.3847,-685.6707 783.7906,-685.5458 786.025,-692.1796"/>
+<g id="a_edge30"><a xlink:title="at utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]">
+<path fill="none" stroke="#8b4513" d="M652.9637,-867.3127C694.6519,-866.34 746.1688,-865.1381 784.2177,-864.2503"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="784.6573,-867.7411 794.5729,-864.0087 784.494,-860.743 784.6573,-867.7411"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge23" class="edge">
+<g id="edge19" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge23"><a xlink:title="at utils.go:95: calling [github.com/samber/oops.Errorf]&#10;at utils.go:101: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M647.2055,-614.647C695.2585,-607.1726 758.5083,-597.3345 798.6756,-591.0867"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="799.272,-594.5361 808.6152,-589.5407 798.1961,-587.6193 799.272,-594.5361"/>
+<g id="a_edge19"><a xlink:title="at utils.go:95: calling [github.com/samber/oops.Errorf]&#10;at utils.go:101: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M647.2055,-572.8001C695.2585,-579.1533 758.5083,-587.5157 798.6756,-592.8263"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="798.2427,-596.2994 808.6152,-594.1404 799.1603,-589.3598 798.2427,-596.2994"/>
 </a>
 </g>
 </g>
 <!-- golang.org/x/crypto/chacha20poly1305.New -->
-<g id="node11" class="node">
+<g id="node9" class="node">
 <title>golang.org/x/crypto/chacha20poly1305.New</title>
-<g id="a_node11"><a xlink:title="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M890.5567,-389C890.5567,-389 785.0583,-389 785.0583,-389 779.0583,-389 773.0583,-383 773.0583,-377 773.0583,-377 773.0583,-365 773.0583,-365 773.0583,-359 779.0583,-353 785.0583,-353 785.0583,-353 890.5567,-353 890.5567,-353 896.5567,-353 902.5567,-359 902.5567,-365 902.5567,-365 902.5567,-377 902.5567,-377 902.5567,-383 896.5567,-389 890.5567,-389"/>
-<text text-anchor="middle" x="837.8075" y="-375.2" font-family="Verdana" font-size="14.00" fill="#000000">chacha20poly1305</text>
-<text text-anchor="middle" x="837.8075" y="-358.4" font-family="Verdana" font-size="14.00" fill="#000000">New</text>
+<g id="a_node9"><a xlink:title="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M890.5567,-210C890.5567,-210 785.0583,-210 785.0583,-210 779.0583,-210 773.0583,-204 773.0583,-198 773.0583,-198 773.0583,-186 773.0583,-186 773.0583,-180 779.0583,-174 785.0583,-174 785.0583,-174 890.5567,-174 890.5567,-174 896.5567,-174 902.5567,-180 902.5567,-186 902.5567,-186 902.5567,-198 902.5567,-198 902.5567,-204 896.5567,-210 890.5567,-210"/>
+<text text-anchor="middle" x="837.8075" y="-196.2" font-family="Verdana" font-size="14.00" fill="#000000">chacha20poly1305</text>
+<text text-anchor="middle" x="837.8075" y="-179.4" font-family="Verdana" font-size="14.00" fill="#000000">New</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD&#45;&gt;golang.org/x/crypto/chacha20poly1305.New -->
-<g id="edge3" class="edge">
+<g id="edge26" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.encryptWithAEAD&#45;&gt;golang.org/x/crypto/chacha20poly1305.New</title>
-<g id="a_edge3"><a xlink:title="at utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]">
-<path fill="none" stroke="#8b4513" d="M647.134,-618.3403C665.5148,-614.0804 684.6033,-607.1715 699.933,-596 769.7828,-545.0972 811.5595,-447.0254 828.7053,-398.9507"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="832.1121,-399.809 832.083,-389.2142 825.4988,-397.5146 832.1121,-399.809"/>
+<g id="a_edge26"><a xlink:title="at utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]">
+<path fill="none" stroke="#8b4513" d="M647.1557,-559.2082C665.9581,-555.0279 685.2696,-547.6941 699.933,-535 797.8363,-450.2449 827.0597,-286.0227 835.0476,-220.2469"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="838.5368,-220.5399 836.1924,-210.2077 831.5819,-219.7467 838.5368,-220.5399"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519 -->
-<g id="node13" class="node">
+<g id="node11" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519</title>
-<g id="a_node13"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519 | defined in utils.go:130&#10;at utils.go:131: calling [github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs]&#10;at utils.go:135: calling [github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents]&#10;at utils.go:139: calling [github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation]&#10;at utils.go:137: calling [github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format]&#10;at utils.go:144: calling [github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD]">
+<g id="a_node11"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519 | defined in utils.go:130&#10;at utils.go:135: calling [github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents]&#10;at utils.go:139: calling [github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation]&#10;at utils.go:144: calling [github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD]&#10;at utils.go:137: calling [github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format]&#10;at utils.go:131: calling [github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M373.301,-235C373.301,-235 244.1438,-235 244.1438,-235 238.1438,-235 232.1438,-229 232.1438,-223 232.1438,-223 232.1438,-211 232.1438,-211 232.1438,-205 238.1438,-199 244.1438,-199 244.1438,-199 373.301,-199 373.301,-199 379.301,-199 385.301,-205 385.301,-211 385.301,-211 385.301,-223 385.301,-223 385.301,-229 379.301,-235 373.301,-235"/>
 <text text-anchor="middle" x="308.7224" y="-212.8" font-family="Verdana" font-size="14.00" fill="#000000">DecryptECIESX25519</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs -->
-<g id="node14" class="node">
+<g id="node12" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs</title>
-<g id="a_node14"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs | defined in utils.go:153">
+<g id="a_node12"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs | defined in utils.go:153">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M651.9347,-113C651.9347,-113 509.3561,-113 509.3561,-113 503.3561,-113 497.3561,-107 497.3561,-101 497.3561,-101 497.3561,-89 497.3561,-89 497.3561,-83 503.3561,-77 509.3561,-77 509.3561,-77 651.9347,-77 651.9347,-77 657.9347,-77 663.9347,-83 663.9347,-89 663.9347,-89 663.9347,-101 663.9347,-101 663.9347,-107 657.9347,-113 651.9347,-113"/>
 <text text-anchor="middle" x="580.6454" y="-90.8" font-family="Verdana" font-size="14.00" fill="#000000">validateDecryptionInputs</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs -->
-<g id="edge10" class="edge">
+<g id="edge27" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs</title>
-<g id="a_edge10"><a xlink:title="at utils.go:131: calling [github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs]">
+<g id="a_edge27"><a xlink:title="at utils.go:131: calling [github.com/go&#45;i2p/crypto/ecies.validateDecryptionInputs]">
 <path fill="none" stroke="#000000" d="M334.0036,-198.8563C363.3512,-178.5414 413.822,-145.8704 461.3578,-126 470.076,-122.3557 479.3359,-119.0463 488.6914,-116.0646"/>
 <polygon fill="#000000" stroke="#000000" points="489.9188,-119.3493 498.4565,-113.0757 487.87,-112.6558 489.9188,-119.3493"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents -->
-<g id="node15" class="node">
+<g id="node13" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents</title>
-<g id="a_node15"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents | defined in utils.go:167">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M664.6062,-296C664.6062,-296 496.6846,-296 496.6846,-296 490.6846,-296 484.6846,-290 484.6846,-284 484.6846,-284 484.6846,-272 484.6846,-272 484.6846,-266 490.6846,-260 496.6846,-260 496.6846,-260 664.6062,-260 664.6062,-260 670.6062,-260 676.6062,-266 676.6062,-272 676.6062,-272 676.6062,-284 676.6062,-284 676.6062,-290 670.6062,-296 664.6062,-296"/>
-<text text-anchor="middle" x="580.6454" y="-273.8" font-family="Verdana" font-size="14.00" fill="#000000">extractCiphertextComponents</text>
+<g id="a_node13"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents | defined in utils.go:167">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M664.6062,-235C664.6062,-235 496.6846,-235 496.6846,-235 490.6846,-235 484.6846,-229 484.6846,-223 484.6846,-223 484.6846,-211 484.6846,-211 484.6846,-205 490.6846,-199 496.6846,-199 496.6846,-199 664.6062,-199 664.6062,-199 670.6062,-199 676.6062,-205 676.6062,-211 676.6062,-211 676.6062,-223 676.6062,-223 676.6062,-229 670.6062,-235 664.6062,-235"/>
+<text text-anchor="middle" x="580.6454" y="-212.8" font-family="Verdana" font-size="14.00" fill="#000000">extractCiphertextComponents</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents -->
-<g id="edge11" class="edge">
+<g id="edge7" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents</title>
-<g id="a_edge11"><a xlink:title="at utils.go:135: calling [github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents]">
+<g id="a_edge7"><a xlink:title="at utils.go:135: calling [github.com/go&#45;i2p/crypto/ecies.extractCiphertextComponents]">
+<path fill="none" stroke="#000000" d="M385.5543,-217C413.0899,-217 444.6442,-217 474.2359,-217"/>
+<polygon fill="#000000" stroke="#000000" points="474.6112,-220.5001 484.6111,-217 474.6111,-213.5001 474.6112,-220.5001"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format -->
+<g id="node14" class="node">
+<title>github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format</title>
+<g id="a_node14"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format | defined in utils.go:175">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M666.4899,-296C666.4899,-296 494.8009,-296 494.8009,-296 488.8009,-296 482.8009,-290 482.8009,-284 482.8009,-284 482.8009,-272 482.8009,-272 482.8009,-266 488.8009,-260 494.8009,-260 494.8009,-260 666.4899,-260 666.4899,-260 672.4899,-260 678.4899,-266 678.4899,-272 678.4899,-272 678.4899,-284 678.4899,-284 678.4899,-290 672.4899,-296 666.4899,-296"/>
+<text text-anchor="middle" x="580.6454" y="-273.8" font-family="Verdana" font-size="14.00" fill="#000000">convertKeysToX25519Format</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format -->
+<g id="edge12" class="edge">
+<title>github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format</title>
+<g id="a_edge12"><a xlink:title="at utils.go:137: calling [github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format]">
 <path fill="none" stroke="#000000" d="M385.5543,-234.2356C418.145,-241.5466 456.3654,-250.1205 490.2981,-257.7326"/>
 <polygon fill="#000000" stroke="#000000" points="489.6884,-261.1827 500.212,-259.9565 491.2206,-254.3524 489.6884,-261.1827"/>
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format -->
-<g id="node16" class="node">
-<title>github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format</title>
-<g id="a_node16"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format | defined in utils.go:175">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M666.4899,-235C666.4899,-235 494.8009,-235 494.8009,-235 488.8009,-235 482.8009,-229 482.8009,-223 482.8009,-223 482.8009,-211 482.8009,-211 482.8009,-205 488.8009,-199 494.8009,-199 494.8009,-199 666.4899,-199 666.4899,-199 672.4899,-199 678.4899,-205 678.4899,-211 678.4899,-211 678.4899,-223 678.4899,-223 678.4899,-229 672.4899,-235 666.4899,-235"/>
-<text text-anchor="middle" x="580.6454" y="-212.8" font-family="Verdana" font-size="14.00" fill="#000000">convertKeysToX25519Format</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format -->
-<g id="edge14" class="edge">
-<title>github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format</title>
-<g id="a_edge14"><a xlink:title="at utils.go:137: calling [github.com/go&#45;i2p/crypto/ecies.convertKeysToX25519Format]">
-<path fill="none" stroke="#000000" d="M385.5543,-217C412.528,-217 443.3579,-217 472.4217,-217"/>
-<polygon fill="#000000" stroke="#000000" points="472.6191,-220.5001 482.6191,-217 472.619,-213.5001 472.6191,-220.5001"/>
-</a>
-</g>
-</g>
 <!-- github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation -->
-<g id="node17" class="node">
+<g id="node15" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation</title>
-<g id="a_node17"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation | defined in utils.go:182&#10;at utils.go:188: calling [golang.org/x/crypto/hkdf.New]&#10;at utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]&#10;at utils.go:185: calling [github.com/samber/oops.Errorf]&#10;at utils.go:191: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M687.721,-357C687.721,-357 473.5698,-357 473.5698,-357 467.5698,-357 461.5698,-351 461.5698,-345 461.5698,-345 461.5698,-333 461.5698,-333 461.5698,-327 467.5698,-321 473.5698,-321 473.5698,-321 687.721,-321 687.721,-321 693.721,-321 699.721,-327 699.721,-333 699.721,-333 699.721,-345 699.721,-345 699.721,-351 693.721,-357 687.721,-357"/>
-<text text-anchor="middle" x="580.6454" y="-334.8" font-family="Verdana" font-size="14.00" fill="#000000">performKeyAgreementAndDerivation</text>
+<g id="a_node15"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation | defined in utils.go:182&#10;at utils.go:188: calling [golang.org/x/crypto/hkdf.New]&#10;at utils.go:185: calling [github.com/samber/oops.Errorf]&#10;at utils.go:191: calling [github.com/samber/oops.Errorf]&#10;at utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M687.721,-765C687.721,-765 473.5698,-765 473.5698,-765 467.5698,-765 461.5698,-759 461.5698,-753 461.5698,-753 461.5698,-741 461.5698,-741 461.5698,-735 467.5698,-729 473.5698,-729 473.5698,-729 687.721,-729 687.721,-729 693.721,-729 699.721,-735 699.721,-741 699.721,-741 699.721,-753 699.721,-753 699.721,-759 693.721,-765 687.721,-765"/>
+<text text-anchor="middle" x="580.6454" y="-742.8" font-family="Verdana" font-size="14.00" fill="#000000">performKeyAgreementAndDerivation</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation -->
-<g id="edge13" class="edge">
+<g id="edge8" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation</title>
-<g id="a_edge13"><a xlink:title="at utils.go:139: calling [github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation]">
-<path fill="none" stroke="#000000" d="M333.4188,-235.0588C362.6305,-255.6468 413.3685,-289.026 461.3578,-309 469.3077,-312.3089 477.7129,-315.3197 486.2326,-318.0443"/>
-<polygon fill="#000000" stroke="#000000" points="485.2955,-321.4177 495.8821,-320.9994 487.3453,-314.7246 485.2955,-321.4177"/>
+<g id="a_edge8"><a xlink:title="at utils.go:139: calling [github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation]">
+<path fill="none" stroke="#000000" d="M319.8907,-235.4092C336.9912,-264.3485 369.6439,-322.6919 388.3578,-376 439.6955,-522.2401 353.7256,-605.4785 461.3578,-717 463.4432,-719.1608 465.6595,-721.1747 467.9859,-723.0513"/>
+<polygon fill="#000000" stroke="#000000" points="466.103,-726.0064 476.2902,-728.9171 470.1416,-720.2889 466.103,-726.0064"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD -->
-<g id="node18" class="node">
+<g id="node16" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD</title>
-<g id="a_node18"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD | defined in utils.go:198&#10;at utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]&#10;at utils.go:201: calling [github.com/samber/oops.Errorf]&#10;at utils.go:206: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M634.9941,-52C634.9941,-52 526.2967,-52 526.2967,-52 520.2967,-52 514.2967,-46 514.2967,-40 514.2967,-40 514.2967,-28 514.2967,-28 514.2967,-22 520.2967,-16 526.2967,-16 526.2967,-16 634.9941,-16 634.9941,-16 640.9941,-16 646.9941,-22 646.9941,-28 646.9941,-28 646.9941,-40 646.9941,-40 646.9941,-46 640.9941,-52 634.9941,-52"/>
-<text text-anchor="middle" x="580.6454" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">decryptWithAEAD</text>
+<g id="a_node16"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD | defined in utils.go:198&#10;at utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]&#10;at utils.go:201: calling [github.com/samber/oops.Errorf]&#10;at utils.go:206: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M634.9941,-174C634.9941,-174 526.2967,-174 526.2967,-174 520.2967,-174 514.2967,-168 514.2967,-162 514.2967,-162 514.2967,-150 514.2967,-150 514.2967,-144 520.2967,-138 526.2967,-138 526.2967,-138 634.9941,-138 634.9941,-138 640.9941,-138 646.9941,-144 646.9941,-150 646.9941,-150 646.9941,-162 646.9941,-162 646.9941,-168 640.9941,-174 634.9941,-174"/>
+<text text-anchor="middle" x="580.6454" y="-151.8" font-family="Verdana" font-size="14.00" fill="#000000">decryptWithAEAD</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD -->
-<g id="edge15" class="edge">
+<g id="edge9" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519&#45;&gt;github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD</title>
-<g id="a_edge15"><a xlink:title="at utils.go:144: calling [github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD]">
-<path fill="none" stroke="#000000" d="M321.6227,-198.9254C345.4625,-166.894 399.6516,-100.2309 461.3578,-65 474.5431,-57.4719 489.5836,-51.7354 504.4378,-47.3756"/>
-<polygon fill="#000000" stroke="#000000" points="505.4369,-50.7309 514.1509,-44.7045 503.5808,-43.9815 505.4369,-50.7309"/>
+<g id="a_edge9"><a xlink:title="at utils.go:144: calling [github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD]">
+<path fill="none" stroke="#000000" d="M385.5543,-199.7644C422.7499,-191.4204 467.2782,-181.4315 504.3967,-173.1047"/>
+<polygon fill="#000000" stroke="#000000" points="505.1682,-176.5187 514.1595,-170.9147 503.6359,-169.6885 505.1682,-176.5187"/>
 </a>
 </g>
 </g>
@@ -479,81 +377,183 @@
 <g id="edge28" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation&#45;&gt;github.com/samber/oops.Errorf</title>
 <g id="a_edge28"><a xlink:title="at utils.go:185: calling [github.com/samber/oops.Errorf]&#10;at utils.go:191: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M693.7654,-357.1249C695.8762,-358.3409 697.9352,-359.6311 699.933,-361 771.3262,-409.9176 812.5766,-509.1722 829.1865,-557.4239"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="825.8678,-558.5361 832.3589,-566.9097 832.5064,-556.3159 825.8678,-558.5361"/>
+<path fill="none" stroke="#8b4513" d="M671.5388,-728.9157C681.3703,-725.5674 691.0269,-721.6277 699.933,-717 724.2847,-704.3464 779.0029,-654.1402 811.7106,-623.1251"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="814.2968,-625.4955 819.1256,-616.0651 809.4698,-620.4259 814.2968,-625.4955"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation&#45;&gt;golang.org/x/crypto/hkdf.New -->
-<g id="edge12" class="edge">
+<g id="edge20" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation&#45;&gt;golang.org/x/crypto/hkdf.New</title>
-<g id="a_edge12"><a xlink:title="at utils.go:188: calling [golang.org/x/crypto/hkdf.New]">
-<path fill="none" stroke="#8b4513" d="M695.7064,-357.2301C697.1636,-358.423 698.5742,-359.6787 699.933,-361 727.7892,-388.0892 750.3592,-671.3739 772.933,-703 780.2098,-713.1949 791.0609,-721.2044 801.816,-727.2428"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="800.2562,-730.3764 810.7472,-731.856 803.4687,-724.157 800.2562,-730.3764"/>
+<g id="a_edge20"><a xlink:title="at utils.go:188: calling [golang.org/x/crypto/hkdf.New]">
+<path fill="none" stroke="#8b4513" d="M699.8164,-761.3656C736.3526,-765.77 773.9075,-770.2971 800.5965,-773.5143"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="800.2756,-777.0009 810.6226,-774.723 801.1134,-770.0512 800.2756,-777.0009"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation&#45;&gt;(go.step.sm/crypto/x25519.PrivateKey).SharedKey -->
-<g id="edge27" class="edge">
+<g id="edge35" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.performKeyAgreementAndDerivation&#45;&gt;(go.step.sm/crypto/x25519.PrivateKey).SharedKey</title>
-<g id="a_edge27"><a xlink:title="at utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]">
-<path fill="none" stroke="#8b4513" d="M695.637,-357.3028C697.1157,-358.4732 698.5494,-359.7047 699.933,-361 796.3287,-451.2469 683.3067,-552.027 772.933,-649 776.4747,-652.832 780.708,-655.9967 785.2917,-658.6103"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="783.9172,-661.8325 794.4489,-662.9876 786.9362,-655.517 783.9172,-661.8325"/>
+<g id="a_edge35"><a xlink:title="at utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]">
+<path fill="none" stroke="#8b4513" d="M669.0258,-765.0467C679.7216,-768.6505 690.2692,-772.9305 699.933,-778 737.8841,-797.9088 735.7305,-819.7253 772.933,-841 776.8126,-843.2186 780.951,-845.2599 785.1888,-847.1281"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="783.981,-850.4153 794.5627,-850.9433 786.6199,-843.9317 783.981,-850.4153"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge29" class="edge">
+<g id="edge21" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge29"><a xlink:title="at utils.go:201: calling [github.com/samber/oops.Errorf]&#10;at utils.go:206: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M647.0721,-38.168C666.4319,-42.541 686.0786,-50.5666 699.933,-65 752.9955,-120.28 751.9779,-328.2953 772.933,-402 788.8322,-457.9218 812.7551,-521.557 826.6733,-557.1286"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="823.5643,-558.7859 830.4852,-566.8079 830.0775,-556.2209 823.5643,-558.7859"/>
+<g id="a_edge21"><a xlink:title="at utils.go:201: calling [github.com/samber/oops.Errorf]&#10;at utils.go:206: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M647.219,-159.6703C666.7035,-164.0047 686.3853,-172.1333 699.933,-187 766.9633,-260.5564 703.9843,-313.7509 735.933,-408 756.9243,-469.9248 796.7069,-535.8124 819.8592,-571.4175"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="816.9486,-573.3616 825.3655,-579.7963 822.7985,-569.5172 816.9486,-573.3616"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD&#45;&gt;golang.org/x/crypto/chacha20poly1305.New -->
-<g id="edge20" class="edge">
+<g id="edge4" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.decryptWithAEAD&#45;&gt;golang.org/x/crypto/chacha20poly1305.New</title>
-<g id="a_edge20"><a xlink:title="at utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]">
-<path fill="none" stroke="#8b4513" d="M647.193,-40.459C665.889,-44.9794 685.1327,-52.5121 699.933,-65 745.3635,-103.3324 805.9541,-274.9279 828.684,-343.0232"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="825.4095,-344.2688 831.878,-352.6599 832.054,-342.0665 825.4095,-344.2688"/>
+<g id="a_edge4"><a xlink:title="at utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]">
+<path fill="none" stroke="#8b4513" d="M647.2055,-165.3177C682.5736,-170.2689 726.1743,-176.3725 762.7446,-181.492"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="762.4714,-184.9878 772.8601,-182.908 763.442,-178.0554 762.4714,-184.9878"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair -->
+<g id="node17" class="node">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair</title>
+<g id="a_node17"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair | defined in utils.go:215&#10;at utils.go:216: calling [go.step.sm/crypto/x25519.GenerateKey]&#10;at utils.go:218: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M629.0318,-643C629.0318,-643 532.259,-643 532.259,-643 526.259,-643 520.259,-637 520.259,-631 520.259,-631 520.259,-619 520.259,-619 520.259,-613 526.259,-607 532.259,-607 532.259,-607 629.0318,-607 629.0318,-607 635.0318,-607 641.0318,-613 641.0318,-619 641.0318,-619 641.0318,-631 641.0318,-631 641.0318,-637 635.0318,-643 629.0318,-643"/>
+<text text-anchor="middle" x="580.6454" y="-620.8" font-family="Verdana" font-size="14.00" fill="#000000">GenerateKeyPair</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;go.step.sm/crypto/x25519.GenerateKey -->
+<g id="edge13" class="edge">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;go.step.sm/crypto/x25519.GenerateKey</title>
+<g id="a_edge13"><a xlink:title="at utils.go:216: calling [go.step.sm/crypto/x25519.GenerateKey]">
+<path fill="none" stroke="#8b4513" d="M640.9385,-640.2396C682.4942,-650.7432 737.4558,-664.6352 778.7436,-675.0711"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="778.1096,-678.5208 788.6624,-677.5782 779.825,-671.7343 778.1096,-678.5208"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge32" class="edge">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge32"><a xlink:title="at utils.go:218: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M640.9385,-618.6697C689.523,-613.5687 756.4317,-606.5438 798.3894,-602.1386"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="798.9128,-605.603 808.4927,-601.0778 798.1818,-598.6412 798.9128,-605.603"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.init -->
-<g id="node19" class="node">
+<g id="node18" class="node">
 <title>github.com/go&#45;i2p/crypto/ecies.init</title>
-<g id="a_node19"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.init | defined in .:0&#10;at constants.go:11: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]&#10;at constants.go:31: calling [github.com/samber/oops.Errorf]&#10;at constants.go:32: calling [github.com/samber/oops.Errorf]&#10;at constants.go:33: calling [github.com/samber/oops.Errorf]&#10;at constants.go:34: calling [github.com/samber/oops.Errorf]&#10;at constants.go:35: calling [github.com/samber/oops.Errorf]&#10;at constants.go:36: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M595.6454,-174C595.6454,-174 565.6454,-174 565.6454,-174 559.6454,-174 553.6454,-168 553.6454,-162 553.6454,-162 553.6454,-150 553.6454,-150 553.6454,-144 559.6454,-138 565.6454,-138 565.6454,-138 595.6454,-138 595.6454,-138 601.6454,-138 607.6454,-144 607.6454,-150 607.6454,-150 607.6454,-162 607.6454,-162 607.6454,-168 601.6454,-174 595.6454,-174"/>
-<text text-anchor="middle" x="580.6454" y="-151.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
+<g id="a_node18"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.init | defined in .:0&#10;at constants.go:11: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]&#10;at constants.go:31: calling [github.com/samber/oops.Errorf]&#10;at constants.go:32: calling [github.com/samber/oops.Errorf]&#10;at constants.go:33: calling [github.com/samber/oops.Errorf]&#10;at constants.go:34: calling [github.com/samber/oops.Errorf]&#10;at constants.go:35: calling [github.com/samber/oops.Errorf]&#10;at constants.go:36: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M595.6454,-52C595.6454,-52 565.6454,-52 565.6454,-52 559.6454,-52 553.6454,-46 553.6454,-40 553.6454,-40 553.6454,-28 553.6454,-28 553.6454,-22 559.6454,-16 565.6454,-16 565.6454,-16 595.6454,-16 595.6454,-16 601.6454,-16 607.6454,-22 607.6454,-28 607.6454,-28 607.6454,-40 607.6454,-40 607.6454,-46 601.6454,-52 595.6454,-52"/>
+<text text-anchor="middle" x="580.6454" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.init&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge34" class="edge">
+<g id="edge33" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.init&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge34"><a xlink:title="at constants.go:31: calling [github.com/samber/oops.Errorf]&#10;at constants.go:32: calling [github.com/samber/oops.Errorf]&#10;at constants.go:33: calling [github.com/samber/oops.Errorf]&#10;at constants.go:34: calling [github.com/samber/oops.Errorf]&#10;at constants.go:35: calling [github.com/samber/oops.Errorf]&#10;at constants.go:36: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M607.9402,-155.8367C634.7612,-157.1628 675.1662,-163.3629 699.933,-187 738.9837,-224.2695 718.758,-251.8239 735.933,-303 767.4646,-396.9545 808.4407,-507.1293 827.3746,-557.4353"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="824.1609,-558.8329 830.9637,-566.9553 830.7109,-556.3634 824.1609,-558.8329"/>
+<g id="a_edge33"><a xlink:title="at constants.go:31: calling [github.com/samber/oops.Errorf]&#10;at constants.go:32: calling [github.com/samber/oops.Errorf]&#10;at constants.go:33: calling [github.com/samber/oops.Errorf]&#10;at constants.go:34: calling [github.com/samber/oops.Errorf]&#10;at constants.go:35: calling [github.com/samber/oops.Errorf]&#10;at constants.go:36: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M607.6767,-33.5692C634.6826,-34.649 675.5868,-40.6264 699.933,-65 773.1783,-138.3277 821.2714,-469.9299 834.2624,-569.5882"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="830.8276,-570.3206 835.5748,-579.7923 837.7704,-569.4275 830.8276,-570.3206"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="node20" class="node">
+<g id="node19" class="node">
 <title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_node20"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M886.497,-174C886.497,-174 789.118,-174 789.118,-174 783.118,-174 777.118,-168 777.118,-162 777.118,-162 777.118,-150 777.118,-150 777.118,-144 783.118,-138 789.118,-138 789.118,-138 886.497,-138 886.497,-138 892.497,-138 898.497,-144 898.497,-150 898.497,-150 898.497,-162 898.497,-162 898.497,-168 892.497,-174 886.497,-174"/>
-<text text-anchor="middle" x="837.8075" y="-160.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="837.8075" y="-143.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
+<g id="a_node19"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M886.497,-52C886.497,-52 789.118,-52 789.118,-52 783.118,-52 777.118,-46 777.118,-40 777.118,-40 777.118,-28 777.118,-28 777.118,-22 783.118,-16 789.118,-16 789.118,-16 886.497,-16 886.497,-16 892.497,-16 898.497,-22 898.497,-28 898.497,-28 898.497,-40 898.497,-40 898.497,-46 892.497,-52 886.497,-52"/>
+<text text-anchor="middle" x="837.8075" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="837.8075" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/ecies.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge31" class="edge">
+<g id="edge6" class="edge">
 <title>github.com/go&#45;i2p/crypto/ecies.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge31"><a xlink:title="at constants.go:11: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
-<path fill="none" stroke="#8b4513" d="M607.6802,-156C645.0975,-156 714.0133,-156 766.7095,-156"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="767.0183,-159.5001 777.0183,-156 767.0183,-152.5001 767.0183,-159.5001"/>
+<g id="a_edge6"><a xlink:title="at constants.go:11: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<path fill="none" stroke="#8b4513" d="M607.6802,-34C645.0975,-34 714.0133,-34 766.7095,-34"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="767.0183,-37.5001 777.0183,-34 767.0183,-30.5001 767.0183,-37.5001"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair -->
+<g id="node20" class="node">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair</title>
+<g id="a_node20"><a xlink:title="github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair | defined in ecies.go:101&#10;at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecies.go:104: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]&#10;at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M376.4934,-424C376.4934,-424 240.9514,-424 240.9514,-424 234.9514,-424 228.9514,-418 228.9514,-412 228.9514,-412 228.9514,-400 228.9514,-400 228.9514,-394 234.9514,-388 240.9514,-388 240.9514,-388 376.4934,-388 376.4934,-388 382.4934,-388 388.4934,-394 388.4934,-400 388.4934,-400 388.4934,-412 388.4934,-412 388.4934,-418 382.4934,-424 376.4934,-424"/>
+<text text-anchor="middle" x="308.7224" y="-401.8" font-family="Verdana" font-size="14.00" fill="#000000">GenerateECIESKeyPair</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair -->
+<g id="edge24" class="edge">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair</title>
+<g id="a_edge24"><a xlink:title="at ecies.go:104: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]">
+<path fill="none" stroke="#000000" d="M354.5996,-424.0206C366.6206,-430.2996 378.8602,-438.2677 388.3578,-448 439.305,-500.206 404.5514,-549.2384 461.3578,-595 475.2593,-606.1986 492.8013,-613.2825 510.1241,-617.7448"/>
+<polygon fill="#000000" stroke="#000000" points="509.7386,-621.2476 520.269,-620.0805 511.3092,-614.426 509.7386,-621.2476"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="node23" class="node">
+<title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_node23"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M609.1769,-521C609.1769,-521 552.1139,-521 552.1139,-521 546.1139,-521 540.1139,-515 540.1139,-509 540.1139,-509 540.1139,-497 540.1139,-497 540.1139,-491 546.1139,-485 552.1139,-485 552.1139,-485 609.1769,-485 609.1769,-485 615.1769,-485 621.1769,-491 621.1769,-497 621.1769,-497 621.1769,-509 621.1769,-509 621.1769,-515 615.1769,-521 609.1769,-521"/>
+<text text-anchor="middle" x="580.6454" y="-507.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="580.6454" y="-490.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
+<g id="edge16" class="edge">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
+<g id="a_edge16"><a xlink:title="at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M347.7771,-424.0342C385.3077,-441.2014 439.4553,-465.4977 461.3578,-473 483.5069,-480.5868 508.5635,-487.1776 529.9747,-492.2341"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="529.3155,-495.6739 539.8471,-494.5188 530.8938,-488.8542 529.3155,-495.6739"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="node24" class="node">
+<title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_node24"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M598.4117,-460C598.4117,-460 562.8791,-460 562.8791,-460 556.8791,-460 550.8791,-454 550.8791,-448 550.8791,-448 550.8791,-436 550.8791,-436 550.8791,-430 556.8791,-424 562.8791,-424 562.8791,-424 598.4117,-424 598.4117,-424 604.4117,-424 610.4117,-430 610.4117,-436 610.4117,-436 610.4117,-448 610.4117,-448 610.4117,-454 604.4117,-460 598.4117,-460"/>
+<text text-anchor="middle" x="580.6454" y="-446.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="580.6454" y="-429.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge25" class="edge">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge25"><a xlink:title="at ecies.go:106: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M388.4709,-416.5579C438.3893,-423.1667 500.5778,-431.3998 540.4477,-436.6782"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="540.204,-440.1764 550.5769,-438.0192 541.1228,-433.237 540.204,-440.1764"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="node25" class="node">
+<title>(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_node25"><a xlink:title="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M599.4674,-374C599.4674,-374 561.8234,-374 561.8234,-374 555.8234,-374 549.8234,-368 549.8234,-362 549.8234,-362 549.8234,-350 549.8234,-350 549.8234,-344 555.8234,-338 561.8234,-338 561.8234,-338 599.4674,-338 599.4674,-338 605.4674,-338 611.4674,-344 611.4674,-350 611.4674,-350 611.4674,-362 611.4674,-362 611.4674,-368 605.4674,-374 599.4674,-374"/>
+<text text-anchor="middle" x="580.6454" y="-360.2" font-family="Verdana" font-size="14.00" fill="#000000">logrus</text>
+<text text-anchor="middle" x="580.6454" y="-343.4" font-family="Verdana" font-size="14.00" fill="#000000">Debug</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge23" class="edge">
+<title>github.com/go&#45;i2p/crypto/ecies.GenerateECIESKeyPair&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge23"><a xlink:title="at ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M388.4709,-391.3362C438.2072,-382.1909 500.1242,-370.8059 540.0105,-363.4718"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="540.7011,-366.9035 549.9032,-361.6527 539.4351,-360.019 540.7011,-366.9035"/>
 </a>
 </g>
 </g>
@@ -567,9 +567,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecies.ECIESDecrypter).Decrypt&#45;&gt;github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519 -->
-<g id="edge36" class="edge">
+<g id="edge5" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecies.ECIESDecrypter).Decrypt&#45;&gt;github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519</title>
-<g id="a_edge36"><a xlink:title="at ecies.go:97: calling [github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519]">
+<g id="a_edge5"><a xlink:title="at ecies.go:97: calling [github.com/go&#45;i2p/crypto/ecies.DecryptECIESX25519]">
 <path fill="none" stroke="#000000" d="M113.5027,-217C142.1271,-217 183.8799,-217 221.4327,-217"/>
 <polygon fill="#000000" stroke="#000000" points="221.8987,-220.5001 231.8987,-217 221.8987,-213.5001 221.8987,-220.5001"/>
 </a>
@@ -585,9 +585,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/ecies.ECIESEncrypter).Encrypt&#45;&gt;github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519 -->
-<g id="edge25" class="edge">
+<g id="edge36" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/ecies.ECIESEncrypter).Encrypt&#45;&gt;github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519</title>
-<g id="a_edge25"><a xlink:title="at ecies.go:87: calling [github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519]">
+<g id="a_edge36"><a xlink:title="at ecies.go:87: calling [github.com/go&#45;i2p/crypto/ecies.EncryptECIESX25519]">
 <path fill="none" stroke="#000000" d="M113.0036,-808C141.9004,-808 184.4255,-808 222.4607,-808"/>
 <polygon fill="#000000" stroke="#000000" points="222.5369,-811.5001 232.5369,-808 222.5369,-804.5001 222.5369,-811.5001"/>
 </a>
@@ -596,45 +596,45 @@
 <!-- (github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public -->
 <g id="node26" class="node">
 <title>(github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public</title>
-<g id="a_node26"><a xlink:title="(github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public | defined in ecies.go:52&#10;at ecies.go:58: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]&#10;at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecies.go:69: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M326.5012,-576C326.5012,-576 290.9436,-576 290.9436,-576 284.9436,-576 278.9436,-570 278.9436,-564 278.9436,-564 278.9436,-552 278.9436,-552 278.9436,-546 284.9436,-540 290.9436,-540 290.9436,-540 326.5012,-540 326.5012,-540 332.5012,-540 338.5012,-546 338.5012,-552 338.5012,-552 338.5012,-564 338.5012,-564 338.5012,-570 332.5012,-576 326.5012,-576"/>
-<text text-anchor="middle" x="308.7224" y="-553.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
+<g id="a_node26"><a xlink:title="(github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public | defined in ecies.go:52&#10;at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at ecies.go:69: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at ecies.go:58: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]&#10;at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M326.5012,-524C326.5012,-524 290.9436,-524 290.9436,-524 284.9436,-524 278.9436,-518 278.9436,-512 278.9436,-512 278.9436,-500 278.9436,-500 278.9436,-494 284.9436,-488 290.9436,-488 290.9436,-488 326.5012,-488 326.5012,-488 332.5012,-488 338.5012,-494 338.5012,-500 338.5012,-500 338.5012,-512 338.5012,-512 338.5012,-518 332.5012,-524 326.5012,-524"/>
+<text text-anchor="middle" x="308.7224" y="-501.8" font-family="Verdana" font-size="14.00" fill="#000000">Public</text>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair -->
-<g id="edge6" class="edge">
+<g id="edge22" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair</title>
-<g id="a_edge6"><a xlink:title="at ecies.go:58: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]">
-<path fill="none" stroke="#000000" d="M338.6009,-562.3296C354.2276,-565.5352 373.2034,-570.9667 388.3578,-580 428.5884,-603.9807 420.8522,-632.4866 461.3578,-656 476.2558,-664.6483 493.6094,-670.8251 510.3916,-675.2292"/>
-<polygon fill="#000000" stroke="#000000" points="509.6388,-678.6482 520.1839,-677.6228 511.3009,-671.8484 509.6388,-678.6482"/>
+<g id="a_edge22"><a xlink:title="at ecies.go:58: calling [github.com/go&#45;i2p/crypto/ecies.GenerateKeyPair]">
+<path fill="none" stroke="#000000" d="M338.757,-510.8008C354.2484,-514.1237 373.052,-519.5177 388.3578,-528 426.8764,-549.3465 422.5946,-574.1008 461.3578,-595 476.4421,-603.1327 493.7914,-609.1146 510.5033,-613.495"/>
+<polygon fill="#000000" stroke="#000000" points="509.7007,-616.9018 520.2474,-615.8932 511.3736,-610.1047 509.7007,-616.9018"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge16" class="edge">
+<g id="edge14" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge16"><a xlink:title="at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
-<path fill="none" stroke="#8b4513" d="M338.6008,-558.6593C384.5788,-559.6738 473.2485,-561.6303 529.5553,-562.8727"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="529.5999,-566.3744 539.6748,-563.096 529.7544,-559.3761 529.5999,-566.3744"/>
+<g id="a_edge14"><a xlink:title="at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<path fill="none" stroke="#8b4513" d="M338.6008,-505.6704C384.5788,-505.1631 473.2485,-504.1849 529.5553,-503.5637"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="529.714,-507.0622 539.6748,-503.452 529.6367,-500.0626 529.714,-507.0622"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge30" class="edge">
+<g id="edge29" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge30"><a xlink:title="at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M338.6008,-551.9567C387.7237,-542.021 485.5784,-522.2286 540.6312,-511.0934"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="541.61,-514.4664 550.7176,-509.0533 540.2222,-507.6053 541.61,-514.4664"/>
+<g id="a_edge29"><a xlink:title="at ecies.go:60: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M338.6008,-498.9678C387.8258,-487.3822 485.9854,-464.2792 540.974,-451.3371"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="541.7855,-454.7418 550.7176,-449.0438 540.1817,-447.928 541.7855,-454.7418"/>
 </a>
 </g>
 </g>
 <!-- (github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge24" class="edge">
+<g id="edge15" class="edge">
 <title>(github.com/go&#45;i2p/crypto/ecies.ECIESPrivateKey).Public&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge24"><a xlink:title="at ecies.go:69: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M338.5563,-554.2841C354.3531,-551.2459 373.5013,-545.7787 388.3578,-536 431.6676,-507.4929 417.5006,-472.6575 461.3578,-445 484.8954,-430.1565 515.5251,-423.1717 539.8531,-419.8899"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="540.3389,-423.3569 549.8545,-418.698 539.5105,-416.406 540.3389,-423.3569"/>
+<g id="a_edge15"><a xlink:title="at ecies.go:69: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M338.7368,-502.5517C354.5864,-499.5918 373.7276,-494.1142 388.3578,-484 433.6213,-452.7084 415.493,-414.4035 461.3578,-384 484.6292,-368.5735 515.3939,-361.6052 539.8512,-358.4771"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="540.355,-361.9428 549.9065,-357.3582 539.5808,-354.9857 540.355,-361.9428"/>
 </a>
 </g>
 </g>

@@ -146,6 +146,45 @@ func (sr *SecureReader) validateEntropy(data []byte) bool {
 // Global secure reader instance
 var DefaultSecureReader = NewSecureReader()
 
+// Reader is the global, shared instance of a cryptographically secure random number generator
+// Compatible with crypto/rand.Reader
+var Reader io.Reader = DefaultSecureReader
+
+// CryptoInt returns a uniform random value in [0, max). It panics if max <= 0.
+// Compatible with crypto/rand.Int function
+func CryptoInt(reader io.Reader, max *big.Int) (*big.Int, error) {
+	if max.Sign() <= 0 {
+		return nil, oops.Errorf("max must be positive")
+	}
+
+	if sr, ok := reader.(*SecureReader); ok {
+		return sr.ReadBigInt(max)
+	}
+
+	// Fallback to crypto/rand.Int for other readers
+	return rand.Int(reader, max)
+}
+
+// Prime returns a number of the given bit length that is prime with high probability.
+// Compatible with crypto/rand.Prime function
+func Prime(random io.Reader, bits int) (*big.Int, error) {
+	log := logger.GetGoI2PLogger()
+
+	if bits < 2 {
+		return nil, oops.Errorf("prime size must be at least 2 bits")
+	}
+
+	// Use crypto/rand.Prime as the underlying implementation
+	prime, err := rand.Prime(random, bits)
+	if err != nil {
+		log.WithError(err).Error("Failed to generate prime number")
+		return nil, oops.Errorf("prime generation failed: %w", err)
+	}
+
+	log.WithField("bits", bits).Debug("Successfully generated prime number")
+	return prime, nil
+}
+
 // Read fills the provided byte slice with cryptographically secure random data
 func Read(p []byte) (n int, err error) {
 	return DefaultSecureReader.Read(p)
