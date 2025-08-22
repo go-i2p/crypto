@@ -3,9 +3,10 @@ package aes
 import (
 	"bytes"
 	"crypto/aes"
-	"crypto/rand"
 	"encoding/hex"
 	"testing"
+
+	"github.com/go-i2p/crypto/rand"
 )
 
 func TestAESEncryptDecrypt(t *testing.T) {

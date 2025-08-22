@@ -26,7 +26,7 @@ go get github.com/go-i2p/crypto
 package main
 
 import (
-    "crypto/rand"
+    "github.com/go-i2p/crypto/rand"
     "github.com/go-i2p/crypto/aes"
     "github.com/go-i2p/crypto/types"
 )
@@ -146,7 +146,7 @@ func main() {
 package main
 
 import (
-    "crypto/rand"
+    "github.com/go-i2p/crypto/rand"
     "github.com/go-i2p/crypto/hmac"
 )
 
