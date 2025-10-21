@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
-	"github.com/sirupsen/logrus"
+	"github.com/go-i2p/logger"
 )
 
 type ECDSAVerifier struct {
@@ -19,7 +19,7 @@ type ECDSAVerifier struct {
 
 // verify a signature given the hash
 func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying ECDSA signature hash")
@@ -29,7 +29,7 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 	expectedSigLen := 2 * curveOrderBytes
 
 	if len(sig) != expectedSigLen {
-		log.WithFields(logrus.Fields{
+		log.WithFields(logger.Fields{
 			"expected_length": expectedSigLen,
 			"actual_length":   len(sig),
 		}).Error("Unsupported ECDSA signature format or length")
@@ -52,7 +52,7 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 
 // verify a block of data by hashing it and comparing the hash against the signature
 func (v *ECDSAVerifier) Verify(data, sig []byte) (err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying ECDSA signature")
@@ -66,7 +66,7 @@ func (v *ECDSAVerifier) Verify(data, sig []byte) (err error) {
 }
 
 func CreateECVerifier(c elliptic.Curve, h crypto.Hash, k []byte) (ev *ECDSAVerifier, err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"curve": c.Params().Name,
 		"hash":  h.String(),
 	}).Debug("Creating ECDSA verifier")

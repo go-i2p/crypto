@@ -5,7 +5,7 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/sirupsen/logrus"
+	"github.com/go-i2p/logger"
 	"golang.org/x/crypto/openpgp/elgamal"
 )
 
@@ -46,7 +46,7 @@ func (elg *ElgamalEncryption) Encrypt(data []byte) (enc []byte, err error) {
 // 3. ElGamal encryption using precomputed session parameters
 // 4. Output formatting according to I2P protocol specifications
 func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (encrypted []byte, err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"data_length":  len(data),
 		"zero_padding": zeroPadding,
 	}).Debug("Encrypting data with ElGamal padding")

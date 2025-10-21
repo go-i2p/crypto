@@ -5,13 +5,13 @@ import (
 	"crypto/aes"
 
 	"github.com/samber/oops"
-	"github.com/sirupsen/logrus"
+	"github.com/go-i2p/logger"
 )
 
 // pkcs7Pad applies PKCS#7 padding to data for the specified block size.
 // Moved from: aes_pkcs.go
 func pkcs7Pad(data []byte, blockSize int) []byte {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"data_length": len(data),
 		"block_size":  blockSize,
 	}).Debug("Applying PKCS#7 padding")

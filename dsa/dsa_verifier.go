@@ -6,7 +6,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
-	"github.com/sirupsen/logrus"
+	"github.com/go-i2p/logger"
 )
 
 // DSAVerifier provides DSA digital signature verification functionality.
@@ -23,7 +23,7 @@ type DSAVerifier struct {
 // format as a 40-byte array containing r (20 bytes) followed by s (20 bytes).
 // Returns nil if the signature is valid, or an error if verification fails.
 func (v *DSAVerifier) Verify(data, sig []byte) (err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying DSA signature")
@@ -40,7 +40,7 @@ func (v *DSAVerifier) Verify(data, sig []byte) (err error) {
 // valid for the hash, or an error if verification fails. This is the primary verification
 // method for performance-critical applications.
 func (v *DSAVerifier) VerifyHash(h, sig []byte) (err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying DSA signature hash")

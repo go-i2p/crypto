@@ -54,7 +54,7 @@ import (
 	"github.com/go-i2p/crypto/rand"
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
-	"github.com/sirupsen/logrus"
+	"github.com/go-i2p/logger"
 
 	"golang.org/x/crypto/openpgp/elgamal"
 )
@@ -152,7 +152,7 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 // 4. Return verified plaintext using constant-time operations for security
 // decrypt an elgamal encrypted message, i2p style
 func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (decrypted []byte, err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"data_length":  len(data),
 		"zero_padding": zeroPadding,
 	}).Debug("Decrypting ElGamal data")

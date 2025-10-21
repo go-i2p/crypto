@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
-	"github.com/sirupsen/logrus"
+	"github.com/go-i2p/logger"
 )
 
 // Ed25519Verifier provides digital signature verification using Ed25519 public keys.
@@ -20,7 +20,7 @@ type Ed25519Verifier struct {
 // This method verifies the signature directly against the provided hash without
 // additional hashing. Returns an error if verification fails or inputs are invalid.
 func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Ed25519 signature hash")
@@ -53,7 +53,7 @@ func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
 // The data is first hashed using SHA-512 before verification to ensure
 // consistent validation. Returns an error if verification fails.
 func (v *Ed25519Verifier) Verify(data, sig []byte) (err error) {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Ed25519 signature")

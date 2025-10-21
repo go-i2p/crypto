@@ -4,7 +4,7 @@ import (
 	"crypto/sha512"
 
 	"github.com/go-i2p/crypto/types"
-	"github.com/sirupsen/logrus"
+	"github.com/go-i2p/logger"
 	"go.step.sm/crypto/x25519"
 )
 
@@ -21,7 +21,7 @@ type Curve25519Verifier struct {
 // Returns types.ErrBadSignatureSize for invalid signature length, ErrInvalidPublicKey for invalid key,
 // or ErrInvalidSignature if verification fails.
 func (v *Curve25519Verifier) VerifyHash(h, sig []byte) error {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"hash_length":      len(h),
 		"signature_length": len(sig),
 	}).Debug("Verifying hash with Curve25519")
@@ -51,7 +51,7 @@ func (v *Curve25519Verifier) VerifyHash(h, sig []byte) error {
 // It validates that the signature was created by the private key corresponding to this public key
 // using the provided data. This is the primary method for signature verification in I2P protocols.
 func (v *Curve25519Verifier) Verify(data, sig []byte) error {
-	log.WithFields(logrus.Fields{
+	log.WithFields(logger.Fields{
 		"data_length":      len(data),
 		"signature_length": len(sig),
 	}).Debug("Verifying data with Curve25519")
