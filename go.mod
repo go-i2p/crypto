@@ -3,7 +3,7 @@ module github.com/go-i2p/crypto
 go 1.24.2
 
 require (
-	github.com/go-i2p/logger v0.0.0-20251021001827-b7cf9a3377d9
+	github.com/go-i2p/logger v0.0.1
 	github.com/samber/oops v1.19.0
 	go.step.sm/crypto v0.67.0
 	golang.org/x/crypto v0.40.0
