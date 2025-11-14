@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"crypto/aes"
 
-	"github.com/samber/oops"
 	"github.com/go-i2p/logger"
+	"github.com/samber/oops"
 )
 
 // pkcs7Pad applies PKCS#7 padding to data for the specified block size.

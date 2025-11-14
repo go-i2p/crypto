@@ -105,7 +105,6 @@ func TestNewTunnelEncryptor_ECIES(t *testing.T) {
 	}
 
 	encryptor, err := NewTunnelEncryptor(TunnelEncryptionECIES, layerKey, TunnelKey{})
-
 	if err != nil {
 		t.Errorf("expected ECIES encryption to be implemented, got error: %v", err)
 	}

@@ -5,8 +5,8 @@ import (
 	"crypto/sha512"
 
 	"github.com/go-i2p/crypto/types"
-	"github.com/samber/oops"
 	"github.com/go-i2p/logger"
+	"github.com/samber/oops"
 )
 
 // Ed25519Verifier provides digital signature verification using Ed25519 public keys.
