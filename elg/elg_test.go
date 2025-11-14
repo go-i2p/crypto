@@ -26,7 +26,7 @@ func BenchmarkElgDecrypt(b *testing.B) {
 		panic(err.Error())
 	}
 	pub := createElgamalPublicKey(prv.Y.Bytes())
-	enc, err := createElgamalEncryption(pub, rand.Reader)
+	enc, err := createElgamalEncryption(pub)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -55,7 +55,7 @@ func BenchmarkElgEncrypt(b *testing.B) {
 		panic(err.Error())
 	}
 	pub := createElgamalPublicKey(prv.Y.Bytes())
-	enc, err := createElgamalEncryption(pub, rand.Reader)
+	enc, err := createElgamalEncryption(pub)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -127,7 +127,7 @@ func generateRandomMessage(t *testing.T) ([]byte, error) {
 // createElgamalEncrypter sets up an ElGamal encrypter from the given private key.
 func createElgamalEncrypter(t *testing.T, k *elgamal.PrivateKey) (*ElgamalEncryption, error) {
 	pub := createElgamalPublicKey(k.Y.Bytes())
-	enc, err := createElgamalEncryption(pub, rand.Reader)
+	enc, err := createElgamalEncryption(pub)
 	if err != nil {
 		t.Logf("failed to create encryption: %s", err.Error())
 		t.Fail()

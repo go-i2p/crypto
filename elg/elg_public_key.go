@@ -1,7 +1,6 @@
 package elg
 
 import (
-	"crypto/rand"
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
@@ -35,8 +34,8 @@ func (elg ElgPublicKey) NewEncrypter() (enc types.Encrypter, err error) {
 	log.Debug("Creating new ElGamal encrypter")
 	// Convert raw key bytes to internal ElGamal structure
 	k := createElgamalPublicKey(elg[:])
-	// Create encryption session with secure random source
-	enc, err = createElgamalEncryption(k, rand.Reader)
+	// Create encryption wrapper using the library
+	enc, err = createElgamalEncryption(k)
 	if err != nil {
 		log.WithError(err).Error("Failed to create ElGamal encrypter")
 	} else {

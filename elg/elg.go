@@ -143,63 +143,81 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 }
 
 // elgamalDecrypt decrypts ElGamal encrypted data using I2P's specific format and validation.
-// Implements constant-time operations to prevent timing attacks during decryption.
 // The zeroPadding parameter controls parsing of the encrypted data format.
-// This function implements the complete I2P ElGamal decryption process:
-// 1. Parse ciphertext components (a, b) from encrypted data with optional padding
-// 2. Perform ElGamal decryption: m = b * a^(-x) mod p using modular arithmetic
+// This function wraps the go-i2p/elgamal library's Decrypt method and implements:
+// 1. Parse ciphertext with optional zero-padding
+// 2. Decrypt using library's Decrypt method
 // 3. Extract and validate SHA-256 integrity hash from decrypted message
 // 4. Return verified plaintext using constant-time operations for security
-// decrypt an elgamal encrypted message, i2p style
 func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (decrypted []byte, err error) {
 	log.WithFields(logger.Fields{
 		"data_length":  len(data),
 		"zero_padding": zeroPadding,
 	}).Debug("Decrypting ElGamal data")
 
-	// Extract ElGamal ciphertext components (a, b) from encrypted data
-	// Parse according to I2P's ElGamal message format with optional zero padding
-	a := new(big.Int)
-	b := new(big.Int)
-	idx := 0
+	// Remove zero-padding if present to get the raw ciphertext for the library
+	var ciphertext []byte
 	if zeroPadding {
-		idx++ // Skip leading zero byte in padded format
-	}
-	a.SetBytes(data[idx : idx+256]) // Extract first component (a)
-	if zeroPadding {
-		idx++ // Skip zero byte between components
-	}
-	b.SetBytes(data[idx+256:]) // Extract second component (b)
-
-	// Perform ElGamal decryption using modular arithmetic: m = b * a^(-x) mod p
-	// This implements the mathematical ElGamal decryption algorithm where:
-	// - a^(-x) is computed as a^(p-1-x) using Fermat's little theorem
-	// - The result recovers the original padded message with integrity hash
-	m := new(big.Int).Mod(new(big.Int).Mul(b, new(big.Int).Exp(a, new(big.Int).Sub(new(big.Int).Sub(priv.P, priv.X), one), priv.P)), priv.P).Bytes()
-
-	// Verify message integrity using SHA-256 digest comparison
-	// The message format includes a 32-byte hash for cryptographic integrity verification
-	d := sha256.Sum256(m[33:255]) // Hash the payload portion
-	good := 0
-	// Use constant-time comparison to prevent timing attacks during validation
-	if subtle.ConstantTimeCompare(d[:], m[1:33]) == 1 {
-		// Integrity check passed - decryption successful
-		good = 1
-		log.Debug("ElGamal decryption successful")
+		// Zero-padded format: [0][256 bytes c1][0][256 bytes c2] = 514 bytes
+		if len(data) != 514 {
+			err = ElgDecryptFail
+			log.WithError(err).Error("Invalid ciphertext length for zero-padded format")
+			return
+		}
+		// Extract c1 and c2, removing the zero bytes
+		ciphertext = make([]byte, 512)
+		copy(ciphertext[0:256], data[1:257])     // c1 from positions 1-256
+		copy(ciphertext[256:512], data[258:514]) // c2 from positions 258-513
 	} else {
-		// Integrity check failed - return decryption error
-		err = ElgDecryptFail
-		log.WithError(err).Error("ElGamal decryption failed")
+		// Non-padded format: [256 bytes c1][256 bytes c2] = 512 bytes
+		if len(data) != 512 {
+			err = ElgDecryptFail
+			log.WithError(err).Error("Invalid ciphertext length for non-padded format")
+			return
+		}
+		ciphertext = data
 	}
 
-	// Copy result using constant-time operation to prevent side-channel attacks
-	// This ensures timing behavior is independent of decryption success/failure
+	// Decrypt using the library's Decrypt method
+	m, err := priv.Decrypt(nil, ciphertext, nil)
+	if err != nil {
+		log.WithError(err).Error("Library decryption failed")
+		return nil, ElgDecryptFail
+	}
+
+	// Verify I2P message format and integrity
+	if len(m) != 255 {
+		log.WithField("length", len(m)).Error("Decrypted message has incorrect length")
+		return nil, ElgDecryptFail
+	}
+
+	// Verify message type byte
+	if m[0] != 0xFF {
+		log.WithField("type_byte", m[0]).Error("Invalid message type byte")
+		return nil, ElgDecryptFail
+	}
+
+	// Verify SHA-256 integrity hash
+	expectedHash := sha256.Sum256(m[33:255])
+	actualHash := m[1:33]
+
+	// Use constant-time comparison to prevent timing attacks
+	good := subtle.ConstantTimeCompare(expectedHash[:], actualHash)
+
+	if good != 1 {
+		log.Error("Hash verification failed")
+		return nil, ElgDecryptFail
+	}
+
+	// Extract payload (bytes 33-255) and trim trailing zeros
 	decrypted = make([]byte, 222)
-	subtle.ConstantTimeCopy(good, decrypted, m[33:255])
+	copy(decrypted, m[33:255])
 
-	if good == 0 {
-		// If decrypt failed, clear output to prevent information leakage
-		decrypted = nil
+	// Trim trailing zeros from payload
+	for len(decrypted) > 0 && decrypted[len(decrypted)-1] == 0 {
+		decrypted = decrypted[:len(decrypted)-1]
 	}
+
+	log.WithField("decrypted_length", len(decrypted)).Debug("ElGamal decryption successful")
 	return
 }

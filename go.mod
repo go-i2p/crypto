@@ -3,7 +3,7 @@ module github.com/go-i2p/crypto
 go 1.24.4
 
 require (
-	github.com/go-i2p/elgamal v0.0.0-20251114205359-7156212a7ff1
+	github.com/go-i2p/elgamal v0.0.2
 	github.com/go-i2p/logger v0.0.1
 	github.com/samber/oops v1.19.0
 	go.step.sm/crypto v0.67.0
