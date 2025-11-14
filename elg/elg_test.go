@@ -6,7 +6,7 @@ import (
 	"io"
 	"testing"
 
-	"golang.org/x/crypto/openpgp/elgamal"
+	"github.com/go-i2p/elgamal"
 )
 
 func BenchmarkElgGenerate(b *testing.B) {

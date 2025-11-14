@@ -1,8 +1,9 @@
 module github.com/go-i2p/crypto
 
-go 1.24.2
+go 1.24.4
 
 require (
+	github.com/go-i2p/elgamal v0.0.0-00010101000000-000000000000
 	github.com/go-i2p/logger v0.0.1
 	github.com/samber/oops v1.19.0
 	go.step.sm/crypto v0.67.0
@@ -21,3 +22,5 @@ require (
 	golang.org/x/sys v0.37.0 // indirect
 	golang.org/x/text v0.27.0 // indirect
 )
+
+replace github.com/go-i2p/elgamal => ../elgamal

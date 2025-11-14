@@ -1,6 +1,6 @@
 package elg
 
-import "golang.org/x/crypto/openpgp/elgamal"
+import "github.com/go-i2p/elgamal"
 
 // elgDecrypter implements the types.Decrypter interface for ElGamal decryption.
 // It wraps an ElGamal private key and provides secure decryption operations.

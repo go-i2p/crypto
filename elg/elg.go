@@ -56,7 +56,7 @@ import (
 	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 
-	"golang.org/x/crypto/openpgp/elgamal"
+	"github.com/go-i2p/elgamal"
 )
 
 // GenerateKeyPair creates a new ElGamal key pair for I2P encryption operations.

@@ -5,8 +5,8 @@ import (
 	"io"
 	"math/big"
 
+	"github.com/go-i2p/elgamal"
 	"github.com/go-i2p/logger"
-	"golang.org/x/crypto/openpgp/elgamal"
 )
 
 // ElgamalEncryption represents an ElGamal encryption session with precomputed parameters.

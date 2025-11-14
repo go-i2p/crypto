@@ -5,8 +5,8 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/elgamal"
 	"github.com/samber/oops"
-	"golang.org/x/crypto/openpgp/elgamal"
 )
 
 type (
