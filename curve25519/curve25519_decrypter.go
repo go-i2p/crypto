@@ -50,7 +50,7 @@ func (c *Curve25519Decrypter) Decrypt(data []byte) ([]byte, error) {
 
 // validateDecryptionData validates that the encrypted data has sufficient length for decryption.
 func (c *Curve25519Decrypter) validateDecryptionData(data []byte) error {
-	minSize := x25519.PublicKeySize + 12 + 16 // 12 is ChaCha20-Poly1305 nonce size, 16 is tag size
+	minSize := 1 + x25519.PublicKeySize + 12 + 16 // 1 for zero padding, 12 is ChaCha20-Poly1305 nonce size, 16 is tag size
 	if len(data) < minSize {
 		return oops.Errorf("data too short for Curve25519 decryption: %d bytes", len(data))
 	}
@@ -59,10 +59,11 @@ func (c *Curve25519Decrypter) validateDecryptionData(data []byte) error {
 
 // deriveSharedSecret extracts the ephemeral public key and derives the shared secret.
 func (c *Curve25519Decrypter) deriveSharedSecret(data []byte) ([]byte, error) {
-	ephemeralPub := data[:x25519.PublicKeySize]
+	// Skip zero padding byte and extract ephemeral public key
+	ephemeralPub := data[1 : 1+x25519.PublicKeySize]
 
-	var pubKey x25519.PublicKey
-	copy(pubKey[:], ephemeralPub)
+	pubKey := make(x25519.PublicKey, x25519.PublicKeySize)
+	copy(pubKey, ephemeralPub)
 
 	sharedSecret, err := c.privateKey.SharedKey(pubKey[:])
 	if err != nil {
@@ -90,12 +91,13 @@ func (c *Curve25519Decrypter) performAEADDecryption(data []byte, key []byte) ([]
 	}
 
 	nonceSize := aead.NonceSize()
-	if len(data) < x25519.PublicKeySize+nonceSize {
+	offset := 1 + x25519.PublicKeySize // Skip zero padding byte and ephemeral public key
+	if len(data) < offset+nonceSize {
 		return nil, oops.Errorf("data too short to extract nonce")
 	}
 
-	nonce := data[x25519.PublicKeySize : x25519.PublicKeySize+nonceSize]
-	ciphertext := data[x25519.PublicKeySize+nonceSize:]
+	nonce := data[offset : offset+nonceSize]
+	ciphertext := data[offset+nonceSize:]
 
 	plaintext, err := aead.Open(nil, nonce, ciphertext, nil)
 	if err != nil {

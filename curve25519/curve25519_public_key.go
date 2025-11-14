@@ -54,8 +54,8 @@ func (k Curve25519PublicKey) NewEncrypter() (types.Encrypter, error) {
 	}
 
 	// Create a proper x25519.PublicKey from the byte slice for cryptographic operations
-	var pubKey x25519.PublicKey
-	copy(pubKey[:], k)
+	pubKey := make(x25519.PublicKey, x25519.PublicKeySize)
+	copy(pubKey, k)
 
 	enc, err := NewCurve25519Encryption(&pubKey, rand.Reader)
 	if err != nil {
