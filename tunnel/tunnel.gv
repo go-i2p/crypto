@@ -14,49 +14,162 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        labelloc="t";
+        bgcolor="#e6ecfa";
+label="tunnel";
+labelloc="t";
 labeljust="c";
 fontsize="18";
-bgcolor="#e6ecfa";
-label="tunnel";
         
-        "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" [ fillcolor="lightblue" label="NewTunnelCrypto" penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewTunnelCrypto | defined in tunnel_struct.go:33\nat tunnel_struct.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "github.com/go-i2p/crypto/tunnel.init" [ label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/tunnel.init | defined in .:0\nat constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]" fillcolor="lightblue" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
+        "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" [ fillcolor="lightblue" label="NewTunnelCrypto" penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewTunnelCrypto | defined in tunnel_struct.go:66\nat tunnel_struct.go:68: calling [github.com/go-i2p/crypto/tunnel.NewAESEncryptor]\nat tunnel_struct.go:67: calling [(*github.com/go-i2p/logger.Logger).Warn]" ]
+        "github.com/go-i2p/crypto/tunnel.NewAESEncryptor" [ fillcolor="lightblue" label="NewAESEncryptor" penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewAESEncryptor | defined in tunnel_struct.go:30\nat tunnel_struct.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat tunnel_struct.go:56: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat tunnel_struct.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]\nat tunnel_struct.go:56: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+        "github.com/go-i2p/crypto/tunnel.NewECIESDecryptor" [ fillcolor="lightblue" label="NewECIESDecryptor" penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewECIESDecryptor | defined in ecies_encryptor.go:112\nat ecies_encryptor.go:117: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:113: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+        "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" [ tooltip="github.com/go-i2p/crypto/ecies.DecryptECIESX25519 | defined in utils.go:130" fillcolor="moccasin" label="ecies\nDecryptECIESX25519" penwidth="1.5" ]
+        "github.com/samber/oops.Wrapf" [ label="oops\nWrapf" penwidth="1.5" tooltip="github.com/samber/oops.Wrapf | defined in oops.go:20" fillcolor="moccasin" ]
+        "github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor" [ fillcolor="lightblue" label="NewTunnelEncryptor" penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor | defined in encryptor.go:70\nat encryptor.go:71: calling [(github.com/go-i2p/crypto/tunnel.TunnelEncryptionType).String]\nat encryptor.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat encryptor.go:71: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat encryptor.go:78: calling [github.com/samber/oops.Wrapf]\nat encryptor.go:76: calling [github.com/go-i2p/crypto/tunnel.NewAESEncryptor]\nat encryptor.go:86: calling [github.com/go-i2p/crypto/tunnel.NewECIESEncryptor]" ]
+        "github.com/go-i2p/crypto/tunnel.NewECIESEncryptor" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/tunnel.NewECIESEncryptor | defined in ecies_encryptor.go:21\nat ecies_encryptor.go:22: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="NewECIESEncryptor" ]
+        "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" [ label="ecies\nEncryptECIESX25519" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.EncryptECIESX25519 | defined in utils.go:21" fillcolor="moccasin" ]
+        "github.com/go-i2p/crypto/tunnel.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/tunnel.init | defined in .:0\nat constants.go:13: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat constants.go:20: calling [github.com/samber/oops.Errorf]\nat constants.go:24: calling [github.com/samber/oops.Errorf]\nat constants.go:28: calling [github.com/samber/oops.Errorf]\nat constants.go:32: calling [github.com/samber/oops.Errorf]\nat constants.go:36: calling [github.com/samber/oops.Errorf]\nat constants.go:40: calling [github.com/samber/oops.Errorf]\nat constants.go:46: calling [github.com/samber/oops.Errorf]\nat constants.go:50: calling [github.com/samber/oops.Errorf]\nat constants.go:54: calling [github.com/samber/oops.Errorf]\nat constants.go:58: calling [github.com/samber/oops.Errorf]\nat constants.go:62: calling [github.com/samber/oops.Errorf]\nat constants.go:66: calling [github.com/samber/oops.Errorf]" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:148" fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" ]
+        "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
         
-        subgraph "cluster_*github.com/go-i2p/crypto/tunnel.Tunnel" {
-        tooltip="type: *github.com/go-i2p/crypto/tunnel.Tunnel";
-penwidth="0.5";
+        subgraph "cluster_*github.com/go-i2p/crypto/tunnel.AESEncryptor" {
+        penwidth="0.5";
 fontcolor="#222222";
-fillcolor="lightsteelblue";
-label="(*Tunnel)";
-fontsize="15";
 labelloc="b";
+label="(*AESEncryptor)";
+fontsize="15";
 style="rounded,filled";
+fillcolor="lightsteelblue";
+tooltip="type: *github.com/go-i2p/crypto/tunnel.AESEncryptor";
         
-        "(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt | defined in tunnel_struct.go:63\nat tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-        "(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt | defined in tunnel_struct.go:86\nat tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).decryptTunnelData" [ fillcolor="lightblue" label="decryptTunnelData" penwidth="0.5" tooltip="(*github.com/go-i2p/crypto/tunnel.AESEncryptor).decryptTunnelData | defined in tunnel_struct.go:160\nat tunnel_struct.go:176: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).encryptTunnelData" [ fillcolor="lightblue" label="encryptTunnelData" penwidth="0.5" tooltip="(*github.com/go-i2p/crypto/tunnel.AESEncryptor).encryptTunnelData | defined in tunnel_struct.go:110\nat tunnel_struct.go:126: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Encrypt | defined in tunnel_struct.go:76\nat tunnel_struct.go:93: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat tunnel_struct.go:85: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat tunnel_struct.go:85: calling [(*github.com/go-i2p/logger.Logger).Error]\nat tunnel_struct.go:93: calling [(*github.com/go-i2p/logger.Logger).Error]\nat tunnel_struct.go:98: calling [(*github.com/go-i2p/crypto/tunnel.AESEncryptor).encryptTunnelData]\nat tunnel_struct.go:77: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Decrypt" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Decrypt | defined in tunnel_struct.go:134\nat tunnel_struct.go:139: calling [(*github.com/go-i2p/logger.Logger).Error]\nat tunnel_struct.go:139: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat tunnel_struct.go:135: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:148: calling [(*github.com/go-i2p/crypto/tunnel.AESEncryptor).decryptTunnelData]" fillcolor="lightblue" label="Decrypt" ]
         
     }
 
-        subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        tooltip="type: *github.com/sirupsen/logrus.Logger";
+        subgraph "cluster_*github.com/go-i2p/crypto/tunnel.ECIESDecryptor" {
+        style="rounded,filled";
+fillcolor="lightsteelblue";
+label="(*ECIESDecryptor)";
+tooltip="type: *github.com/go-i2p/crypto/tunnel.ECIESDecryptor";
+penwidth="0.5";
+labelloc="b";
+fontsize="15";
+fontcolor="#222222";
+        
+        "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Zero" [ fillcolor="lightblue" label="Zero" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Zero | defined in ecies_encryptor.go:178\nat ecies_encryptor.go:187: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:182: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+        "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Encrypt | defined in ecies_encryptor.go:125\nat ecies_encryptor.go:126: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:130: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Decrypt | defined in ecies_encryptor.go:137\nat ecies_encryptor.go:153: calling [github.com/go-i2p/crypto/ecies.DecryptECIESX25519]\nat ecies_encryptor.go:139: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:147: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:155: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:163: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:159: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecies_encryptor.go:160: calling [github.com/samber/oops.Wrapf]\nat ecies_encryptor.go:143: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:151: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:168: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/crypto/tunnel.ECIESEncryptor" {
+        fontsize="15";
+style="rounded,filled";
+penwidth="0.5";
+fontcolor="#222222";
+labelloc="b";
+fillcolor="lightsteelblue";
+label="(*ECIESEncryptor)";
+tooltip="type: *github.com/go-i2p/crypto/tunnel.ECIESEncryptor";
+        
+        "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Encrypt" [ label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Encrypt | defined in ecies_encryptor.go:44\nat ecies_encryptor.go:67: calling [github.com/samber/oops.Wrapf]\nat ecies_encryptor.go:51: calling [github.com/go-i2p/crypto/ecies.EncryptECIESX25519]\nat ecies_encryptor.go:60: calling [github.com/go-i2p/crypto/ecies.EncryptECIESX25519]\nat ecies_encryptor.go:66: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecies_encryptor.go:46: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:62: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:70: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:50: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Decrypt | defined in ecies_encryptor.go:88\nat ecies_encryptor.go:97: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:93: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/logger.Logger" {
+        label="(*Logger)";
+tooltip="type: *github.com/go-i2p/logger.Logger";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
 labelloc="b";
 style="rounded,filled";
 fillcolor="wheat2";
+        
+        "(*github.com/go-i2p/logger.Logger).Warn" [ fillcolor="moccasin" label="logger\nWarn" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Warn | defined in log.go:36" ]
+        "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:72" ]
+        "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:48" fillcolor="moccasin" label="logger\nError" penwidth="1.5" ]
+        "(*github.com/go-i2p/logger.Logger).WithFields" [ fillcolor="moccasin" label="logger\nWithFields" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithFields | defined in log.go:66" ]
+        "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:60" ]
+        
+    }
+
+        subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
+        penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+fillcolor="wheat2";
 label="(*Logger)";
+tooltip="type: *github.com/sirupsen/logrus.Logger";
         
         "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
         
     }
 
+        subgraph "cluster_github.com/go-i2p/crypto/tunnel.TunnelEncryptionType" {
+        fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+label="(TunnelEncryptionType)";
+tooltip="type: github.com/go-i2p/crypto/tunnel.TunnelEncryptionType";
+penwidth="0.5";
+fontsize="15";
+fillcolor="lightsteelblue";
+        
+        "(github.com/go-i2p/crypto/tunnel.TunnelEncryptionType).String" [ fillcolor="lightblue" label="String" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/tunnel.TunnelEncryptionType).String | defined in encryptor.go:47" ]
+        
     }
 
-    "(*github.com/go-i2p/crypto/tunnel.Tunnel).Encrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:64: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:76: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "(*github.com/go-i2p/crypto/tunnel.Tunnel).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:87: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:99: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:34: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/tunnel.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:10: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    }
+
+    "github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor" -> "(github.com/go-i2p/crypto/tunnel.TunnelEncryptionType).String" [ tooltip="at encryptor.go:71: calling [(github.com/go-i2p/crypto/tunnel.TunnelEncryptionType).String]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Encrypt" -> "github.com/samber/oops.Wrapf" [ color="saddlebrown" tooltip="at ecies_encryptor.go:67: calling [github.com/samber/oops.Wrapf]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecies_encryptor.go:97: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/tunnel.NewAESEncryptor" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat tunnel_struct.go:60: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/tunnel.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at constants.go:13: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" -> "github.com/go-i2p/crypto/tunnel.NewAESEncryptor" [ tooltip="at tunnel_struct.go:68: calling [github.com/go-i2p/crypto/tunnel.NewAESEncryptor]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Zero" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecies_encryptor.go:187: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Decrypt" -> "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" [ color="saddlebrown" tooltip="at ecies_encryptor.go:153: calling [github.com/go-i2p/crypto/ecies.DecryptECIESX25519]" ]
+    "github.com/go-i2p/crypto/tunnel.NewECIESEncryptor" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ tooltip="at ecies_encryptor.go:22: calling [(*github.com/go-i2p/logger.Logger).WithFields]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Encrypt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at tunnel_struct.go:93: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Encrypt" -> "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" [ tooltip="at ecies_encryptor.go:51: calling [github.com/go-i2p/crypto/ecies.EncryptECIESX25519]\nat ecies_encryptor.go:60: calling [github.com/go-i2p/crypto/ecies.EncryptECIESX25519]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Encrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecies_encryptor.go:66: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Decrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at tunnel_struct.go:139: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at encryptor.go:71: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Encrypt" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at tunnel_struct.go:85: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Encrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at tunnel_struct.go:85: calling [(*github.com/go-i2p/logger.Logger).Error]\nat tunnel_struct.go:93: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "github.com/go-i2p/crypto/tunnel.NewAESEncryptor" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at tunnel_struct.go:48: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat tunnel_struct.go:56: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "github.com/go-i2p/crypto/tunnel.NewECIESDecryptor" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecies_encryptor.go:117: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).encryptTunnelData" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:126: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at encryptor.go:71: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Encrypt" -> "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).encryptTunnelData" [ tooltip="at tunnel_struct.go:98: calling [(*github.com/go-i2p/crypto/tunnel.AESEncryptor).encryptTunnelData]" ]
+    "github.com/go-i2p/crypto/tunnel.init" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at constants.go:20: calling [github.com/samber/oops.Errorf]\nat constants.go:24: calling [github.com/samber/oops.Errorf]\nat constants.go:28: calling [github.com/samber/oops.Errorf]\nat constants.go:32: calling [github.com/samber/oops.Errorf]\nat constants.go:36: calling [github.com/samber/oops.Errorf]\nat constants.go:40: calling [github.com/samber/oops.Errorf]\nat constants.go:46: calling [github.com/samber/oops.Errorf]\nat constants.go:50: calling [github.com/samber/oops.Errorf]\nat constants.go:54: calling [github.com/samber/oops.Errorf]\nat constants.go:58: calling [github.com/samber/oops.Errorf]\nat constants.go:62: calling [github.com/samber/oops.Errorf]\nat constants.go:66: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Zero" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecies_encryptor.go:182: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Decrypt" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecies_encryptor.go:139: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:147: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:155: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:163: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Encrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at tunnel_struct.go:77: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Encrypt" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecies_encryptor.go:46: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:54: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:62: calling [(*github.com/go-i2p/logger.Logger).WithFields]\nat ecies_encryptor.go:70: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Decrypt" -> "(*github.com/go-i2p/logger.Logger).WithField" [ tooltip="at tunnel_struct.go:139: calling [(*github.com/go-i2p/logger.Logger).WithField]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor" -> "github.com/samber/oops.Wrapf" [ color="saddlebrown" tooltip="at encryptor.go:78: calling [github.com/samber/oops.Wrapf]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Encrypt" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecies_encryptor.go:126: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Decrypt" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecies_encryptor.go:159: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Decrypt" -> "github.com/samber/oops.Wrapf" [ color="saddlebrown" tooltip="at ecies_encryptor.go:160: calling [github.com/samber/oops.Wrapf]" ]
+    "github.com/go-i2p/crypto/tunnel.NewECIESEncryptor" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecies_encryptor.go:26: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Decrypt" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ color="saddlebrown" tooltip="at ecies_encryptor.go:93: calling [(*github.com/go-i2p/logger.Logger).WithFields]" ]
+    "github.com/go-i2p/crypto/tunnel.NewAESEncryptor" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at tunnel_struct.go:48: calling [(*github.com/go-i2p/logger.Logger).Error]\nat tunnel_struct.go:56: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Encrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecies_encryptor.go:130: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor" -> "github.com/go-i2p/crypto/tunnel.NewAESEncryptor" [ tooltip="at encryptor.go:76: calling [github.com/go-i2p/crypto/tunnel.NewAESEncryptor]" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelEncryptor" -> "github.com/go-i2p/crypto/tunnel.NewECIESEncryptor" [ tooltip="at encryptor.go:86: calling [github.com/go-i2p/crypto/tunnel.NewECIESEncryptor]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESEncryptor).Encrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at ecies_encryptor.go:50: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:58: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:75: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:135: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).Decrypt" -> "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).decryptTunnelData" [ tooltip="at tunnel_struct.go:148: calling [(*github.com/go-i2p/crypto/tunnel.AESEncryptor).decryptTunnelData]" ]
+    "(*github.com/go-i2p/crypto/tunnel.ECIESDecryptor).Decrypt" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecies_encryptor.go:143: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:151: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies_encryptor.go:168: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/tunnel.NewTunnelCrypto" -> "(*github.com/go-i2p/logger.Logger).Warn" [ color="saddlebrown" tooltip="at tunnel_struct.go:67: calling [(*github.com/go-i2p/logger.Logger).Warn]" ]
+    "github.com/go-i2p/crypto/tunnel.NewECIESDecryptor" -> "(*github.com/go-i2p/logger.Logger).WithFields" [ tooltip="at ecies_encryptor.go:113: calling [(*github.com/go-i2p/logger.Logger).WithFields]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/tunnel.AESEncryptor).decryptTunnelData" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at tunnel_struct.go:176: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
 }

@@ -14,154 +14,270 @@ digraph gocallvis {
     edge [minlen="2"]
 
     subgraph "cluster_focus" {
-        bgcolor="#e6ecfa";
-label="ecies";
-labelloc="t";
+        labelloc="t";
 labeljust="c";
 fontsize="18";
+bgcolor="#e6ecfa";
+label="ecies";
         
-        "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" [ fillcolor="lightblue" label="DecryptECIESX25519" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.DecryptECIESX25519 | defined in utils.go:130\nat utils.go:137: calling [github.com/go-i2p/crypto/ecies.convertKeysToX25519Format]\nat utils.go:144: calling [github.com/go-i2p/crypto/ecies.decryptWithAEAD]\nat utils.go:139: calling [github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation]\nat utils.go:131: calling [github.com/go-i2p/crypto/ecies.validateDecryptionInputs]\nat utils.go:135: calling [github.com/go-i2p/crypto/ecies.extractCiphertextComponents]" ]
-        "github.com/go-i2p/crypto/ecies.validateDecryptionInputs" [ fillcolor="lightblue" label="validateDecryptionInputs" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.validateDecryptionInputs | defined in utils.go:153" ]
-        "github.com/go-i2p/crypto/ecies.extractCiphertextComponents" [ fillcolor="lightblue" label="extractCiphertextComponents" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.extractCiphertextComponents | defined in utils.go:167" ]
-        "github.com/go-i2p/crypto/ecies.convertKeysToX25519Format" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.convertKeysToX25519Format | defined in utils.go:175" fillcolor="lightblue" label="convertKeysToX25519Format" ]
-        "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" [ fillcolor="lightblue" label="performKeyAgreementAndDerivation" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation | defined in utils.go:182\nat utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]\nat utils.go:185: calling [github.com/samber/oops.Errorf]\nat utils.go:191: calling [github.com/samber/oops.Errorf]\nat utils.go:188: calling [golang.org/x/crypto/hkdf.New]" ]
-        "github.com/samber/oops.Errorf" [ fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" ]
-        "golang.org/x/crypto/hkdf.New" [ fillcolor="moccasin" label="hkdf\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/hkdf.New | defined in hkdf.go:92" ]
-        "github.com/go-i2p/crypto/ecies.decryptWithAEAD" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.decryptWithAEAD | defined in utils.go:198\nat utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]\nat utils.go:201: calling [github.com/samber/oops.Errorf]\nat utils.go:206: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="decryptWithAEAD" ]
-        "golang.org/x/crypto/chacha20poly1305.New" [ fillcolor="moccasin" label="chacha20poly1305\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40" ]
-        "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" [ fillcolor="lightblue" label="EncryptECIESX25519" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.EncryptECIESX25519 | defined in utils.go:21\nat utils.go:31: calling [github.com/go-i2p/crypto/ecies.deriveEncryptionKey]\nat utils.go:41: calling [github.com/go-i2p/crypto/ecies.buildCiphertextResult]\nat utils.go:26: calling [github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair]\nat utils.go:22: calling [github.com/go-i2p/crypto/ecies.validateEncryptionInputs]\nat utils.go:36: calling [github.com/go-i2p/crypto/ecies.encryptWithAEAD]" ]
-        "github.com/go-i2p/crypto/ecies.validateEncryptionInputs" [ fillcolor="lightblue" label="validateEncryptionInputs" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.validateEncryptionInputs | defined in utils.go:46" ]
-        "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" [ fillcolor="lightblue" label="generateEphemeralKeyPair" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair | defined in utils.go:59\nat utils.go:62: calling [github.com/samber/oops.Errorf]\nat utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
-        "go.step.sm/crypto/x25519.GenerateKey" [ fillcolor="moccasin" label="x25519\nGenerateKey" penwidth="1.5" tooltip="go.step.sm/crypto/x25519.GenerateKey | defined in x25519.go:37" ]
-        "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.deriveEncryptionKey | defined in utils.go:69\nat utils.go:76: calling [github.com/samber/oops.Errorf]\nat utils.go:84: calling [github.com/samber/oops.Errorf]\nat utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]\nat utils.go:81: calling [golang.org/x/crypto/hkdf.New]" fillcolor="lightblue" label="deriveEncryptionKey" ]
-        "github.com/go-i2p/crypto/ecies.encryptWithAEAD" [ fillcolor="lightblue" label="encryptWithAEAD" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.encryptWithAEAD | defined in utils.go:91\nat utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]\nat utils.go:95: calling [github.com/samber/oops.Errorf]\nat utils.go:101: calling [github.com/samber/oops.Errorf]" ]
-        "github.com/go-i2p/crypto/ecies.buildCiphertextResult" [ fillcolor="lightblue" label="buildCiphertextResult" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.buildCiphertextResult | defined in utils.go:111" ]
-        "github.com/go-i2p/crypto/ecies.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.init | defined in .:0\nat constants.go:31: calling [github.com/samber/oops.Errorf]\nat constants.go:32: calling [github.com/samber/oops.Errorf]\nat constants.go:33: calling [github.com/samber/oops.Errorf]\nat constants.go:34: calling [github.com/samber/oops.Errorf]\nat constants.go:35: calling [github.com/samber/oops.Errorf]\nat constants.go:36: calling [github.com/samber/oops.Errorf]\nat constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
-        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:120" ]
-        "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" [ fillcolor="lightblue" label="GenerateECIESKeyPair" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair | defined in ecies.go:101\nat ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:104: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
+        "github.com/go-i2p/crypto/ecies.NewSession" [ fillcolor="lightblue" label="NewSession" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.NewSession | defined in session_state.go:56\nat session_state.go:89: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat session_state.go:87: calling [github.com/go-i2p/crypto/ecies.currentTimestamp]\nat session_state.go:74: calling [(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet]\nat session_state.go:84: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]\nat session_state.go:85: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]\nat session_state.go:58: calling [github.com/samber/oops.Errorf]\nat session_state.go:61: calling [github.com/samber/oops.Errorf]\nat session_state.go:70: calling [github.com/samber/oops.Errorf]\nat session_state.go:75: calling [github.com/samber/oops.Errorf]\nat session_state.go:80: calling [github.com/samber/oops.Errorf]\nat session_state.go:79: calling [(*github.com/go-i2p/crypto/ecies.SessionState).deriveInitialKeys]\nat session_state.go:89: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "github.com/samber/oops.Errorf" [ tooltip="github.com/samber/oops.Errorf | defined in oops.go:34" fillcolor="moccasin" label="oops\nErrorf" penwidth="1.5" ]
         "github.com/go-i2p/crypto/ecies.GenerateKeyPair" [ fillcolor="lightblue" label="GenerateKeyPair" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.GenerateKeyPair | defined in utils.go:215\nat utils.go:216: calling [go.step.sm/crypto/x25519.GenerateKey]\nat utils.go:218: calling [github.com/samber/oops.Errorf]" ]
+        "go.step.sm/crypto/x25519.GenerateKey" [ penwidth="1.5" tooltip="go.step.sm/crypto/x25519.GenerateKey | defined in x25519.go:37" fillcolor="moccasin" label="x25519\nGenerateKey" ]
+        "github.com/go-i2p/crypto/ecies.performDH" [ label="performDH" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.performDH | defined in kdf.go:115\nat kdf.go:117: calling [github.com/samber/oops.Errorf]\nat kdf.go:120: calling [github.com/samber/oops.Errorf]\nat kdf.go:130: calling [github.com/samber/oops.Errorf]\nat kdf.go:128: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" fillcolor="lightblue" ]
+        "github.com/go-i2p/crypto/ecies.deriveKeys" [ fillcolor="lightblue" label="deriveKeys" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.deriveKeys | defined in kdf.go:19\nat kdf.go:25: calling [github.com/go-i2p/crypto/hkdf.NewHKDF]\nat kdf.go:21: calling [github.com/samber/oops.Errorf]\nat kdf.go:28: calling [github.com/samber/oops.Errorf]" ]
+        "github.com/go-i2p/crypto/hkdf.NewHKDF" [ fillcolor="moccasin" label="hkdf\nNewHKDF" penwidth="1.5" tooltip="github.com/go-i2p/crypto/hkdf.NewHKDF | defined in types.go:33" ]
+        "github.com/go-i2p/crypto/ratchet.NewTagRatchet" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/ratchet.NewTagRatchet | defined in tag_ratchet.go:22" fillcolor="moccasin" label="ratchet\nNewTagRatchet" ]
+        "github.com/go-i2p/crypto/ecies.currentTimestamp" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.currentTimestamp | defined in kdf.go:144" fillcolor="lightblue" label="currentTimestamp" ]
+        "github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey" [ fillcolor="moccasin" label="ratchet\nRatchetSymmetricKey" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey | defined in utils.go:13" ]
+        "github.com/go-i2p/crypto/ecies.constantTimeEqual" [ fillcolor="lightblue" label="constantTimeEqual" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.constantTimeEqual | defined in kdf.go:138" ]
+        "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" [ fillcolor="lightblue" label="deriveEncryptionKey" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.deriveEncryptionKey | defined in utils.go:69\nat utils.go:76: calling [github.com/samber/oops.Errorf]\nat utils.go:84: calling [github.com/samber/oops.Errorf]\nat utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]\nat utils.go:81: calling [golang.org/x/crypto/hkdf.New]" ]
+        "golang.org/x/crypto/hkdf.New" [ fillcolor="moccasin" label="hkdf\nNew" penwidth="1.5" tooltip="golang.org/x/crypto/hkdf.New | defined in hkdf.go:92" ]
+        "github.com/go-i2p/crypto/ecies.encryptWithAEAD" [ fillcolor="lightblue" label="encryptWithAEAD" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.encryptWithAEAD | defined in utils.go:91\nat utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]\nat utils.go:95: calling [github.com/samber/oops.Errorf]\nat utils.go:101: calling [github.com/samber/oops.Errorf]" ]
+        "golang.org/x/crypto/chacha20poly1305.New" [ tooltip="golang.org/x/crypto/chacha20poly1305.New | defined in chacha20poly1305.go:40" fillcolor="moccasin" label="chacha20poly1305\nNew" penwidth="1.5" ]
+        "github.com/go-i2p/crypto/ecies.zeroBytes" [ label="zeroBytes" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.zeroBytes | defined in session_state.go:305" fillcolor="lightblue" ]
+        "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" [ fillcolor="lightblue" label="GenerateECIESKeyPair" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair | defined in ecies.go:101\nat ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecies.go:104: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
+        "github.com/go-i2p/crypto/ecies.DeriveSessionTag" [ fillcolor="lightblue" label="DeriveSessionTag" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.DeriveSessionTag | defined in kdf.go:85\nat kdf.go:97: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]\nat kdf.go:103: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]\nat kdf.go:87: calling [github.com/samber/oops.Errorf]\nat kdf.go:93: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]" ]
+        "github.com/go-i2p/crypto/ecies.DeriveMessageKey" [ fillcolor="lightblue" label="DeriveMessageKey" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.DeriveMessageKey | defined in kdf.go:63\nat kdf.go:71: calling [github.com/go-i2p/crypto/ratchet.NewSymmetricRatchet]\nat kdf.go:65: calling [github.com/samber/oops.Errorf]\nat kdf.go:72: calling [(*github.com/go-i2p/crypto/ratchet.SymmetricRatchet).DeriveMessageKey]" ]
+        "github.com/go-i2p/crypto/ratchet.NewSymmetricRatchet" [ fillcolor="moccasin" label="ratchet\nNewSymmetricRatchet" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ratchet.NewSymmetricRatchet | defined in symmetric_ratchet.go:20" ]
+        "github.com/go-i2p/crypto/ecies.DeriveChaCha20Nonce" [ fillcolor="lightblue" label="DeriveChaCha20Nonce" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.DeriveChaCha20Nonce | defined in kdf.go:184\nat kdf.go:186: calling [github.com/go-i2p/crypto/ecies.deriveKeys]" ]
+        "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" [ fillcolor="lightblue" label="EncryptECIESX25519" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.EncryptECIESX25519 | defined in utils.go:21\nat utils.go:26: calling [github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair]\nat utils.go:22: calling [github.com/go-i2p/crypto/ecies.validateEncryptionInputs]\nat utils.go:31: calling [github.com/go-i2p/crypto/ecies.deriveEncryptionKey]\nat utils.go:36: calling [github.com/go-i2p/crypto/ecies.encryptWithAEAD]\nat utils.go:41: calling [github.com/go-i2p/crypto/ecies.buildCiphertextResult]" ]
+        "github.com/go-i2p/crypto/ecies.validateEncryptionInputs" [ tooltip="github.com/go-i2p/crypto/ecies.validateEncryptionInputs | defined in utils.go:46" fillcolor="lightblue" label="validateEncryptionInputs" penwidth="0.5" ]
+        "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" [ label="generateEphemeralKeyPair" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair | defined in utils.go:59\nat utils.go:62: calling [github.com/samber/oops.Errorf]\nat utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]" fillcolor="lightblue" ]
+        "github.com/go-i2p/crypto/ecies.buildCiphertextResult" [ label="buildCiphertextResult" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.buildCiphertextResult | defined in utils.go:111" fillcolor="lightblue" ]
+        "github.com/go-i2p/crypto/ecies.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.init | defined in .:0\nat constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]\nat constants.go:31: calling [github.com/samber/oops.Errorf]\nat constants.go:32: calling [github.com/samber/oops.Errorf]\nat constants.go:33: calling [github.com/samber/oops.Errorf]\nat constants.go:34: calling [github.com/samber/oops.Errorf]\nat constants.go:35: calling [github.com/samber/oops.Errorf]\nat constants.go:36: calling [github.com/samber/oops.Errorf]\nat constants.go:37: calling [github.com/samber/oops.Errorf]" ]
+        "github.com/go-i2p/logger.GetGoI2PLogger" [ fillcolor="moccasin" label="logger\nGetGoI2PLogger" penwidth="1.5" tooltip="github.com/go-i2p/logger.GetGoI2PLogger | defined in log.go:148" ]
+        "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" [ penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.DecryptECIESX25519 | defined in utils.go:130\nat utils.go:131: calling [github.com/go-i2p/crypto/ecies.validateDecryptionInputs]\nat utils.go:144: calling [github.com/go-i2p/crypto/ecies.decryptWithAEAD]\nat utils.go:135: calling [github.com/go-i2p/crypto/ecies.extractCiphertextComponents]\nat utils.go:139: calling [github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation]\nat utils.go:137: calling [github.com/go-i2p/crypto/ecies.convertKeysToX25519Format]" fillcolor="lightblue" label="DecryptECIESX25519" ]
+        "github.com/go-i2p/crypto/ecies.validateDecryptionInputs" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.validateDecryptionInputs | defined in utils.go:153" fillcolor="lightblue" label="validateDecryptionInputs" ]
+        "github.com/go-i2p/crypto/ecies.extractCiphertextComponents" [ fillcolor="lightblue" label="extractCiphertextComponents" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.extractCiphertextComponents | defined in utils.go:167" ]
+        "github.com/go-i2p/crypto/ecies.convertKeysToX25519Format" [ fillcolor="lightblue" label="convertKeysToX25519Format" penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.convertKeysToX25519Format | defined in utils.go:175" ]
+        "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation | defined in utils.go:182\nat utils.go:185: calling [github.com/samber/oops.Errorf]\nat utils.go:191: calling [github.com/samber/oops.Errorf]\nat utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]\nat utils.go:188: calling [golang.org/x/crypto/hkdf.New]" fillcolor="lightblue" label="performKeyAgreementAndDerivation" ]
+        "github.com/go-i2p/crypto/ecies.decryptWithAEAD" [ penwidth="0.5" tooltip="github.com/go-i2p/crypto/ecies.decryptWithAEAD | defined in utils.go:198\nat utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]\nat utils.go:201: calling [github.com/samber/oops.Errorf]\nat utils.go:206: calling [github.com/samber/oops.Errorf]" fillcolor="lightblue" label="decryptWithAEAD" ]
+        "github.com/go-i2p/crypto/ecies.DeriveSessionKeys" [ fillcolor="lightblue" label="DeriveSessionKeys" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.DeriveSessionKeys | defined in kdf.go:39\nat kdf.go:45: calling [github.com/go-i2p/crypto/ecies.deriveKeys]\nat kdf.go:41: calling [github.com/samber/oops.Errorf]\nat kdf.go:54: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "github.com/go-i2p/crypto/ecies.DeriveNoiseKeys" [ fillcolor="lightblue" label="DeriveNoiseKeys" penwidth="1.5" tooltip="github.com/go-i2p/crypto/ecies.DeriveNoiseKeys | defined in kdf.go:153\nat kdf.go:155: calling [github.com/samber/oops.Errorf]\nat kdf.go:169: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat kdf.go:159: calling [github.com/go-i2p/crypto/ecies.deriveKeys]" ]
         
         subgraph "cluster_*github.com/go-i2p/crypto/ecies.ECIESDecrypter" {
-        penwidth="0.5";
-fontsize="15";
-fontcolor="#222222";
-style="rounded,filled";
-labelloc="b";
-fillcolor="lightsteelblue";
-label="(*ECIESDecrypter)";
+        label="(*ECIESDecrypter)";
 tooltip="type: *github.com/go-i2p/crypto/ecies.ECIESDecrypter";
+penwidth="0.5";
+fontcolor="#222222";
+fillcolor="lightsteelblue";
+fontsize="15";
+labelloc="b";
+style="rounded,filled";
         
-        "(*github.com/go-i2p/crypto/ecies.ECIESDecrypter).Decrypt" [ label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.ECIESDecrypter).Decrypt | defined in ecies.go:96\nat ecies.go:97: calling [github.com/go-i2p/crypto/ecies.DecryptECIESX25519]" fillcolor="lightblue" ]
+        "(*github.com/go-i2p/crypto/ecies.ECIESDecrypter).Decrypt" [ fillcolor="lightblue" label="Decrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.ECIESDecrypter).Decrypt | defined in ecies.go:96\nat ecies.go:97: calling [github.com/go-i2p/crypto/ecies.DecryptECIESX25519]" ]
         
     }
 
         subgraph "cluster_*github.com/go-i2p/crypto/ecies.ECIESEncrypter" {
         fontsize="15";
-style="rounded,filled";
-fillcolor="lightsteelblue";
-penwidth="0.5";
 fontcolor="#222222";
 labelloc="b";
+style="rounded,filled";
 label="(*ECIESEncrypter)";
 tooltip="type: *github.com/go-i2p/crypto/ecies.ECIESEncrypter";
+penwidth="0.5";
+fillcolor="lightsteelblue";
         
         "(*github.com/go-i2p/crypto/ecies.ECIESEncrypter).Encrypt" [ fillcolor="lightblue" label="Encrypt" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.ECIESEncrypter).Encrypt | defined in ecies.go:86\nat ecies.go:87: calling [github.com/go-i2p/crypto/ecies.EncryptECIESX25519]" ]
         
     }
 
-        subgraph "cluster_*github.com/go-i2p/logger.Logger" {
-        fontcolor="#222222";
+        subgraph "cluster_*github.com/go-i2p/crypto/ecies.SessionState" {
+        fillcolor="lightsteelblue";
+label="(*SessionState)";
+penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+tooltip="type: *github.com/go-i2p/crypto/ecies.SessionState";
+        
+        "(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet" [ fillcolor="lightblue" label="initializeDHRatchet" penwidth="0.5" tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet | defined in session_state.go:94\nat session_state.go:95: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
+        "(*github.com/go-i2p/crypto/ecies.SessionState).deriveInitialKeys" [ fillcolor="lightblue" label="deriveInitialKeys" penwidth="0.5" tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).deriveInitialKeys | defined in session_state.go:109\nat session_state.go:126: calling [github.com/go-i2p/crypto/ecies.deriveKeys]\nat session_state.go:111: calling [github.com/go-i2p/crypto/ecies.performDH]" ]
+        "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextSendingKey" [ fillcolor="lightblue" label="DeriveNextSendingKey" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextSendingKey | defined in session_state.go:146\nat session_state.go:150: calling [github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey]\nat session_state.go:159: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat session_state.go:159: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+        "(*github.com/go-i2p/crypto/ecies.SessionState).ValidateReceivingTag" [ fillcolor="lightblue" label="ValidateReceivingTag" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).ValidateReceivingTag | defined in session_state.go:244\nat session_state.go:250: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).PeekNextTag]\nat session_state.go:255: calling [github.com/go-i2p/crypto/ecies.constantTimeEqual]\nat session_state.go:260: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]" ]
+        "(*github.com/go-i2p/crypto/ecies.SessionState).Zero" [ fillcolor="lightblue" label="Zero" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).Zero | defined in session_state.go:283\nat session_state.go:287: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:288: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:289: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:290: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:291: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:292: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:293: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:294: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:297: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).Zero]\nat session_state.go:300: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).Zero]" ]
+        "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextReceivingKey" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextReceivingKey | defined in session_state.go:165\nat session_state.go:178: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat session_state.go:178: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat session_state.go:169: calling [github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey]" fillcolor="lightblue" label="DeriveNextReceivingKey" ]
+        "(*github.com/go-i2p/crypto/ecies.SessionState).GetNextSendingTag" [ tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).GetNextSendingTag | defined in session_state.go:230\nat session_state.go:234: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]\nat session_state.go:239: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat session_state.go:236: calling [github.com/samber/oops.Errorf]\nat session_state.go:239: calling [(*github.com/sirupsen/logrus.Logger).Debug]" fillcolor="lightblue" label="GetNextSendingTag" penwidth="1.5" ]
+        "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" [ penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet | defined in session_state.go:184\nat session_state.go:186: calling [github.com/samber/oops.Errorf]\nat session_state.go:195: calling [github.com/samber/oops.Errorf]\nat session_state.go:201: calling [github.com/samber/oops.Errorf]\nat session_state.go:218: calling [github.com/samber/oops.Errorf]\nat session_state.go:199: calling [github.com/go-i2p/crypto/ecies.deriveKeys]\nat session_state.go:217: calling [(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet]\nat session_state.go:225: calling [(*github.com/go-i2p/logger.Logger).WithField]\nat session_state.go:225: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat session_state.go:193: calling [github.com/go-i2p/crypto/ecies.performDH]\nat session_state.go:222: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]\nat session_state.go:223: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]" fillcolor="lightblue" label="PerformDHRatchet" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/crypto/ratchet.SymmetricRatchet" {
+        fontsize="15";
+fontcolor="#222222";
 labelloc="b";
 style="rounded,filled";
 fillcolor="wheat2";
+label="(*SymmetricRatchet)";
+tooltip="type: *github.com/go-i2p/crypto/ratchet.SymmetricRatchet";
+penwidth="0.5";
+        
+        "(*github.com/go-i2p/crypto/ratchet.SymmetricRatchet).DeriveMessageKey" [ tooltip="(*github.com/go-i2p/crypto/ratchet.SymmetricRatchet).DeriveMessageKey | defined in symmetric_ratchet.go:28" fillcolor="moccasin" label="ratchet\nDeriveMessageKey" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/crypto/ratchet.TagRatchet" {
+        labelloc="b";
+style="rounded,filled";
+fillcolor="wheat2";
+label="(*TagRatchet)";
+tooltip="type: *github.com/go-i2p/crypto/ratchet.TagRatchet";
+penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
+        
+        "(*github.com/go-i2p/crypto/ratchet.TagRatchet).PeekNextTag" [ tooltip="(*github.com/go-i2p/crypto/ratchet.TagRatchet).PeekNextTag | defined in tag_ratchet.go:47" fillcolor="moccasin" label="ratchet\nPeekNextTag" penwidth="1.5" ]
+        "(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag" [ fillcolor="moccasin" label="ratchet\nGenerateNextTag" penwidth="1.5" tooltip="(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag | defined in tag_ratchet.go:31" ]
+        "(*github.com/go-i2p/crypto/ratchet.TagRatchet).Zero" [ tooltip="(*github.com/go-i2p/crypto/ratchet.TagRatchet).Zero | defined in tag_ratchet.go:99" fillcolor="moccasin" label="ratchet\nZero" penwidth="1.5" ]
+        
+    }
+
+        subgraph "cluster_*github.com/go-i2p/logger.Logger" {
+        fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/go-i2p/logger.Logger";
 penwidth="0.5";
 fontsize="15";
+fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
         
-        "(*github.com/go-i2p/logger.Logger).WithError" [ fillcolor="moccasin" label="logger\nWithError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:66" ]
-        "(*github.com/go-i2p/logger.Logger).Error" [ label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:42" fillcolor="moccasin" ]
+        "(*github.com/go-i2p/logger.Logger).WithField" [ fillcolor="moccasin" label="logger\nWithField" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithField | defined in log.go:60" ]
+        "(*github.com/go-i2p/logger.Logger).WithError" [ penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).WithError | defined in log.go:72" fillcolor="moccasin" label="logger\nWithError" ]
+        "(*github.com/go-i2p/logger.Logger).Error" [ fillcolor="moccasin" label="logger\nError" penwidth="1.5" tooltip="(*github.com/go-i2p/logger.Logger).Error | defined in log.go:48" ]
         
     }
 
         subgraph "cluster_*github.com/sirupsen/logrus.Logger" {
-        fontsize="15";
-fontcolor="#222222";
-labelloc="b";
+        labelloc="b";
 style="rounded,filled";
 fillcolor="wheat2";
 label="(*Logger)";
 tooltip="type: *github.com/sirupsen/logrus.Logger";
 penwidth="0.5";
+fontsize="15";
+fontcolor="#222222";
         
-        "(*github.com/sirupsen/logrus.Logger).Debug" [ penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" fillcolor="moccasin" label="logrus\nDebug" ]
+        "(*github.com/sirupsen/logrus.Logger).Debug" [ fillcolor="moccasin" label="logrus\nDebug" penwidth="1.5" tooltip="(*github.com/sirupsen/logrus.Logger).Debug | defined in logger.go:221" ]
         
     }
 
         subgraph "cluster_github.com/go-i2p/crypto/ecies.ECIESPrivateKey" {
-        fontsize="15";
+        penwidth="0.5";
 fontcolor="#222222";
+labelloc="b";
 style="rounded,filled";
 fillcolor="lightsteelblue";
-label="(ECIESPrivateKey)";
-penwidth="0.5";
-labelloc="b";
 tooltip="type: github.com/go-i2p/crypto/ecies.ECIESPrivateKey";
+fontsize="15";
+label="(ECIESPrivateKey)";
         
-        "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" [ fillcolor="lightblue" label="Public" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public | defined in ecies.go:52\nat ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecies.go:69: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:58: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
+        "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" [ fillcolor="lightblue" label="Public" penwidth="1.5" tooltip="(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public | defined in ecies.go:52\nat ecies.go:69: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).Error]\nat ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).WithError]\nat ecies.go:58: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
         
     }
 
         subgraph "cluster_go.step.sm/crypto/x25519.PrivateKey" {
-        labelloc="b";
-style="rounded,filled";
-fillcolor="wheat2";
-label="(PrivateKey)";
-tooltip="type: go.step.sm/crypto/x25519.PrivateKey";
+        tooltip="type: go.step.sm/crypto/x25519.PrivateKey";
 penwidth="0.5";
 fontsize="15";
 fontcolor="#222222";
+labelloc="b";
+style="rounded,filled";
+fillcolor="wheat2";
+label="(PrivateKey)";
         
-        "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ tooltip="(go.step.sm/crypto/x25519.PrivateKey).SharedKey | defined in x25519.go:101" fillcolor="moccasin" label="x25519\nSharedKey" penwidth="1.5" ]
+        "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ fillcolor="moccasin" label="x25519\nSharedKey" penwidth="1.5" tooltip="(go.step.sm/crypto/x25519.PrivateKey).SharedKey | defined in x25519.go:101" ]
         
     }
 
     }
 
-    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.convertKeysToX25519Format" [ tooltip="at utils.go:137: calling [github.com/go-i2p/crypto/ecies.convertKeysToX25519Format]" ]
-    "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
-    "(*github.com/go-i2p/crypto/ecies.ECIESDecrypter).Decrypt" -> "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" [ tooltip="at ecies.go:97: calling [github.com/go-i2p/crypto/ecies.DecryptECIESX25519]" ]
-    "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:62: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" -> "github.com/samber/oops.Errorf" [ tooltip="at utils.go:76: calling [github.com/samber/oops.Errorf]\nat utils.go:84: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" [ tooltip="at utils.go:31: calling [github.com/go-i2p/crypto/ecies.deriveEncryptionKey]" ]
-    "github.com/go-i2p/crypto/ecies.init" -> "github.com/samber/oops.Errorf" [ tooltip="at constants.go:31: calling [github.com/samber/oops.Errorf]\nat constants.go:32: calling [github.com/samber/oops.Errorf]\nat constants.go:33: calling [github.com/samber/oops.Errorf]\nat constants.go:34: calling [github.com/samber/oops.Errorf]\nat constants.go:35: calling [github.com/samber/oops.Errorf]\nat constants.go:36: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:185: calling [github.com/samber/oops.Errorf]\nat utils.go:191: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.buildCiphertextResult" [ tooltip="at utils.go:41: calling [github.com/go-i2p/crypto/ecies.buildCiphertextResult]" ]
-    "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
-    "github.com/go-i2p/crypto/ecies.encryptWithAEAD" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
-    "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.decryptWithAEAD" [ tooltip="at utils.go:144: calling [github.com/go-i2p/crypto/ecies.decryptWithAEAD]" ]
-    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" [ tooltip="at utils.go:26: calling [github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair]" ]
-    "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
-    "github.com/go-i2p/crypto/ecies.GenerateKeyPair" -> "go.step.sm/crypto/x25519.GenerateKey" [ color="saddlebrown" tooltip="at utils.go:216: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
-    "github.com/go-i2p/crypto/ecies.GenerateKeyPair" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:218: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" [ tooltip="at utils.go:139: calling [github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation]" ]
-    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.validateEncryptionInputs" [ tooltip="at utils.go:22: calling [github.com/go-i2p/crypto/ecies.validateEncryptionInputs]" ]
-    "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at utils.go:81: calling [golang.org/x/crypto/hkdf.New]" ]
-    "github.com/go-i2p/crypto/ecies.encryptWithAEAD" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:95: calling [github.com/samber/oops.Errorf]\nat utils.go:101: calling [github.com/samber/oops.Errorf]" ]
-    "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
-    "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveSessionTag" -> "(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag" [ tooltip="at kdf.go:97: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]\nat kdf.go:103: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at session_state.go:186: calling [github.com/samber/oops.Errorf]\nat session_state.go:195: calling [github.com/samber/oops.Errorf]\nat session_state.go:201: calling [github.com/samber/oops.Errorf]\nat session_state.go:218: calling [github.com/samber/oops.Errorf]" ]
     "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecies.go:69: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
-    "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" -> "go.step.sm/crypto/x25519.GenerateKey" [ color="saddlebrown" tooltip="at utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveMessageKey" -> "github.com/go-i2p/crypto/ratchet.NewSymmetricRatchet" [ color="saddlebrown" tooltip="at kdf.go:71: calling [github.com/go-i2p/crypto/ratchet.NewSymmetricRatchet]" ]
+    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" [ tooltip="at utils.go:26: calling [github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair]" ]
     "(*github.com/go-i2p/crypto/ecies.ECIESEncrypter).Encrypt" -> "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" [ tooltip="at ecies.go:87: calling [github.com/go-i2p/crypto/ecies.EncryptECIESX25519]" ]
-    "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at utils.go:188: calling [golang.org/x/crypto/hkdf.New]" ]
-    "github.com/go-i2p/crypto/ecies.decryptWithAEAD" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
-    "github.com/go-i2p/crypto/ecies.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ tooltip="at constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" color="saddlebrown" ]
-    "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveNoiseKeys" -> "github.com/samber/oops.Errorf" [ tooltip="at kdf.go:155: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.validateEncryptionInputs" [ tooltip="at utils.go:22: calling [github.com/go-i2p/crypto/ecies.validateEncryptionInputs]" ]
     "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.validateDecryptionInputs" [ tooltip="at utils.go:131: calling [github.com/go-i2p/crypto/ecies.validateDecryptionInputs]" ]
-    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.extractCiphertextComponents" [ tooltip="at utils.go:135: calling [github.com/go-i2p/crypto/ecies.extractCiphertextComponents]" ]
-    "github.com/go-i2p/crypto/ecies.decryptWithAEAD" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:201: calling [github.com/samber/oops.Errorf]\nat utils.go:206: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/ecies.GenerateKeyPair" -> "go.step.sm/crypto/x25519.GenerateKey" [ color="saddlebrown" tooltip="at utils.go:216: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
+    "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).Error" [ tooltip="at ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).Error]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/ecies.DeriveSessionTag" -> "github.com/samber/oops.Errorf" [ tooltip="at kdf.go:87: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/ecies.DeriveSessionTag" -> "github.com/go-i2p/crypto/ratchet.NewTagRatchet" [ color="saddlebrown" tooltip="at kdf.go:93: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]" ]
+    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" [ tooltip="at utils.go:31: calling [github.com/go-i2p/crypto/ecies.deriveEncryptionKey]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet" -> "github.com/go-i2p/crypto/ecies.GenerateKeyPair" [ tooltip="at session_state.go:95: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
+    "github.com/go-i2p/crypto/ecies.encryptWithAEAD" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at utils.go:93: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" -> "github.com/go-i2p/crypto/ecies.deriveKeys" [ tooltip="at session_state.go:199: calling [github.com/go-i2p/crypto/ecies.deriveKeys]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" -> "(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet" [ tooltip="at session_state.go:217: calling [(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet]" ]
+    "github.com/go-i2p/crypto/ecies.decryptWithAEAD" -> "golang.org/x/crypto/chacha20poly1305.New" [ color="saddlebrown" tooltip="at utils.go:199: calling [golang.org/x/crypto/chacha20poly1305.New]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveSessionKeys" -> "github.com/go-i2p/crypto/ecies.deriveKeys" [ tooltip="at kdf.go:45: calling [github.com/go-i2p/crypto/ecies.deriveKeys]" ]
+    "github.com/go-i2p/crypto/ecies.GenerateKeyPair" -> "github.com/samber/oops.Errorf" [ tooltip="at utils.go:218: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).deriveInitialKeys" -> "github.com/go-i2p/crypto/ecies.deriveKeys" [ tooltip="at session_state.go:126: calling [github.com/go-i2p/crypto/ecies.deriveKeys]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextReceivingKey" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at session_state.go:178: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
     "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.encryptWithAEAD" [ tooltip="at utils.go:36: calling [github.com/go-i2p/crypto/ecies.encryptWithAEAD]" ]
+    "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" -> "github.com/samber/oops.Errorf" [ tooltip="at utils.go:185: calling [github.com/samber/oops.Errorf]\nat utils.go:191: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/ecies.decryptWithAEAD" -> "github.com/samber/oops.Errorf" [ tooltip="at utils.go:201: calling [github.com/samber/oops.Errorf]\nat utils.go:206: calling [github.com/samber/oops.Errorf]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.decryptWithAEAD" [ tooltip="at utils.go:144: calling [github.com/go-i2p/crypto/ecies.decryptWithAEAD]" ]
+    "github.com/go-i2p/crypto/ecies.NewSession" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at session_state.go:89: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:76: calling [github.com/samber/oops.Errorf]\nat utils.go:84: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at ecies.go:102: calling [(*github.com/sirupsen/logrus.Logger).Debug]\nat ecies.go:116: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveMessageKey" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at kdf.go:65: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextReceivingKey" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at session_state.go:178: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:62: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.extractCiphertextComponents" [ tooltip="at utils.go:135: calling [github.com/go-i2p/crypto/ecies.extractCiphertextComponents]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).deriveInitialKeys" -> "github.com/go-i2p/crypto/ecies.performDH" [ tooltip="at session_state.go:111: calling [github.com/go-i2p/crypto/ecies.performDH]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).ValidateReceivingTag" -> "(*github.com/go-i2p/crypto/ratchet.TagRatchet).PeekNextTag" [ color="saddlebrown" tooltip="at session_state.go:250: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).PeekNextTag]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveMessageKey" -> "(*github.com/go-i2p/crypto/ratchet.SymmetricRatchet).DeriveMessageKey" [ color="saddlebrown" tooltip="at kdf.go:72: calling [(*github.com/go-i2p/crypto/ratchet.SymmetricRatchet).DeriveMessageKey]" ]
+    "(*github.com/go-i2p/crypto/ecies.ECIESDecrypter).Decrypt" -> "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" [ tooltip="at ecies.go:97: calling [github.com/go-i2p/crypto/ecies.DecryptECIESX25519]" ]
+    "github.com/go-i2p/crypto/ecies.performDH" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at kdf.go:117: calling [github.com/samber/oops.Errorf]\nat kdf.go:120: calling [github.com/samber/oops.Errorf]\nat kdf.go:130: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).GetNextSendingTag" -> "(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag" [ color="saddlebrown" tooltip="at session_state.go:234: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at session_state.go:225: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ tooltip="at session_state.go:225: calling [(*github.com/sirupsen/logrus.Logger).Debug]" color="saddlebrown" ]
+    "github.com/go-i2p/crypto/ecies.init" -> "github.com/go-i2p/logger.GetGoI2PLogger" [ color="saddlebrown" tooltip="at constants.go:11: calling [github.com/go-i2p/logger.GetGoI2PLogger]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveNoiseKeys" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at kdf.go:169: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecies.deriveKeys" -> "github.com/go-i2p/crypto/hkdf.NewHKDF" [ color="saddlebrown" tooltip="at kdf.go:25: calling [github.com/go-i2p/crypto/hkdf.NewHKDF]" ]
+    "github.com/go-i2p/crypto/ecies.NewSession" -> "github.com/go-i2p/crypto/ecies.currentTimestamp" [ tooltip="at session_state.go:87: calling [github.com/go-i2p/crypto/ecies.currentTimestamp]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).ValidateReceivingTag" -> "github.com/go-i2p/crypto/ecies.constantTimeEqual" [ tooltip="at session_state.go:255: calling [github.com/go-i2p/crypto/ecies.constantTimeEqual]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).ValidateReceivingTag" -> "(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag" [ color="saddlebrown" tooltip="at session_state.go:260: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).GenerateNextTag]" ]
+    "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at utils.go:74: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
+    "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" -> "(*github.com/go-i2p/logger.Logger).WithError" [ color="saddlebrown" tooltip="at ecies.go:60: calling [(*github.com/go-i2p/logger.Logger).WithError]" ]
+    "github.com/go-i2p/crypto/ecies.generateEphemeralKeyPair" -> "go.step.sm/crypto/x25519.GenerateKey" [ color="saddlebrown" tooltip="at utils.go:60: calling [go.step.sm/crypto/x25519.GenerateKey]" ]
+    "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at utils.go:183: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
+    "github.com/go-i2p/crypto/ecies.performDH" -> "(go.step.sm/crypto/x25519.PrivateKey).SharedKey" [ color="saddlebrown" tooltip="at kdf.go:128: calling [(go.step.sm/crypto/x25519.PrivateKey).SharedKey]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextSendingKey" -> "github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey" [ color="saddlebrown" tooltip="at session_state.go:150: calling [github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextSendingKey" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at session_state.go:159: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextReceivingKey" -> "github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey" [ color="saddlebrown" tooltip="at session_state.go:169: calling [github.com/go-i2p/crypto/ratchet.RatchetSymmetricKey]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).GetNextSendingTag" -> "(*github.com/go-i2p/logger.Logger).WithField" [ color="saddlebrown" tooltip="at session_state.go:239: calling [(*github.com/go-i2p/logger.Logger).WithField]" ]
+    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" [ tooltip="at utils.go:139: calling [github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveNoiseKeys" -> "github.com/go-i2p/crypto/ecies.deriveKeys" [ tooltip="at kdf.go:159: calling [github.com/go-i2p/crypto/ecies.deriveKeys]" ]
+    "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" -> "(*github.com/go-i2p/logger.Logger).Error" [ color="saddlebrown" tooltip="at ecies.go:106: calling [(*github.com/go-i2p/logger.Logger).Error]" ]
+    "github.com/go-i2p/crypto/ecies.NewSession" -> "(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet" [ tooltip="at session_state.go:74: calling [(*github.com/go-i2p/crypto/ecies.SessionState).initializeDHRatchet]" ]
+    "github.com/go-i2p/crypto/ecies.NewSession" -> "github.com/go-i2p/crypto/ratchet.NewTagRatchet" [ color="saddlebrown" tooltip="at session_state.go:84: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]\nat session_state.go:85: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).Zero" -> "github.com/go-i2p/crypto/ecies.zeroBytes" [ tooltip="at session_state.go:287: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:288: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:289: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:290: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:291: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:292: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:293: calling [github.com/go-i2p/crypto/ecies.zeroBytes]\nat session_state.go:294: calling [github.com/go-i2p/crypto/ecies.zeroBytes]" ]
     "github.com/go-i2p/crypto/ecies.GenerateECIESKeyPair" -> "github.com/go-i2p/crypto/ecies.GenerateKeyPair" [ tooltip="at ecies.go:104: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).GetNextSendingTag" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at session_state.go:236: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" -> "github.com/go-i2p/crypto/ecies.performDH" [ tooltip="at session_state.go:193: calling [github.com/go-i2p/crypto/ecies.performDH]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).PerformDHRatchet" -> "github.com/go-i2p/crypto/ratchet.NewTagRatchet" [ color="saddlebrown" tooltip="at session_state.go:222: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]\nat session_state.go:223: calling [github.com/go-i2p/crypto/ratchet.NewTagRatchet]" ]
+    "github.com/go-i2p/crypto/ecies.init" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at constants.go:31: calling [github.com/samber/oops.Errorf]\nat constants.go:32: calling [github.com/samber/oops.Errorf]\nat constants.go:33: calling [github.com/samber/oops.Errorf]\nat constants.go:34: calling [github.com/samber/oops.Errorf]\nat constants.go:35: calling [github.com/samber/oops.Errorf]\nat constants.go:36: calling [github.com/samber/oops.Errorf]\nat constants.go:37: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/ecies.NewSession" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at session_state.go:58: calling [github.com/samber/oops.Errorf]\nat session_state.go:61: calling [github.com/samber/oops.Errorf]\nat session_state.go:70: calling [github.com/samber/oops.Errorf]\nat session_state.go:75: calling [github.com/samber/oops.Errorf]\nat session_state.go:80: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/ecies.deriveKeys" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at kdf.go:21: calling [github.com/samber/oops.Errorf]\nat kdf.go:28: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/ecies.DecryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.convertKeysToX25519Format" [ tooltip="at utils.go:137: calling [github.com/go-i2p/crypto/ecies.convertKeysToX25519Format]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveSessionKeys" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at kdf.go:41: calling [github.com/samber/oops.Errorf]" ]
+    "github.com/go-i2p/crypto/ecies.NewSession" -> "(*github.com/go-i2p/crypto/ecies.SessionState).deriveInitialKeys" [ tooltip="at session_state.go:79: calling [(*github.com/go-i2p/crypto/ecies.SessionState).deriveInitialKeys]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).DeriveNextSendingKey" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at session_state.go:159: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveChaCha20Nonce" -> "github.com/go-i2p/crypto/ecies.deriveKeys" [ tooltip="at kdf.go:186: calling [github.com/go-i2p/crypto/ecies.deriveKeys]" ]
+    "github.com/go-i2p/crypto/ecies.EncryptECIESX25519" -> "github.com/go-i2p/crypto/ecies.buildCiphertextResult" [ tooltip="at utils.go:41: calling [github.com/go-i2p/crypto/ecies.buildCiphertextResult]" ]
+    "github.com/go-i2p/crypto/ecies.performKeyAgreementAndDerivation" -> "golang.org/x/crypto/hkdf.New" [ color="saddlebrown" tooltip="at utils.go:188: calling [golang.org/x/crypto/hkdf.New]" ]
+    "github.com/go-i2p/crypto/ecies.DeriveSessionKeys" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at kdf.go:54: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecies.NewSession" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at session_state.go:89: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecies.deriveEncryptionKey" -> "golang.org/x/crypto/hkdf.New" [ tooltip="at utils.go:81: calling [golang.org/x/crypto/hkdf.New]" color="saddlebrown" ]
     "(github.com/go-i2p/crypto/ecies.ECIESPrivateKey).Public" -> "github.com/go-i2p/crypto/ecies.GenerateKeyPair" [ tooltip="at ecies.go:58: calling [github.com/go-i2p/crypto/ecies.GenerateKeyPair]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).GetNextSendingTag" -> "(*github.com/sirupsen/logrus.Logger).Debug" [ color="saddlebrown" tooltip="at session_state.go:239: calling [(*github.com/sirupsen/logrus.Logger).Debug]" ]
+    "github.com/go-i2p/crypto/ecies.encryptWithAEAD" -> "github.com/samber/oops.Errorf" [ color="saddlebrown" tooltip="at utils.go:95: calling [github.com/samber/oops.Errorf]\nat utils.go:101: calling [github.com/samber/oops.Errorf]" ]
+    "(*github.com/go-i2p/crypto/ecies.SessionState).Zero" -> "(*github.com/go-i2p/crypto/ratchet.TagRatchet).Zero" [ tooltip="at session_state.go:297: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).Zero]\nat session_state.go:300: calling [(*github.com/go-i2p/crypto/ratchet.TagRatchet).Zero]" color="saddlebrown" ]
 }

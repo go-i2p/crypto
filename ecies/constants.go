@@ -28,10 +28,11 @@ const (
 // Error constants for ECIES operations
 // Moved from: ecies.go
 var (
-	ErrInvalidPublicKey    = oops.Errorf("invalid public key for ECIES-X25519")
-	ErrInvalidPrivateKey   = oops.Errorf("invalid private key for ECIES-X25519")
-	ErrDataTooBig          = oops.Errorf("data too large for ECIES-X25519 encryption")
-	ErrInvalidCiphertext   = oops.Errorf("invalid ciphertext for ECIES-X25519 decryption")
-	ErrDecryptionFailed    = oops.Errorf("ECIES-X25519 decryption failed")
-	ErrKeyDerivationFailed = oops.Errorf("ECIES-X25519 key derivation failed")
+	ErrInvalidPublicKey           = oops.Errorf("invalid public key for ECIES-X25519")
+	ErrInvalidPrivateKey          = oops.Errorf("invalid private key for ECIES-X25519")
+	ErrDataTooBig                 = oops.Errorf("data too large for ECIES-X25519 encryption")
+	ErrInvalidCiphertext          = oops.Errorf("invalid ciphertext for ECIES-X25519 decryption")
+	ErrDecryptionFailed           = oops.Errorf("ECIES-X25519 decryption failed")
+	ErrKeyDerivationFailed        = oops.Errorf("ECIES-X25519 key derivation failed")
+	ErrNotElligator2Representable = oops.Errorf("public key is not Elligator2-representable")
 )

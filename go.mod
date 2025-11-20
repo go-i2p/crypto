@@ -3,6 +3,7 @@ module github.com/go-i2p/crypto
 go 1.24.4
 
 require (
+	filippo.io/edwards25519 v1.1.0
 	github.com/go-i2p/elgamal v0.0.2
 	github.com/go-i2p/logger v0.0.1
 	github.com/samber/oops v1.19.0
@@ -11,7 +12,6 @@ require (
 )
 
 require (
-	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/oklog/ulid/v2 v2.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
