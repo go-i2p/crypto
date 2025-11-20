@@ -215,13 +215,9 @@ type ElgamalEncryption struct {
 }
 ```
 
-ElgamalEncryption represents an ElGamal encryption session with precomputed
-parameters. It stores the necessary cryptographic parameters (p, a, b1) for
-efficient encryption operations. Multiple messages can be encrypted using the
-same session for performance optimization. This structure implements a stateful
-ElGamal encryption session where the ephemeral key k is generated once and
-reused for multiple encryptions, providing better performance while maintaining
-cryptographic security through parameter isolation.
+ElgamalEncryption represents an ElGamal encryption wrapper using the
+go-i2p/elgamal library. It wraps a PublicKey and provides I2P-specific message
+formatting with SHA-256 integrity checks.
 
 #### func (*ElgamalEncryption) Encrypt
 
@@ -245,7 +241,7 @@ shorter than block size. Maximum supported data size is 222 bytes due to ElGamal
 security requirements. This method implements the complete I2P ElGamal
 encryption process including: 1. Data size validation (max 222 bytes for
 security) 2. Message formatting with 0xFF prefix and SHA-256 integrity hash 3.
-ElGamal encryption using precomputed session parameters 4. Output formatting
+ElGamal encryption using the go-i2p/elgamal library 4. Output formatting
 according to I2P protocol specifications
 
 #### type PrivateKey

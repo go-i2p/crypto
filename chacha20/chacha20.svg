@@ -66,65 +66,28 @@
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce -->
-<g id="node3" class="node">
-<title>github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce</title>
-<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce | defined in utils.go:11&#10;at utils.go:13: calling [github.com/go&#45;i2p/crypto/rand.Read]&#10;at utils.go:15: calling [github.com/samber/oops.Errorf]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M475.8851,-52C475.8851,-52 365.0731,-52 365.0731,-52 359.0731,-52 353.0731,-46 353.0731,-40 353.0731,-40 353.0731,-28 353.0731,-28 353.0731,-22 359.0731,-16 365.0731,-16 365.0731,-16 475.8851,-16 475.8851,-16 481.8851,-16 487.8851,-22 487.8851,-28 487.8851,-28 487.8851,-40 487.8851,-40 487.8851,-46 481.8851,-52 475.8851,-52"/>
-<text text-anchor="middle" x="420.4791" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">NewRandomNonce</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge18" class="edge">
-<title>github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge18"><a xlink:title="at utils.go:15: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M462.7001,-52.137C471.0448,-55.9208 479.6905,-59.9837 487.6818,-64 520.4211,-80.4541 556.6103,-100.9175 583.0561,-116.3106"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="581.5829,-119.5035 591.9823,-121.529 585.1158,-113.4604 581.5829,-119.5035"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/rand.Read -->
-<g id="node4" class="node">
-<title>github.com/go&#45;i2p/crypto/rand.Read</title>
-<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/crypto/rand.Read | defined in secure_reader.go:208">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M636.2765,-74C636.2765,-74 606.2765,-74 606.2765,-74 600.2765,-74 594.2765,-68 594.2765,-62 594.2765,-62 594.2765,-50 594.2765,-50 594.2765,-44 600.2765,-38 606.2765,-38 606.2765,-38 636.2765,-38 636.2765,-38 642.2765,-38 648.2765,-44 648.2765,-50 648.2765,-50 648.2765,-62 648.2765,-62 648.2765,-68 642.2765,-74 636.2765,-74"/>
-<text text-anchor="middle" x="621.2765" y="-60.2" font-family="Verdana" font-size="14.00" fill="#000000">rand</text>
-<text text-anchor="middle" x="621.2765" y="-43.4" font-family="Verdana" font-size="14.00" fill="#000000">Read</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/go&#45;i2p/crypto/rand.Read -->
-<g id="edge13" class="edge">
-<title>github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/go&#45;i2p/crypto/rand.Read</title>
-<g id="a_edge13"><a xlink:title="at utils.go:13: calling [github.com/go&#45;i2p/crypto/rand.Read]">
-<path fill="none" stroke="#8b4513" d="M487.9003,-41.3869C519.9858,-44.9023 557.1264,-48.9715 584.054,-51.9218"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="583.88,-55.4236 594.2018,-53.0336 584.6425,-48.4652 583.88,-55.4236"/>
-</a>
-</g>
-</g>
 <!-- github.com/go&#45;i2p/crypto/chacha20.init -->
-<g id="node5" class="node">
+<g id="node3" class="node">
 <title>github.com/go&#45;i2p/crypto/chacha20.init</title>
-<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/chacha20.init | defined in .:0&#10;at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]&#10;at constants.go:23: calling [github.com/samber/oops.Errorf]&#10;at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]&#10;at constants.go:26: calling [github.com/samber/oops.Errorf]&#10;at constants.go:27: calling [github.com/samber/oops.Errorf]">
+<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/chacha20.init | defined in .:0&#10;at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]&#10;at constants.go:23: calling [github.com/samber/oops.Errorf]&#10;at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]&#10;at constants.go:26: calling [github.com/samber/oops.Errorf]&#10;at constants.go:27: calling [github.com/samber/oops.Errorf]">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M435.4791,-575C435.4791,-575 405.4791,-575 405.4791,-575 399.4791,-575 393.4791,-569 393.4791,-563 393.4791,-563 393.4791,-551 393.4791,-551 393.4791,-545 399.4791,-539 405.4791,-539 405.4791,-539 435.4791,-539 435.4791,-539 441.4791,-539 447.4791,-545 447.4791,-551 447.4791,-551 447.4791,-563 447.4791,-563 447.4791,-569 441.4791,-575 435.4791,-575"/>
 <text text-anchor="middle" x="420.4791" y="-552.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/chacha20.init&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge14" class="edge">
+<g id="edge16" class="edge">
 <title>github.com/go&#45;i2p/crypto/chacha20.init&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge14"><a xlink:title="at constants.go:23: calling [github.com/samber/oops.Errorf]&#10;at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]&#10;at constants.go:26: calling [github.com/samber/oops.Errorf]&#10;at constants.go:27: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge16"><a xlink:title="at constants.go:23: calling [github.com/samber/oops.Errorf]&#10;at constants.go:24: calling [github.com/samber/oops.Errorf]&#10;at constants.go:25: calling [github.com/samber/oops.Errorf]&#10;at constants.go:26: calling [github.com/samber/oops.Errorf]&#10;at constants.go:27: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M447.9033,-554.3948C471.5427,-550.6867 504.8994,-541.711 524.6818,-520 572.7468,-467.2491 606.7519,-246.3594 617.5862,-167.2971"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="621.0914,-167.4928 618.9602,-157.1146 614.1543,-166.5567 621.0914,-167.4928"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="node6" class="node">
+<g id="node4" class="node">
 <title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
+<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:148">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M669.966,-575C669.966,-575 572.587,-575 572.587,-575 566.587,-575 560.587,-569 560.587,-563 560.587,-563 560.587,-551 560.587,-551 560.587,-545 566.587,-539 572.587,-539 572.587,-539 669.966,-539 669.966,-539 675.966,-539 681.966,-545 681.966,-551 681.966,-551 681.966,-563 681.966,-563 681.966,-569 675.966,-575 669.966,-575"/>
 <text text-anchor="middle" x="621.2765" y="-561.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="621.2765" y="-544.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
@@ -132,36 +95,73 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/chacha20.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge6" class="edge">
+<g id="edge9" class="edge">
 <title>github.com/go&#45;i2p/crypto/chacha20.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge6"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<g id="a_edge9"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
 <path fill="none" stroke="#8b4513" d="M447.5595,-557C473.7686,-557 514.6346,-557 550.1471,-557"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="550.4879,-560.5001 560.4879,-557 550.4878,-553.5001 550.4879,-560.5001"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce -->
+<g id="node5" class="node">
+<title>github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce</title>
+<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce | defined in utils.go:11&#10;at utils.go:13: calling [github.com/go&#45;i2p/crypto/rand.Read]&#10;at utils.go:15: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M475.8851,-52C475.8851,-52 365.0731,-52 365.0731,-52 359.0731,-52 353.0731,-46 353.0731,-40 353.0731,-40 353.0731,-28 353.0731,-28 353.0731,-22 359.0731,-16 365.0731,-16 365.0731,-16 475.8851,-16 475.8851,-16 481.8851,-16 487.8851,-22 487.8851,-28 487.8851,-28 487.8851,-40 487.8851,-40 487.8851,-46 481.8851,-52 475.8851,-52"/>
+<text text-anchor="middle" x="420.4791" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">NewRandomNonce</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge12" class="edge">
+<title>github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge12"><a xlink:title="at utils.go:15: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M462.7001,-52.137C471.0448,-55.9208 479.6905,-59.9837 487.6818,-64 520.4211,-80.4541 556.6103,-100.9175 583.0561,-116.3106"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="581.5829,-119.5035 591.9823,-121.529 585.1158,-113.4604 581.5829,-119.5035"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/rand.Read -->
+<g id="node6" class="node">
+<title>github.com/go&#45;i2p/crypto/rand.Read</title>
+<g id="a_node6"><a xlink:title="github.com/go&#45;i2p/crypto/rand.Read | defined in secure_reader.go:208">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M636.2765,-74C636.2765,-74 606.2765,-74 606.2765,-74 600.2765,-74 594.2765,-68 594.2765,-62 594.2765,-62 594.2765,-50 594.2765,-50 594.2765,-44 600.2765,-38 606.2765,-38 606.2765,-38 636.2765,-38 636.2765,-38 642.2765,-38 648.2765,-44 648.2765,-50 648.2765,-50 648.2765,-62 648.2765,-62 648.2765,-68 642.2765,-74 636.2765,-74"/>
+<text text-anchor="middle" x="621.2765" y="-60.2" font-family="Verdana" font-size="14.00" fill="#000000">rand</text>
+<text text-anchor="middle" x="621.2765" y="-43.4" font-family="Verdana" font-size="14.00" fill="#000000">Read</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/go&#45;i2p/crypto/rand.Read -->
+<g id="edge11" class="edge">
+<title>github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce&#45;&gt;github.com/go&#45;i2p/crypto/rand.Read</title>
+<g id="a_edge11"><a xlink:title="at utils.go:13: calling [github.com/go&#45;i2p/crypto/rand.Read]">
+<path fill="none" stroke="#8b4513" d="M487.9003,-41.3869C519.9858,-44.9023 557.1264,-48.9715 584.054,-51.9218"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="583.88,-55.4236 594.2018,-53.0336 584.6425,-48.4652 583.88,-55.4236"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/chacha20.GenerateKey -->
 <g id="node7" class="node">
 <title>github.com/go&#45;i2p/crypto/chacha20.GenerateKey</title>
-<g id="a_node7"><a xlink:title="github.com/go&#45;i2p/crypto/chacha20.GenerateKey | defined in chacha20_key.go:10&#10;at chacha20_key.go:14: calling [github.com/samber/oops.Errorf]&#10;at chacha20_key.go:12: calling [github.com/go&#45;i2p/crypto/rand.Read]">
+<g id="a_node7"><a xlink:title="github.com/go&#45;i2p/crypto/chacha20.GenerateKey | defined in chacha20_key.go:10&#10;at chacha20_key.go:12: calling [github.com/go&#45;i2p/crypto/rand.Read]&#10;at chacha20_key.go:14: calling [github.com/samber/oops.Errorf]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M457.3166,-113C457.3166,-113 383.6416,-113 383.6416,-113 377.6416,-113 371.6416,-107 371.6416,-101 371.6416,-101 371.6416,-89 371.6416,-89 371.6416,-83 377.6416,-77 383.6416,-77 383.6416,-77 457.3166,-77 457.3166,-77 463.3166,-77 469.3166,-83 469.3166,-89 469.3166,-89 469.3166,-101 469.3166,-101 469.3166,-107 463.3166,-113 457.3166,-113"/>
 <text text-anchor="middle" x="420.4791" y="-90.8" font-family="Verdana" font-size="14.00" fill="#000000">GenerateKey</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/chacha20.GenerateKey&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge3" class="edge">
+<g id="edge14" class="edge">
 <title>github.com/go&#45;i2p/crypto/chacha20.GenerateKey&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge3"><a xlink:title="at chacha20_key.go:14: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge14"><a xlink:title="at chacha20_key.go:14: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M469.3429,-105.7073C504.0153,-113.305 549.9381,-123.3679 582.1865,-130.4343"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="581.6272,-133.8948 592.1447,-132.6164 583.1256,-127.057 581.6272,-133.8948"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/chacha20.GenerateKey&#45;&gt;github.com/go&#45;i2p/crypto/rand.Read -->
-<g id="edge7" class="edge">
+<g id="edge6" class="edge">
 <title>github.com/go&#45;i2p/crypto/chacha20.GenerateKey&#45;&gt;github.com/go&#45;i2p/crypto/rand.Read</title>
-<g id="a_edge7"><a xlink:title="at chacha20_key.go:12: calling [github.com/go&#45;i2p/crypto/rand.Read]">
+<g id="a_edge6"><a xlink:title="at chacha20_key.go:12: calling [github.com/go&#45;i2p/crypto/rand.Read]">
 <path fill="none" stroke="#8b4513" d="M469.3429,-85.5094C504.7485,-78.6327 551.8855,-69.4775 584.2139,-63.1985"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="585.0069,-66.61 594.1561,-61.2675 583.6722,-59.7384 585.0069,-66.61"/>
 </a>
@@ -170,25 +170,25 @@
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd -->
 <g id="node8" class="node">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd</title>
-<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd | defined in chacha20_decrypter.go:20&#10;at chacha20_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_decrypter.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]&#10;at chacha20_decrypter.go:21: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_decrypter.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]&#10;at chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]">
+<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd | defined in chacha20_decrypter.go:20&#10;at chacha20_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_decrypter.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]&#10;at chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]&#10;at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]&#10;at chacha20_decrypter.go:21: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_decrypter.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M268.3713,-395C268.3713,-395 177.9921,-395 177.9921,-395 171.9921,-395 165.9921,-389 165.9921,-383 165.9921,-383 165.9921,-371 165.9921,-371 165.9921,-365 171.9921,-359 177.9921,-359 177.9921,-359 268.3713,-359 268.3713,-359 274.3713,-359 280.3713,-365 280.3713,-371 280.3713,-371 280.3713,-383 280.3713,-383 280.3713,-389 274.3713,-395 268.3713,-395"/>
 <text text-anchor="middle" x="223.1817" y="-372.8" font-family="Verdana" font-size="14.00" fill="#000000">DecryptWithAd</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge15" class="edge">
+<g id="edge2" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge15"><a xlink:title="at chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]&#10;at chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge2"><a xlink:title="at chacha20_decrypter.go:25: calling [github.com/samber/oops.Errorf]&#10;at chacha20_decrypter.go:31: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M235.285,-395.3739C255.6106,-424.3458 299.6855,-479.5511 353.2764,-501 408.7352,-523.1965 438.6726,-535.1534 487.6818,-501 545.0295,-461.0356 597.6553,-245.6749 615.1495,-167.4316"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="618.6407,-167.8535 617.3817,-157.3337 611.8057,-166.3425 618.6407,-167.8535"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;golang.org/x/crypto/chacha20poly1305.New -->
-<g id="edge5" class="edge">
+<g id="edge15" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;golang.org/x/crypto/chacha20poly1305.New</title>
-<g id="a_edge5"><a xlink:title="at chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]">
+<g id="a_edge15"><a xlink:title="at chacha20_decrypter.go:29: calling [golang.org/x/crypto/chacha20poly1305.New]">
 <path fill="none" stroke="#8b4513" d="M232.1132,-358.7749C249.3801,-325.3182 290.5585,-253.6002 350.962,-207.254"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="353.2416,-209.9219 359.2138,-201.1707 349.0878,-204.2875 353.2416,-209.9219"/>
 </a>
@@ -197,7 +197,7 @@
 <!-- (*github.com/go&#45;i2p/logger.Logger).WithField -->
 <g id="node12" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:54">
+<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:60">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M448.7536,-365C448.7536,-365 392.2046,-365 392.2046,-365 386.2046,-365 380.2046,-359 380.2046,-353 380.2046,-353 380.2046,-341 380.2046,-341 380.2046,-335 386.2046,-329 392.2046,-329 392.2046,-329 448.7536,-329 448.7536,-329 454.7536,-329 460.7536,-335 460.7536,-341 460.7536,-341 460.7536,-353 460.7536,-353 460.7536,-359 454.7536,-365 448.7536,-365"/>
 <text text-anchor="middle" x="420.4791" y="-351.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="420.4791" y="-334.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
@@ -205,9 +205,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge8" class="edge">
+<g id="edge18" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge8"><a xlink:title="at chacha20_decrypter.go:21: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_decrypter.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge18"><a xlink:title="at chacha20_decrypter.go:21: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_decrypter.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M280.5133,-368.2825C308.7614,-363.9872 342.5263,-358.8531 369.815,-354.7037"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="370.5713,-358.129 379.9315,-353.1655 369.519,-351.2086 370.5713,-358.129"/>
 </a>
@@ -216,7 +216,7 @@
 <!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
 <g id="node13" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_node13"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
+<g id="a_node13"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:72">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M449.0106,-487C449.0106,-487 391.9476,-487 391.9476,-487 385.9476,-487 379.9476,-481 379.9476,-475 379.9476,-475 379.9476,-463 379.9476,-463 379.9476,-457 385.9476,-451 391.9476,-451 391.9476,-451 449.0106,-451 449.0106,-451 455.0106,-451 461.0106,-457 461.0106,-463 461.0106,-463 461.0106,-475 461.0106,-475 461.0106,-481 455.0106,-487 449.0106,-487"/>
 <text text-anchor="middle" x="420.4791" y="-473.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="420.4791" y="-456.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
@@ -224,9 +224,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="edge9" class="edge">
+<g id="edge19" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_edge9"><a xlink:title="at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<g id="a_edge19"><a xlink:title="at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
 <path fill="none" stroke="#8b4513" d="M260.3576,-395.0188C286.3146,-407.5258 321.812,-424.4821 353.2764,-439 358.9104,-441.5995 364.8251,-444.2924 370.7114,-446.9496"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="369.3375,-450.1693 379.8934,-451.0773 372.2077,-443.7848 369.3375,-450.1693"/>
 </a>
@@ -235,7 +235,7 @@
 <!-- (*github.com/go&#45;i2p/logger.Logger).Error -->
 <g id="node14" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
+<g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:48">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M438.2454,-426C438.2454,-426 402.7128,-426 402.7128,-426 396.7128,-426 390.7128,-420 390.7128,-414 390.7128,-414 390.7128,-402 390.7128,-402 390.7128,-396 396.7128,-390 402.7128,-390 402.7128,-390 438.2454,-390 438.2454,-390 444.2454,-390 450.2454,-396 450.2454,-402 450.2454,-402 450.2454,-414 450.2454,-414 450.2454,-420 444.2454,-426 438.2454,-426"/>
 <text text-anchor="middle" x="420.4791" y="-412.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="420.4791" y="-395.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
@@ -243,9 +243,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge10" class="edge">
+<g id="edge7" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge10"><a xlink:title="at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_edge7"><a xlink:title="at chacha20_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="none" stroke="#8b4513" d="M280.5133,-386.0081C312.5337,-391.0393 351.6428,-397.1842 380.3725,-401.6983"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="380.0331,-405.1879 390.4552,-403.2825 381.1197,-398.2727 380.0331,-405.1879"/>
 </a>
@@ -262,9 +262,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge4" class="edge">
+<g id="edge1" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge4"><a xlink:title="at chacha20_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_decrypter.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge1"><a xlink:title="at chacha20_decrypter.go:21: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_decrypter.go:45: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M257.2608,-358.7912C275.5825,-348.4945 298.2534,-334.9208 317.2764,-321 334.5521,-308.3579 335.147,-300.3841 353.2764,-289 361.618,-283.762 371.1085,-279.1184 380.2754,-275.1926"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="381.7135,-278.386 389.6494,-271.3666 379.0683,-271.905 381.7135,-278.386"/>
 </a>
@@ -280,9 +280,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd -->
-<g id="edge11" class="edge">
+<g id="edge8" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd</title>
-<g id="a_edge11"><a xlink:title="at chacha20_decrypter.go:16: calling [(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd]">
+<g id="a_edge8"><a xlink:title="at chacha20_decrypter.go:16: calling [(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyDecrypter).DecryptWithAd]">
 <path fill="none" stroke="#000000" d="M93.459,-377C111.6303,-377 134.4765,-377 155.913,-377"/>
 <polygon fill="#000000" stroke="#000000" points="155.9675,-380.5001 165.9675,-377 155.9675,-373.5001 155.9675,-380.5001"/>
 </a>
@@ -291,16 +291,16 @@
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd -->
 <g id="node10" class="node">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd</title>
-<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd | defined in chacha20_encrypter.go:21&#10;at chacha20_encrypter.go:27: calling [github.com/samber/oops.Errorf]&#10;at chacha20_encrypter.go:31: calling [github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce]&#10;at chacha20_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_encrypter.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_encrypter.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_encrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_encrypter.go:25: calling [golang.org/x/crypto/chacha20poly1305.New]">
+<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd | defined in chacha20_encrypter.go:21&#10;at chacha20_encrypter.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_encrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_encrypter.go:27: calling [github.com/samber/oops.Errorf]&#10;at chacha20_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_encrypter.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_encrypter.go:31: calling [github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce]&#10;at chacha20_encrypter.go:25: calling [golang.org/x/crypto/chacha20poly1305.New]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M268.1033,-201C268.1033,-201 178.2601,-201 178.2601,-201 172.2601,-201 166.2601,-195 166.2601,-189 166.2601,-189 166.2601,-177 166.2601,-177 166.2601,-171 172.2601,-165 178.2601,-165 178.2601,-165 268.1033,-165 268.1033,-165 274.1033,-165 280.1033,-171 280.1033,-177 280.1033,-177 280.1033,-189 280.1033,-189 280.1033,-195 274.1033,-201 268.1033,-201"/>
 <text text-anchor="middle" x="223.1817" y="-178.8" font-family="Verdana" font-size="14.00" fill="#000000">EncryptWithAd</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge1" class="edge">
+<g id="edge4" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge1"><a xlink:title="at chacha20_encrypter.go:27: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge4"><a xlink:title="at chacha20_encrypter.go:27: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M280.0585,-167.0294C302.6674,-161.318 329.0249,-155.4472 353.2764,-152 433.9602,-140.5313 529.5284,-138.6665 581.9566,-138.6353"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="582.1533,-142.1356 592.1592,-138.6524 582.1652,-135.1356 582.1533,-142.1356"/>
 </a>
@@ -316,27 +316,27 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce -->
-<g id="edge2" class="edge">
+<g id="edge13" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce</title>
-<g id="a_edge2"><a xlink:title="at chacha20_encrypter.go:31: calling [github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce]">
+<g id="a_edge13"><a xlink:title="at chacha20_encrypter.go:31: calling [github.com/go&#45;i2p/crypto/chacha20.NewRandomNonce]">
 <path fill="none" stroke="#000000" d="M239.3643,-164.9107C262.6156,-139.7375 307.7129,-93.8763 353.2764,-64 357.2097,-61.4209 361.4015,-58.9632 365.6959,-56.6453"/>
 <polygon fill="#000000" stroke="#000000" points="367.2952,-59.7586 374.6054,-52.0898 364.1084,-53.5261 367.2952,-59.7586"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge12" class="edge">
+<g id="edge10" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge12"><a xlink:title="at chacha20_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_encrypter.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge10"><a xlink:title="at chacha20_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at chacha20_encrypter.go:44: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M244.2267,-201.0731C269.8394,-223.0039 314.4775,-261.0172 353.2764,-293 365.079,-302.7291 378.1678,-313.296 389.6352,-322.4813"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="387.6605,-325.3836 397.657,-328.8938 392.0313,-319.9159 387.6605,-325.3836"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge16" class="edge">
+<g id="edge3" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge16"><a xlink:title="at chacha20_encrypter.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_encrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge3"><a xlink:title="at chacha20_encrypter.go:22: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at chacha20_encrypter.go:44: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M262.6592,-201.0942C288.2558,-212.5515 322.4553,-227.3486 353.2764,-239 361.7866,-242.2171 371.0014,-245.4153 379.7997,-248.3359"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="378.9041,-251.7252 389.4966,-251.5016 381.0766,-245.0709 378.9041,-251.7252"/>
 </a>
@@ -352,9 +352,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd -->
-<g id="edge19" class="edge">
+<g id="edge5" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd</title>
-<g id="a_edge19"><a xlink:title="at chacha20_encrypter.go:16: calling [(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd]">
+<g id="a_edge5"><a xlink:title="at chacha20_encrypter.go:16: calling [(*github.com/go&#45;i2p/crypto/chacha20.ChaCha20PolyEncrypter).EncryptWithAd]">
 <path fill="none" stroke="#000000" d="M93.0571,-183C111.3721,-183 134.5186,-183 156.1948,-183"/>
 <polygon fill="#000000" stroke="#000000" points="156.3578,-186.5001 166.3578,-183 156.3578,-179.5001 156.3578,-186.5001"/>
 </a>

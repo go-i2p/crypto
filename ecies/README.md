@@ -18,6 +18,10 @@ encryption.
 The implementation follows I2P Proposal 144 specification:
 https://geti2p.net/spec/proposals/144-ecies-x25519-aead-ratchet
 
+Package ecies key derivation functions for ECIES-X25519-AEAD-Ratchet protocol.
+
+Package ecies session state management for ECIES-X25519-AEAD-Ratchet protocol.
+
 Package ecies utility functions for ECIES-X25519-AEAD-Ratchet encryption. Moved
 from: ecies.go
 
@@ -41,12 +45,13 @@ Constants for ECIES-X25519 implementation Moved from: ecies.go
 
 ```go
 var (
-	ErrInvalidPublicKey    = oops.Errorf("invalid public key for ECIES-X25519")
-	ErrInvalidPrivateKey   = oops.Errorf("invalid private key for ECIES-X25519")
-	ErrDataTooBig          = oops.Errorf("data too large for ECIES-X25519 encryption")
-	ErrInvalidCiphertext   = oops.Errorf("invalid ciphertext for ECIES-X25519 decryption")
-	ErrDecryptionFailed    = oops.Errorf("ECIES-X25519 decryption failed")
-	ErrKeyDerivationFailed = oops.Errorf("ECIES-X25519 key derivation failed")
+	ErrInvalidPublicKey           = oops.Errorf("invalid public key for ECIES-X25519")
+	ErrInvalidPrivateKey          = oops.Errorf("invalid private key for ECIES-X25519")
+	ErrDataTooBig                 = oops.Errorf("data too large for ECIES-X25519 encryption")
+	ErrInvalidCiphertext          = oops.Errorf("invalid ciphertext for ECIES-X25519 decryption")
+	ErrDecryptionFailed           = oops.Errorf("ECIES-X25519 decryption failed")
+	ErrKeyDerivationFailed        = oops.Errorf("ECIES-X25519 key derivation failed")
+	ErrNotElligator2Representable = oops.Errorf("public key is not Elligator2-representable")
 )
 ```
 Error constants for ECIES operations Moved from: ecies.go
@@ -59,6 +64,60 @@ func DecryptECIESX25519(recipientPrivKey, ciphertext []byte) ([]byte, error)
 DecryptECIESX25519 decrypts ciphertext using ECIES-X25519 scheme. The private
 key must be 32 bytes (X25519 private key). The ciphertext must be in the format:
 [ephemeral_pubkey][nonce][aead_ciphertext] Moved from: ecies.go
+
+#### func  DeriveChaCha20Key
+
+```go
+func DeriveChaCha20Key(messageKey [32]byte) ([32]byte, error)
+```
+DeriveChaCha20Key derives a ChaCha20 encryption key from a message key. Some
+implementations may need this extra derivation step.
+
+#### func  DeriveChaCha20Nonce
+
+```go
+func DeriveChaCha20Nonce(messageKey [32]byte, messageNum uint32) ([12]byte, error)
+```
+DeriveChaCha20Nonce derives a ChaCha20 nonce from a message key and message
+number. Returns a 12-byte nonce suitable for ChaCha20-Poly1305.
+
+#### func  DeriveMessageKey
+
+```go
+func DeriveMessageKey(chainKey []byte, messageNumber uint32) ([32]byte, error)
+```
+DeriveMessageKey derives a message encryption key from a chain key. This is used
+by the symmetric key ratchet. chainKey: The current chain key (32 bytes)
+messageNumber: The message sequence number for this key Returns (messageKey,
+error)
+
+#### func  DeriveNoiseKeys
+
+```go
+func DeriveNoiseKeys(sharedSecret, info []byte) ([32]byte, [32]byte, [32]byte, error)
+```
+DeriveNoiseKeys derives keys using the Noise protocol pattern. This is
+specifically for ECIES session establishment following Noise_X pattern.
+sharedSecret: Output from X25519 DH info: Context string for domain separation
+Returns (sendKey, recvKey, chainKey, error)
+
+#### func  DeriveSessionKeys
+
+```go
+func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error)
+```
+DeriveSessionKeys derives the initial session keys from a shared secret. This is
+used during session establishment to derive: - Sending chain key (32 bytes) -
+Receiving chain key (32 bytes) Returns (sendKey, recvKey, error)
+
+#### func  DeriveSessionTag
+
+```go
+func DeriveSessionTag(chainKey []byte, tagNumber uint32) ([8]byte, error)
+```
+DeriveSessionTag derives a session tag from a chain key. This is used by the
+session tag ratchet. chainKey: The current chain key (32 bytes) tagNumber: The
+tag sequence number Returns (tag, error) where tag is 8 bytes
 
 #### func  EncryptECIESX25519
 
@@ -192,6 +251,120 @@ Len returns the length of the public key in bytes
 func (k ECIESPublicKey) NewEncrypter() (types.Encrypter, error)
 ```
 NewEncrypter creates a new encrypter using this public key
+
+#### type SessionState
+
+```go
+type SessionState struct {
+
+	// Session identification
+	SessionID [32]byte
+
+	// Static keys
+	LocalPrivKey       [32]byte // Our static private key
+	RemoteStaticPubKey [32]byte // Remote peer's static public key
+
+	// Ratchet state - Sending chain
+	SendingChainKey   [32]byte // Current sending chain key
+	SendingMessageNum uint32   // Next message number to send
+
+	// Ratchet state - Receiving chain
+	ReceivingChainKey   [32]byte // Current receiving chain key
+	ReceivingMessageNum uint32   // Next expected message number
+
+	// DH Ratchet state
+	DHRatchetPrivKey [32]byte // Our current DH ratchet private key
+	DHRatchetPubKey  [32]byte // Our current DH ratchet public key
+	RemoteDHPubKey   [32]byte // Remote peer's current DH ratchet public key
+
+	// Session tag ratchets
+	SendingTagRatchet   *ratchet.TagRatchet // Derives outgoing session tags
+	ReceivingTagRatchet *ratchet.TagRatchet // Derives incoming session tags
+
+	// Previous chain length for message ordering
+	PreviousChainLength uint32
+
+	// Session creation timestamp
+	CreatedAt int64
+}
+```
+
+SessionState tracks the state of an ECIES session with forward secrecy. It
+implements the three-level ratcheting mechanism from I2P Proposal 144: 1.
+Session Tag Ratchet - Derives unique session tags for message routing 2.
+Symmetric Key Ratchet - Derives message encryption keys 3. DH Ratchet - Provides
+forward secrecy through ephemeral key exchanges
+
+#### func  NewSession
+
+```go
+func NewSession(localPrivKey, remoteStaticPubKey []byte, isInitiator bool) (*SessionState, error)
+```
+NewSession creates a new ECIES session state. localPrivKey: Our static X25519
+private key (32 bytes) remoteStaticPubKey: Remote peer's static X25519 public
+key (32 bytes) isInitiator: True if we are initiating the session, false if
+responding
+
+#### func (*SessionState) DeriveNextReceivingKey
+
+```go
+func (s *SessionState) DeriveNextReceivingKey() ([32]byte, error)
+```
+DeriveNextReceivingKey derives the next message decryption key from the
+receiving chain. This implements the symmetric key ratchet for receiving.
+
+#### func (*SessionState) DeriveNextSendingKey
+
+```go
+func (s *SessionState) DeriveNextSendingKey() ([32]byte, error)
+```
+DeriveNextSendingKey derives the next message encryption key from the sending
+chain. This implements the symmetric key ratchet for sending.
+
+#### func (*SessionState) GetDHRatchetPublicKey
+
+```go
+func (s *SessionState) GetDHRatchetPublicKey() [32]byte
+```
+GetDHRatchetPublicKey returns our current DH ratchet public key.
+
+#### func (*SessionState) GetNextSendingTag
+
+```go
+func (s *SessionState) GetNextSendingTag() ([8]byte, error)
+```
+GetNextSendingTag derives the next session tag for sending an existing session
+message.
+
+#### func (*SessionState) GetSessionID
+
+```go
+func (s *SessionState) GetSessionID() [32]byte
+```
+GetSessionID returns the session identifier.
+
+#### func (*SessionState) PerformDHRatchet
+
+```go
+func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error
+```
+PerformDHRatchet performs a DH ratchet step, providing forward secrecy. This
+should be called when we receive a new DH public key from the remote peer.
+
+#### func (*SessionState) ValidateReceivingTag
+
+```go
+func (s *SessionState) ValidateReceivingTag(tag [8]byte) (bool, error)
+```
+ValidateReceivingTag checks if a received tag matches the expected tag in the
+receiving ratchet.
+
+#### func (*SessionState) Zero
+
+```go
+func (s *SessionState) Zero()
+```
+Zero securely clears sensitive session data from memory.
 
 
 

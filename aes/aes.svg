@@ -54,38 +54,66 @@
 </a>
 </g>
 </g>
-<!-- github.com/go&#45;i2p/crypto/aes.pkcs7Pad -->
+<!-- github.com/go&#45;i2p/crypto/aes.init -->
 <g id="node1" class="node">
+<title>github.com/go&#45;i2p/crypto/aes.init</title>
+<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/aes.init | defined in .:0&#10;at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]&#10;at constants.go:15: calling [github.com/samber/oops.Errorf]&#10;at constants.go:18: calling [github.com/samber/oops.Errorf]">
+<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M378.2764,-52C378.2764,-52 348.2764,-52 348.2764,-52 342.2764,-52 336.2764,-46 336.2764,-40 336.2764,-40 336.2764,-28 336.2764,-28 336.2764,-22 342.2764,-16 348.2764,-16 348.2764,-16 378.2764,-16 378.2764,-16 384.2764,-16 390.2764,-22 390.2764,-28 390.2764,-28 390.2764,-40 390.2764,-40 390.2764,-46 384.2764,-52 378.2764,-52"/>
+<text text-anchor="middle" x="363.2764" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<g id="node2" class="node">
+<title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
+<g id="a_node2"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:148">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M623.7556,-52C623.7556,-52 526.3766,-52 526.3766,-52 520.3766,-52 514.3766,-46 514.3766,-40 514.3766,-40 514.3766,-28 514.3766,-28 514.3766,-22 520.3766,-16 526.3766,-16 526.3766,-16 623.7556,-16 623.7556,-16 629.7556,-16 635.7556,-22 635.7556,-28 635.7556,-28 635.7556,-40 635.7556,-40 635.7556,-46 629.7556,-52 623.7556,-52"/>
+<text text-anchor="middle" x="575.0661" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="575.0661" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
+<g id="edge3" class="edge">
+<title>github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
+<g id="a_edge3"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
+<path fill="none" stroke="#8b4513" d="M390.5306,-34C419.0412,-34 464.9752,-34 503.8809,-34"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="504.1252,-37.5001 514.1252,-34 504.1251,-30.5001 504.1252,-37.5001"/>
+</a>
+</g>
+</g>
+<!-- github.com/samber/oops.Errorf -->
+<g id="node3" class="node">
+<title>github.com/samber/oops.Errorf</title>
+<g id="a_node3"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M592.2614,-116C592.2614,-116 557.8708,-116 557.8708,-116 551.8708,-116 545.8708,-110 545.8708,-104 545.8708,-104 545.8708,-92 545.8708,-92 545.8708,-86 551.8708,-80 557.8708,-80 557.8708,-80 592.2614,-80 592.2614,-80 598.2614,-80 604.2614,-86 604.2614,-92 604.2614,-92 604.2614,-104 604.2614,-104 604.2614,-110 598.2614,-116 592.2614,-116"/>
+<text text-anchor="middle" x="575.0661" y="-102.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
+<text text-anchor="middle" x="575.0661" y="-85.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/samber/oops.Errorf -->
+<g id="edge14" class="edge">
+<title>github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/samber/oops.Errorf</title>
+<g id="a_edge14"><a xlink:title="at constants.go:15: calling [github.com/samber/oops.Errorf]&#10;at constants.go:18: calling [github.com/samber/oops.Errorf]">
+<path fill="none" stroke="#8b4513" d="M390.4552,-40.3974C413.9124,-46.0807 448.6281,-54.8792 478.4714,-64 497.5164,-69.8206 518.3887,-77.0571 535.8428,-83.356"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="535.0909,-86.8069 545.6849,-86.9385 537.4853,-80.2291 535.0909,-86.8069"/>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/aes.pkcs7Pad -->
+<g id="node4" class="node">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Pad</title>
-<g id="a_node1"><a xlink:title="github.com/go&#45;i2p/crypto/aes.pkcs7Pad | defined in utils.go:13&#10;at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:14: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at utils.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/crypto/aes.pkcs7Pad | defined in utils.go:13&#10;at utils.go:14: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]&#10;at utils.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M389.9336,-458C389.9336,-458 336.6192,-458 336.6192,-458 330.6192,-458 324.6192,-452 324.6192,-446 324.6192,-446 324.6192,-434 324.6192,-434 324.6192,-428 330.6192,-422 336.6192,-422 336.6192,-422 389.9336,-422 389.9336,-422 395.9336,-422 401.9336,-428 401.9336,-434 401.9336,-434 401.9336,-446 401.9336,-446 401.9336,-452 395.9336,-458 389.9336,-458"/>
 <text text-anchor="middle" x="363.2764" y="-435.8" font-family="Verdana" font-size="14.00" fill="#000000">pkcs7Pad</text>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="node13" class="node">
-<title>(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_node13"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithFields | defined in log.go:60">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M606.2852,-464C606.2852,-464 543.847,-464 543.847,-464 537.847,-464 531.847,-458 531.847,-452 531.847,-452 531.847,-440 531.847,-440 531.847,-434 537.847,-428 543.847,-428 543.847,-428 606.2852,-428 606.2852,-428 612.2852,-428 618.2852,-434 618.2852,-440 618.2852,-440 618.2852,-452 618.2852,-452 618.2852,-458 612.2852,-464 606.2852,-464"/>
-<text text-anchor="middle" x="575.0661" y="-450.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="575.0661" y="-433.4" font-family="Verdana" font-size="14.00" fill="#000000">WithFields</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
-<g id="edge21" class="edge">
-<title>github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
-<g id="a_edge21"><a xlink:title="at utils.go:14: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
-<path fill="none" stroke="#8b4513" d="M399.1906,-458.036C426.8637,-471.0524 462.9381,-485.8732 478.4714,-483 495.1422,-479.9164 512.6538,-474.0753 528.119,-467.9299"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="529.5427,-471.1288 537.4579,-464.0861 526.8784,-464.6557 529.5427,-471.1288"/>
-</a>
-</g>
-</g>
 <!-- (*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="node14" class="node">
+<g id="node13" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:54">
+<g id="a_node13"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithField | defined in log.go:60">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M603.3406,-403C603.3406,-403 546.7916,-403 546.7916,-403 540.7916,-403 534.7916,-397 534.7916,-391 534.7916,-391 534.7916,-379 534.7916,-379 534.7916,-373 540.7916,-367 546.7916,-367 546.7916,-367 603.3406,-367 603.3406,-367 609.3406,-367 615.3406,-373 615.3406,-379 615.3406,-379 615.3406,-391 615.3406,-391 615.3406,-397 609.3406,-403 603.3406,-403"/>
 <text text-anchor="middle" x="575.0661" y="-389.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="575.0661" y="-372.4" font-family="Verdana" font-size="14.00" fill="#000000">WithField</text>
@@ -93,11 +121,30 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge9" class="edge">
+<g id="edge17" class="edge">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge9"><a xlink:title="at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge17"><a xlink:title="at utils.go:23: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M401.9777,-439.4954C424.6053,-438.415 453.532,-435.6695 478.4714,-429 488.845,-426.2258 509.7927,-416.8585 529.5369,-407.4761"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="531.2769,-410.5233 538.7803,-403.0433 528.25,-404.2116 531.2769,-410.5233"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/logger.Logger).WithFields -->
+<g id="node16" class="node">
+<title>(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
+<g id="a_node16"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithFields | defined in log.go:66">
+<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M606.2852,-464C606.2852,-464 543.847,-464 543.847,-464 537.847,-464 531.847,-458 531.847,-452 531.847,-452 531.847,-440 531.847,-440 531.847,-434 537.847,-428 543.847,-428 543.847,-428 606.2852,-428 606.2852,-428 612.2852,-428 618.2852,-434 618.2852,-440 618.2852,-440 618.2852,-452 618.2852,-452 618.2852,-458 612.2852,-464 606.2852,-464"/>
+<text text-anchor="middle" x="575.0661" y="-450.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
+<text text-anchor="middle" x="575.0661" y="-433.4" font-family="Verdana" font-size="14.00" fill="#000000">WithFields</text>
+</a>
+</g>
+</g>
+<!-- github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields -->
+<g id="edge7" class="edge">
+<title>github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithFields</title>
+<g id="a_edge7"><a xlink:title="at utils.go:14: calling [(*github.com/go&#45;i2p/logger.Logger).WithFields]">
+<path fill="none" stroke="#8b4513" d="M399.1906,-458.036C426.8637,-471.0524 462.9381,-485.8732 478.4714,-483 495.1422,-479.9164 512.6538,-474.0753 528.119,-467.9299"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="529.5427,-471.1288 537.4579,-464.0861 526.8784,-464.6557 529.5427,-471.1288"/>
 </a>
 </g>
 </g>
@@ -112,46 +159,36 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge26" class="edge">
+<g id="edge16" class="edge">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Pad&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge26"><a xlink:title="at utils.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge16"><a xlink:title="at utils.go:17: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:23: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M402.2984,-454.1154C415.7699,-460.0224 430.4777,-467.702 442.4714,-477 492.3853,-515.695 535.8333,-576.3962 558.4571,-611.1564"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="555.6683,-613.2914 564.0131,-619.8195 561.5607,-609.5124 555.6683,-613.2914"/>
 </a>
 </g>
 </g>
-<!-- github.com/samber/oops.Errorf -->
-<g id="node2" class="node">
-<title>github.com/samber/oops.Errorf</title>
-<g id="a_node2"><a xlink:title="github.com/samber/oops.Errorf | defined in oops.go:34">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M592.2614,-116C592.2614,-116 557.8708,-116 557.8708,-116 551.8708,-116 545.8708,-110 545.8708,-104 545.8708,-104 545.8708,-92 545.8708,-92 545.8708,-86 551.8708,-80 557.8708,-80 557.8708,-80 592.2614,-80 592.2614,-80 598.2614,-80 604.2614,-86 604.2614,-92 604.2614,-92 604.2614,-104 604.2614,-104 604.2614,-110 598.2614,-116 592.2614,-116"/>
-<text text-anchor="middle" x="575.0661" y="-102.2" font-family="Verdana" font-size="14.00" fill="#000000">oops</text>
-<text text-anchor="middle" x="575.0661" y="-85.4" font-family="Verdana" font-size="14.00" fill="#000000">Errorf</text>
-</a>
-</g>
-</g>
 <!-- github.com/go&#45;i2p/crypto/aes.pkcs7Unpad -->
-<g id="node3" class="node">
+<g id="node5" class="node">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Unpad</title>
-<g id="a_node3"><a xlink:title="github.com/go&#45;i2p/crypto/aes.pkcs7Unpad | defined in utils.go:29&#10;at utils.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:35: calling [github.com/samber/oops.Errorf]&#10;at utils.go:40: calling [github.com/samber/oops.Errorf]&#10;at utils.go:46: calling [github.com/samber/oops.Errorf]&#10;at utils.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:51: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/crypto/aes.pkcs7Unpad | defined in utils.go:29&#10;at utils.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:51: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:35: calling [github.com/samber/oops.Errorf]&#10;at utils.go:40: calling [github.com/samber/oops.Errorf]&#10;at utils.go:46: calling [github.com/samber/oops.Errorf]&#10;at utils.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M398.2568,-305C398.2568,-305 328.296,-305 328.296,-305 322.296,-305 316.296,-299 316.296,-293 316.296,-293 316.296,-281 316.296,-281 316.296,-275 322.296,-269 328.296,-269 328.296,-269 398.2568,-269 398.2568,-269 404.2568,-269 410.2568,-275 410.2568,-281 410.2568,-281 410.2568,-293 410.2568,-293 410.2568,-299 404.2568,-305 398.2568,-305"/>
 <text text-anchor="middle" x="363.2764" y="-282.8" font-family="Verdana" font-size="14.00" fill="#000000">pkcs7Unpad</text>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge13" class="edge">
+<g id="edge8" class="edge">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge13"><a xlink:title="at utils.go:35: calling [github.com/samber/oops.Errorf]&#10;at utils.go:40: calling [github.com/samber/oops.Errorf]&#10;at utils.go:46: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge8"><a xlink:title="at utils.go:35: calling [github.com/samber/oops.Errorf]&#10;at utils.go:40: calling [github.com/samber/oops.Errorf]&#10;at utils.go:46: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M383.5837,-268.8779C421.6934,-234.869 503.9754,-161.4409 547.2194,-122.8502"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="549.6896,-125.3369 554.8203,-116.0672 545.0288,-120.1141 549.6896,-125.3369"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge16" class="edge">
+<g id="edge1" class="edge">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge16"><a xlink:title="at utils.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:51: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge1"><a xlink:title="at utils.go:30: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at utils.go:51: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M410.4566,-304.5153C431.566,-312.7925 456.5763,-323.2139 478.4714,-334 495.0878,-342.1857 498.1618,-346.2189 514.4714,-355 519.0062,-357.4416 523.7665,-359.9274 528.5418,-362.3707"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="527.1844,-365.6062 537.6879,-366.9938 530.3422,-359.359 527.1844,-365.6062"/>
 </a>
@@ -160,7 +197,7 @@
 <!-- (*github.com/go&#45;i2p/logger.Logger).Error -->
 <g id="node15" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_node15"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:42">
+<g id="a_node15"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).Error | defined in log.go:48">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M592.8324,-342C592.8324,-342 557.2998,-342 557.2998,-342 551.2998,-342 545.2998,-336 545.2998,-330 545.2998,-330 545.2998,-318 545.2998,-318 545.2998,-312 551.2998,-306 557.2998,-306 557.2998,-306 592.8324,-306 592.8324,-306 598.8324,-306 604.8324,-312 604.8324,-318 604.8324,-318 604.8324,-330 604.8324,-330 604.8324,-336 598.8324,-342 592.8324,-342"/>
 <text text-anchor="middle" x="575.0661" y="-328.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="575.0661" y="-311.4" font-family="Verdana" font-size="14.00" fill="#000000">Error</text>
@@ -168,109 +205,63 @@
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge1" class="edge">
+<g id="edge5" class="edge">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge1"><a xlink:title="at utils.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_edge5"><a xlink:title="at utils.go:34: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:39: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at utils.go:45: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="none" stroke="#8b4513" d="M410.3599,-295.1493C431.2285,-298.7678 456.0769,-303.0853 478.4714,-307 496.9456,-310.2294 517.4033,-313.8267 534.7181,-316.8777"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="534.5912,-320.4092 545.047,-318.6985 535.8065,-313.5155 534.5912,-320.4092"/>
 </a>
 </g>
 </g>
 <!-- github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge23" class="edge">
+<g id="edge12" class="edge">
 <title>github.com/go&#45;i2p/crypto/aes.pkcs7Unpad&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge23"><a xlink:title="at utils.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge12"><a xlink:title="at utils.go:30: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at utils.go:51: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M375.3446,-305.1743C391.1023,-329.0328 419.3956,-372.3114 442.4714,-410 486.4665,-481.855 535.7169,-568.2029 559.9404,-611.0902"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="556.8951,-612.8155 564.8565,-619.806 562.9921,-609.3765 556.8951,-612.8155"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/aes.init -->
-<g id="node4" class="node">
-<title>github.com/go&#45;i2p/crypto/aes.init</title>
-<g id="a_node4"><a xlink:title="github.com/go&#45;i2p/crypto/aes.init | defined in .:0&#10;at constants.go:15: calling [github.com/samber/oops.Errorf]&#10;at constants.go:18: calling [github.com/samber/oops.Errorf]&#10;at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
-<path fill="#add8e6" stroke="#000000" stroke-width=".5" d="M378.2764,-52C378.2764,-52 348.2764,-52 348.2764,-52 342.2764,-52 336.2764,-46 336.2764,-40 336.2764,-40 336.2764,-28 336.2764,-28 336.2764,-22 342.2764,-16 348.2764,-16 348.2764,-16 378.2764,-16 378.2764,-16 384.2764,-16 390.2764,-22 390.2764,-28 390.2764,-28 390.2764,-40 390.2764,-40 390.2764,-46 384.2764,-52 378.2764,-52"/>
-<text text-anchor="middle" x="363.2764" y="-29.8" font-family="Verdana" font-size="14.00" fill="#000000">init</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge8" class="edge">
-<title>github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge8"><a xlink:title="at constants.go:15: calling [github.com/samber/oops.Errorf]&#10;at constants.go:18: calling [github.com/samber/oops.Errorf]">
-<path fill="none" stroke="#8b4513" d="M390.4552,-40.3974C413.9124,-46.0807 448.6281,-54.8792 478.4714,-64 497.5164,-69.8206 518.3887,-77.0571 535.8428,-83.356"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="535.0909,-86.8069 545.6849,-86.9385 537.4853,-80.2291 535.0909,-86.8069"/>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="node5" class="node">
-<title>github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_node5"><a xlink:title="github.com/go&#45;i2p/logger.GetGoI2PLogger | defined in log.go:120">
-<path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M623.7556,-52C623.7556,-52 526.3766,-52 526.3766,-52 520.3766,-52 514.3766,-46 514.3766,-40 514.3766,-40 514.3766,-28 514.3766,-28 514.3766,-22 520.3766,-16 526.3766,-16 526.3766,-16 623.7556,-16 623.7556,-16 629.7556,-16 635.7556,-22 635.7556,-28 635.7556,-28 635.7556,-40 635.7556,-40 635.7556,-46 629.7556,-52 623.7556,-52"/>
-<text text-anchor="middle" x="575.0661" y="-38.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
-<text text-anchor="middle" x="575.0661" y="-21.4" font-family="Verdana" font-size="14.00" fill="#000000">GetGoI2PLogger</text>
-</a>
-</g>
-</g>
-<!-- github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger -->
-<g id="edge28" class="edge">
-<title>github.com/go&#45;i2p/crypto/aes.init&#45;&gt;github.com/go&#45;i2p/logger.GetGoI2PLogger</title>
-<g id="a_edge28"><a xlink:title="at constants.go:10: calling [github.com/go&#45;i2p/logger.GetGoI2PLogger]">
-<path fill="none" stroke="#8b4513" d="M390.5306,-34C419.0412,-34 464.9752,-34 503.8809,-34"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="504.1252,-37.5001 514.1252,-34 504.1251,-30.5001 504.1252,-37.5001"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt -->
 <g id="node6" class="node">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt</title>
-<g id="a_node6"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt | defined in aes_decrypter.go:17&#10;at aes_decrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_decrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:35: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Unpad]&#10;at aes_decrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_decrypter.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_decrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at aes_decrypter.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at aes_decrypter.go:28: calling [github.com/samber/oops.Errorf]">
+<g id="a_node6"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt | defined in aes_decrypter.go:17&#10;at aes_decrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_decrypter.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_decrypter.go:35: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Unpad]&#10;at aes_decrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_decrypter.go:28: calling [github.com/samber/oops.Errorf]&#10;at aes_decrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at aes_decrypter.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]&#10;at aes_decrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M128.6278,-177C128.6278,-177 83.4536,-177 83.4536,-177 77.4536,-177 71.4536,-171 71.4536,-165 71.4536,-165 71.4536,-153 71.4536,-153 71.4536,-147 77.4536,-141 83.4536,-141 83.4536,-141 128.6278,-141 128.6278,-141 134.6278,-141 140.6278,-147 140.6278,-153 140.6278,-153 140.6278,-165 140.6278,-165 140.6278,-171 134.6278,-177 128.6278,-177"/>
 <text text-anchor="middle" x="106.0407" y="-154.8" font-family="Verdana" font-size="14.00" fill="#000000">Decrypt</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge29" class="edge">
+<g id="edge20" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge29"><a xlink:title="at aes_decrypter.go:28: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge20"><a xlink:title="at aes_decrypter.go:28: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M140.7655,-149.1179C169.3412,-141.3667 211.0252,-130.9294 248.0814,-125 350.9652,-108.5374 473.7632,-101.8159 535.4904,-99.32"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="535.718,-102.8139 545.5745,-98.9281 535.4462,-95.8191 535.718,-102.8139"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;github.com/go&#45;i2p/crypto/aes.pkcs7Unpad -->
-<g id="edge6" class="edge">
+<g id="edge13" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;github.com/go&#45;i2p/crypto/aes.pkcs7Unpad</title>
-<g id="a_edge6"><a xlink:title="at aes_decrypter.go:35: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Unpad]">
+<g id="a_edge13"><a xlink:title="at aes_decrypter.go:35: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Unpad]">
 <path fill="none" stroke="#000000" d="M140.7327,-176.2626C186.5639,-199.0682 267.381,-239.2826 317.9843,-264.4628"/>
 <polygon fill="#000000" stroke="#000000" points="316.5541,-267.6604 327.0662,-268.9819 319.6726,-261.3934 316.5541,-267.6604"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge4" class="edge">
+<g id="edge19" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge4"><a xlink:title="at aes_decrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge19"><a xlink:title="at aes_decrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_decrypter.go:41: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M123.5767,-177.1048C164.5731,-219.2588 264.6846,-321.1431 284.0814,-331 325.3387,-351.9657 452.6159,-370.1639 524.4241,-379.108"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="524.2469,-382.6125 534.5994,-380.3598 525.1016,-375.6649 524.2469,-382.6125"/>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge5" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge5"><a xlink:title="at aes_decrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M140.7725,-155.7511C212.3698,-150.9956 378.0627,-150.2639 478.4714,-232 503.1829,-252.116 491.2053,-272.2286 514.4714,-294 520.7552,-299.8801 528.4094,-304.8527 536.1337,-308.9553"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="534.6356,-312.1188 545.1558,-313.3741 537.7146,-305.8323 534.6356,-312.1188"/>
-</a>
-</g>
-</g>
 <!-- (*github.com/go&#45;i2p/logger.Logger).WithError -->
-<g id="node16" class="node">
+<g id="node14" class="node">
 <title>(*github.com/go&#45;i2p/logger.Logger).WithError</title>
-<g id="a_node16"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:66">
+<g id="a_node14"><a xlink:title="(*github.com/go&#45;i2p/logger.Logger).WithError | defined in log.go:72">
 <path fill="#ffe4b5" stroke="#000000" stroke-width="1.5" d="M603.5976,-281C603.5976,-281 546.5346,-281 546.5346,-281 540.5346,-281 534.5346,-275 534.5346,-269 534.5346,-269 534.5346,-257 534.5346,-257 534.5346,-251 540.5346,-245 546.5346,-245 546.5346,-245 603.5976,-245 603.5976,-245 609.5976,-245 615.5976,-251 615.5976,-257 615.5976,-257 615.5976,-269 615.5976,-269 615.5976,-275 609.5976,-281 603.5976,-281"/>
 <text text-anchor="middle" x="575.0661" y="-267.2" font-family="Verdana" font-size="14.00" fill="#000000">logger</text>
 <text text-anchor="middle" x="575.0661" y="-250.4" font-family="Verdana" font-size="14.00" fill="#000000">WithError</text>
@@ -286,10 +277,19 @@
 </a>
 </g>
 </g>
+<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge28" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge28"><a xlink:title="at aes_decrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:27: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_decrypter.go:37: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M140.7725,-155.7511C212.3698,-150.9956 378.0627,-150.2639 478.4714,-232 503.1829,-252.116 491.2053,-272.2286 514.4714,-294 520.7552,-299.8801 528.4094,-304.8527 536.1337,-308.9553"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="534.6356,-312.1188 545.1558,-313.3741 537.7146,-305.8323 534.6356,-312.1188"/>
+</a>
+</g>
+</g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge12" class="edge">
+<g id="edge11" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).Decrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge12"><a xlink:title="at aes_decrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_decrypter.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge11"><a xlink:title="at aes_decrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_decrypter.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M128.5395,-177.1501C150.681,-196.0481 184.1313,-227.5225 205.0814,-261 259.7503,-348.3588 201.807,-416.9422 284.0814,-479 312.2495,-500.2466 414.8941,-467.992 442.4714,-490 484.5622,-523.5904 439.8487,-567.471 477.4714,-606 492.4292,-621.3181 514.8251,-629.3066 534.3914,-633.4712"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="533.8391,-636.9285 544.3109,-635.3191 535.1211,-630.0469 533.8391,-636.9285"/>
 </a>
@@ -305,9 +305,9 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).DecryptNoPadding&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge10" class="edge">
+<g id="edge9" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricDecrypter).DecryptNoPadding&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge10"><a xlink:title="at aes_decrypter.go:48: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge9"><a xlink:title="at aes_decrypter.go:48: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M172.124,-96.379C246.3946,-94.6446 370.5741,-92.0072 477.4714,-91 496.6407,-90.8194 517.8747,-92.1583 535.6279,-93.7122"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="535.3557,-97.2018 545.6366,-94.642 536.0033,-90.2319 535.3557,-97.2018"/>
 </a>
@@ -316,36 +316,27 @@
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt -->
 <g id="node8" class="node">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt</title>
-<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt | defined in aes_encrypter.go:17&#10;at aes_encrypter.go:26: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Pad]&#10;at aes_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_encrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_encrypter.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_encrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_encrypter.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
+<g id="a_node8"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt | defined in aes_encrypter.go:17&#10;at aes_encrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_encrypter.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_encrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_encrypter.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_encrypter.go:26: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Pad]&#10;at aes_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).WithError]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M128.3598,-398C128.3598,-398 83.7216,-398 83.7216,-398 77.7216,-398 71.7216,-392 71.7216,-386 71.7216,-386 71.7216,-374 71.7216,-374 71.7216,-368 77.7216,-362 83.7216,-362 83.7216,-362 128.3598,-362 128.3598,-362 134.3598,-362 140.3598,-368 140.3598,-374 140.3598,-374 140.3598,-386 140.3598,-386 140.3598,-392 134.3598,-398 128.3598,-398"/>
 <text text-anchor="middle" x="106.0407" y="-375.8" font-family="Verdana" font-size="14.00" fill="#000000">Encrypt</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;github.com/go&#45;i2p/crypto/aes.pkcs7Pad -->
-<g id="edge7" class="edge">
+<g id="edge18" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;github.com/go&#45;i2p/crypto/aes.pkcs7Pad</title>
-<g id="a_edge7"><a xlink:title="at aes_encrypter.go:26: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Pad]">
+<g id="a_edge18"><a xlink:title="at aes_encrypter.go:26: calling [github.com/go&#45;i2p/crypto/aes.pkcs7Pad]">
 <path fill="none" stroke="#000000" d="M140.4657,-388.0296C185.2587,-398.4775 263.792,-416.7953 314.6508,-428.6581"/>
 <polygon fill="#000000" stroke="#000000" points="313.9017,-432.0773 324.4353,-430.9404 315.4918,-425.2603 313.9017,-432.0773"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge17" class="edge">
+<g id="edge15" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge17"><a xlink:title="at aes_encrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_encrypter.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge15"><a xlink:title="at aes_encrypter.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_encrypter.go:31: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M140.5293,-380.3677C222.38,-381.2402 428.6624,-383.4393 524.5787,-384.4618"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="524.5757,-387.9619 534.6125,-384.5687 524.6504,-380.9623 524.5757,-387.9619"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge14" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge14"><a xlink:title="at aes_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M140.4198,-374.977C160.6046,-370.7739 185.844,-363.2447 205.0814,-350 252.3104,-317.4835 233.2667,-274.5664 284.0814,-248 322.4137,-227.9595 440.506,-217.2728 478.4714,-238 504.4413,-252.1783 492.4149,-274.2777 514.4714,-294 520.6857,-299.5566 528.1152,-304.339 535.6075,-308.349"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="534.5292,-311.7203 545.0446,-313.0156 537.632,-305.4456 534.5292,-311.7203"/>
 </a>
 </g>
 </g>
@@ -358,10 +349,19 @@
 </a>
 </g>
 </g>
+<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge22" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge22"><a xlink:title="at aes_encrypter.go:22: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M140.4198,-374.977C160.6046,-370.7739 185.844,-363.2447 205.0814,-350 252.3104,-317.4835 233.2667,-274.5664 284.0814,-248 322.4137,-227.9595 440.506,-217.2728 478.4714,-238 504.4413,-252.1783 492.4149,-274.2777 514.4714,-294 520.6857,-299.5566 528.1152,-304.339 535.6075,-308.349"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="534.5292,-311.7203 545.0446,-313.0156 537.632,-305.4456 534.5292,-311.7203"/>
+</a>
+</g>
+</g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge24" class="edge">
+<g id="edge4" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).Encrypt&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge24"><a xlink:title="at aes_encrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_encrypter.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge4"><a xlink:title="at aes_encrypter.go:18: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_encrypter.go:31: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M119.7338,-398.3688C142.5975,-427.3848 191.6429,-482.8988 248.0814,-506 328.144,-538.7709 373.3843,-463.9336 442.4714,-516 480.7469,-544.8457 441.4765,-586.3542 477.4714,-618 492.8862,-631.5523 514.9816,-636.8377 534.2515,-638.6084"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="534.1097,-642.1064 544.3122,-639.2502 534.5553,-635.1206 534.1097,-642.1064"/>
 </a>
@@ -377,99 +377,99 @@
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).EncryptNoPadding&#45;&gt;github.com/samber/oops.Errorf -->
-<g id="edge2" class="edge">
+<g id="edge26" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricEncrypter).EncryptNoPadding&#45;&gt;github.com/samber/oops.Errorf</title>
-<g id="a_edge2"><a xlink:title="at aes_encrypter.go:38: calling [github.com/samber/oops.Errorf]">
+<g id="a_edge26"><a xlink:title="at aes_encrypter.go:38: calling [github.com/samber/oops.Errorf]">
 <path fill="none" stroke="#8b4513" d="M130.3844,-300.9774C163.7695,-276.8409 226.2257,-233.733 284.0814,-205 370.7153,-161.9749 479.1118,-126.6275 536.0239,-109.3809"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="537.1329,-112.7024 545.7025,-106.4724 535.1183,-105.9985 537.1329,-112.7024"/>
 </a>
 </g>
 </g>
-<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter -->
-<g id="node10" class="node">
-<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter</title>
-<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter | defined in aes_key.go:12&#10;at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:13: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M403.8985,-590C403.8985,-590 322.6543,-590 322.6543,-590 316.6543,-590 310.6543,-584 310.6543,-578 310.6543,-578 310.6543,-566 310.6543,-566 310.6543,-560 316.6543,-554 322.6543,-554 322.6543,-554 403.8985,-554 403.8985,-554 409.8985,-554 415.8985,-560 415.8985,-566 415.8985,-566 415.8985,-578 415.8985,-578 415.8985,-584 409.8985,-590 403.8985,-590"/>
-<text text-anchor="middle" x="363.2764" y="-567.8" font-family="Verdana" font-size="14.00" fill="#000000">NewEncrypter</text>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge15" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge15"><a xlink:title="at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
-<path fill="none" stroke="#8b4513" d="M416.0028,-574.6952C437.7847,-573.0592 461.7879,-567.2937 478.4714,-552 524.5621,-509.7487 475.236,-464.6838 514.4714,-416 517.7699,-411.9072 521.7517,-408.3007 526.0798,-405.1351"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="528.2138,-407.9245 534.7411,-399.579 524.4342,-402.0325 528.2138,-407.9245"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge11" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge11"><a xlink:title="at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
-<path fill="none" stroke="#8b4513" d="M416.2748,-565.8239C426.0717,-562.483 435.4208,-557.4732 442.4714,-550 493.0206,-496.4206 440.384,-451.6435 477.4714,-388 490.5345,-365.5831 514.9474,-349.5793 536.0874,-339.1816"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="537.6237,-342.3272 545.21,-334.9313 534.6674,-335.982 537.6237,-342.3272"/>
-</a>
-</g>
-</g>
-<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge19" class="edge">
-<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge19"><a xlink:title="at aes_key.go:13: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
-<path fill="none" stroke="#8b4513" d="M415.9149,-588.2822C425.1975,-592.3351 434.4465,-597.2153 442.4714,-603 462.1826,-617.2088 455.4669,-634.6936 477.4714,-645 494.9128,-653.1691 516.0481,-652.7292 534.1843,-649.7036"/>
-<polygon fill="#8b4513" stroke="#8b4513" points="535.0518,-653.1 544.1863,-647.7323 533.6982,-646.2321 535.0518,-653.1"/>
-</a>
-</g>
-</g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).Zero -->
-<g id="node11" class="node">
+<g id="node10" class="node">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).Zero</title>
-<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).Zero | defined in aes_key.go:64&#10;at aes_key.go:65: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_key.go:77: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_node10"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).Zero | defined in aes_key.go:64&#10;at aes_key.go:65: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_key.go:77: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M378.2764,-712C378.2764,-712 348.2764,-712 348.2764,-712 342.2764,-712 336.2764,-706 336.2764,-700 336.2764,-700 336.2764,-688 336.2764,-688 336.2764,-682 342.2764,-676 348.2764,-676 348.2764,-676 378.2764,-676 378.2764,-676 384.2764,-676 390.2764,-682 390.2764,-688 390.2764,-688 390.2764,-700 390.2764,-700 390.2764,-706 384.2764,-712 378.2764,-712"/>
 <text text-anchor="middle" x="363.2764" y="-689.8" font-family="Verdana" font-size="14.00" fill="#000000">Zero</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge22" class="edge">
+<g id="edge10" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).Zero&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge22"><a xlink:title="at aes_key.go:65: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_key.go:77: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge10"><a xlink:title="at aes_key.go:65: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_key.go:77: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M390.6855,-692.5318C414.2867,-690.7724 449.0844,-686.9892 478.4714,-679 497.6061,-673.798 517.9312,-665.6079 534.9755,-657.911"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="536.4669,-661.0775 544.0786,-653.7077 533.5324,-654.7222 536.4669,-661.0775"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter -->
+<g id="node11" class="node">
+<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter</title>
+<g id="a_node11"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter | defined in aes_key.go:12&#10;at aes_key.go:13: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M403.8985,-590C403.8985,-590 322.6543,-590 322.6543,-590 316.6543,-590 310.6543,-584 310.6543,-578 310.6543,-578 310.6543,-566 310.6543,-566 310.6543,-560 316.6543,-554 322.6543,-554 322.6543,-554 403.8985,-554 403.8985,-554 409.8985,-554 415.8985,-560 415.8985,-566 415.8985,-566 415.8985,-578 415.8985,-578 415.8985,-584 409.8985,-590 403.8985,-590"/>
+<text text-anchor="middle" x="363.2764" y="-567.8" font-family="Verdana" font-size="14.00" fill="#000000">NewEncrypter</text>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
+<g id="edge23" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
+<g id="a_edge23"><a xlink:title="at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<path fill="none" stroke="#8b4513" d="M416.0028,-574.6952C437.7847,-573.0592 461.7879,-567.2937 478.4714,-552 524.5621,-509.7487 475.236,-464.6838 514.4714,-416 517.7699,-411.9072 521.7517,-408.3007 526.0798,-405.1351"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="528.2138,-407.9245 534.7411,-399.579 524.4342,-402.0325 528.2138,-407.9245"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
+<g id="edge24" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
+<g id="a_edge24"><a xlink:title="at aes_key.go:18: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:24: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<path fill="none" stroke="#8b4513" d="M416.2748,-565.8239C426.0717,-562.483 435.4208,-557.4732 442.4714,-550 493.0206,-496.4206 440.384,-451.6435 477.4714,-388 490.5345,-365.5831 514.9474,-349.5793 536.0874,-339.1816"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="537.6237,-342.3272 545.21,-334.9313 534.6674,-335.982 537.6237,-342.3272"/>
+</a>
+</g>
+</g>
+<!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
+<g id="edge6" class="edge">
+<title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewEncrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
+<g id="a_edge6"><a xlink:title="at aes_key.go:13: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<path fill="none" stroke="#8b4513" d="M415.9149,-588.2822C425.1975,-592.3351 434.4465,-597.2153 442.4714,-603 462.1826,-617.2088 455.4669,-634.6936 477.4714,-645 494.9128,-653.1691 516.0481,-652.7292 534.1843,-649.7036"/>
+<polygon fill="#8b4513" stroke="#8b4513" points="535.0518,-653.1 544.1863,-647.7323 533.6982,-646.2321 535.0518,-653.1"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter -->
 <g id="node12" class="node">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter</title>
-<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter | defined in aes_key.go:40&#10;at aes_key.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_node12"><a xlink:title="(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter | defined in aes_key.go:40&#10;at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]&#10;at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="#add8e6" stroke="#000000" stroke-width="1.5" d="M404.6671,-651C404.6671,-651 321.8857,-651 321.8857,-651 315.8857,-651 309.8857,-645 309.8857,-639 309.8857,-639 309.8857,-627 309.8857,-627 309.8857,-621 315.8857,-615 321.8857,-615 321.8857,-615 404.6671,-615 404.6671,-615 410.6671,-615 416.6671,-621 416.6671,-627 416.6671,-627 416.6671,-639 416.6671,-639 416.6671,-645 410.6671,-651 404.6671,-651"/>
 <text text-anchor="middle" x="363.2764" y="-628.8" font-family="Verdana" font-size="14.00" fill="#000000">NewDecrypter</text>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField -->
-<g id="edge20" class="edge">
+<g id="edge29" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).WithField</title>
-<g id="a_edge20"><a xlink:title="at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
+<g id="a_edge29"><a xlink:title="at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).WithField]">
 <path fill="none" stroke="#8b4513" d="M416.7918,-617.1395C425.7894,-613.2614 434.7134,-608.5806 442.4714,-603 462.9828,-588.2453 467.1146,-581.5708 478.4714,-559 507.9293,-500.4548 473.6564,-467.2781 514.4714,-416 517.745,-411.8872 521.7106,-408.2677 526.0288,-405.0942"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="528.1626,-407.8832 534.6784,-399.5288 524.3749,-401.9965 528.1626,-407.8832"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error -->
-<g id="edge18" class="edge">
+<g id="edge2" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter&#45;&gt;(*github.com/go&#45;i2p/logger.Logger).Error</title>
-<g id="a_edge18"><a xlink:title="at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
+<g id="a_edge2"><a xlink:title="at aes_key.go:46: calling [(*github.com/go&#45;i2p/logger.Logger).Error]&#10;at aes_key.go:52: calling [(*github.com/go&#45;i2p/logger.Logger).Error]">
 <path fill="none" stroke="#8b4513" d="M416.4801,-620.6578C426.1441,-616.3918 435.3894,-610.6691 442.4714,-603 520.337,-518.6798 441.393,-443.5014 514.4714,-355 520.266,-347.9825 528.0582,-342.3816 536.1218,-337.9801"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="537.8085,-341.0513 545.249,-333.5088 534.7289,-334.7651 537.8085,-341.0513"/>
 </a>
 </g>
 </g>
 <!-- (*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug -->
-<g id="edge3" class="edge">
+<g id="edge21" class="edge">
 <title>(*github.com/go&#45;i2p/crypto/aes.AESSymmetricKey).NewDecrypter&#45;&gt;(*github.com/sirupsen/logrus.Logger).Debug</title>
-<g id="a_edge3"><a xlink:title="at aes_key.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
+<g id="a_edge21"><a xlink:title="at aes_key.go:41: calling [(*github.com/sirupsen/logrus.Logger).Debug]">
 <path fill="none" stroke="#8b4513" d="M409.5612,-651.0014C438.3777,-661.798 471.291,-673.2268 478.4714,-672 497.3691,-668.7712 517.4857,-662.2297 534.4411,-655.7392"/>
 <polygon fill="#8b4513" stroke="#8b4513" points="536.0135,-658.8812 544.0258,-651.949 533.4394,-652.3716 536.0135,-658.8812"/>
 </a>
