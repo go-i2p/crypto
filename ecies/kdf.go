@@ -5,31 +5,11 @@ import (
 	"crypto/subtle"
 	"time"
 
-	"github.com/go-i2p/crypto/hkdf"
+	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/ratchet"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 )
-
-// deriveKeys derives multiple keys from a shared secret using HKDF-SHA256.
-// This is the core KDF used throughout the ECIES protocol.
-// sharedSecret: The input key material (typically from X25519 DH)
-// info: Context-specific info string for domain separation
-// length: Total number of bytes to derive
-func deriveKeys(sharedSecret []byte, info []byte, length int) ([]byte, error) {
-	if length <= 0 || length > 255*32 {
-		return nil, oops.Errorf("invalid key derivation length: %d", length)
-	}
-
-	// Use our existing HKDF package
-	hkdfDeriver := hkdf.NewHKDF()
-	keys, err := hkdfDeriver.Derive(sharedSecret, nil, info, length)
-	if err != nil {
-		return nil, oops.Errorf("HKDF key derivation failed: %w", err)
-	}
-
-	return keys, nil
-}
 
 // DeriveSessionKeys derives the initial session keys from a shared secret.
 // This is used during session establishment to derive:
@@ -41,18 +21,19 @@ func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
 		return [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")
 	}
 
+	// Use kdf package for consistent key derivation
+	var sharedSecretArray [32]byte
+	copy(sharedSecretArray[:], sharedSecret)
+	kd := kdf.NewKeyDerivation(sharedSecretArray)
+
 	// Derive 64 bytes: sendKey (32) + recvKey (32)
-	keys, err := deriveKeys(sharedSecret, info, 64)
+	keys, err := kd.DeriveKeys(info, 2)
 	if err != nil {
 		return [32]byte{}, [32]byte{}, err
 	}
 
-	var sendKey, recvKey [32]byte
-	copy(sendKey[:], keys[:32])
-	copy(recvKey[:], keys[32:64])
-
 	log.Debug("Session keys derived successfully")
-	return sendKey, recvKey, nil
+	return keys[0], keys[1], nil
 }
 
 // DeriveMessageKey derives a message encryption key from a chain key.
@@ -155,19 +136,19 @@ func DeriveNoiseKeys(sharedSecret, info []byte) ([32]byte, [32]byte, [32]byte, e
 		return [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")
 	}
 
+	// Use kdf package for consistent key derivation
+	var sharedSecretArray [32]byte
+	copy(sharedSecretArray[:], sharedSecret)
+	kd := kdf.NewKeyDerivation(sharedSecretArray)
+
 	// Derive 96 bytes: sendKey (32) + recvKey (32) + chainKey (32)
-	keys, err := deriveKeys(sharedSecret, info, 96)
+	keys, err := kd.DeriveKeys(info, 3)
 	if err != nil {
 		return [32]byte{}, [32]byte{}, [32]byte{}, err
 	}
 
-	var sendKey, recvKey, chainKey [32]byte
-	copy(sendKey[:], keys[:32])
-	copy(recvKey[:], keys[32:64])
-	copy(chainKey[:], keys[64:96])
-
 	log.Debug("Noise keys derived successfully")
-	return sendKey, recvKey, chainKey, nil
+	return keys[0], keys[1], keys[2], nil
 }
 
 // DeriveChaCha20Key derives a ChaCha20 encryption key from a message key.
@@ -182,13 +163,18 @@ func DeriveChaCha20Key(messageKey [32]byte) ([32]byte, error) {
 // DeriveChaCha20Nonce derives a ChaCha20 nonce from a message key and message number.
 // Returns a 12-byte nonce suitable for ChaCha20-Poly1305.
 func DeriveChaCha20Nonce(messageKey [32]byte, messageNum uint32) ([12]byte, error) {
-	// Derive nonce using HKDF
-	keys, err := deriveKeys(messageKey[:], []byte("ChaCha20-Nonce"), 12)
+	// Use kdf package for consistent derivation
+	kd := kdf.NewKeyDerivation(messageKey)
+
+	// For nonce derivation, we only need 12 bytes (not a full 32-byte key)
+	// DeriveKeys returns [][32]byte, so we get one key and take first 12 bytes
+	keys, err := kd.DeriveKeys([]byte("ChaCha20-Nonce"), 1)
 	if err != nil {
 		return [12]byte{}, err
 	}
 
+	// Take first 12 bytes for the nonce
 	var nonce [12]byte
-	copy(nonce[:], keys[:12])
+	copy(nonce[:], keys[0][:12])
 	return nonce, nil
 }

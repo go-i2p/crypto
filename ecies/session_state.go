@@ -6,6 +6,7 @@ import (
 	"io"
 	"sync"
 
+	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/ratchet"
 	"github.com/samber/oops"
 )
@@ -149,20 +150,25 @@ func (s *SessionState) deriveInitialKeys(isInitiator bool) error {
 		info = "ECIES-Session-Responder"
 	}
 
+	// Use kdf package for consistent derivation
+	var sharedSecretArray [32]byte
+	copy(sharedSecretArray[:], sharedSecret)
+	kd := kdf.NewKeyDerivation(sharedSecretArray)
+
 	// Derive 64 bytes: sending key (32) + receiving key (32)
-	keys, err := deriveKeys(sharedSecret, []byte(info), 64)
+	keys, err := kd.DeriveKeys([]byte(info), 2)
 	if err != nil {
 		return err
 	}
 
 	if isInitiator {
-		// Initiator: first 32 bytes = sending, second 32 = receiving
-		copy(s.SendingChainKey[:], keys[:32])
-		copy(s.ReceivingChainKey[:], keys[32:64])
+		// Initiator: first key = sending, second = receiving
+		s.SendingChainKey = keys[0]
+		s.ReceivingChainKey = keys[1]
 	} else {
 		// Responder: opposite arrangement
-		copy(s.ReceivingChainKey[:], keys[:32])
-		copy(s.SendingChainKey[:], keys[32:64])
+		s.ReceivingChainKey = keys[0]
+		s.SendingChainKey = keys[1]
 	}
 
 	return nil
@@ -238,16 +244,21 @@ func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error {
 }
 
 // performDHAndDeriveKeys performs Diffie-Hellman key agreement and derives chain keys.
-// Returns 64 bytes: receiving key (32 bytes) + sending key (32 bytes).
-func performDHAndDeriveKeys(localPrivKey, remotePubKey []byte) ([]byte, error) {
+// Returns 2 keys as [32]byte arrays: receiving key and sending key.
+func performDHAndDeriveKeys(localPrivKey, remotePubKey []byte) ([][32]byte, error) {
 	// Perform DH with remote's new public key
 	sharedSecret, err := performDH(localPrivKey, remotePubKey)
 	if err != nil {
 		return nil, oops.Errorf("DH ratchet key agreement failed: %w", err)
 	}
 
-	// Derive new chain keys from DH output
-	keys, err := deriveKeys(sharedSecret, []byte("ECIES-DH-Ratchet"), 64)
+	// Use kdf package for consistent derivation
+	var sharedSecretArray [32]byte
+	copy(sharedSecretArray[:], sharedSecret)
+	kd := kdf.NewKeyDerivation(sharedSecretArray)
+
+	// Derive new chain keys from DH output: receiving key + sending key
+	keys, err := kd.DeriveKeys([]byte("ECIES-DH-Ratchet"), 2)
 	if err != nil {
 		return nil, oops.Errorf("DH ratchet key derivation failed: %w", err)
 	}
@@ -257,14 +268,14 @@ func performDHAndDeriveKeys(localPrivKey, remotePubKey []byte) ([]byte, error) {
 
 // updateRatchetChains updates the sending and receiving chain keys after a DH ratchet.
 // Resets message counters and stores the remote DH public key.
-func (s *SessionState) updateRatchetChains(keys []byte, remoteDHPubKey []byte) {
+func (s *SessionState) updateRatchetChains(keys [][32]byte, remoteDHPubKey []byte) {
 	// Update receiving chain (we receive with new remote DH key)
-	copy(s.ReceivingChainKey[:], keys[:32])
+	s.ReceivingChainKey = keys[0]
 	s.PreviousChainLength = s.SendingMessageNum
 	s.ReceivingMessageNum = 0
 
 	// Update sending chain (we send with our existing DH key)
-	copy(s.SendingChainKey[:], keys[32:64])
+	s.SendingChainKey = keys[1]
 	s.SendingMessageNum = 0
 
 	// Store remote's new DH public key

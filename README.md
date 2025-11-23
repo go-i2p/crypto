@@ -18,7 +18,136 @@ go get github.com/go-i2p/crypto
 
 ---
 
+## Recent API Improvements
+
+🎉 **Version 2.0** includes major API improvements based on production usage patterns:
+
+- ✅ **Concrete Key Generation**: New `GenerateEd25519KeyPair()` and `GenerateX25519KeyPair()` return concrete types
+- ✅ **ChaCha20-Poly1305 AEAD**: Dedicated authenticated encryption package for I2P tunnel and garlic messages
+- ✅ **Unified Session API**: Single `Session` type manages DH, symmetric, and tag ratchets
+- ✅ **KDF Utilities**: Consistent key derivation with `kdf.KeyDerivation` for all I2P components
+- ✅ **Better Error Handling**: Standardized sentinel errors across all packages
+
+See [AUDIT.md](AUDIT.md) for detailed improvement rationale.
+
+---
+
 ## Usage
+
+### Modern Key Generation (Recommended)
+
+```go
+package main
+
+import (
+    "github.com/go-i2p/crypto/ed25519"
+    "github.com/go-i2p/crypto/curve25519"
+)
+
+func main() {
+    // Generate Ed25519 signing keys - returns concrete types
+    sigPubKey, sigPrivKey, err := ed25519.GenerateEd25519KeyPair()
+    if err != nil {
+        panic(err)
+    }
+    defer sigPrivKey.Zero() // Securely clear private key
+    
+    // Generate X25519 encryption keys - returns concrete types
+    encPubKey, encPrivKey, err := curve25519.GenerateX25519KeyPair()
+    if err != nil {
+        panic(err)
+    }
+    defer encPrivKey.Zero()
+    
+    // Use keys directly without type assertions
+    signer, _ := sigPrivKey.NewSigner()
+    signature, _ := signer.Sign([]byte("message"))
+}
+```
+
+### Authenticated Encryption (ChaCha20-Poly1305 AEAD)
+
+```go
+package main
+
+import (
+    "github.com/go-i2p/crypto/chacha20poly1305"
+)
+
+func main() {
+    // Generate key and nonce
+    key, _ := chacha20poly1305.GenerateKey()
+    nonce, _ := chacha20poly1305.GenerateNonce()
+    
+    // Create AEAD cipher
+    aead, _ := chacha20poly1305.NewAEAD(key)
+    
+    // Encrypt with authentication
+    plaintext := []byte("Secret message")
+    associatedData := []byte("public metadata")
+    ciphertext, tag, _ := aead.Encrypt(plaintext, associatedData, nonce[:])
+    
+    // Decrypt and verify
+    decrypted, err := aead.Decrypt(ciphertext, tag[:], associatedData, nonce[:])
+    if err != nil {
+        // Authentication failed - message was tampered with
+        panic(err)
+    }
+}
+```
+
+### Unified Session Management
+
+```go
+package main
+
+import (
+    "github.com/go-i2p/crypto/ratchet"
+)
+
+func main() {
+    // After ECIES key exchange
+    session, err := ratchet.NewSessionFromECIES(
+        eciesSharedSecret,
+        ourEphemeralPrivKey,
+        theirPublicKey,
+    )
+    if err != nil {
+        panic(err)
+    }
+    defer session.Zero()
+    
+    // Encrypt message (handles all ratchet operations)
+    messageKey, sessionTag, _ := session.EncryptMessage(plaintext)
+    
+    // Use message key with AEAD
+    aead, _ := chacha20poly1305.NewAEAD(messageKey)
+    ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce)
+}
+```
+
+### Consistent Key Derivation
+
+```go
+package main
+
+import (
+    "github.com/go-i2p/crypto/kdf"
+)
+
+func main() {
+    // Derive keys from root secret
+    kd := kdf.NewKeyDerivation(rootSecret)
+    defer kd.Zero()
+    
+    // Derive purpose-specific keys
+    tunnelKey, _ := kd.DeriveForPurpose(kdf.PurposeTunnelEncryption)
+    garlicKey, _ := kd.DeriveForPurpose(kdf.PurposeGarlicEncryption)
+    
+    // Or derive session keys in one call
+    rootKey, symKey, tagKey, _ := kd.DeriveSessionKeys()
+}
+```
 
 ### Basic Symmetric Encryption (AES)
 
@@ -203,11 +332,13 @@ func main() {
 - **Symmetric Encryption**
   - AES (128/192/256-bit) with CBC mode
   - ChaCha20 stream cipher
+  - **ChaCha20-Poly1305 AEAD** (authenticated encryption) ✨ NEW
 
 - **Asymmetric Encryption**
   - Curve25519 (X25519) key agreement
   - RSA (2048/3072/4096-bit)
   - ElGamal encryption
+  - **ECIES-X25519-AEAD-Ratchet** with unified Session API ✨ NEW
 
 - **Digital Signatures**
   - Ed25519 signatures
@@ -217,6 +348,12 @@ func main() {
 - **Message Authentication**
   - HMAC (Hash-based Message Authentication Code)
   - HKDF (HMAC-based Key Derivation Function)
+  - **Unified KDF utilities** for consistent key derivation ✨ NEW
+
+- **Key Management**
+  - **Concrete key generation APIs** (no type assertions needed) ✨ NEW
+  - Secure memory cleanup with `Zero()` methods
+  - Forward secrecy with ratcheting
 
 ---
 

@@ -2,9 +2,9 @@
 package ratchet
 
 import (
+	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/rand"
 
-	"github.com/go-i2p/crypto/hkdf"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 )
@@ -39,22 +39,19 @@ func (r *DHRatchet) PerformRatchet() ([ChainKeySize]byte, [ChainKeySize]byte, er
 		return [ChainKeySize]byte{}, [ChainKeySize]byte{}, oops.Wrapf(ErrDHFailed, "DH ratchet failed: %w", err)
 	}
 
-	// Derive new root key and chain keys using HKDF from our existing package
-	// We derive 96 bytes: rootKey (32) + sendingKey (32) + receivingKey (32)
-	hkdfDeriver := hkdf.NewHKDF()
-	keys, err := hkdfDeriver.Derive(sharedSecret, nil, []byte("ECIES-DH-Ratchet-KDF"), 96)
+	// Use kdf package to derive new root key and chain keys
+	var sharedSecretArray [32]byte
+	copy(sharedSecretArray[:], sharedSecret)
+	kd := kdf.NewKeyDerivation(sharedSecretArray)
+
+	// Derive rootKey + sendingKey + receivingKey (3 keys total)
+	rootKey, sendingChainKey, receivingChainKey, err := kd.DeriveSessionKeys()
 	if err != nil {
 		return [ChainKeySize]byte{}, [ChainKeySize]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "DH ratchet KDF failed: %w", err)
 	}
 
 	// Update root key
-	copy(r.rootKey[:], keys[:32])
-
-	// Extract chain keys
-	var sendingChainKey [ChainKeySize]byte
-	var receivingChainKey [ChainKeySize]byte
-	copy(sendingChainKey[:], keys[32:64])
-	copy(receivingChainKey[:], keys[64:96])
+	r.rootKey = rootKey
 
 	log.Debug("DH ratchet performed successfully")
 	return sendingChainKey, receivingChainKey, nil
