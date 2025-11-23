@@ -216,18 +216,48 @@ func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	// Perform DH with remote's new public key
-	sharedSecret, err := performDH(s.DHRatchetPrivKey[:], remoteDHPubKey)
+	// Perform DH and derive new chain keys
+	keys, err := performDHAndDeriveKeys(s.DHRatchetPrivKey[:], remoteDHPubKey)
 	if err != nil {
-		return oops.Errorf("DH ratchet key agreement failed: %w", err)
+		return err
+	}
+
+	// Update ratchet state with new keys
+	s.updateRatchetChains(keys, remoteDHPubKey)
+
+	// Generate a new ephemeral key pair for the next ratchet step
+	if err := s.initializeDHRatchet(); err != nil {
+		return oops.Errorf("failed to generate new DH ratchet key: %w", err)
+	}
+
+	// Update tag ratchets with new chain keys
+	updateSessionTagRatchets(s)
+
+	log.WithField("remote_dh_key", remoteDHPubKey[:8]).Debug("DH ratchet performed")
+	return nil
+}
+
+// performDHAndDeriveKeys performs Diffie-Hellman key agreement and derives chain keys.
+// Returns 64 bytes: receiving key (32 bytes) + sending key (32 bytes).
+func performDHAndDeriveKeys(localPrivKey, remotePubKey []byte) ([]byte, error) {
+	// Perform DH with remote's new public key
+	sharedSecret, err := performDH(localPrivKey, remotePubKey)
+	if err != nil {
+		return nil, oops.Errorf("DH ratchet key agreement failed: %w", err)
 	}
 
 	// Derive new chain keys from DH output
 	keys, err := deriveKeys(sharedSecret, []byte("ECIES-DH-Ratchet"), 64)
 	if err != nil {
-		return oops.Errorf("DH ratchet key derivation failed: %w", err)
+		return nil, oops.Errorf("DH ratchet key derivation failed: %w", err)
 	}
 
+	return keys, nil
+}
+
+// updateRatchetChains updates the sending and receiving chain keys after a DH ratchet.
+// Resets message counters and stores the remote DH public key.
+func (s *SessionState) updateRatchetChains(keys []byte, remoteDHPubKey []byte) {
 	// Update receiving chain (we receive with new remote DH key)
 	copy(s.ReceivingChainKey[:], keys[:32])
 	s.PreviousChainLength = s.SendingMessageNum
@@ -239,18 +269,12 @@ func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error {
 
 	// Store remote's new DH public key
 	copy(s.RemoteDHPubKey[:], remoteDHPubKey)
+}
 
-	// Generate a new ephemeral key pair for the next ratchet step
-	if err := s.initializeDHRatchet(); err != nil {
-		return oops.Errorf("failed to generate new DH ratchet key: %w", err)
-	}
-
-	// Update tag ratchets with new chain keys
+// updateSessionTagRatchets reinitializes the session tag ratchets with the current chain keys.
+func updateSessionTagRatchets(s *SessionState) {
 	s.SendingTagRatchet = ratchet.NewTagRatchet(s.SendingChainKey)
 	s.ReceivingTagRatchet = ratchet.NewTagRatchet(s.ReceivingChainKey)
-
-	log.WithField("remote_dh_key", remoteDHPubKey[:8]).Debug("DH ratchet performed")
-	return nil
 }
 
 // GetNextSendingTag derives the next session tag for sending an existing session message.
