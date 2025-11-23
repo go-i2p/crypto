@@ -27,29 +27,17 @@ func (elg *ElgamalEncryption) Encrypt(data []byte) (enc []byte, err error) {
 // EncryptPadding encrypts data using ElGamal with configurable padding options.
 // The zeroPadding parameter controls whether to apply zero-padding for data shorter than block size.
 // Maximum supported data size is 222 bytes due to ElGamal security requirements.
-// This method implements the complete I2P ElGamal encryption process including:
-// 1. Data size validation (max 222 bytes for security)
-// 2. Message formatting with 0xFF prefix and SHA-256 integrity hash
-// 3. ElGamal encryption using the go-i2p/elgamal library
-// 4. Output formatting according to I2P protocol specifications
+// This method coordinates the I2P ElGamal encryption process.
 func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (encrypted []byte, err error) {
 	log.WithField("data_length", len(data)).Debug("Encrypting data with ElGamal padding")
 
 	// Validate data size limit for ElGamal security constraints
 	if len(data) > 222 {
-		err = ElgEncryptTooBig
-		return
+		return nil, ElgEncryptTooBig
 	}
 
-	// Prepare message block with I2P standard format
-	// Structure: [0xFF][32-byte SHA-256 hash][222-byte payload]
-	mbytes := make([]byte, 255)
-	mbytes[0] = 0xFF        // I2P message type indicator
-	copy(mbytes[33:], data) // Copy payload starting at byte 33
-
-	// Compute SHA-256 integrity hash of the payload data (full 222 bytes)
-	d := sha256.Sum256(mbytes[33:255])
-	copy(mbytes[1:], d[:]) // Insert hash at bytes 1-32
+	// Prepare and hash the message block
+	mbytes := prepareMessageBlock(data)
 
 	// Encrypt using the library's Encrypt method
 	ciphertext, err := elg.pub.Encrypt(rand.Reader, mbytes)
@@ -58,20 +46,40 @@ func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (enc
 		return nil, err
 	}
 
-	// The library returns 512 bytes (256 bytes each for c1 and c2)
-	// Apply zero-padding if requested for I2P protocol compatibility
-	if zeroPadding {
-		// Zero-padded format: [1 zero byte][256-byte c1][1 zero byte][256-byte c2]
-		encrypted = make([]byte, 514)
-		copy(encrypted[1:257], ciphertext[0:256])     // Insert c1 at offset 1
-		copy(encrypted[258:514], ciphertext[256:512]) // Insert c2 at offset 258
-	} else {
-		// Compact format: [256-byte c1][256-byte c2] without padding
-		encrypted = ciphertext
-	}
+	// Format output according to padding requirements
+	encrypted = formatCiphertext(ciphertext, zeroPadding)
 
 	log.WithField("encrypted_length", len(encrypted)).Debug("Data encrypted successfully with ElGamal")
 	return
+}
+
+// prepareMessageBlock creates an I2P-formatted message block with SHA-256 integrity hash.
+// Structure: [0xFF][32-byte SHA-256 hash][222-byte payload]
+func prepareMessageBlock(data []byte) []byte {
+	mbytes := make([]byte, 255)
+	mbytes[0] = 0xFF        // I2P message type indicator
+	copy(mbytes[33:], data) // Copy payload starting at byte 33
+
+	// Compute SHA-256 integrity hash of the payload data (full 222 bytes)
+	d := sha256.Sum256(mbytes[33:255])
+	copy(mbytes[1:], d[:]) // Insert hash at bytes 1-32
+
+	return mbytes
+}
+
+// formatCiphertext formats the ElGamal ciphertext according to I2P protocol requirements.
+// Returns either zero-padded format (514 bytes) or compact format (512 bytes).
+func formatCiphertext(ciphertext []byte, zeroPadding bool) []byte {
+	if zeroPadding {
+		// Zero-padded format: [1 zero byte][256-byte c1][1 zero byte][256-byte c2]
+		encrypted := make([]byte, 514)
+		copy(encrypted[1:257], ciphertext[0:256])     // Insert c1 at offset 1
+		copy(encrypted[258:514], ciphertext[256:512]) // Insert c2 at offset 258
+		return encrypted
+	}
+
+	// Compact format: [256-byte c1][256-byte c2] without padding
+	return ciphertext
 }
 
 // createElgamalEncryption initializes a new ElGamal encryption wrapper.
