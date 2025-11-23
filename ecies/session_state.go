@@ -54,20 +54,15 @@ type SessionState struct {
 // remoteStaticPubKey: Remote peer's static X25519 public key (32 bytes)
 // isInitiator: True if we are initiating the session, false if responding
 func NewSession(localPrivKey, remoteStaticPubKey []byte, isInitiator bool) (*SessionState, error) {
-	if len(localPrivKey) != PrivateKeySize {
-		return nil, oops.Errorf("invalid local private key size: expected %d, got %d", PrivateKeySize, len(localPrivKey))
-	}
-	if len(remoteStaticPubKey) != PublicKeySize {
-		return nil, oops.Errorf("invalid remote public key size: expected %d, got %d", PublicKeySize, len(remoteStaticPubKey))
+	if err := validateSessionKeys(localPrivKey, remoteStaticPubKey); err != nil {
+		return nil, err
 	}
 
-	session := &SessionState{}
-	copy(session.LocalPrivKey[:], localPrivKey)
-	copy(session.RemoteStaticPubKey[:], remoteStaticPubKey)
+	session := createSessionWithKeys(localPrivKey, remoteStaticPubKey)
 
 	// Generate session ID from random bytes
-	if _, err := io.ReadFull(rand.Reader, session.SessionID[:]); err != nil {
-		return nil, oops.Errorf("failed to generate session ID: %w", err)
+	if err := generateSessionID(session); err != nil {
+		return nil, err
 	}
 
 	// Initialize DH ratchet with a fresh ephemeral key pair
@@ -81,13 +76,45 @@ func NewSession(localPrivKey, remoteStaticPubKey []byte, isInitiator bool) (*Ses
 	}
 
 	// Initialize session tag ratchets
-	session.SendingTagRatchet = ratchet.NewTagRatchet(session.SendingChainKey)
-	session.ReceivingTagRatchet = ratchet.NewTagRatchet(session.ReceivingChainKey)
+	initializeTagRatchets(session)
 
 	session.CreatedAt = currentTimestamp()
 
 	log.WithField("session_id", session.SessionID[:8]).Debug("ECIES session created")
 	return session, nil
+}
+
+// validateSessionKeys checks that the provided keys have the correct sizes.
+func validateSessionKeys(localPrivKey, remoteStaticPubKey []byte) error {
+	if len(localPrivKey) != PrivateKeySize {
+		return oops.Errorf("invalid local private key size: expected %d, got %d", PrivateKeySize, len(localPrivKey))
+	}
+	if len(remoteStaticPubKey) != PublicKeySize {
+		return oops.Errorf("invalid remote public key size: expected %d, got %d", PublicKeySize, len(remoteStaticPubKey))
+	}
+	return nil
+}
+
+// createSessionWithKeys creates a new session state and copies the provided keys.
+func createSessionWithKeys(localPrivKey, remoteStaticPubKey []byte) *SessionState {
+	session := &SessionState{}
+	copy(session.LocalPrivKey[:], localPrivKey)
+	copy(session.RemoteStaticPubKey[:], remoteStaticPubKey)
+	return session
+}
+
+// generateSessionID generates a random session identifier using cryptographically secure random bytes.
+func generateSessionID(session *SessionState) error {
+	if _, err := io.ReadFull(rand.Reader, session.SessionID[:]); err != nil {
+		return oops.Errorf("failed to generate session ID: %w", err)
+	}
+	return nil
+}
+
+// initializeTagRatchets creates and initializes the session tag ratchets for sending and receiving.
+func initializeTagRatchets(session *SessionState) {
+	session.SendingTagRatchet = ratchet.NewTagRatchet(session.SendingChainKey)
+	session.ReceivingTagRatchet = ratchet.NewTagRatchet(session.ReceivingChainKey)
 }
 
 // initializeDHRatchet generates a fresh ephemeral key pair for the DH ratchet.
