@@ -2,17 +2,16 @@ package hkdf
 
 import (
 	"crypto/sha256"
+	"hash"
 	"io"
 
 	"github.com/samber/oops"
 	"golang.org/x/crypto/hkdf"
 )
 
-// Derive implements types.KeyDeriver for HKDF key derivation operations.
-// Derives a cryptographic key of specified length from input key material using RFC 5869 HKDF.
+// Derive derives a key of the specified length from the input key material (IKM).
 // Parameters: ikm (input key material), salt (optional random value), info (context data), keyLen (output length).
 // Returns derived key bytes or error if derivation fails due to invalid parameters.
-// Derive derives a key of the specified length from the input key material (IKM)
 func (h *HKDFImpl) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 	log.WithField("ikm_length", len(ikm)).
 		WithField("salt_length", len(salt)).
@@ -20,35 +19,58 @@ func (h *HKDFImpl) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 		WithField("key_length", keyLen).
 		Debug("Deriving key with HKDF")
 
-	// Validate key length parameter for security and compatibility
+	// Validate input parameters
+	if err := validateDeriveParameters(keyLen, info); err != nil {
+		return nil, err
+	}
+
+	// Select hash function with secure default fallback to SHA-256
+	hashFunc := selectHashFunction(h.hashFunc)
+
+	// Initialize HKDF reader and derive key
+	key, err := performKeyDerivation(hashFunc, ikm, salt, info, keyLen)
+	if err != nil {
+		return nil, err
+	}
+
+	log.WithField("derived_key_length", len(key)).Debug("HKDF key derivation successful")
+	return key, nil
+}
+
+// validateDeriveParameters checks that key length and info length meet security requirements.
+func validateDeriveParameters(keyLen int, info []byte) error {
 	if keyLen <= 0 {
-		return nil, oops.Wrapf(ErrInvalidKeyLength, "key length must be positive, got %d", keyLen)
+		return oops.Wrapf(ErrInvalidKeyLength, "key length must be positive, got %d", keyLen)
 	}
 
 	// Enforce RFC 5869 info length limit to prevent security issues
 	if len(info) > MaxInfoLength {
-		return nil, oops.Wrapf(ErrInvalidInfoLength, "info length exceeds maximum %d bytes", MaxInfoLength)
+		return oops.Wrapf(ErrInvalidInfoLength, "info length exceeds maximum %d bytes", MaxInfoLength)
 	}
 
-	// Select hash function with secure default fallback to SHA-256
-	// Get hash function
-	hashFunc := h.hashFunc
+	return nil
+}
+
+// selectHashFunction returns the configured hash function or SHA-256 as secure default.
+func selectHashFunction(hashFunc func() hash.Hash) func() hash.Hash {
 	if hashFunc == nil {
-		hashFunc = sha256.New
+		return sha256.New
 	}
+	return hashFunc
+}
 
-	// Initialize HKDF reader using validated parameters and selected hash function
+// performKeyDerivation executes the HKDF key derivation process.
+// Creates an HKDF reader and derives the requested number of key bytes.
+func performKeyDerivation(hashFunc func() hash.Hash, ikm, salt, info []byte, keyLen int) ([]byte, error) {
 	// Create HKDF reader
 	reader := hkdf.New(hashFunc, ikm, salt, info)
 
-	// Perform key derivation with proper error handling for cryptographic failures
 	// Derive key
 	key := make([]byte, keyLen)
 	if _, err := io.ReadFull(reader, key); err != nil {
 		return nil, oops.Wrapf(ErrKeyDerivationFailed, "failed to derive key: %w", err)
 	}
 
-	log.WithField("derived_key_length", len(key)).Debug("HKDF key derivation successful")
 	return key, nil
 }
 
