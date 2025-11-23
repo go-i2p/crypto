@@ -9,6 +9,17 @@ import (
 // Ed25519PublicKey represents an Ed25519 public key for signature verification operations.
 // This key type implements the SigningPublicKey interface and is used to verify digital
 // signatures created by corresponding Ed25519 private keys. Public keys are 32 bytes in length.
+//
+// IMPORTANT: Do not declare Ed25519PublicKey using var without initialization:
+//
+//	var key Ed25519PublicKey  // WRONG: creates nil slice, Bytes() will return empty slice
+//	copy(key[:], data)        // WRONG: copy to nil slice does nothing
+//
+// Instead, use one of these correct patterns:
+//
+//	key, err := CreateEd25519PublicKeyFromBytes(data)  // Recommended
+//	key := make(Ed25519PublicKey, 32)                 // Also correct
+//	key := Ed25519PublicKey(data)                      // Also correct if data is 32 bytes
 type Ed25519PublicKey []byte
 
 // NewVerifier creates a verifier instance that can validate Ed25519 signatures.
