@@ -144,38 +144,18 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 
 // elgamalDecrypt decrypts ElGamal encrypted data using I2P's specific format and validation.
 // The zeroPadding parameter controls parsing of the encrypted data format.
-// This function wraps the go-i2p/elgamal library's Decrypt method and implements:
-// 1. Parse ciphertext with optional zero-padding
-// 2. Decrypt using library's Decrypt method
-// 3. Extract and validate SHA-256 integrity hash from decrypted message
-// 4. Return verified plaintext using constant-time operations for security
+// This function coordinates the complete decryption process by parsing ciphertext format,
+// performing decryption, and validating the integrity of the decrypted message.
 func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (decrypted []byte, err error) {
 	log.WithFields(logger.Fields{
 		"data_length":  len(data),
 		"zero_padding": zeroPadding,
 	}).Debug("Decrypting ElGamal data")
 
-	// Remove zero-padding if present to get the raw ciphertext for the library
-	var ciphertext []byte
-	if zeroPadding {
-		// Zero-padded format: [0][256 bytes c1][0][256 bytes c2] = 514 bytes
-		if len(data) != 514 {
-			err = ElgDecryptFail
-			log.WithError(err).Error("Invalid ciphertext length for zero-padded format")
-			return
-		}
-		// Extract c1 and c2, removing the zero bytes
-		ciphertext = make([]byte, 512)
-		copy(ciphertext[0:256], data[1:257])     // c1 from positions 1-256
-		copy(ciphertext[256:512], data[258:514]) // c2 from positions 258-513
-	} else {
-		// Non-padded format: [256 bytes c1][256 bytes c2] = 512 bytes
-		if len(data) != 512 {
-			err = ElgDecryptFail
-			log.WithError(err).Error("Invalid ciphertext length for non-padded format")
-			return
-		}
-		ciphertext = data
+	// Parse ciphertext format (with or without zero-padding)
+	ciphertext, err := parseCiphertext(data, zeroPadding)
+	if err != nil {
+		return nil, err
 	}
 
 	// Decrypt using the library's Decrypt method
@@ -185,7 +165,46 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 		return nil, ElgDecryptFail
 	}
 
-	// Verify I2P message format and integrity
+	// Verify message format and extract payload
+	decrypted, err = verifyAndExtractPayload(m)
+	if err != nil {
+		return nil, err
+	}
+
+	log.WithField("decrypted_length", len(decrypted)).Debug("ElGamal decryption successful")
+	return
+}
+
+// parseCiphertext extracts the raw ciphertext from I2P's formatted encrypted data.
+// Handles both zero-padded format (514 bytes) and non-padded format (512 bytes).
+// Returns the extracted ciphertext ready for cryptographic decryption.
+func parseCiphertext(data []byte, zeroPadding bool) ([]byte, error) {
+	if zeroPadding {
+		// Zero-padded format: [0][256 bytes c1][0][256 bytes c2] = 514 bytes
+		if len(data) != 514 {
+			log.WithError(ElgDecryptFail).Error("Invalid ciphertext length for zero-padded format")
+			return nil, ElgDecryptFail
+		}
+		// Extract c1 and c2, removing the zero bytes
+		ciphertext := make([]byte, 512)
+		copy(ciphertext[0:256], data[1:257])     // c1 from positions 1-256
+		copy(ciphertext[256:512], data[258:514]) // c2 from positions 258-513
+		return ciphertext, nil
+	}
+
+	// Non-padded format: [256 bytes c1][256 bytes c2] = 512 bytes
+	if len(data) != 512 {
+		log.WithError(ElgDecryptFail).Error("Invalid ciphertext length for non-padded format")
+		return nil, ElgDecryptFail
+	}
+	return data, nil
+}
+
+// verifyAndExtractPayload validates the decrypted message format and integrity.
+// Checks message length, type byte, and SHA-256 hash before extracting the payload.
+// Returns the verified payload with trailing zeros removed.
+func verifyAndExtractPayload(m []byte) ([]byte, error) {
+	// Verify I2P message format
 	if len(m) != 255 {
 		log.WithField("length", len(m)).Error("Decrypted message has incorrect length")
 		return nil, ElgDecryptFail
@@ -198,6 +217,18 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 	}
 
 	// Verify SHA-256 integrity hash
+	if err := verifyMessageHash(m); err != nil {
+		return nil, err
+	}
+
+	// Extract payload and trim trailing zeros
+	return extractPayload(m), nil
+}
+
+// verifyMessageHash performs constant-time SHA-256 hash verification on the decrypted message.
+// Compares the embedded hash with the computed hash of the payload to ensure data integrity.
+// Uses constant-time comparison to prevent timing attacks.
+func verifyMessageHash(m []byte) error {
 	expectedHash := sha256.Sum256(m[33:255])
 	actualHash := m[1:33]
 
@@ -206,11 +237,16 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 
 	if good != 1 {
 		log.Error("Hash verification failed")
-		return nil, ElgDecryptFail
+		return ElgDecryptFail
 	}
 
-	// Extract payload (bytes 33-255) and trim trailing zeros
-	decrypted = make([]byte, 222)
+	return nil
+}
+
+// extractPayload extracts the message payload from the decrypted I2P message.
+// Copies bytes 33-255 and removes trailing zero-byte padding to recover the original plaintext.
+func extractPayload(m []byte) []byte {
+	decrypted := make([]byte, 222)
 	copy(decrypted, m[33:255])
 
 	// Trim trailing zeros from payload
@@ -218,6 +254,5 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 		decrypted = decrypted[:len(decrypted)-1]
 	}
 
-	log.WithField("decrypted_length", len(decrypted)).Debug("ElGamal decryption successful")
-	return
+	return decrypted
 }
