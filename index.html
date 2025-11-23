@@ -13,7 +13,7 @@
         <a href="index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 87 commits
+        📝 90 commits
          • 📜 MIT License
       </div>
     </div>
@@ -42,12 +42,12 @@
       <div class="repo-stats">
         
         <div class="repo-stat">
-          <span>📝</span> <span>87 commits</span>
+          <span>📝</span> <span>90 commits</span>
         </div>
         
         
         <div class="repo-stat">
-          <span>📅</span> <span>Last updated: November 22, 2025</span>
+          <span>📅</span> <span>Last updated: November 23, 2025</span>
         </div>
         
         
@@ -85,7 +85,134 @@
 
 <hr>
 
+<h2 id="recent-api-improvements">Recent API Improvements</h2>
+
+<p>🎉 <strong>Version 2.0</strong> includes major API improvements based on production usage patterns:</p>
+
+<ul>
+<li>✅ <strong>Concrete Key Generation</strong>: New <code>GenerateEd25519KeyPair()</code> and <code>GenerateX25519KeyPair()</code> return concrete types</li>
+<li>✅ <strong>ChaCha20-Poly1305 AEAD</strong>: Dedicated authenticated encryption package for I2P tunnel and garlic messages</li>
+<li>✅ <strong>Unified Session API</strong>: Single <code>Session</code> type manages DH, symmetric, and tag ratchets</li>
+<li>✅ <strong>KDF Utilities</strong>: Consistent key derivation with <code>kdf.KeyDerivation</code> for all I2P components</li>
+<li>✅ <strong>Better Error Handling</strong>: Standardized sentinel errors across all packages</li>
+</ul>
+
+<p>See <a href="AUDIT.md" target="_blank">AUDIT.md</a> for detailed improvement rationale.</p>
+
+<hr>
+
 <h2 id="usage">Usage</h2>
+
+<h3 id="modern-key-generation-recommended">Modern Key Generation (Recommended)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/ed25519&quot;
+    &quot;github.com/go-i2p/crypto/curve25519&quot;
+)
+
+func main() {
+    // Generate Ed25519 signing keys - returns concrete types
+    sigPubKey, sigPrivKey, err := ed25519.GenerateEd25519KeyPair()
+    if err != nil {
+        panic(err)
+    }
+    defer sigPrivKey.Zero() // Securely clear private key
+    
+    // Generate X25519 encryption keys - returns concrete types
+    encPubKey, encPrivKey, err := curve25519.GenerateX25519KeyPair()
+    if err != nil {
+        panic(err)
+    }
+    defer encPrivKey.Zero()
+    
+    // Use keys directly without type assertions
+    signer, _ := sigPrivKey.NewSigner()
+    signature, _ := signer.Sign([]byte(&quot;message&quot;))
+}
+</code></pre>
+
+<h3 id="authenticated-encryption-chacha20-poly1305-aead">Authenticated Encryption (ChaCha20-Poly1305 AEAD)</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/chacha20poly1305&quot;
+)
+
+func main() {
+    // Generate key and nonce
+    key, _ := chacha20poly1305.GenerateKey()
+    nonce, _ := chacha20poly1305.GenerateNonce()
+    
+    // Create AEAD cipher
+    aead, _ := chacha20poly1305.NewAEAD(key)
+    
+    // Encrypt with authentication
+    plaintext := []byte(&quot;Secret message&quot;)
+    associatedData := []byte(&quot;public metadata&quot;)
+    ciphertext, tag, _ := aead.Encrypt(plaintext, associatedData, nonce[:])
+    
+    // Decrypt and verify
+    decrypted, err := aead.Decrypt(ciphertext, tag[:], associatedData, nonce[:])
+    if err != nil {
+        // Authentication failed - message was tampered with
+        panic(err)
+    }
+}
+</code></pre>
+
+<h3 id="unified-session-management">Unified Session Management</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/ratchet&quot;
+)
+
+func main() {
+    // After ECIES key exchange
+    session, err := ratchet.NewSessionFromECIES(
+        eciesSharedSecret,
+        ourEphemeralPrivKey,
+        theirPublicKey,
+    )
+    if err != nil {
+        panic(err)
+    }
+    defer session.Zero()
+    
+    // Encrypt message (handles all ratchet operations)
+    messageKey, sessionTag, _ := session.EncryptMessage(plaintext)
+    
+    // Use message key with AEAD
+    aead, _ := chacha20poly1305.NewAEAD(messageKey)
+    ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce)
+}
+</code></pre>
+
+<h3 id="consistent-key-derivation">Consistent Key Derivation</h3>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/go-i2p/crypto/kdf&quot;
+)
+
+func main() {
+    // Derive keys from root secret
+    kd := kdf.NewKeyDerivation(rootSecret)
+    defer kd.Zero()
+    
+    // Derive purpose-specific keys
+    tunnelKey, _ := kd.DeriveForPurpose(kdf.PurposeTunnelEncryption)
+    garlicKey, _ := kd.DeriveForPurpose(kdf.PurposeGarlicEncryption)
+    
+    // Or derive session keys in one call
+    rootKey, symKey, tagKey, _ := kd.DeriveSessionKeys()
+}
+</code></pre>
 
 <h3 id="basic-symmetric-encryption-aes">Basic Symmetric Encryption (AES)</h3>
 
@@ -265,6 +392,7 @@ func main() {
 <ul>
 <li>AES (128/192/256-bit) with CBC mode</li>
 <li>ChaCha20 stream cipher</li>
+<li><strong>ChaCha20-Poly1305 AEAD</strong> (authenticated encryption) ✨ NEW</li>
 </ul></li>
 
 <li><p><strong>Asymmetric Encryption</strong></p>
@@ -273,6 +401,7 @@ func main() {
 <li>Curve25519 (X25519) key agreement</li>
 <li>RSA (2048/3072/4096-bit)</li>
 <li>ElGamal encryption</li>
+<li><strong>ECIES-X25519-AEAD-Ratchet</strong> with unified Session API ✨ NEW</li>
 </ul></li>
 
 <li><p><strong>Digital Signatures</strong></p>
@@ -288,6 +417,15 @@ func main() {
 <ul>
 <li>HMAC (Hash-based Message Authentication Code)</li>
 <li>HKDF (HMAC-based Key Derivation Function)</li>
+<li><strong>Unified KDF utilities</strong> for consistent key derivation ✨ NEW</li>
+</ul></li>
+
+<li><p><strong>Key Management</strong></p>
+
+<ul>
+<li><strong>Concrete key generation APIs</strong> (no type assertions needed) ✨ NEW</li>
+<li>Secure memory cleanup with <code>Zero()</code> methods</li>
+<li>Forward secrecy with ratcheting</li>
 </ul></li>
 </ul>
 
@@ -344,7 +482,7 @@ func main() {
                 eyedeekay
               </div>
               <div class="contributor-commits">
-                87 commits
+                90 commits
               </div>
             </div>
           </div>
@@ -356,7 +494,7 @@ func main() {
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2025-11-23 17:15:20 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2025-11-23 18:03:02 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>
