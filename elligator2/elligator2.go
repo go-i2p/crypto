@@ -141,85 +141,95 @@ func GenerateKeyPair() ([]byte, []byte, error) {
 // publicKeyToRepresentative attempts to find an Elligator2 representative for a public key.
 // Returns (representative, true) if successful, (nil, false) if not representable.
 //
-// This implements the inverse Elligator2 map for Curve25519.
-// Formula: Given u, solve for r where u = -A / (1 + 2*r²)
-// Rearranged: r² = (-A - u) / (2*u)
+// This implements the inverse Elligator2 map for Curve25519 by coordinating
+// the computation and verification of the representative value.
 func publicKeyToRepresentative(publicKey []byte) ([]byte, bool) {
 	var u field.Element
 	if _, err := u.SetBytes(publicKey); err != nil {
 		return nil, false
 	}
 
+	// Compute r = sqrt((-A - u) / (2*u))
+	r, wasSquare := computeRepresentativeSqrt(&u)
+	if wasSquare != 1 {
+		return nil, false
+	}
+
+	// Get candidate representative bytes and verify round-trip
+	rBytes := prepareRepresentativeBytes(r)
+	if verifyRoundTrip(rBytes, &u) {
+		return rBytes, true
+	}
+
+	// Try the negative square root
+	return tryNegativeSquareRoot(r, &u)
+}
+
+// computeRepresentativeSqrt computes the square root for the inverse Elligator2 map.
+// Formula: r² = (-A - u) / (2*u) where A = 486662 for Curve25519.
+// Returns the square root and a flag indicating if the value was a perfect square.
+func computeRepresentativeSqrt(u *field.Element) (*field.Element, int) {
 	// A = 486662 for Curve25519
+	a := createCurve25519A()
+
+	// Compute numerator: -A - u
+	negA := new(field.Element).Negate(a)
+	numerator := new(field.Element).Subtract(negA, u)
+
+	// Compute denominator: 2*u
+	one := new(field.Element).One()
+	two := new(field.Element).Add(one, one)
+	denominator := new(field.Element).Multiply(two, u)
+
+	// Use SqrtRatio which computes sqrt(numerator/denominator) and checks if it's a square
+	return new(field.Element).SqrtRatio(numerator, denominator)
+}
+
+// createCurve25519A constructs the Curve25519 'A' parameter field element (486662).
+func createCurve25519A() *field.Element {
 	a := new(field.Element)
 	aBytes := make([]byte, 32)
 	aBytes[0] = 0x06
 	aBytes[1] = 0x6D
 	aBytes[2] = 0x07
-	if _, err := a.SetBytes(aBytes); err != nil {
-		return nil, false
-	}
+	a.SetBytes(aBytes)
+	return a
+}
 
-	// Compute numerator: -A - u
-	negA := new(field.Element).Negate(a)
-	numerator := new(field.Element).Subtract(negA, &u)
-
-	// Compute denominator: 2*u
-	one := new(field.Element).One()
-	two := new(field.Element).Add(one, one)
-	denominator := new(field.Element).Multiply(two, &u)
-
-	// Compute r = sqrt((-A - u) / (2*u))
-	// Use SqrtRatio which computes sqrt(numerator/denominator) and checks if it's a square
-	r, wasSquare := new(field.Element).SqrtRatio(numerator, denominator)
-
-	if wasSquare != 1 {
-		return nil, false
-	}
-
-	// Get the bytes for the representative
+// prepareRepresentativeBytes converts a field element to representative bytes.
+// Clears the top 2 bits to ensure the value is in the proper range.
+func prepareRepresentativeBytes(r *field.Element) []byte {
 	rBytes := r.Bytes()
+	rBytes[31] &= 0x3F // Clear top 2 bits
+	return rBytes
+}
 
-	// Clear top 2 bits to ensure it's in the proper range
-	rBytes[31] &= 0x3F
-
-	// Verify the round-trip: check that forward_map(r) == u
-	// This is crucial because SqrtRatio may give us either +sqrt or -sqrt,
-	// and we need the one that maps back to the original u
+// verifyRoundTrip checks that the representative maps back to the original public key.
+// This verification is crucial because SqrtRatio may return either +sqrt or -sqrt.
+func verifyRoundTrip(rBytes []byte, u *field.Element) bool {
 	var rForCheck field.Element
 	rForCheck.SetBytes(rBytes)
 	uCheck := computeForwardMap(&rForCheck)
+	return string(uCheck.Bytes()) == string(u.Bytes())
+}
 
-	// Compare using bytes to handle field element representation
-	if string(uCheck.Bytes()) != string(u.Bytes()) {
-		// Try the negative square root
-		rNeg := new(field.Element).Negate(r)
-		rNegBytes := rNeg.Bytes()
-		rNegBytes[31] &= 0x3F
+// tryNegativeSquareRoot attempts to use the negative square root as the representative.
+// Returns the negated representative if it maps correctly, or (nil, false) if neither root works.
+func tryNegativeSquareRoot(r *field.Element, u *field.Element) ([]byte, bool) {
+	rNeg := new(field.Element).Negate(r)
+	rNegBytes := prepareRepresentativeBytes(rNeg)
 
-		// Verify negative works
-		var rNegForCheck field.Element
-		rNegForCheck.SetBytes(rNegBytes)
-		uCheckNeg := computeForwardMap(&rNegForCheck)
-
-		if string(uCheckNeg.Bytes()) != string(u.Bytes()) {
-			// Neither square root works
-			return nil, false
-		}
-
-		// Use the negative
+	if verifyRoundTrip(rNegBytes, u) {
 		return rNegBytes, true
 	}
 
-	return rBytes, true
+	// Neither square root works
+	return nil, false
 }
 
-// computeForwardMap is a helper that computes the forward Elligator2 map
-// without modifying the representative bytes
+// computeForwardMap computes the forward Elligator2 map without modifying the representative bytes.
+// Applies the formula: u = -A / (1 + 2*r²) where A = 486662 for Curve25519.
 func computeForwardMap(r *field.Element) *field.Element {
-	// Compute u using the Elligator2 formula:
-	// u = -A / (1 + 2*r²) where A = 486662
-
 	// r²
 	rSquared := new(field.Element).Square(r)
 
@@ -232,12 +242,7 @@ func computeForwardMap(r *field.Element) *field.Element {
 	denominator := new(field.Element).Add(one, twoRSquared)
 
 	// A = 486662
-	a := new(field.Element)
-	aBytes := make([]byte, 32)
-	aBytes[0] = 0x06
-	aBytes[1] = 0x6D
-	aBytes[2] = 0x07
-	a.SetBytes(aBytes)
+	a := createCurve25519A()
 
 	// -A
 	negA := new(field.Element).Negate(a)
