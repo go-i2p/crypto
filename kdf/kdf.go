@@ -71,17 +71,31 @@ const (
 
 	// PurposeHandshake is for deriving handshake-related keys
 	PurposeHandshake
+
+	// PurposeEncryptedLeaseSetEncryption is used when deriving symmetric
+	// encryption keys for EncryptedLeaseSet inner data.
+	//
+	// The encryption key is derived from:
+	//   - ECDH shared secret (X25519)
+	//   - EncryptedLeaseSet cookie (32 bytes)
+	//   - This purpose constant
+	//
+	// Info string: "i2p-encrypted-leaseset-encryption"
+	//
+	// Spec: I2P Proposal 123 - Encrypted LeaseSet
+	PurposeEncryptedLeaseSetEncryption
 )
 
 // Standard info strings for each key purpose
 var purposeInfo = map[KeyPurpose]string{
-	PurposeTunnelEncryption: "I2P-Tunnel-Encryption-v1",
-	PurposeGarlicEncryption: "I2P-Garlic-Encryption-v1",
-	PurposeSessionTag:       "I2P-Session-Tag-v1",
-	PurposeRatchetChain:     "I2P-Ratchet-Chain-v1",
-	PurposeIVGeneration:     "I2P-IV-Generation-v1",
-	PurposeMessageKey:       "I2P-Message-Key-v1",
-	PurposeHandshake:        "I2P-Handshake-v1",
+	PurposeTunnelEncryption:            "I2P-Tunnel-Encryption-v1",
+	PurposeGarlicEncryption:            "I2P-Garlic-Encryption-v1",
+	PurposeSessionTag:                  "I2P-Session-Tag-v1",
+	PurposeRatchetChain:                "I2P-Ratchet-Chain-v1",
+	PurposeIVGeneration:                "I2P-IV-Generation-v1",
+	PurposeMessageKey:                  "I2P-Message-Key-v1",
+	PurposeHandshake:                   "I2P-Handshake-v1",
+	PurposeEncryptedLeaseSetEncryption: "i2p-encrypted-leaseset-encryption",
 }
 
 // Package-level logger
