@@ -63,19 +63,25 @@ func (k Ed25519PublicKey) Bytes() []byte {
 // Use the curve25519 package for ECIES-X25519-AEAD encryption as required
 // by I2P protocol specifications.
 
-// createEd25519PublicKey creates an Ed25519 public key from byte data (legacy function).
-// This function appears to contain a bug - it expects 256 bytes but Ed25519 public keys are 32 bytes.
-// This function should not be used in new code; use CreateEd25519PublicKeyFromBytes instead.
+// createEd25519PublicKey is DEPRECATED and had a known bug (expected 256 bytes instead of 32).
+// Use NewEd25519PublicKey or CreateEd25519PublicKeyFromBytes instead.
+// This function will be removed in v2.0.
+//
+// Deprecated: Use NewEd25519PublicKey instead.
 func createEd25519PublicKey(data []byte) (k *ed25519.PublicKey) {
+	log.Warn("createEd25519PublicKey is deprecated and has been fixed - use NewEd25519PublicKey")
 	log.WithField("data_length", len(data)).Debug("Creating Ed25519 public key")
-	// Legacy logic with incorrect size expectation - should be 32 bytes, not 256
-	if len(data) == 256 {
-		k2 := ed25519.PublicKey{}
-		copy(k2[:], data)
+
+	// Fixed implementation - now accepts correct 32-byte keys instead of buggy 256-byte expectation
+	if len(data) == ed25519.PublicKeySize { // Changed from 256 to 32
+		k2 := make(ed25519.PublicKey, ed25519.PublicKeySize)
+		copy(k2, data)
 		k = &k2
 		log.Debug("Ed25519 public key created successfully")
 	} else {
-		log.Warn("Invalid data length for Ed25519 public key")
+		log.WithField("expected", ed25519.PublicKeySize).
+			WithField("got", len(data)).
+			Warn("Invalid data length for Ed25519 public key")
 	}
 	return
 }

@@ -519,3 +519,105 @@ func BenchmarkNewEd25519PrivateKey(b *testing.B) {
 		NewEd25519PrivateKey(priv)
 	}
 }
+
+// TestCreateEd25519PublicKeyDeprecatedFixed tests the fixed createEd25519PublicKey function.
+// This test verifies that the bug (expecting 256 bytes instead of 32) has been fixed.
+func TestCreateEd25519PublicKeyDeprecatedFixed(t *testing.T) {
+	t.Run("valid 32-byte input succeeds after fix", func(t *testing.T) {
+		// Generate a valid 32-byte Ed25519 public key
+		pub, _, err := ed25519.GenerateKey(rand.Reader)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		// This should now succeed (bug was fixed: 256 → 32 bytes)
+		result := createEd25519PublicKey(pub)
+		if result == nil {
+			t.Error("createEd25519PublicKey returned nil for valid 32-byte input")
+		}
+
+		// Verify the key data is correct
+		if len(*result) != ed25519.PublicKeySize {
+			t.Errorf("createEd25519PublicKey returned key of length %d, want %d", len(*result), ed25519.PublicKeySize)
+		}
+
+		// Verify the bytes match the input
+		for i, b := range pub {
+			if (*result)[i] != b {
+				t.Errorf("createEd25519PublicKey returned incorrect key data at index %d", i)
+				break
+			}
+		}
+	})
+
+	t.Run("256-byte input fails after fix", func(t *testing.T) {
+		// Create 256 bytes of data (the buggy size the function used to accept)
+		invalidData := make([]byte, 256)
+		io.ReadFull(rand.Reader, invalidData)
+
+		// This should now fail (bug was fixed: no longer accepts 256 bytes)
+		result := createEd25519PublicKey(invalidData)
+		if result != nil {
+			t.Error("createEd25519PublicKey should return nil for 256-byte input after fix, but returned non-nil")
+		}
+	})
+
+	t.Run("nil input returns nil", func(t *testing.T) {
+		result := createEd25519PublicKey(nil)
+		if result != nil {
+			t.Error("createEd25519PublicKey should return nil for nil input")
+		}
+	})
+
+	t.Run("empty input returns nil", func(t *testing.T) {
+		result := createEd25519PublicKey([]byte{})
+		if result != nil {
+			t.Error("createEd25519PublicKey should return nil for empty input")
+		}
+	})
+
+	t.Run("too short input returns nil", func(t *testing.T) {
+		shortData := make([]byte, 16)
+		io.ReadFull(rand.Reader, shortData)
+
+		result := createEd25519PublicKey(shortData)
+		if result != nil {
+			t.Error("createEd25519PublicKey should return nil for 16-byte input")
+		}
+	})
+
+	t.Run("too long input returns nil", func(t *testing.T) {
+		longData := make([]byte, 64)
+		io.ReadFull(rand.Reader, longData)
+
+		result := createEd25519PublicKey(longData)
+		if result != nil {
+			t.Error("createEd25519PublicKey should return nil for 64-byte input")
+		}
+	})
+
+	t.Run("function is deprecated - use NewEd25519PublicKey instead", func(t *testing.T) {
+		// This test documents the deprecation - new code should use NewEd25519PublicKey
+		pub, _, err := ed25519.GenerateKey(rand.Reader)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		// Old deprecated way (works but logs warning)
+		deprecatedKey := createEd25519PublicKey(pub)
+
+		// New preferred way
+		newKey, err := NewEd25519PublicKey(pub)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		// Both should produce equivalent results
+		if deprecatedKey == nil {
+			t.Fatal("deprecated function returned nil")
+		}
+		if len(*deprecatedKey) != len(newKey) {
+			t.Error("deprecated and new constructors produced keys of different lengths")
+		}
+	})
+}
