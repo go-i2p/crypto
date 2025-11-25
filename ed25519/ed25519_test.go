@@ -196,3 +196,326 @@ func TestEd25519PublicKeyNilSliceBug(t *testing.T) {
 		t.Errorf("Expected correct key to have 32 bytes, got %d", len(correctKey.Bytes()))
 	}
 }
+
+// TestNewEd25519PublicKey tests the mandatory constructor for Ed25519 public keys.
+func TestNewEd25519PublicKey(t *testing.T) {
+	t.Run("valid 32-byte key", func(t *testing.T) {
+		data := make([]byte, 32)
+		io.ReadFull(rand.Reader, data)
+
+		key, err := NewEd25519PublicKey(data)
+		if err != nil {
+			t.Fatalf("NewEd25519PublicKey failed: %v", err)
+		}
+
+		if key.Len() != 32 {
+			t.Errorf("Len() = %d, want 32", key.Len())
+		}
+
+		if len(key.Bytes()) != 32 {
+			t.Errorf("Bytes() length = %d, want 32", len(key.Bytes()))
+		}
+
+		// Verify bytes match input
+		for i, b := range key.Bytes() {
+			if b != data[i] {
+				t.Errorf("Byte mismatch at index %d: got %d, want %d", i, b, data[i])
+				break
+			}
+		}
+	})
+
+	t.Run("invalid size - too short", func(t *testing.T) {
+		data := make([]byte, 16)
+		_, err := NewEd25519PublicKey(data)
+		if err == nil {
+			t.Error("Expected error for 16-byte key, got nil")
+		}
+	})
+
+	t.Run("invalid size - too long", func(t *testing.T) {
+		data := make([]byte, 64)
+		_, err := NewEd25519PublicKey(data)
+		if err == nil {
+			t.Error("Expected error for 64-byte key, got nil")
+		}
+	})
+
+	t.Run("nil input", func(t *testing.T) {
+		_, err := NewEd25519PublicKey(nil)
+		if err == nil {
+			t.Error("Expected error for nil input, got nil")
+		}
+	})
+
+	t.Run("empty input", func(t *testing.T) {
+		_, err := NewEd25519PublicKey([]byte{})
+		if err == nil {
+			t.Error("Expected error for empty input, got nil")
+		}
+	})
+
+	t.Run("prevents nil slice panic", func(t *testing.T) {
+		// This is the key safety feature - the constructor prevents the nil slice bug
+		data := make([]byte, 32)
+		for i := range data {
+			data[i] = byte(i)
+		}
+
+		key, err := NewEd25519PublicKey(data)
+		if err != nil {
+			t.Fatalf("NewEd25519PublicKey failed: %v", err)
+		}
+
+		// Verify we can safely call methods without panic
+		if key.Len() != 32 {
+			t.Errorf("Len() = %d, want 32", key.Len())
+		}
+
+		bytes := key.Bytes()
+		if len(bytes) != 32 {
+			t.Errorf("Bytes() length = %d, want 32", len(bytes))
+		}
+	})
+}
+
+// TestNewEd25519PrivateKey tests the mandatory constructor for Ed25519 private keys.
+func TestNewEd25519PrivateKey(t *testing.T) {
+	t.Run("valid 64-byte key", func(t *testing.T) {
+		// Generate a valid key pair
+		_, priv, err := ed25519.GenerateKey(rand.Reader)
+		if err != nil {
+			t.Fatalf("Failed to generate key: %v", err)
+		}
+
+		key, err := NewEd25519PrivateKey(priv)
+		if err != nil {
+			t.Fatalf("NewEd25519PrivateKey failed: %v", err)
+		}
+
+		if key.Len() != 64 {
+			t.Errorf("Len() = %d, want 64", key.Len())
+		}
+
+		if len(key.Bytes()) != 64 {
+			t.Errorf("Bytes() length = %d, want 64", len(key.Bytes()))
+		}
+	})
+
+	t.Run("invalid size - too short", func(t *testing.T) {
+		data := make([]byte, 32)
+		_, err := NewEd25519PrivateKey(data)
+		if err == nil {
+			t.Error("Expected error for 32-byte private key, got nil")
+		}
+	})
+
+	t.Run("invalid size - too long", func(t *testing.T) {
+		data := make([]byte, 128)
+		_, err := NewEd25519PrivateKey(data)
+		if err == nil {
+			t.Error("Expected error for 128-byte private key, got nil")
+		}
+	})
+
+	t.Run("nil input", func(t *testing.T) {
+		_, err := NewEd25519PrivateKey(nil)
+		if err == nil {
+			t.Error("Expected error for nil input, got nil")
+		}
+	})
+
+	t.Run("empty input", func(t *testing.T) {
+		_, err := NewEd25519PrivateKey([]byte{})
+		if err == nil {
+			t.Error("Expected error for empty input, got nil")
+		}
+	})
+
+	t.Run("public key derivation", func(t *testing.T) {
+		// Generate a valid key pair
+		pub, priv, err := ed25519.GenerateKey(rand.Reader)
+		if err != nil {
+			t.Fatalf("Failed to generate key: %v", err)
+		}
+
+		privKey, err := NewEd25519PrivateKey(priv)
+		if err != nil {
+			t.Fatalf("NewEd25519PrivateKey failed: %v", err)
+		}
+
+		// Derive public key
+		derivedPub, err := privKey.Public()
+		if err != nil {
+			t.Fatalf("Public() failed: %v", err)
+		}
+
+		derivedPubBytes := derivedPub.Bytes()
+		if len(derivedPubBytes) != 32 {
+			t.Errorf("Derived public key length = %d, want 32", len(derivedPubBytes))
+		}
+
+		// Verify it matches the original public key
+		for i, b := range derivedPubBytes {
+			if b != pub[i] {
+				t.Errorf("Public key mismatch at byte %d: got %d, want %d", i, b, pub[i])
+				break
+			}
+		}
+	})
+
+	t.Run("sign and verify round-trip", func(t *testing.T) {
+		// Generate a valid key pair
+		pub, priv, err := ed25519.GenerateKey(rand.Reader)
+		if err != nil {
+			t.Fatalf("Failed to generate key: %v", err)
+		}
+
+		privKey, err := NewEd25519PrivateKey(priv)
+		if err != nil {
+			t.Fatalf("NewEd25519PrivateKey failed: %v", err)
+		}
+
+		pubKey, err := NewEd25519PublicKey(pub)
+		if err != nil {
+			t.Fatalf("NewEd25519PublicKey failed: %v", err)
+		}
+
+		// Create test message
+		message := []byte("Test message for Ed25519 signature")
+
+		// Sign with private key
+		signer, err := privKey.NewSigner()
+		if err != nil {
+			t.Fatalf("NewSigner() failed: %v", err)
+		}
+
+		signature, err := signer.Sign(message)
+		if err != nil {
+			t.Fatalf("Sign() failed: %v", err)
+		}
+
+		// Verify with public key
+		verifier, err := pubKey.NewVerifier()
+		if err != nil {
+			t.Fatalf("NewVerifier() failed: %v", err)
+		}
+
+		err = verifier.Verify(message, signature)
+		if err != nil {
+			t.Errorf("Verify() failed: %v", err)
+		}
+	})
+
+	t.Run("Zero() method", func(t *testing.T) {
+		// Generate a valid key
+		_, priv, err := ed25519.GenerateKey(rand.Reader)
+		if err != nil {
+			t.Fatalf("Failed to generate key: %v", err)
+		}
+
+		privKey, err := NewEd25519PrivateKey(priv)
+		if err != nil {
+			t.Fatalf("NewEd25519PrivateKey failed: %v", err)
+		}
+
+		// Call Zero()
+		privKey.Zero()
+
+		// Verify all bytes are zeroed
+		for i, b := range privKey.Bytes() {
+			if b != 0 {
+				t.Errorf("Zero() failed: byte at index %d is %d, expected 0", i, b)
+			}
+		}
+	})
+}
+
+// TestEd25519KeyPairConsistency tests that keys created with constructors
+// are consistent with the standard library behavior.
+func TestEd25519KeyPairConsistency(t *testing.T) {
+	// Generate 10 key pairs and verify consistency
+	for i := 0; i < 10; i++ {
+		pub, priv, err := ed25519.GenerateKey(rand.Reader)
+		if err != nil {
+			t.Fatalf("Iteration %d: failed to generate key: %v", i, err)
+		}
+
+		pubKey, err := NewEd25519PublicKey(pub)
+		if err != nil {
+			t.Fatalf("Iteration %d: NewEd25519PublicKey failed: %v", i, err)
+		}
+
+		privKey, err := NewEd25519PrivateKey(priv)
+		if err != nil {
+			t.Fatalf("Iteration %d: NewEd25519PrivateKey failed: %v", i, err)
+		}
+
+		// Derive public key from private key
+		derivedPubInterface, err := privKey.Public()
+		if err != nil {
+			t.Fatalf("Iteration %d: Public() failed: %v", i, err)
+		}
+
+		derivedPub := derivedPubInterface.(Ed25519PublicKey)
+
+		// Verify derived public key matches original
+		if len(derivedPub.Bytes()) != len(pubKey.Bytes()) {
+			t.Errorf("Iteration %d: derived public key length mismatch", i)
+			continue
+		}
+
+		for j := 0; j < len(pubKey.Bytes()); j++ {
+			if derivedPub.Bytes()[j] != pubKey.Bytes()[j] {
+				t.Errorf("Iteration %d: derived public key mismatch at byte %d", i, j)
+				break
+			}
+		}
+
+		// Test signature verification
+		message := []byte("Consistency test message")
+		signer, err := privKey.NewSigner()
+		if err != nil {
+			t.Fatalf("Iteration %d: NewSigner failed: %v", i, err)
+		}
+
+		sig, err := signer.Sign(message)
+		if err != nil {
+			t.Fatalf("Iteration %d: Sign failed: %v", i, err)
+		}
+
+		verifier, err := pubKey.NewVerifier()
+		if err != nil {
+			t.Fatalf("Iteration %d: NewVerifier failed: %v", i, err)
+		}
+
+		err = verifier.Verify(message, sig)
+		if err != nil {
+			t.Errorf("Iteration %d: Verify failed: %v", i, err)
+		}
+	}
+}
+
+// BenchmarkNewEd25519PublicKey benchmarks the constructor performance.
+func BenchmarkNewEd25519PublicKey(b *testing.B) {
+	data := make([]byte, 32)
+	io.ReadFull(rand.Reader, data)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		NewEd25519PublicKey(data)
+	}
+}
+
+// BenchmarkNewEd25519PrivateKey benchmarks the constructor performance.
+func BenchmarkNewEd25519PrivateKey(b *testing.B) {
+	_, priv, err := ed25519.GenerateKey(rand.Reader)
+	if err != nil {
+		b.Fatal(err)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		NewEd25519PrivateKey(priv)
+	}
+}

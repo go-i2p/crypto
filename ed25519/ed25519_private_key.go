@@ -11,6 +11,25 @@ import (
 // Ed25519PrivateKey represents an Ed25519 private key for digital signature operations.
 // This key type implements the SigningPrivateKey interface and provides methods for
 // signing data and generating verifiers. Ed25519 keys are 64 bytes in length.
+//
+// CRITICAL: Always use NewEd25519PrivateKey() to create instances.
+//
+// WRONG - Unsafe:
+//
+//	var key Ed25519PrivateKey  // Zero value - cryptographically invalid
+//
+// CORRECT - Use constructor:
+//
+//	privKey, err := ed25519.NewEd25519PrivateKey(privBytes)
+//	if err != nil {
+//	    return err
+//	}
+//	defer privKey.Zero() // Always zero private keys
+//
+// Security:
+//   - Private keys contain sensitive material
+//   - Always call Zero() when done to clear memory
+//   - Never log or transmit private keys
 type Ed25519PrivateKey ed25519.PrivateKey
 
 // NewVerifier creates a verifier instance from this private key's public component.
@@ -100,9 +119,30 @@ func (k Ed25519PrivateKey) Public() (types.SigningPublicKey, error) {
 	return Ed25519PublicKey(pubKey), nil
 }
 
+// NewEd25519PrivateKey creates a validated Ed25519 private key from bytes.
+// This is the REQUIRED constructor - do not use var declarations or direct construction.
+//
+// Parameters:
+//   - data: Must be exactly 64 bytes
+//
+// Returns error if data length is invalid.
+//
+// Example usage:
+//
+//	privKey, err := ed25519.NewEd25519PrivateKey(privBytes)
+//	if err != nil {
+//	    return err
+//	}
+//	defer privKey.Zero() // Always zero private keys when done
+func NewEd25519PrivateKey(data []byte) (Ed25519PrivateKey, error) {
+	return CreateEd25519PrivateKeyFromBytes(data)
+}
+
 // CreateEd25519PrivateKeyFromBytes constructs an Ed25519 private key from raw byte data.
 // The input data must be exactly 64 bytes representing a valid Ed25519 private key.
 // Returns an error if the data length is incorrect or the key format is invalid.
+//
+// Deprecated: Use NewEd25519PrivateKey instead. This function will be removed in v2.0.
 func CreateEd25519PrivateKeyFromBytes(data []byte) (Ed25519PrivateKey, error) {
 	// Validate input byte length matches Ed25519 private key requirements
 	if len(data) != ed25519.PrivateKeySize {
