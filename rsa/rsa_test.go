@@ -1,12 +1,366 @@
 package rsa
 
 import (
+	"bytes"
 	"crypto/rand"
 	"crypto/rsa"
 	"testing"
 
 	"github.com/go-i2p/crypto/types"
 )
+
+// TestNewRSA2048PrivateKey tests the RSA-2048 private key constructor
+func TestNewRSA2048PrivateKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantErr bool
+	}{
+		{
+			name:    "valid 512-byte key",
+			data:    make([]byte, 512),
+			wantErr: false,
+		},
+		{
+			name:    "too short",
+			data:    make([]byte, 511),
+			wantErr: true,
+		},
+		{
+			name:    "too long",
+			data:    make([]byte, 513),
+			wantErr: true,
+		},
+		{
+			name:    "nil data",
+			data:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "all zeros",
+			data:    make([]byte, 512),
+			wantErr: true,
+		},
+		{
+			name:    "empty slice",
+			data:    []byte{},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test data
+			if tt.name == "valid 512-byte key" {
+				for i := range tt.data {
+					tt.data[i] = byte(i % 256)
+				}
+			}
+
+			key, err := NewRSA2048PrivateKey(tt.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewRSA2048PrivateKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && key == nil {
+				t.Error("NewRSA2048PrivateKey() returned nil key")
+			}
+		})
+	}
+}
+
+// TestNewRSA2048PublicKey tests the RSA-2048 public key constructor
+func TestNewRSA2048PublicKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantErr bool
+	}{
+		{
+			name:    "valid 256-byte key",
+			data:    make([]byte, 256),
+			wantErr: false,
+		},
+		{
+			name:    "too short",
+			data:    make([]byte, 255),
+			wantErr: true,
+		},
+		{
+			name:    "too long",
+			data:    make([]byte, 257),
+			wantErr: true,
+		},
+		{
+			name:    "nil data",
+			data:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "all zeros",
+			data:    make([]byte, 256),
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test data
+			if tt.name == "valid 256-byte key" {
+				for i := range tt.data {
+					tt.data[i] = byte(i % 256)
+				}
+			}
+
+			key, err := NewRSA2048PublicKey(tt.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewRSA2048PublicKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && key == nil {
+				t.Error("NewRSA2048PublicKey() returned nil key")
+			}
+		})
+	}
+}
+
+// TestNewRSA3072PrivateKey tests the RSA-3072 private key constructor
+func TestNewRSA3072PrivateKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantErr bool
+	}{
+		{
+			name:    "valid 768-byte key",
+			data:    make([]byte, 768),
+			wantErr: false,
+		},
+		{
+			name:    "too short",
+			data:    make([]byte, 767),
+			wantErr: true,
+		},
+		{
+			name:    "too long",
+			data:    make([]byte, 769),
+			wantErr: true,
+		},
+		{
+			name:    "all zeros",
+			data:    make([]byte, 768),
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test data
+			if tt.name == "valid 768-byte key" {
+				for i := range tt.data {
+					tt.data[i] = byte(i % 256)
+				}
+			}
+
+			key, err := NewRSA3072PrivateKey(tt.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewRSA3072PrivateKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && key == nil {
+				t.Error("NewRSA3072PrivateKey() returned nil key")
+			}
+		})
+	}
+}
+
+// TestNewRSA3072PublicKey tests the RSA-3072 public key constructor
+func TestNewRSA3072PublicKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantErr bool
+	}{
+		{
+			name:    "valid 384-byte key",
+			data:    make([]byte, 384),
+			wantErr: false,
+		},
+		{
+			name:    "wrong size",
+			data:    make([]byte, 256),
+			wantErr: true,
+		},
+		{
+			name:    "all zeros",
+			data:    make([]byte, 384),
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test data
+			if tt.name == "valid 384-byte key" {
+				for i := range tt.data {
+					tt.data[i] = byte(i % 256)
+				}
+			}
+
+			key, err := NewRSA3072PublicKey(tt.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewRSA3072PublicKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && key == nil {
+				t.Error("NewRSA3072PublicKey() returned nil key")
+			}
+		})
+	}
+}
+
+// TestNewRSA4096PrivateKey tests the RSA-4096 private key constructor
+func TestNewRSA4096PrivateKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantErr bool
+	}{
+		{
+			name:    "valid 1024-byte key",
+			data:    make([]byte, 1024),
+			wantErr: false,
+		},
+		{
+			name:    "wrong size",
+			data:    make([]byte, 512),
+			wantErr: true,
+		},
+		{
+			name:    "all zeros",
+			data:    make([]byte, 1024),
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test data
+			if tt.name == "valid 1024-byte key" {
+				for i := range tt.data {
+					tt.data[i] = byte(i % 256)
+				}
+			}
+
+			key, err := NewRSA4096PrivateKey(tt.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewRSA4096PrivateKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && key == nil {
+				t.Error("NewRSA4096PrivateKey() returned nil key")
+			}
+		})
+	}
+}
+
+// TestNewRSA4096PublicKey tests the RSA-4096 public key constructor
+func TestNewRSA4096PublicKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantErr bool
+	}{
+		{
+			name:    "valid 512-byte key",
+			data:    make([]byte, 512),
+			wantErr: false,
+		},
+		{
+			name:    "wrong size",
+			data:    make([]byte, 256),
+			wantErr: true,
+		},
+		{
+			name:    "all zeros",
+			data:    make([]byte, 512),
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test data
+			if tt.name == "valid 512-byte key" {
+				for i := range tt.data {
+					tt.data[i] = byte(i % 256)
+				}
+			}
+
+			key, err := NewRSA4096PublicKey(tt.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewRSA4096PublicKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && key == nil {
+				t.Error("NewRSA4096PublicKey() returned nil key")
+			}
+		})
+	}
+}
+
+// TestRSAConstructorDefensiveCopy tests that constructors make defensive copies
+func TestRSAConstructorDefensiveCopy(t *testing.T) {
+	t.Run("RSA2048PrivateKey", func(t *testing.T) {
+		data := make([]byte, 512)
+		for i := range data {
+			data[i] = byte(i % 256)
+		}
+		original := make([]byte, len(data))
+		copy(original, data)
+
+		key, err := NewRSA2048PrivateKey(data)
+		if err != nil {
+			t.Fatalf("Failed to create key: %v", err)
+		}
+
+		// Modify original data
+		data[0] = 0xFF
+
+		// Key should not be affected
+		if bytes.Equal(key.Bytes(), data) {
+			t.Error("Constructor did not make defensive copy")
+		}
+		if !bytes.Equal(key.Bytes(), original) {
+			t.Error("Key was modified when input was modified")
+		}
+	})
+
+	t.Run("RSA2048PublicKey", func(t *testing.T) {
+		data := make([]byte, 256)
+		for i := range data {
+			data[i] = byte(i % 256)
+		}
+		original := make([]byte, len(data))
+		copy(original, data)
+
+		key, err := NewRSA2048PublicKey(data)
+		if err != nil {
+			t.Fatalf("Failed to create key: %v", err)
+		}
+
+		// Modify original data
+		data[0] = 0xFF
+
+		// Key should not be affected
+		if bytes.Equal(key.Bytes(), data) {
+			t.Error("Constructor did not make defensive copy")
+		}
+		if !bytes.Equal(key.Bytes(), original) {
+			t.Error("Key was modified when input was modified")
+		}
+	})
+}
 
 // Test helper function to generate RSA keys for testing
 func generateRSA2048KeyPair() (*rsa.PrivateKey, error) {

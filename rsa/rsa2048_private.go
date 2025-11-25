@@ -15,9 +15,57 @@ import (
 // The key data is stored as a 512-byte array containing both the modulus (256 bytes)
 // and private exponent (256 bytes) as specified by I2P cryptographic standards.
 // This type implements types.Signer for creating digital signatures.
-// Example usage: privKey := RSA2048PrivateKey{}; sig, err := privKey.Sign(data)
+//
+// ⚠️ CRITICAL SECURITY WARNING ⚠️
+// Always use NewRSA2048PrivateKey() to create instances.
+// Do NOT construct directly with &RSA2048PrivateKey{} or RSA2048PrivateKey{}.
+//
+// Example usage:
+//
+//	// WRONG - Creates invalid zero-value key
+//	var key RSA2048PrivateKey
+//
+//	// CORRECT - Validates key data
+//	key, err := NewRSA2048PrivateKey(keyBytes)
 type RSA2048PrivateKey struct {
 	RSA2048PrivateKey [512]byte // I2P-compliant: 256 bytes modulus + 256 bytes private exponent
+}
+
+// NewRSA2048PrivateKey creates a validated RSA-2048 private key from bytes.
+//
+// The input data must be exactly 512 bytes in I2P format:
+//   - First 256 bytes: modulus (N) in big-endian
+//   - Next 256 bytes: private exponent (D) in big-endian
+//
+// Returns an error if:
+//   - data length is not exactly 512 bytes
+//   - data is all zeros (cryptographically invalid)
+//
+// The returned key is a defensive copy - modifications to the input
+// slice will not affect the key.
+func NewRSA2048PrivateKey(data []byte) (*RSA2048PrivateKey, error) {
+	if len(data) != 512 {
+		return nil, oops.Errorf("RSA-2048 private key must be 512 bytes, got %d: %w", len(data), ErrInvalidKeySize)
+	}
+
+	// Check for all-zero key (cryptographically invalid)
+	allZero := true
+	for _, b := range data {
+		if b != 0 {
+			allZero = false
+			break
+		}
+	}
+	if allZero {
+		return nil, oops.Errorf("RSA-2048 private key cannot be all zeros: %w", ErrInvalidKeyFormat)
+	}
+
+	// Create defensive copy
+	var key RSA2048PrivateKey
+	copy(key.RSA2048PrivateKey[:], data)
+
+	log.Debug("RSA-2048 private key created successfully")
+	return &key, nil
 }
 
 // Sign implements types.Signer.

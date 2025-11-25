@@ -10,6 +10,169 @@ import (
 	"github.com/go-i2p/crypto/types"
 )
 
+// TestNewChaCha20Key tests the ChaCha20 key constructor with various inputs
+func TestNewChaCha20Key(t *testing.T) {
+	tests := []struct {
+		name      string
+		input     []byte
+		wantError bool
+	}{
+		{
+			name:      "valid 32-byte key",
+			input:     make([]byte, 32),
+			wantError: false,
+		},
+		{
+			name:      "invalid size - too small",
+			input:     make([]byte, 31),
+			wantError: true,
+		},
+		{
+			name:      "invalid size - too large",
+			input:     make([]byte, 33),
+			wantError: true,
+		},
+		{
+			name:      "empty input",
+			input:     []byte{},
+			wantError: true,
+		},
+		{
+			name:      "nil input",
+			input:     nil,
+			wantError: true,
+		},
+		{
+			name:      "all zeros (weak but valid)",
+			input:     make([]byte, 32),
+			wantError: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test case with random data
+			if len(tt.input) == 32 && tt.name == "valid 32-byte key" {
+				rand.Read(tt.input)
+			}
+
+			key, err := NewChaCha20Key(tt.input)
+			if (err != nil) != tt.wantError {
+				t.Errorf("NewChaCha20Key() error = %v, wantError %v", err, tt.wantError)
+			}
+			if err == nil && key == nil {
+				t.Error("NewChaCha20Key() returned nil key without error")
+			}
+			if err == nil {
+				if key.Len() != KeySize {
+					t.Errorf("Key length = %d, want %d", key.Len(), KeySize)
+				}
+			}
+		})
+	}
+}
+
+// TestChaCha20KeyDefensiveCopy verifies the constructor returns a defensive copy
+func TestChaCha20KeyDefensiveCopy(t *testing.T) {
+	original := make([]byte, 32)
+	original[0] = 1
+
+	key, err := NewChaCha20Key(original)
+	if err != nil {
+		t.Fatalf("Constructor failed: %v", err)
+	}
+
+	// Modify original slice
+	original[0] = 99
+
+	// Key should be unchanged
+	if key.Bytes()[0] != 1 {
+		t.Error("Constructor did not create defensive copy")
+	}
+}
+
+// TestChaCha20KeyZero tests the Zero method
+func TestChaCha20KeyZero(t *testing.T) {
+	keyData := make([]byte, 32)
+	for i := range keyData {
+		keyData[i] = byte(i)
+	}
+
+	key, err := NewChaCha20Key(keyData)
+	if err != nil {
+		t.Fatalf("NewChaCha20Key() failed: %v", err)
+	}
+
+	// Verify key is not zero before Zero()
+	isZero := true
+	for _, b := range key.Bytes() {
+		if b != 0 {
+			isZero = false
+			break
+		}
+	}
+	if isZero {
+		t.Error("Key should not be zero before Zero() is called")
+	}
+
+	// Call Zero()
+	key.Zero()
+
+	// Verify key is zeroed
+	for i, b := range key {
+		if b != 0 {
+			t.Errorf("Key byte %d = %d, want 0 after Zero()", i, b)
+		}
+	}
+}
+
+// TestChaCha20KeyEncryptDecrypt tests encryption/decryption with constructor-created keys
+func TestChaCha20KeyEncryptDecrypt(t *testing.T) {
+	keyData := make([]byte, 32)
+	rand.Read(keyData)
+
+	key, err := NewChaCha20Key(keyData)
+	if err != nil {
+		t.Fatalf("NewChaCha20Key() failed: %v", err)
+	}
+
+	encrypter, err := key.NewEncrypter()
+	if err != nil {
+		t.Fatalf("NewEncrypter() failed: %v", err)
+	}
+
+	decrypter, err := key.NewDecrypter()
+	if err != nil {
+		t.Fatalf("NewDecrypter() failed: %v", err)
+	}
+
+	plaintext := []byte("hello world")
+	encrypted, err := encrypter.Encrypt(plaintext)
+	if err != nil {
+		t.Fatalf("Encrypt() failed: %v", err)
+	}
+
+	decrypted, err := decrypter.Decrypt(encrypted)
+	if err != nil {
+		t.Fatalf("Decrypt() failed: %v", err)
+	}
+
+	if !bytes.Equal(plaintext, decrypted) {
+		t.Error("Decrypted data doesn't match original plaintext")
+	}
+}
+
+// BenchmarkNewChaCha20Key benchmarks the key constructor
+func BenchmarkNewChaCha20Key(b *testing.B) {
+	keyData := make([]byte, 32)
+	rand.Read(keyData)
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _ = NewChaCha20Key(keyData)
+	}
+}
+
 func TestGenerateKey(t *testing.T) {
 	tests := []struct {
 		name    string

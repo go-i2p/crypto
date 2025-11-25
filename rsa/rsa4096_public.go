@@ -14,8 +14,48 @@ type (
 	// The key is stored as a 512-byte array containing the public key modulus.
 	// This type implements types.Verifier for signature verification with maximum security.
 	// RSA-4096 provides equivalent security to 192-bit symmetric encryption.
+	//
+	// ⚠️ CRITICAL SECURITY WARNING ⚠️
+	// Always use NewRSA4096PublicKey() to create instances.
+	// Do NOT construct directly with &RSA4096PublicKey{} or RSA4096PublicKey{}.
 	RSA4096PublicKey [512]byte
 )
+
+// NewRSA4096PublicKey creates a validated RSA-4096 public key from bytes.
+//
+// The input data must be exactly 512 bytes containing the modulus (N)
+// in big-endian format as per I2P specifications.
+//
+// Returns an error if:
+//   - data length is not exactly 512 bytes
+//   - data is all zeros (cryptographically invalid)
+//
+// The returned key is a defensive copy - modifications to the input
+// slice will not affect the key.
+func NewRSA4096PublicKey(data []byte) (*RSA4096PublicKey, error) {
+	if len(data) != 512 {
+		return nil, oops.Errorf("RSA-4096 public key must be 512 bytes, got %d: %w", len(data), ErrInvalidKeySize)
+	}
+
+	// Check for all-zero key (cryptographically invalid)
+	allZero := true
+	for _, b := range data {
+		if b != 0 {
+			allZero = false
+			break
+		}
+	}
+	if allZero {
+		return nil, oops.Errorf("RSA-4096 public key cannot be all zeros: %w", ErrInvalidKeyFormat)
+	}
+
+	// Create defensive copy
+	var key RSA4096PublicKey
+	copy(key[:], data)
+
+	log.Debug("RSA-4096 public key created successfully")
+	return &key, nil
+}
 
 // Verify implements types.Verifier.
 // This method hashes the data with SHA-512 and verifies the signature

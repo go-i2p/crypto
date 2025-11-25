@@ -16,8 +16,49 @@ import (
 // and private exponent (384 bytes) following I2P cryptographic specifications.
 // This type implements types.Signer and provides enhanced security over RSA-2048.
 // RSA-3072 offers equivalent security to 128-bit symmetric encryption.
+//
+// ⚠️ CRITICAL SECURITY WARNING ⚠️
+// Always use NewRSA3072PrivateKey() to create instances.
+// Do NOT construct directly with &RSA3072PrivateKey{} or RSA3072PrivateKey{}.
 type RSA3072PrivateKey struct {
 	RSA3072PrivateKey [768]byte // I2P-compliant: 384 bytes modulus + 384 bytes private exponent
+}
+
+// NewRSA3072PrivateKey creates a validated RSA-3072 private key from bytes.
+//
+// The input data must be exactly 768 bytes in I2P format:
+//   - First 384 bytes: modulus (N) in big-endian
+//   - Next 384 bytes: private exponent (D) in big-endian
+//
+// Returns an error if:
+//   - data length is not exactly 768 bytes
+//   - data is all zeros (cryptographically invalid)
+//
+// The returned key is a defensive copy - modifications to the input
+// slice will not affect the key.
+func NewRSA3072PrivateKey(data []byte) (*RSA3072PrivateKey, error) {
+	if len(data) != 768 {
+		return nil, oops.Errorf("RSA-3072 private key must be 768 bytes, got %d: %w", len(data), ErrInvalidKeySize)
+	}
+
+	// Check for all-zero key (cryptographically invalid)
+	allZero := true
+	for _, b := range data {
+		if b != 0 {
+			allZero = false
+			break
+		}
+	}
+	if allZero {
+		return nil, oops.Errorf("RSA-3072 private key cannot be all zeros: %w", ErrInvalidKeyFormat)
+	}
+
+	// Create defensive copy
+	var key RSA3072PrivateKey
+	copy(key.RSA3072PrivateKey[:], data)
+
+	log.Debug("RSA-3072 private key created successfully")
+	return &key, nil
 }
 
 // Len implements types.SigningPrivateKey.

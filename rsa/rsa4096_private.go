@@ -16,8 +16,49 @@ import (
 // and private exponent (512 bytes) following I2P cryptographic specifications.
 // This type implements types.Signer and provides maximum security in the RSA family.
 // RSA-4096 offers equivalent security to 192-bit symmetric encryption.
+//
+// ⚠️ CRITICAL SECURITY WARNING ⚠️
+// Always use NewRSA4096PrivateKey() to create instances.
+// Do NOT construct directly with &RSA4096PrivateKey{} or RSA4096PrivateKey{}.
 type RSA4096PrivateKey struct {
 	RSA4096PrivateKey [1024]byte // I2P-compliant: 512 bytes modulus + 512 bytes private exponent
+}
+
+// NewRSA4096PrivateKey creates a validated RSA-4096 private key from bytes.
+//
+// The input data must be exactly 1024 bytes in I2P format:
+//   - First 512 bytes: modulus (N) in big-endian
+//   - Next 512 bytes: private exponent (D) in big-endian
+//
+// Returns an error if:
+//   - data length is not exactly 1024 bytes
+//   - data is all zeros (cryptographically invalid)
+//
+// The returned key is a defensive copy - modifications to the input
+// slice will not affect the key.
+func NewRSA4096PrivateKey(data []byte) (*RSA4096PrivateKey, error) {
+	if len(data) != 1024 {
+		return nil, oops.Errorf("RSA-4096 private key must be 1024 bytes, got %d: %w", len(data), ErrInvalidKeySize)
+	}
+
+	// Check for all-zero key (cryptographically invalid)
+	allZero := true
+	for _, b := range data {
+		if b != 0 {
+			allZero = false
+			break
+		}
+	}
+	if allZero {
+		return nil, oops.Errorf("RSA-4096 private key cannot be all zeros: %w", ErrInvalidKeyFormat)
+	}
+
+	// Create defensive copy
+	var key RSA4096PrivateKey
+	copy(key.RSA4096PrivateKey[:], data)
+
+	log.Debug("RSA-4096 private key created successfully")
+	return &key, nil
 }
 
 // Sign implements types.Signer.

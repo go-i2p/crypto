@@ -5,6 +5,92 @@ import (
 	"testing"
 )
 
+// TestNewTunnelKey tests the TunnelKey constructor
+func TestNewTunnelKey(t *testing.T) {
+	tests := []struct {
+		name    string
+		data    []byte
+		wantErr bool
+	}{
+		{
+			name:    "valid 32-byte key",
+			data:    make([]byte, 32),
+			wantErr: false,
+		},
+		{
+			name:    "too short",
+			data:    make([]byte, 31),
+			wantErr: true,
+		},
+		{
+			name:    "too long",
+			data:    make([]byte, 33),
+			wantErr: true,
+		},
+		{
+			name:    "nil data",
+			data:    nil,
+			wantErr: true,
+		},
+		{
+			name:    "all zeros",
+			data:    make([]byte, 32),
+			wantErr: true,
+		},
+		{
+			name:    "empty slice",
+			data:    []byte{},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Fill non-zero test data
+			if tt.name == "valid 32-byte key" {
+				for i := range tt.data {
+					tt.data[i] = byte(i % 256)
+				}
+			}
+
+			key, err := NewTunnelKey(tt.data)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("NewTunnelKey() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !tt.wantErr && key == nil {
+				t.Error("NewTunnelKey() returned nil key")
+			}
+		})
+	}
+}
+
+// TestTunnelKeyDefensiveCopy verifies that NewTunnelKey makes a defensive copy
+func TestTunnelKeyDefensiveCopy(t *testing.T) {
+	data := make([]byte, 32)
+	for i := range data {
+		data[i] = byte(i % 256)
+	}
+	original := make([]byte, len(data))
+	copy(original, data)
+
+	key, err := NewTunnelKey(data)
+	if err != nil {
+		t.Fatalf("Failed to create key: %v", err)
+	}
+
+	// Modify original data
+	data[0] = 0xFF
+
+	// Key should not be affected
+	if bytes.Equal(key[:], data) {
+		t.Error("NewTunnelKey did not make defensive copy")
+	}
+	if !bytes.Equal(key[:], original) {
+		t.Error("Key was modified when input was modified")
+	}
+}
+
 // TestNewAESEncryptor validates AES encryptor creation with various key configurations
 func TestNewAESEncryptor(t *testing.T) {
 	tests := []struct {

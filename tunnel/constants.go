@@ -19,6 +19,10 @@ var (
 	// AES-256 requires exactly 32-byte keys for both layer and IV encryption.
 	ErrInvalidKeySize = oops.Errorf("invalid key size: must be 32 bytes for AES-256")
 
+	// ErrInvalidKey indicates that a provided key is cryptographically invalid.
+	// This occurs when a key is all zeros or contains invalid/weak values.
+	ErrInvalidKey = oops.Errorf("invalid key: key cannot be all zeros or weak")
+
 	// ErrCipherCreationFailed indicates that AES cipher initialization failed.
 	// This typically occurs due to invalid key material or system-level cryptographic failures.
 	ErrCipherCreationFailed = oops.Errorf("failed to create AES cipher block")
