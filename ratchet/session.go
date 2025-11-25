@@ -188,39 +188,55 @@ func (s *Session) DecryptMessage(tag [8]byte) (messageKey [32]byte, err error) {
 		WithField("message_num", s.messageNum).
 		Debug("Decrypting message")
 
-	// Verify tag matches expected tag
+	if err := s.verifySessionTag(tag); err != nil {
+		return messageKey, err
+	}
+
+	messageKey, err = s.deriveDecryptionKey()
+	if err != nil {
+		return messageKey, err
+	}
+
+	log.Debug("Message decrypted successfully")
+
+	return messageKey, nil
+}
+
+// verifySessionTag validates that the received tag matches the expected tag.
+func (s *Session) verifySessionTag(tag [8]byte) error {
 	expectedTag, err := s.tagRatchet.PeekNextTag()
 	if err != nil {
-		return messageKey, oops.Wrapf(err, "failed to peek session tag")
+		return oops.Wrapf(err, "failed to peek session tag")
 	}
 
 	if expectedTag != tag {
 		log.WithField("expected_tag", expectedTag).
 			WithField("received_tag", tag).
 			Warn("Session tag mismatch")
-		return messageKey, oops.Errorf("invalid session tag: tag mismatch")
+		return oops.Errorf("invalid session tag: tag mismatch")
 	}
 
-	// Advance tag ratchet
 	if err := s.tagRatchet.Advance(); err != nil {
-		return messageKey, oops.Wrapf(err, "failed to advance tag ratchet")
+		return oops.Wrapf(err, "failed to advance tag ratchet")
 	}
 
-	// Derive message key
-	messageKey, err = s.symRatchet.DeriveMessageKey(s.messageNum)
+	return nil
+}
+
+// deriveDecryptionKey derives the message key and advances the symmetric ratchet.
+func (s *Session) deriveDecryptionKey() ([32]byte, error) {
+	var messageKey [32]byte
+
+	messageKey, err := s.symRatchet.DeriveMessageKey(s.messageNum)
 	if err != nil {
 		return messageKey, oops.Wrapf(err, "failed to derive message key")
 	}
 
-	// Advance symmetric ratchet
 	if err := s.symRatchet.Advance(); err != nil {
 		return messageKey, oops.Wrapf(err, "failed to advance symmetric ratchet")
 	}
 
-	// Increment message number
 	s.messageNum++
-
-	log.Debug("Message decrypted successfully")
 
 	return messageKey, nil
 }

@@ -139,49 +139,65 @@ func BlindPrivateKey(privateKey [64]byte, alpha [32]byte) ([64]byte, error) {
 
 	log.Debug("Blinding Ed25519 private key")
 
-	// Validate private key length (should be 64 bytes)
 	if len(privateKey) != ed25519.PrivateKeySize {
 		return result, oops.Wrapf(ErrInvalidPrivateKey, "expected %d bytes, got %d", ed25519.PrivateKeySize, len(privateKey))
 	}
 
-	// Extract the seed (first 32 bytes) from the private key
-	seed := privateKey[:32]
+	d, err := deriveScalarFromSeed(privateKey[:32])
+	if err != nil {
+		return result, err
+	}
 
-	// Derive the scalar from the seed using Ed25519 key derivation
-	// This matches the standard Ed25519 private key -> scalar derivation
+	blindedScalar, err := computeBlindedScalar(d, alpha)
+	if err != nil {
+		return result, err
+	}
+
+	result = constructBlindedPrivateKey(blindedScalar)
+
+	log.Debug("Private key blinded successfully")
+
+	return result, nil
+}
+
+// deriveScalarFromSeed derives the Ed25519 private scalar from a 32-byte seed.
+func deriveScalarFromSeed(seed []byte) (*edwards25519.Scalar, error) {
 	h := sha512.Sum512(seed)
 	h[0] &= 248
 	h[31] &= 63
 	h[31] |= 64
 
-	// Parse the private scalar d (now clamped, so we need SetBytesWithClamping)
 	d, err := (&edwards25519.Scalar{}).SetBytesWithClamping(h[:32])
 	if err != nil {
 		log.WithField("error", err).Error("Failed to parse private scalar")
-		return result, oops.Wrapf(ErrInvalidPrivateKey, "failed to parse private scalar: %v", err)
+		return nil, oops.Wrapf(ErrInvalidPrivateKey, "failed to parse private scalar: %v", err)
 	}
 
-	// Parse alpha as a scalar
+	return d, nil
+}
+
+// computeBlindedScalar computes the blinded scalar d' = d + alpha (mod L).
+func computeBlindedScalar(d *edwards25519.Scalar, alpha [32]byte) (*edwards25519.Scalar, error) {
 	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
 	if err != nil {
 		log.WithField("error", err).Error("Failed to parse blinding factor")
-		return result, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
+		return nil, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
 	}
 
-	// Compute d' = d + alpha (mod L)
 	blindedScalar := (&edwards25519.Scalar{}).Add(d, alphaScalar)
+	return blindedScalar, nil
+}
 
-	// Compute the blinded public key: P' = [d']B
+// constructBlindedPrivateKey constructs the blinded private key in [scalar][pubkey] format.
+func constructBlindedPrivateKey(blindedScalar *edwards25519.Scalar) [64]byte {
+	var result [64]byte
+
 	blindedPubPoint := (&edwards25519.Point{}).ScalarBaseMult(blindedScalar)
 
-	// Construct the blinded private key
-	// Ed25519 private key format: [32 bytes scalar][32 bytes public key]
 	copy(result[:32], blindedScalar.Bytes())
 	copy(result[32:], blindedPubPoint.Bytes())
 
-	log.Debug("Private key blinded successfully")
-
-	return result, nil
+	return result
 }
 
 // UnblindPublicKey reverses the blinding operation on a public key.
@@ -216,38 +232,59 @@ func UnblindPublicKey(blindedPublicKey [32]byte, alpha [32]byte) ([32]byte, erro
 
 	log.Debug("Unblinding Ed25519 public key")
 
-	// Parse the blinded public key as an edwards25519 point
-	Pblinded, err := (&edwards25519.Point{}).SetBytes(blindedPublicKey[:])
+	Pblinded, err := parseBlindedPublicKey(blindedPublicKey)
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse blinded public key")
-		return result, oops.Wrapf(ErrInvalidPublicKey, "failed to parse blinded public key: %v", err)
+		return result, err
 	}
 
-	// Parse alpha as a scalar
-	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
+	alphaB, err := computeAlphaBasePoint(alpha)
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse blinding factor")
-		return result, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
+		return result, err
 	}
 
-	// Compute [alpha]B (alpha times the base point)
-	alphaB := (&edwards25519.Point{}).ScalarBaseMult(alphaScalar)
-
-	// Compute P = P' - [alpha]B
-	// Note: Subtract is implemented as P' + (-[alpha]B)
-	original := (&edwards25519.Point{}).Subtract(Pblinded, alphaB)
-
-	// Check if result is identity point
-	identityPoint := edwards25519.NewIdentityPoint()
-	if original.Equal(identityPoint) == 1 {
-		log.Error("Unblinded public key is identity point")
-		return result, ErrIdentityPoint
+	original, err := subtractAndValidate(Pblinded, alphaB)
+	if err != nil {
+		return result, err
 	}
 
-	// Encode the result
 	copy(result[:], original.Bytes())
 
 	log.Debug("Public key unblinded successfully")
 
 	return result, nil
+}
+
+// parseBlindedPublicKey parses a blinded public key as an edwards25519 point.
+func parseBlindedPublicKey(blindedPublicKey [32]byte) (*edwards25519.Point, error) {
+	Pblinded, err := (&edwards25519.Point{}).SetBytes(blindedPublicKey[:])
+	if err != nil {
+		log.WithField("error", err).Error("Failed to parse blinded public key")
+		return nil, oops.Wrapf(ErrInvalidPublicKey, "failed to parse blinded public key: %v", err)
+	}
+	return Pblinded, nil
+}
+
+// computeAlphaBasePoint computes [alpha]B for unblinding operations.
+func computeAlphaBasePoint(alpha [32]byte) (*edwards25519.Point, error) {
+	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
+	if err != nil {
+		log.WithField("error", err).Error("Failed to parse blinding factor")
+		return nil, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
+	}
+
+	alphaB := (&edwards25519.Point{}).ScalarBaseMult(alphaScalar)
+	return alphaB, nil
+}
+
+// subtractAndValidate performs P' - [alpha]B and validates the result isn't identity.
+func subtractAndValidate(Pblinded, alphaB *edwards25519.Point) (*edwards25519.Point, error) {
+	original := (&edwards25519.Point{}).Subtract(Pblinded, alphaB)
+
+	identityPoint := edwards25519.NewIdentityPoint()
+	if original.Equal(identityPoint) == 1 {
+		log.Error("Unblinded public key is identity point")
+		return nil, ErrIdentityPoint
+	}
+
+	return original, nil
 }

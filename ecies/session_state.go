@@ -135,14 +135,31 @@ func (s *SessionState) initializeDHRatchet() error {
 // The derivation differs for initiator vs responder to ensure both peers
 // use different keys for sending/receiving.
 func (s *SessionState) deriveInitialKeys(isInitiator bool) error {
-	// Perform static X25519 DH
-	sharedSecret, err := performDH(s.LocalPrivKey[:], s.RemoteStaticPubKey[:])
+	sharedSecret, err := s.performStaticDH()
 	if err != nil {
 		return err
 	}
 
-	// Derive root key and initial chain keys using HKDF
-	// Info string distinguishes initiator from responder
+	keys, err := deriveSessionChainKeys(sharedSecret, isInitiator)
+	if err != nil {
+		return err
+	}
+
+	s.assignChainKeysByRole(keys, isInitiator)
+	return nil
+}
+
+// performStaticDH executes the static X25519 Diffie-Hellman key exchange.
+func (s *SessionState) performStaticDH() ([]byte, error) {
+	sharedSecret, err := performDH(s.LocalPrivKey[:], s.RemoteStaticPubKey[:])
+	if err != nil {
+		return nil, err
+	}
+	return sharedSecret, nil
+}
+
+// deriveSessionChainKeys derives sending and receiving chain keys using HKDF.
+func deriveSessionChainKeys(sharedSecret []byte, isInitiator bool) ([][32]byte, error) {
 	var info string
 	if isInitiator {
 		info = "ECIES-Session-Initiator"
@@ -150,28 +167,27 @@ func (s *SessionState) deriveInitialKeys(isInitiator bool) error {
 		info = "ECIES-Session-Responder"
 	}
 
-	// Use kdf package for consistent derivation
 	var sharedSecretArray [32]byte
 	copy(sharedSecretArray[:], sharedSecret)
 	kd := kdf.NewKeyDerivation(sharedSecretArray)
 
-	// Derive 64 bytes: sending key (32) + receiving key (32)
 	keys, err := kd.DeriveKeys([]byte(info), 2)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
+	return keys, nil
+}
+
+// assignChainKeysByRole assigns chain keys based on initiator or responder role.
+func (s *SessionState) assignChainKeysByRole(keys [][32]byte, isInitiator bool) {
 	if isInitiator {
-		// Initiator: first key = sending, second = receiving
 		s.SendingChainKey = keys[0]
 		s.ReceivingChainKey = keys[1]
 	} else {
-		// Responder: opposite arrangement
 		s.ReceivingChainKey = keys[0]
 		s.SendingChainKey = keys[1]
 	}
-
-	return nil
 }
 
 // DeriveNextSendingKey derives the next message encryption key from the sending chain.
