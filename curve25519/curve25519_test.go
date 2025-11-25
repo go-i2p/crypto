@@ -430,7 +430,7 @@ func TestCurve25519KeyPairConsistency(t *testing.T) {
 
 		// Test encryption/decryption round-trip
 		message := []byte("Consistency test message")
-		
+
 		encrypter, err := pubKey.NewEncrypter()
 		if err != nil {
 			t.Fatalf("Iteration %d: NewEncrypter failed: %v", i, err)
@@ -491,4 +491,3 @@ func BenchmarkNewCurve25519PrivateKey(b *testing.B) {
 		NewCurve25519PrivateKey(priv[:])
 	}
 }
-
