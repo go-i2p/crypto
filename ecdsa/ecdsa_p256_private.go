@@ -12,8 +12,51 @@ import (
 )
 
 type (
+	// ECP256PrivateKey represents a P-256 ECDSA private key.
+	//
+	// CRITICAL: Never create ECP256PrivateKey using zero-value construction (e.g. var key ECP256PrivateKey).
+	// Zero-value construction results in an all-zero key which:
+	//   - Is cryptographically invalid
+	//   - Will panic when calling Public()
+	//   - Violates ECDSA security requirements
+	//
+	// ALWAYS use NewECP256PrivateKey() for safe construction.
 	ECP256PrivateKey [32]byte
 )
+
+// NewECP256PrivateKey creates a new P-256 ECDSA private key from bytes with validation.
+//
+// This constructor provides mandatory validation to prevent common security issues:
+//   - Rejects inputs that are not exactly 32 bytes
+//   - Rejects all-zero keys (cryptographically invalid)
+//   - Returns defensive copy to prevent external mutation
+//
+// Use this instead of direct byte slice conversion to ensure key validity.
+//
+// Returns an error if:
+//   - Input is not exactly 32 bytes
+//   - Input is all zeros (invalid ECDSA private key)
+func NewECP256PrivateKey(data []byte) (*ECP256PrivateKey, error) {
+	if len(data) != 32 {
+		return nil, oops.Errorf("invalid P-256 private key size: expected 32 bytes, got %d bytes", len(data))
+	}
+
+	// Check for all-zero key (cryptographically invalid)
+	var isZero = true
+	for _, b := range data {
+		if b != 0 {
+			isZero = false
+			break
+		}
+	}
+	if isZero {
+		return nil, oops.Errorf("invalid P-256 private key: cannot be all zeros")
+	}
+
+	var key ECP256PrivateKey
+	copy(key[:], data)
+	return &key, nil
+}
 
 // Len implements types.SigningPrivateKey.
 func (e *ECP256PrivateKey) Len() int {

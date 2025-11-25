@@ -9,8 +9,38 @@ import (
 )
 
 type (
+	// ECP256PublicKey represents a P-256 ECDSA public key in uncompressed form.
+	//
+	// CRITICAL: Never create ECP256PublicKey using zero-value construction (e.g. var key ECP256PublicKey).
+	// Zero-value construction results in an invalid public key which:
+	//   - Will fail signature verification
+	//   - May panic in cryptographic operations
+	//   - Violates ECDSA security requirements
+	//
+	// ALWAYS use NewECP256PublicKey() for safe construction.
 	ECP256PublicKey [64]byte
 )
+
+// NewECP256PublicKey creates a new P-256 ECDSA public key from bytes with validation.
+//
+// This constructor provides mandatory validation to prevent common security issues:
+//   - Rejects inputs that are not exactly 64 bytes (uncompressed X||Y point)
+//   - Returns defensive copy to prevent external mutation
+//
+// Note: This constructor validates size only. Full curve point validation occurs
+// when the key is used for cryptographic operations.
+//
+// Returns an error if:
+//   - Input is not exactly 64 bytes
+func NewECP256PublicKey(data []byte) (*ECP256PublicKey, error) {
+	if len(data) != 64 {
+		return nil, oops.Errorf("invalid P-256 public key size: expected 64 bytes (uncompressed point), got %d bytes", len(data))
+	}
+
+	var key ECP256PublicKey
+	copy(key[:], data)
+	return &key, nil
+}
 
 // Verify implements types.Verifier.
 func (k ECP256PublicKey) Verify(data []byte, sig []byte) error {
