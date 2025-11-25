@@ -341,3 +341,114 @@ func BenchmarkDHRatchet(b *testing.B) {
 		_, _, _ = ratchet.PerformRatchet()
 	}
 }
+
+// TestZeroValueFootguns demonstrates why direct construction is dangerous
+func TestZeroValueFootguns(t *testing.T) {
+	t.Run("DHRatchet zero-value is cryptographically invalid", func(t *testing.T) {
+		// WRONG: Direct construction with zero values
+		var badRatchet DHRatchet
+
+		// This will produce weak/invalid keys because all internal state is zero
+		sendKey, recvKey, err := badRatchet.PerformRatchet()
+		if err != nil {
+			t.Logf("Expected behavior: DH ratchet with zero keys fails: %v", err)
+		}
+
+		// Even if it succeeds, the keys will be derived from all-zero state
+		zeroKey := [ChainKeySize]byte{}
+		if bytes.Equal(sendKey[:], zeroKey[:]) && bytes.Equal(recvKey[:], zeroKey[:]) {
+			t.Log("Zero-value DHRatchet produces zero keys - cryptographically invalid!")
+		}
+
+		// CORRECT: Always use constructor
+		var rootKey, privKey, pubKey [ChainKeySize]byte
+		rand.Read(rootKey[:])
+		rand.Read(privKey[:])
+		rand.Read(pubKey[:])
+		goodRatchet := NewDHRatchet(rootKey, privKey, pubKey)
+
+		sendKeyGood, _, err := goodRatchet.PerformRatchet()
+		if err != nil {
+			t.Fatalf("Constructor-initialized ratchet should work: %v", err)
+		}
+		if bytes.Equal(sendKeyGood[:], zeroKey[:]) {
+			t.Error("Properly initialized ratchet produced zero keys - unexpected!")
+		}
+	})
+
+	t.Run("SymmetricRatchet zero-value produces predictable keys", func(t *testing.T) {
+		// WRONG: Direct construction with zero chain key
+		var badRatchet SymmetricRatchet
+
+		// Keys will be derived from all-zero chain key - predictable and weak
+		key1, err := badRatchet.DeriveMessageKey(0)
+		if err != nil {
+			t.Fatalf("DeriveMessageKey failed: %v", err)
+		}
+
+		// Create another zero-value ratchet
+		var badRatchet2 SymmetricRatchet
+		key2, err := badRatchet2.DeriveMessageKey(0)
+		if err != nil {
+			t.Fatalf("DeriveMessageKey failed: %v", err)
+		}
+
+		// They produce identical keys - no randomness!
+		if bytes.Equal(key1[:], key2[:]) {
+			t.Log("Zero-value SymmetricRatchet produces identical keys - cryptographically invalid!")
+		}
+
+		// CORRECT: Always use constructor with random chain key
+		var chainKey [ChainKeySize]byte
+		rand.Read(chainKey[:])
+		goodRatchet := NewSymmetricRatchet(chainKey)
+
+		keyGood, err := goodRatchet.DeriveMessageKey(0)
+		if err != nil {
+			t.Fatalf("Constructor-initialized ratchet should work: %v", err)
+		}
+
+		// Should differ from zero-state keys
+		if bytes.Equal(keyGood[:], key1[:]) {
+			t.Error("Properly initialized ratchet produced same key as zero-state - unexpected!")
+		}
+	})
+
+	t.Run("TagRatchet zero-value produces predictable tags", func(t *testing.T) {
+		// WRONG: Direct construction with zero chain key
+		var badRatchet TagRatchet
+
+		// Tags will be derived from all-zero chain key - predictable
+		tag1, err := badRatchet.GenerateNextTag()
+		if err != nil {
+			t.Fatalf("GenerateNextTag failed: %v", err)
+		}
+
+		// Create another zero-value ratchet
+		var badRatchet2 TagRatchet
+		tag2, err := badRatchet2.GenerateNextTag()
+		if err != nil {
+			t.Fatalf("GenerateNextTag failed: %v", err)
+		}
+
+		// They produce identical tags - no randomness!
+		if bytes.Equal(tag1[:], tag2[:]) {
+			t.Log("Zero-value TagRatchet produces identical tags - cryptographically invalid!")
+		}
+
+		// CORRECT: Always use constructor with random chain key
+		var chainKey [ChainKeySize]byte
+		rand.Read(chainKey[:])
+		goodRatchet := NewTagRatchet(chainKey)
+
+		tagGood, err := goodRatchet.GenerateNextTag()
+		if err != nil {
+			t.Fatalf("Constructor-initialized ratchet should work: %v", err)
+		}
+
+		// Should differ from zero-state tags
+		if bytes.Equal(tagGood[:], tag1[:]) {
+			t.Error("Properly initialized ratchet produced same tag as zero-state - unexpected!")
+		}
+	})
+}
