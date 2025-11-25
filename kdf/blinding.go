@@ -59,27 +59,56 @@ var dateFormatRegex = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
 func DeriveBlindingFactor(secret []byte, date string) ([32]byte, error) {
 	var alpha [32]byte
 
-	// Validate secret length
-	if len(secret) < 32 {
-		log.WithField("secret_length", len(secret)).
-			Error("Secret too short for blinding factor derivation")
-		return alpha, oops.Wrapf(ErrInvalidSecret, "got %d bytes, need at least 32", len(secret))
+	if err := validateSecretLength(secret); err != nil {
+		return alpha, err
 	}
 
-	// Validate date format
-	if !dateFormatRegex.MatchString(date) {
-		log.WithField("date", date).
-			Error("Invalid date format for blinding factor")
-		return alpha, oops.Wrapf(ErrInvalidDateFormat, "got %q, expected YYYY-MM-DD", date)
-	}
-
-	// Validate date values (check it parses as a valid date)
-	if err := validateDate(date); err != nil {
+	if err := validateDateFormatAndValues(date); err != nil {
 		return alpha, err
 	}
 
 	log.WithField("date", date).
 		Debug("Deriving blinding factor")
+
+	alpha, err := deriveAlphaUsingHKDF(secret, date)
+	if err != nil {
+		return alpha, err
+	}
+
+	log.WithField("date", date).
+		Debug("Blinding factor derived successfully")
+
+	return alpha, nil
+}
+
+// validateSecretLength checks if the secret meets the minimum length requirement.
+func validateSecretLength(secret []byte) error {
+	if len(secret) < 32 {
+		log.WithField("secret_length", len(secret)).
+			Error("Secret too short for blinding factor derivation")
+		return oops.Wrapf(ErrInvalidSecret, "got %d bytes, need at least 32", len(secret))
+	}
+	return nil
+}
+
+// validateDateFormatAndValues validates both the format and logical validity of a date string.
+func validateDateFormatAndValues(date string) error {
+	if !dateFormatRegex.MatchString(date) {
+		log.WithField("date", date).
+			Error("Invalid date format for blinding factor")
+		return oops.Wrapf(ErrInvalidDateFormat, "got %q, expected YYYY-MM-DD", date)
+	}
+
+	if err := validateDate(date); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// deriveAlphaUsingHKDF performs HKDF-based derivation to create the blinding factor.
+func deriveAlphaUsingHKDF(secret []byte, date string) ([32]byte, error) {
+	var alpha [32]byte
 
 	// Use HKDF to derive blinding factor
 	// IKM: secret, Salt: date, Info: "i2p-blinding-factor", Length: 32 bytes
@@ -95,10 +124,6 @@ func DeriveBlindingFactor(secret []byte, date string) ([32]byte, error) {
 	}
 
 	copy(alpha[:], derived)
-
-	log.WithField("date", date).
-		Debug("Blinding factor derived successfully")
-
 	return alpha, nil
 }
 
