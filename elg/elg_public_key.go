@@ -11,9 +11,74 @@ import (
 type (
 	// ElgPublicKey represents a 256-byte ElGamal public key used for encryption operations.
 	// It stores the public key component in I2P's standard ElGamal format for secure communications.
-	// Example usage: pubKey := ElgPublicKey{}; enc, err := pubKey.NewEncrypter()
+	//
+	// CRITICAL: Never create ElgPublicKey using zero-value construction (e.g. var key ElgPublicKey).
+	// Zero-value construction results in an all-zero key which:
+	//   - Is cryptographically invalid (Y=0 is not a valid public key)
+	//   - Will fail or produce weak encryption
+	//   - Violates ElGamal security requirements
+	//
+	// ALWAYS use NewElgPublicKey() for safe construction.
+	//
+	// WRONG - Will fail:
+	//
+	//	var pubKey ElgPublicKey              // all zeros - invalid!
+	//	enc, _ := pubKey.NewEncrypter()      // will fail or be insecure
+	//
+	// CORRECT - Use constructor:
+	//
+	//	pubKey, err := elg.NewElgPublicKey(keyBytes)
+	//	if err != nil {
+	//	    return err
+	//	}
 	ElgPublicKey [256]byte
 )
+
+// NewElgPublicKey creates a validated ElGamal public key from bytes.
+//
+// This constructor provides mandatory validation to prevent common security issues:
+//   - Rejects inputs that are not exactly 256 bytes
+//   - Rejects keys with Y=0 or Y=1 (cryptographically weak)
+//   - Rejects keys outside the valid range [2, p-1] where p is the ElGamal prime
+//   - Returns defensive copy to prevent external mutation
+//
+// The range validation ensures the public key represents a valid group element
+// that can be used for secure encryption operations.
+//
+// Parameters:
+//   - data: Must be exactly 256 bytes and represent a value in range [2, p-1]
+//
+// Returns an error if:
+//   - Input is not exactly 256 bytes
+//   - Input represents a value outside the valid range [2, p-1]
+//
+// Example usage:
+//
+//	pubKey, err := elg.NewElgPublicKey(keyBytes)
+//	if err != nil {
+//	    return err
+//	}
+func NewElgPublicKey(data []byte) (*ElgPublicKey, error) {
+	if len(data) != 256 {
+		return nil, oops.Errorf("invalid ElGamal public key size: expected 256 bytes, got %d bytes", len(data))
+	}
+
+	// Validate Y is in valid range [2, p-1]
+	// Y=0 and Y=1 are cryptographically weak
+	y := new(big.Int).SetBytes(data)
+	two := big.NewInt(2)
+	
+	if y.Cmp(two) < 0 {
+		return nil, oops.Errorf("invalid ElGamal public key: Y must be >= 2")
+	}
+	if y.Cmp(new(big.Int).Sub(elgp, one)) >= 0 {
+		return nil, oops.Errorf("invalid ElGamal public key: Y must be < p-1")
+	}
+
+	var key ElgPublicKey
+	copy(key[:], data)
+	return &key, nil
+}
 
 // Len returns the length of the ElGamal public key in bytes.
 // Always returns 256 for I2P standard ElGamal key size.

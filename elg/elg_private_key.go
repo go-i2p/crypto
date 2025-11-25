@@ -11,9 +11,74 @@ import (
 type (
 	// ElgPrivateKey represents a 256-byte ElGamal private key used for decryption operations.
 	// It stores the private exponent in I2P's standard ElGamal format for anonymous networking.
-	// Example usage: privKey := ElgPrivateKey{}; dec, err := privKey.NewDecrypter()
+	//
+	// CRITICAL: Never create ElgPrivateKey using zero-value construction (e.g. var key ElgPrivateKey).
+	// Zero-value construction results in an all-zero key which:
+	//   - Is cryptographically invalid (outside valid range [1, p-1])
+	//   - Will fail when calling NewDecrypter()
+	//   - Violates ElGamal security requirements
+	//
+	// ALWAYS use NewElgPrivateKey() for safe construction.
+	//
+	// WRONG - Will fail:
+	//
+	//	var privKey ElgPrivateKey              // all zeros - invalid!
+	//	dec, _ := privKey.NewDecrypter()       // will return error
+	//
+	// CORRECT - Use constructor:
+	//
+	//	privKey, err := elg.NewElgPrivateKey(keyBytes)
+	//	if err != nil {
+	//	    return err
+	//	}
+	//	defer privKey.Zero()
 	ElgPrivateKey [256]byte
 )
+
+// NewElgPrivateKey creates a validated ElGamal private key from bytes.
+//
+// This constructor provides mandatory validation to prevent common security issues:
+//   - Rejects inputs that are not exactly 256 bytes
+//   - Rejects keys outside the valid range [1, p-1] where p is the ElGamal prime
+//   - Returns defensive copy to prevent external mutation
+//
+// The valid range check ensures that the private key can be used for secure
+// ElGamal operations. Keys outside this range would produce invalid cryptographic
+// operations or be trivially breakable.
+//
+// Parameters:
+//   - data: Must be exactly 256 bytes and represent a value in range [1, p-1]
+//
+// Returns an error if:
+//   - Input is not exactly 256 bytes
+//   - Input represents a value outside the valid range [1, p-1]
+//
+// Example usage:
+//
+//	privKey, err := elg.NewElgPrivateKey(keyBytes)
+//	if err != nil {
+//	    return err
+//	}
+//	defer privKey.Zero()
+func NewElgPrivateKey(data []byte) (*ElgPrivateKey, error) {
+	if len(data) != 256 {
+		return nil, oops.Errorf("invalid ElGamal private key size: expected 256 bytes, got %d bytes", len(data))
+	}
+
+	// Validate key is in valid range [1, p-1]
+	// This uses the existing validation logic
+	x := new(big.Int).SetBytes(data)
+	if x.Cmp(one) < 0 {
+		return nil, oops.Errorf("invalid ElGamal private key: must be >= 1")
+	}
+	if x.Cmp(new(big.Int).Sub(elgp, one)) >= 0 {
+		return nil, oops.Errorf("invalid ElGamal private key: must be < p-1")
+	}
+
+	var key ElgPrivateKey
+	copy(key[:], data)
+	return &key, nil
+}
 
 // Len returns the length of the ElGamal private key in bytes.
 // Always returns 256 for I2P standard ElGamal key size.
