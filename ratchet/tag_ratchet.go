@@ -13,6 +13,19 @@ import (
 //
 // The ratchet uses HMAC-SHA256 to derive tags and chain keys, ensuring
 // forward secrecy - past tags cannot be derived from current state.
+//
+// ⚠️ CRITICAL SECURITY WARNING:
+// Do NOT construct TagRatchet directly using var or struct literals.
+// Always use NewTagRatchet() to ensure proper initialization.
+//
+// BAD:
+//
+//	var ratchet TagRatchet             // Zero chain key - cryptographically invalid!
+//	ratchet := TagRatchet{...}         // Missing validation
+//
+// GOOD:
+//
+//	ratchet := NewTagRatchet(initialChainKey)
 type TagRatchet struct {
 	chainKey [ChainKeySize]byte
 	tagCount uint32

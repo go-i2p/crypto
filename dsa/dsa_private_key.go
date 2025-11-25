@@ -6,13 +6,72 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/samber/oops"
 )
 
 // DSAPrivateKey represents a DSA private key using a 20-byte array format.
 // This type implements the I2P standard DSA private key representation where the
 // private key value (X) is stored as a 160-bit (20-byte) big-endian integer.
 // DSAPrivateKey satisfies the types.SigningPrivateKey interface for digital signatures.
+//
+// ⚠️ CRITICAL SECURITY WARNING:
+// Do NOT use zero-value construction (var key DSAPrivateKey) as it creates an invalid
+// all-zero key. Always use NewDSAPrivateKey() to ensure proper validation.
 type DSAPrivateKey [20]byte
+
+// NewDSAPrivateKey creates a validated DSA private key from bytes.
+//
+// This constructor validates that the provided data:
+//   - Is exactly 20 bytes (160 bits) as required by I2P DSA specification
+//   - Is non-zero (all-zero keys are cryptographically invalid)
+//   - Is less than the DSA subgroup order q
+//
+// Parameters:
+//   - data: Must be exactly 20 bytes representing the private exponent X
+//
+// Returns:
+//   - DSAPrivateKey: A validated private key with defensive copy of the input
+//   - error: If data is invalid (wrong size, all-zero, or >= p)
+//
+// Example:
+//
+//	keyBytes := make([]byte, 20)
+//	_, _ = rand.Read(keyBytes)
+//	key, err := NewDSAPrivateKey(keyBytes)
+//	if err != nil {
+//	    // Handle error - key is invalid
+//	}
+func NewDSAPrivateKey(data []byte) (DSAPrivateKey, error) {
+	if len(data) != 20 {
+		return DSAPrivateKey{}, oops.
+			Code("invalid_key_size").
+			With("expected", 20).
+			With("actual", len(data)).
+			Errorf("DSA private key must be exactly 20 bytes, got %d bytes", len(data))
+	}
+
+	// Validate key is non-zero and in valid range [1, q-1]
+	x := new(big.Int).SetBytes(data)
+
+	if x.Sign() == 0 {
+		return DSAPrivateKey{}, oops.
+			Code("zero_key").
+			Errorf("DSA private key cannot be all zeros")
+	}
+
+	// Validate X < q (DSA subgroup order)
+	// Note: DSA private keys are in the range [1, q-1] where q is 160-bit
+	if x.Cmp(dsaq) >= 0 {
+		return DSAPrivateKey{}, oops.
+			Code("key_out_of_range").
+			Errorf("DSA private key must be less than q")
+	}
+
+	// Create defensive copy
+	var key DSAPrivateKey
+	copy(key[:], data)
+	return key, nil
+}
 
 // NewSigner creates a new DSA signer instance using this private key.
 // The returned signer can generate DSA signatures for data and pre-computed hashes.

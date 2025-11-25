@@ -12,6 +12,19 @@ import (
 //
 // The ratchet provides forward secrecy - message keys cannot be derived from
 // later chain keys, and compromise of one message key doesn't affect others.
+//
+// ⚠️ CRITICAL SECURITY WARNING:
+// Do NOT construct SymmetricRatchet directly using var or struct literals.
+// Always use NewSymmetricRatchet() to ensure proper initialization.
+//
+// BAD:
+//
+//	var ratchet SymmetricRatchet       // Zero chain key - cryptographically invalid!
+//	ratchet := SymmetricRatchet{...}   // Missing validation
+//
+// GOOD:
+//
+//	ratchet := NewSymmetricRatchet(initialChainKey)
 type SymmetricRatchet struct {
 	chainKey [ChainKeySize]byte
 }

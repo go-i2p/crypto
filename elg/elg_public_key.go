@@ -67,7 +67,7 @@ func NewElgPublicKey(data []byte) (*ElgPublicKey, error) {
 	// Y=0 and Y=1 are cryptographically weak
 	y := new(big.Int).SetBytes(data)
 	two := big.NewInt(2)
-	
+
 	if y.Cmp(two) < 0 {
 		return nil, oops.Errorf("invalid ElGamal public key: Y must be >= 2")
 	}

@@ -76,7 +76,7 @@ func TestNewElgPrivateKeyValidRange(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Failed to generate random value: %v", err)
 		}
-		
+
 		// Ensure it's at least 1
 		if x.Cmp(one) < 0 {
 			x = one
@@ -194,7 +194,7 @@ func TestNewElgPublicKeyValidRange(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Failed to generate random value: %v", err)
 		}
-		
+
 		// Ensure it's at least 2
 		two := big.NewInt(2)
 		if y.Cmp(two) < 0 {

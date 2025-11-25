@@ -4,13 +4,78 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/samber/oops"
 )
 
 // DSAPublicKey represents a DSA public key using a 128-byte array format.
 // This type implements the I2P standard DSA public key representation where the
 // public key value (Y = g^X mod p) is stored as a 1024-bit (128-byte) big-endian integer.
 // DSAPublicKey satisfies the types.SigningPublicKey interface for signature verification.
+//
+// ⚠️ CRITICAL SECURITY WARNING:
+// Do NOT use zero-value construction (var key DSAPublicKey) as it creates an invalid
+// all-zero key. Always use NewDSAPublicKey() to ensure proper validation.
 type DSAPublicKey [128]byte
+
+// NewDSAPublicKey creates a validated DSA public key from bytes.
+//
+// This constructor validates that the provided data:
+//   - Is exactly 128 bytes (1024 bits) as required by I2P DSA specification
+//   - Is non-zero (all-zero keys are cryptographically invalid)
+//   - Is in valid range [2, p-1] where p is the DSA prime modulus
+//
+// Parameters:
+//   - data: Must be exactly 128 bytes representing the public value Y
+//
+// Returns:
+//   - DSAPublicKey: A validated public key with defensive copy of the input
+//   - error: If data is invalid (wrong size, zero/one, or >= p)
+//
+// Example:
+//
+//	privKey, _ := NewDSAPrivateKey(privBytes)
+//	pubKey, err := privKey.Public()
+//	if err != nil {
+//	    // Handle error
+//	}
+func NewDSAPublicKey(data []byte) (DSAPublicKey, error) {
+	if len(data) != 128 {
+		return DSAPublicKey{}, oops.
+			Code("invalid_key_size").
+			With("expected", 128).
+			With("actual", len(data)).
+			Errorf("DSA public key must be exactly 128 bytes, got %d bytes", len(data))
+	}
+
+	// Validate key is non-zero and in valid range [2, p-1]
+	y := new(big.Int).SetBytes(data)
+
+	if y.Sign() == 0 {
+		return DSAPublicKey{}, oops.
+			Code("zero_key").
+			Errorf("DSA public key cannot be all zeros")
+	}
+
+	// Reject Y=1 (cryptographically weak)
+	one := big.NewInt(1)
+	if y.Cmp(one) == 0 {
+		return DSAPublicKey{}, oops.
+			Code("weak_key").
+			Errorf("DSA public key cannot be 1 (cryptographically weak)")
+	}
+
+	// Validate Y < p (DSA modulus)
+	if y.Cmp(dsap) >= 0 {
+		return DSAPublicKey{}, oops.
+			Code("key_out_of_range").
+			Errorf("DSA public key must be less than p")
+	}
+
+	// Create defensive copy
+	var key DSAPublicKey
+	copy(key[:], data)
+	return key, nil
+}
 
 // Bytes returns the raw byte representation of this DSA public key.
 // The returned bytes contain the complete public key material in I2P format,

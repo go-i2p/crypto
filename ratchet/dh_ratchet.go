@@ -14,6 +14,19 @@ import (
 //
 // The DH ratchet provides the strongest form of forward secrecy - even if
 // an attacker compromises the current state, they cannot decrypt past messages.
+//
+// ⚠️ CRITICAL SECURITY WARNING:
+// Do NOT construct DHRatchet directly using var or struct literals.
+// Always use NewDHRatchet() to ensure proper initialization.
+//
+// BAD:
+//
+//	var ratchet DHRatchet              // Zero keys - cryptographically invalid!
+//	ratchet := DHRatchet{...}          // Missing validation
+//
+// GOOD:
+//
+//	ratchet := NewDHRatchet(rootKey, ourPrivKey, theirPubKey)
 type DHRatchet struct {
 	ourPrivKey  [PrivateKeySize]byte // Our current ephemeral private key
 	theirPubKey [PublicKeySize]byte  // Their current ephemeral public key
