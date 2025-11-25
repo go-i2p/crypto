@@ -76,7 +76,7 @@ func TestNewECP256PrivateKeyValidKey(t *testing.T) {
 
 	// Get the private key bytes
 	privBytes := privKey.D.Bytes()
-	
+
 	// Pad to 32 bytes if needed
 	if len(privBytes) < 32 {
 		padded := make([]byte, 32)
@@ -352,15 +352,15 @@ func TestECDSAConstructorDefensiveCopy(t *testing.T) {
 	t.Run("P-256 private key", func(t *testing.T) {
 		original := make([]byte, 32)
 		original[0] = 1 // Non-zero to pass validation
-		
+
 		key, err := NewECP256PrivateKey(original)
 		if err != nil {
 			t.Fatalf("Constructor failed: %v", err)
 		}
-		
+
 		// Modify original
 		original[0] = 99
-		
+
 		// Key should be unchanged
 		if key[0] != 1 {
 			t.Error("Constructor did not create defensive copy")
@@ -370,15 +370,15 @@ func TestECDSAConstructorDefensiveCopy(t *testing.T) {
 	t.Run("P-256 public key", func(t *testing.T) {
 		original := make([]byte, 64)
 		original[0] = 1
-		
+
 		key, err := NewECP256PublicKey(original)
 		if err != nil {
 			t.Fatalf("Constructor failed: %v", err)
 		}
-		
+
 		// Modify original
 		original[0] = 99
-		
+
 		// Key should be unchanged
 		if key[0] != 1 {
 			t.Error("Constructor did not create defensive copy")
@@ -390,7 +390,7 @@ func TestECDSAConstructorDefensiveCopy(t *testing.T) {
 func BenchmarkNewECP256PrivateKey(b *testing.B) {
 	validKey := make([]byte, 32)
 	validKey[0] = 1 // Non-zero
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _ = NewECP256PrivateKey(validKey)
@@ -399,7 +399,7 @@ func BenchmarkNewECP256PrivateKey(b *testing.B) {
 
 func BenchmarkNewECP256PublicKey(b *testing.B) {
 	validKey := make([]byte, 64)
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _ = NewECP256PublicKey(validKey)
@@ -409,7 +409,7 @@ func BenchmarkNewECP256PublicKey(b *testing.B) {
 func BenchmarkNewECP384PrivateKey(b *testing.B) {
 	validKey := make([]byte, 48)
 	validKey[0] = 1 // Non-zero
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _ = NewECP384PrivateKey(validKey)
@@ -418,7 +418,7 @@ func BenchmarkNewECP384PrivateKey(b *testing.B) {
 
 func BenchmarkNewECP384PublicKey(b *testing.B) {
 	validKey := make([]byte, 96)
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _ = NewECP384PublicKey(validKey)
@@ -428,7 +428,7 @@ func BenchmarkNewECP384PublicKey(b *testing.B) {
 func BenchmarkNewECP521PrivateKey(b *testing.B) {
 	validKey := make([]byte, 66)
 	validKey[0] = 1 // Non-zero
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _ = NewECP521PrivateKey(validKey)
@@ -437,7 +437,7 @@ func BenchmarkNewECP521PrivateKey(b *testing.B) {
 
 func BenchmarkNewECP521PublicKey(b *testing.B) {
 	validKey := make([]byte, 132)
-	
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		_, _ = NewECP521PublicKey(validKey)

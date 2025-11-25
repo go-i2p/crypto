@@ -42,7 +42,7 @@ func NewECP256PrivateKey(data []byte) (*ECP256PrivateKey, error) {
 	}
 
 	// Check for all-zero key (cryptographically invalid)
-	var isZero = true
+	isZero := true
 	for _, b := range data {
 		if b != 0 {
 			isZero = false
