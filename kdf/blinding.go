@@ -1,9 +1,10 @@
 package kdf
 
 import (
-	"filippo.io/edwards25519"
 	"regexp"
 	"time"
+
+	"filippo.io/edwards25519"
 
 	"github.com/go-i2p/crypto/hkdf"
 	"github.com/samber/oops"
@@ -34,9 +35,9 @@ var dateFormatRegex = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
 //
 // The output is a canonical Ed25519 scalar (reduced modulo L), ensuring compatibility
 // with edwards25519.Scalar.SetCanonicalBytes. The derivation process:
-//   1. HKDF derives 64 bytes from secret + date
-//   2. SetUniformBytes reduces to canonical scalar (< L)
-//   3. Returns 32-byte canonical scalar encoding
+//  1. HKDF derives 64 bytes from secret + date
+//  2. SetUniformBytes reduces to canonical scalar (< L)
+//  3. Returns 32-byte canonical scalar encoding
 //
 // The same secret + date always produces the same alpha, enabling:
 //   - Service to create blinded destination for publication
