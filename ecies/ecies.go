@@ -55,21 +55,21 @@ func (k ECIESPrivateKey) NewDecrypter() (types.Decrypter, error) {
 func (k ECIESPrivateKey) Public() (types.PublicEncryptionKey, error) {
 	// Convert to X25519 private key format
 	privKey := x25519.PrivateKey(k[:])
-	
+
 	// Derive public key using X25519 scalar base multiplication
 	pubKeyInterface := privKey.Public()
-	
+
 	// Type assert to get the actual public key bytes
 	pubKeyBytes, ok := pubKeyInterface.(x25519.PublicKey)
 	if !ok {
 		log.Error("Failed to type assert X25519 public key")
 		return nil, oops.Errorf("failed to derive public key from private key")
 	}
-	
+
 	// Copy to ECIESPublicKey
 	var pubKey ECIESPublicKey
 	copy(pubKey[:], pubKeyBytes)
-	
+
 	log.Debug("ECIES public key derived successfully from private key")
 	return pubKey, nil
 }

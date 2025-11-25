@@ -649,4 +649,3 @@ func TestGenerateECIESKeyPair(t *testing.T) {
 		}
 	}
 }
-
