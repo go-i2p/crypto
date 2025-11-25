@@ -60,39 +60,60 @@ func BlindPublicKey(publicKey [32]byte, alpha [32]byte) ([32]byte, error) {
 
 	log.Debug("Blinding Ed25519 public key")
 
-	// Parse the public key as an edwards25519 point
-	P, err := (&edwards25519.Point{}).SetBytes(publicKey[:])
+	P, err := parsePublicKeyPoint(publicKey)
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse public key")
-		return result, oops.Wrapf(ErrInvalidPublicKey, "failed to parse public key: %v", err)
+		return result, err
 	}
 
-	// Parse alpha as a scalar
-	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
+	alphaScalar, err := parseAlphaScalar(alpha)
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse blinding factor as scalar")
-		return result, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
+		return result, err
 	}
 
-	// Compute [alpha]B (alpha times the base point)
-	alphaB := (&edwards25519.Point{}).ScalarBaseMult(alphaScalar)
-
-	// Compute P' = P + [alpha]B
-	blindedPoint := (&edwards25519.Point{}).Add(P, alphaB)
-
-	// Check if result is identity point (should not happen in practice)
-	identityPoint := edwards25519.NewIdentityPoint()
-	if blindedPoint.Equal(identityPoint) == 1 {
-		log.Error("Blinded public key is identity point")
-		return result, ErrIdentityPoint
+	blindedPoint, err := computeBlindedPoint(P, alphaScalar)
+	if err != nil {
+		return result, err
 	}
 
-	// Encode the result
 	copy(result[:], blindedPoint.Bytes())
 
 	log.Debug("Public key blinded successfully")
 
 	return result, nil
+}
+
+// parsePublicKeyPoint parses a public key as an edwards25519 point.
+func parsePublicKeyPoint(publicKey [32]byte) (*edwards25519.Point, error) {
+	P, err := (&edwards25519.Point{}).SetBytes(publicKey[:])
+	if err != nil {
+		log.WithField("error", err).Error("Failed to parse public key")
+		return nil, oops.Wrapf(ErrInvalidPublicKey, "failed to parse public key: %v", err)
+	}
+	return P, nil
+}
+
+// parseAlphaScalar parses a blinding factor as an edwards25519 scalar.
+func parseAlphaScalar(alpha [32]byte) (*edwards25519.Scalar, error) {
+	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
+	if err != nil {
+		log.WithField("error", err).Error("Failed to parse blinding factor as scalar")
+		return nil, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
+	}
+	return alphaScalar, nil
+}
+
+// computeBlindedPoint computes P' = P + [alpha]B and validates the result.
+func computeBlindedPoint(P *edwards25519.Point, alphaScalar *edwards25519.Scalar) (*edwards25519.Point, error) {
+	alphaB := (&edwards25519.Point{}).ScalarBaseMult(alphaScalar)
+	blindedPoint := (&edwards25519.Point{}).Add(P, alphaB)
+
+	identityPoint := edwards25519.NewIdentityPoint()
+	if blindedPoint.Equal(identityPoint) == 1 {
+		log.Error("Blinded public key is identity point")
+		return nil, ErrIdentityPoint
+	}
+
+	return blindedPoint, nil
 }
 
 // BlindPrivateKey blinds an Ed25519 private key using a blinding factor (alpha).
