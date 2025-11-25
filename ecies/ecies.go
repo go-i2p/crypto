@@ -10,6 +10,8 @@ package ecies
 
 import (
 	"github.com/go-i2p/crypto/types"
+	"github.com/samber/oops"
+	"go.step.sm/crypto/x25519"
 )
 
 // ECIESPublicKey represents an ECIES X25519 public key for encryption
@@ -48,25 +50,27 @@ func (k ECIESPrivateKey) NewDecrypter() (types.Decrypter, error) {
 	return &ECIESDecrypter{PrivateKey: k}, nil
 }
 
-// Public returns the corresponding public key
+// Public returns the corresponding public key derived from this private key.
+// This uses X25519 scalar base multiplication to properly derive the public key.
 func (k ECIESPrivateKey) Public() (types.PublicEncryptionKey, error) {
 	// Convert to X25519 private key format
-	privKey := make([]byte, PrivateKeySize)
-	copy(privKey, k[:])
-
-	// Use the existing key derivation from utils
-	pubBytes, _, err := GenerateKeyPair()
-	if err != nil {
-		log.WithError(err).Error("Failed to derive ECIES public key")
-		return nil, err
+	privKey := x25519.PrivateKey(k[:])
+	
+	// Derive public key using X25519 scalar base multiplication
+	pubKeyInterface := privKey.Public()
+	
+	// Type assert to get the actual public key bytes
+	pubKeyBytes, ok := pubKeyInterface.(x25519.PublicKey)
+	if !ok {
+		log.Error("Failed to type assert X25519 public key")
+		return nil, oops.Errorf("failed to derive public key from private key")
 	}
-
-	// For proper implementation, we should derive from private key
-	// For now, this is a placeholder - would need X25519 point multiplication
+	
+	// Copy to ECIESPublicKey
 	var pubKey ECIESPublicKey
-	copy(pubKey[:], pubBytes)
-
-	log.Debug("ECIES public key derived successfully")
+	copy(pubKey[:], pubKeyBytes)
+	
+	log.Debug("ECIES public key derived successfully from private key")
 	return pubKey, nil
 }
 

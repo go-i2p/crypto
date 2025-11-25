@@ -359,3 +359,294 @@ func TestECIESX25519CompatibilityWithX25519(t *testing.T) {
 		t.Error("Round-trip with x25519 keys failed")
 	}
 }
+
+// TestECIESPrivateKeyPublicDerivation tests that Public() correctly derives the public key
+// from the private key instead of generating a random key.
+// This is a regression test for the critical bug where Public() was generating random keys.
+func TestECIESPrivateKeyPublicDerivation(t *testing.T) {
+	// Generate a key pair
+	expectedPub, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("Failed to generate key pair: %v", err)
+	}
+
+	// Create ECIESPrivateKey from the private key bytes
+	var privKey ECIESPrivateKey
+	copy(privKey[:], priv)
+
+	// Derive public key using the Public() method
+	derivedPubInterface, err := privKey.Public()
+	if err != nil {
+		t.Fatalf("Public() failed: %v", err)
+	}
+
+	derivedPub, ok := derivedPubInterface.(ECIESPublicKey)
+	if !ok {
+		t.Fatalf("Public() returned wrong type: %T", derivedPubInterface)
+	}
+
+	// Verify the derived public key matches the expected public key
+	if !bytes.Equal(derivedPub[:], expectedPub) {
+		t.Errorf("Public key mismatch:\nExpected: %x\nGot:      %x", expectedPub, derivedPub[:])
+	}
+}
+
+// TestECIESPrivateKeyPublicConsistency tests that Public() always returns the same
+// public key for the same private key (deterministic derivation).
+func TestECIESPrivateKeyPublicConsistency(t *testing.T) {
+	// Generate a key pair
+	_, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("Failed to generate key pair: %v", err)
+	}
+
+	var privKey ECIESPrivateKey
+	copy(privKey[:], priv)
+
+	// Derive public key multiple times
+	pub1, err := privKey.Public()
+	if err != nil {
+		t.Fatalf("First Public() call failed: %v", err)
+	}
+
+	pub2, err := privKey.Public()
+	if err != nil {
+		t.Fatalf("Second Public() call failed: %v", err)
+	}
+
+	pub3, err := privKey.Public()
+	if err != nil {
+		t.Fatalf("Third Public() call failed: %v", err)
+	}
+
+	// All derived public keys should be identical
+	eciesPub1 := pub1.(ECIESPublicKey)
+	eciesPub2 := pub2.(ECIESPublicKey)
+	eciesPub3 := pub3.(ECIESPublicKey)
+
+	if !bytes.Equal(eciesPub1[:], eciesPub2[:]) {
+		t.Error("Public() returned different keys on consecutive calls (first vs second)")
+	}
+
+	if !bytes.Equal(eciesPub1[:], eciesPub3[:]) {
+		t.Error("Public() returned different keys on consecutive calls (first vs third)")
+	}
+}
+
+// TestECIESPublicKeyEncryptDecryptRoundTrip tests that encryption/decryption works
+// correctly when using a public key derived via Public() method.
+func TestECIESPublicKeyEncryptDecryptRoundTrip(t *testing.T) {
+	// Generate key pair
+	_, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("Failed to generate key pair: %v", err)
+	}
+
+	var privKey ECIESPrivateKey
+	copy(privKey[:], priv)
+
+	// Derive public key using Public() method
+	pubInterface, err := privKey.Public()
+	if err != nil {
+		t.Fatalf("Public() failed: %v", err)
+	}
+
+	pubKey := pubInterface.(ECIESPublicKey)
+
+	// Test data
+	originalData := []byte("Testing encryption with derived public key")
+
+	// Encrypt using the derived public key
+	ciphertext, err := EncryptECIESX25519(pubKey[:], originalData)
+	if err != nil {
+		t.Fatalf("Encryption with derived public key failed: %v", err)
+	}
+
+	// Decrypt using the private key
+	plaintext, err := DecryptECIESX25519(privKey[:], ciphertext)
+	if err != nil {
+		t.Fatalf("Decryption failed: %v", err)
+	}
+
+	// Verify plaintext matches original
+	if !bytes.Equal(plaintext, originalData) {
+		t.Errorf("Plaintext mismatch:\nExpected: %s\nGot:      %s", originalData, plaintext)
+	}
+}
+
+// TestECIESPublicKeyInterfaceMethods tests that ECIESPublicKey properly
+// implements the PublicEncryptionKey interface methods.
+func TestECIESPublicKeyInterfaceMethods(t *testing.T) {
+	// Generate key pair
+	pub, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("Failed to generate key pair: %v", err)
+	}
+
+	var privKey ECIESPrivateKey
+	copy(privKey[:], priv)
+
+	// Derive public key
+	pubInterface, err := privKey.Public()
+	if err != nil {
+		t.Fatalf("Public() failed: %v", err)
+	}
+
+	pubKey := pubInterface.(ECIESPublicKey)
+
+	// Test Len() method
+	if pubKey.Len() != PublicKeySize {
+		t.Errorf("Len() returned %d, expected %d", pubKey.Len(), PublicKeySize)
+	}
+
+	// Test Bytes() method
+	pubBytes := pubKey.Bytes()
+	if len(pubBytes) != PublicKeySize {
+		t.Errorf("Bytes() returned %d bytes, expected %d", len(pubBytes), PublicKeySize)
+	}
+
+	if !bytes.Equal(pubBytes, pub) {
+		t.Error("Bytes() returned incorrect public key bytes")
+	}
+
+	// Test NewEncrypter() method
+	encrypter, err := pubKey.NewEncrypter()
+	if err != nil {
+		t.Fatalf("NewEncrypter() failed: %v", err)
+	}
+
+	if encrypter == nil {
+		t.Error("NewEncrypter() returned nil encrypter")
+	}
+
+	// Test encryption with the encrypter
+	testData := []byte("Test encrypter interface")
+	ciphertext, err := encrypter.Encrypt(testData)
+	if err != nil {
+		t.Fatalf("Encrypter.Encrypt() failed: %v", err)
+	}
+
+	// Verify we can decrypt it
+	plaintext, err := DecryptECIESX25519(privKey[:], ciphertext)
+	if err != nil {
+		t.Fatalf("Decryption failed: %v", err)
+	}
+
+	if !bytes.Equal(plaintext, testData) {
+		t.Error("Encryption/decryption round-trip through interface failed")
+	}
+}
+
+// TestECIESPrivateKeyInterfaceMethods tests that ECIESPrivateKey properly
+// implements the PrivateEncryptionKey interface methods.
+func TestECIESPrivateKeyInterfaceMethods(t *testing.T) {
+	// Generate key pair
+	pub, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("Failed to generate key pair: %v", err)
+	}
+
+	var privKey ECIESPrivateKey
+	copy(privKey[:], priv)
+
+	// Test Len() method
+	if privKey.Len() != PrivateKeySize {
+		t.Errorf("Len() returned %d, expected %d", privKey.Len(), PrivateKeySize)
+	}
+
+	// Test Bytes() method
+	privBytes := privKey.Bytes()
+	if len(privBytes) != PrivateKeySize {
+		t.Errorf("Bytes() returned %d bytes, expected %d", len(privBytes), PrivateKeySize)
+	}
+
+	if !bytes.Equal(privBytes, priv) {
+		t.Error("Bytes() returned incorrect private key bytes")
+	}
+
+	// Test NewDecrypter() method
+	decrypter, err := privKey.NewDecrypter()
+	if err != nil {
+		t.Fatalf("NewDecrypter() failed: %v", err)
+	}
+
+	if decrypter == nil {
+		t.Error("NewDecrypter() returned nil decrypter")
+	}
+
+	// Test decryption with the decrypter
+	testData := []byte("Test decrypter interface")
+	ciphertext, err := EncryptECIESX25519(pub, testData)
+	if err != nil {
+		t.Fatalf("Encryption failed: %v", err)
+	}
+
+	plaintext, err := decrypter.Decrypt(ciphertext)
+	if err != nil {
+		t.Fatalf("Decrypter.Decrypt() failed: %v", err)
+	}
+
+	if !bytes.Equal(plaintext, testData) {
+		t.Error("Encryption/decryption round-trip through interface failed")
+	}
+
+	// Note: Zero() method has a value receiver which makes it ineffective.
+	// This is a known issue but fixing it is outside the scope of the current task.
+	// The Zero() method should have a pointer receiver: func (k *ECIESPrivateKey) Zero()
+}
+
+// TestGenerateECIESKeyPair tests the GenerateECIESKeyPair function.
+func TestGenerateECIESKeyPair(t *testing.T) {
+	// Generate multiple key pairs
+	for i := 0; i < 10; i++ {
+		pubKey, privKey, err := GenerateECIESKeyPair()
+		if err != nil {
+			t.Fatalf("GenerateECIESKeyPair() iteration %d failed: %v", i, err)
+		}
+
+		if pubKey == nil {
+			t.Fatalf("GenerateECIESKeyPair() iteration %d returned nil public key", i)
+		}
+
+		if privKey == nil {
+			t.Fatalf("GenerateECIESKeyPair() iteration %d returned nil private key", i)
+		}
+
+		// Test key sizes
+		if pubKey.Len() != PublicKeySize {
+			t.Errorf("Public key %d has wrong size: got %d, expected %d", i, pubKey.Len(), PublicKeySize)
+		}
+
+		if privKey.Len() != PrivateKeySize {
+			t.Errorf("Private key %d has wrong size: got %d, expected %d", i, privKey.Len(), PrivateKeySize)
+		}
+
+		// Verify derived public key matches
+		derivedPubInterface, err := privKey.Public()
+		if err != nil {
+			t.Fatalf("Public() for key pair %d failed: %v", i, err)
+		}
+
+		derivedPub := derivedPubInterface.(ECIESPublicKey)
+		if !bytes.Equal(derivedPub[:], pubKey[:]) {
+			t.Errorf("Key pair %d: derived public key doesn't match generated public key", i)
+		}
+
+		// Test encryption/decryption round-trip
+		testData := []byte("Test key pair functionality")
+		ciphertext, err := EncryptECIESX25519(pubKey[:], testData)
+		if err != nil {
+			t.Fatalf("Encryption with key pair %d failed: %v", i, err)
+		}
+
+		plaintext, err := DecryptECIESX25519(privKey[:], ciphertext)
+		if err != nil {
+			t.Fatalf("Decryption with key pair %d failed: %v", i, err)
+		}
+
+		if !bytes.Equal(plaintext, testData) {
+			t.Errorf("Key pair %d: round-trip failed", i)
+		}
+	}
+}
+
