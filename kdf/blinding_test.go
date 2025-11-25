@@ -6,6 +6,8 @@ import (
 	"crypto/rand"
 	"testing"
 	"time"
+
+	"filippo.io/edwards25519"
 )
 
 func TestDeriveBlindingFactor(t *testing.T) {
@@ -385,4 +387,122 @@ func BenchmarkDeriveBlindingFactorWithTimestamp(b *testing.B) {
 			b.Fatal(err)
 		}
 	}
+}
+
+// TestDeriveBlindingFactorProducesCanonicalScalar verifies that the output
+// from DeriveBlindingFactor is a valid canonical Ed25519 scalar that can be
+// used with edwards25519.Scalar.SetCanonicalBytes.
+// This is the critical test that ensures the bug fix works correctly.
+func TestDeriveBlindingFactorProducesCanonicalScalar(t *testing.T) {
+	// Generate test secret
+	secret := make([]byte, 32)
+	_, err := rand.Read(secret)
+	if err != nil {
+		t.Fatalf("Failed to generate test secret: %v", err)
+	}
+
+	// Test with multiple dates to ensure consistency
+	dates := []string{
+		"2025-11-24",
+		"2024-01-01",
+		"2025-12-31",
+		"2024-02-29", // leap year
+	}
+
+	for _, date := range dates {
+		t.Run(date, func(t *testing.T) {
+			// Derive blinding factor
+			alpha, err := DeriveBlindingFactor(secret, date)
+			if err != nil {
+				t.Fatalf("DeriveBlindingFactor failed: %v", err)
+			}
+
+			// CRITICAL TEST: Verify it's a canonical scalar
+			// This would fail before the fix (when KDF returned raw 32 bytes)
+			alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
+			if err != nil {
+				t.Fatalf("SetCanonicalBytes failed: %v - alpha is not canonical! This is the bug we're fixing.", err)
+			}
+
+			// Verify the scalar is not zero (extremely unlikely but good sanity check)
+			zeroScalar := edwards25519.NewScalar()
+			if alphaScalar.Equal(zeroScalar) == 1 {
+				t.Error("Alpha scalar is zero (should be random)")
+			}
+
+			// Verify round-trip: canonical -> bytes -> canonical
+			roundTrip, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alphaScalar.Bytes())
+			if err != nil {
+				t.Fatalf("Round-trip failed: %v", err)
+			}
+
+			if roundTrip.Equal(alphaScalar) != 1 {
+				t.Error("Round-trip produced different scalar")
+			}
+		})
+	}
+}
+
+// TestDeriveBlindingFactorIntegrationWithEd25519Blinding tests the complete
+// integration between KDF and Ed25519 blinding as described in the bug report.
+// This simulates the actual use case that was failing before the fix.
+func TestDeriveBlindingFactorIntegrationWithEd25519Blinding(t *testing.T) {
+	// This test requires the ed25519 package's BlindPublicKey function
+	// Since we're in the kdf package, we'll verify what we can here:
+	// that the alpha is usable as a canonical scalar.
+
+	// Generate Ed25519 keypair
+	_, priv, err := ed25519.GenerateKey(rand.Reader)
+	if err != nil {
+		t.Fatalf("Failed to generate keypair: %v", err)
+	}
+
+	secret := priv.Seed()
+	date := "2025-11-24"
+
+	// Derive blinding factor using KDF
+	alpha, err := DeriveBlindingFactor(secret, date)
+	if err != nil {
+		t.Fatalf("DeriveBlindingFactor failed: %v", err)
+	}
+
+	// Verify it can be parsed as a canonical scalar
+	// (This is what ed25519.BlindPublicKey does internally via parseAlphaScalar)
+	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
+	if err != nil {
+		t.Fatalf("INTEGRATION FAILURE: KDF output cannot be used with BlindPublicKey! Error: %v", err)
+	}
+
+	// SUCCESS: If we got here, the KDF output is compatible with BlindPublicKey
+	t.Logf("✓ KDF output is a valid canonical scalar for Ed25519 blinding")
+	t.Logf("✓ Alpha scalar bytes: %x", alphaScalar.Bytes())
+}
+
+// TestDeriveBlindingFactorMultipleDerivations verifies that all derivations
+// produce canonical scalars, not just one lucky case.
+func TestDeriveBlindingFactorMultipleDerivations(t *testing.T) {
+	// Test 100 different secret+date combinations
+	for i := 0; i < 100; i++ {
+		secret := make([]byte, 32)
+		_, err := rand.Read(secret)
+		if err != nil {
+			t.Fatalf("Failed to generate secret: %v", err)
+		}
+
+		// Use varying dates
+		date := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC).AddDate(0, 0, i).Format("2006-01-02")
+
+		alpha, err := DeriveBlindingFactor(secret, date)
+		if err != nil {
+			t.Fatalf("Derivation %d failed: %v", i, err)
+		}
+
+		// Verify it's canonical
+		_, err = (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
+		if err != nil {
+			t.Fatalf("Derivation %d produced non-canonical scalar: %v", i, err)
+		}
+	}
+
+	t.Logf("✓ All 100 derivations produced valid canonical scalars")
 }

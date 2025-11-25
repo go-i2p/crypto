@@ -1,6 +1,7 @@
 package kdf
 
 import (
+	"filippo.io/edwards25519"
 	"regexp"
 	"time"
 
@@ -29,7 +30,13 @@ var dateFormatRegex = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
 //   - IKM (input key material): secret (32+ bytes, typically from destination keypair)
 //   - Salt: date in YYYY-MM-DD format as bytes
 //   - Info: "i2p-blinding-factor"
-//   - Output: 32 bytes
+//   - Output: 64 bytes (reduced to canonical Ed25519 scalar)
+//
+// The output is a canonical Ed25519 scalar (reduced modulo L), ensuring compatibility
+// with edwards25519.Scalar.SetCanonicalBytes. The derivation process:
+//   1. HKDF derives 64 bytes from secret + date
+//   2. SetUniformBytes reduces to canonical scalar (< L)
+//   3. Returns 32-byte canonical scalar encoding
 //
 // The same secret + date always produces the same alpha, enabling:
 //   - Service to create blinded destination for publication
@@ -40,7 +47,7 @@ var dateFormatRegex = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
 //   - date: Date in "YYYY-MM-DD" format (e.g., "2025-11-24")
 //
 // Returns:
-//   - alpha: 32-byte blinding factor suitable for Ed25519 point blinding
+//   - alpha: 32-byte canonical Ed25519 scalar suitable for point blinding
 //   - error: ErrInvalidSecret if secret is too short, ErrInvalidDateFormat or ErrInvalidDate if date is invalid
 //
 // Example:
@@ -107,23 +114,32 @@ func validateDateFormatAndValues(date string) error {
 }
 
 // deriveAlphaUsingHKDF performs HKDF-based derivation to create the blinding factor.
+// It derives 64 bytes and reduces them to a canonical Ed25519 scalar to ensure
+// compatibility with edwards25519.Scalar.SetCanonicalBytes.
 func deriveAlphaUsingHKDF(secret []byte, date string) ([32]byte, error) {
 	var alpha [32]byte
 
-	// Use HKDF to derive blinding factor
-	// IKM: secret, Salt: date, Info: "i2p-blinding-factor", Length: 32 bytes
+	// Use HKDF to derive 64 bytes for uniform scalar reduction
+	// IKM: secret, Salt: date, Info: "i2p-blinding-factor", Length: 64 bytes
 	hkdfDeriver := hkdf.NewHKDF()
 	derived, err := hkdfDeriver.Derive(
 		secret,
 		[]byte(date),
 		[]byte("i2p-blinding-factor"),
-		32,
+		64, // Changed from 32 to 64 for SetUniformBytes
 	)
 	if err != nil {
 		return alpha, oops.Wrapf(err, "HKDF derivation failed for blinding factor")
 	}
 
-	copy(alpha[:], derived)
+	// Reduce to canonical scalar using SetUniformBytes
+	// This ensures the output is a valid Ed25519 scalar (< L, the group order)
+	alphaScalar, err := (&edwards25519.Scalar{}).SetUniformBytes(derived)
+	if err != nil {
+		return alpha, oops.Wrapf(err, "failed to reduce blinding factor to canonical scalar")
+	}
+
+	copy(alpha[:], alphaScalar.Bytes())
 	return alpha, nil
 }
 
