@@ -8,6 +8,26 @@ import (
 // Curve25519PrivateKey represents a Curve25519 private key for decryption and signing operations.
 // This type implements the types.PrivateEncryptionKey interface and provides X25519 elliptic curve
 // cryptographic operations including key derivation, decryption, and digital signature creation.
+//
+// CRITICAL: Always use NewCurve25519PrivateKey() to create instances.
+//
+// WRONG - Unsafe:
+//
+//	var key Curve25519PrivateKey  // Zero value - cryptographically invalid
+//
+// CORRECT - Use constructor:
+//
+//	privKey, err := curve25519.NewCurve25519PrivateKey(privBytes)
+//	if err != nil {
+//	    return err
+//	}
+//	defer privKey.Zero() // Always zero private keys
+//
+// Security:
+//   - Private keys contain sensitive material
+//   - Always call Zero() when done to clear memory
+//   - Never log or transmit private keys
+//   - Reject all-zero keys (cryptographically invalid)
 type Curve25519PrivateKey []byte
 
 // Bytes returns the raw byte representation of the Curve25519 private key.
@@ -84,6 +104,48 @@ func (k Curve25519PrivateKey) NewSigner() (types.Signer, error) {
 		return nil, ErrInvalidPrivateKey
 	}
 	return &Curve25519Signer{k: k}, nil
+}
+
+// NewCurve25519PrivateKey creates a validated Curve25519 private key from bytes.
+// This is the REQUIRED constructor - do not use var declarations or direct construction.
+//
+// Parameters:
+//   - data: Must be exactly 32 bytes (x25519.PrivateKeySize)
+//
+// Returns error if data length is invalid or key is all zeros.
+//
+// Example usage:
+//
+//	privKey, err := curve25519.NewCurve25519PrivateKey(privBytes)
+//	if err != nil {
+//	    return err
+//	}
+//	defer privKey.Zero() // Always zero private keys when done
+func NewCurve25519PrivateKey(data []byte) (*Curve25519PrivateKey, error) {
+	if len(data) != x25519.PrivateKeySize {
+		log.WithField("expected_length", x25519.PrivateKeySize).
+			WithField("actual_length", len(data)).
+			Error("Invalid data length for Curve25519PrivateKey")
+		return nil, ErrInvalidPrivateKey
+	}
+
+	// Check for all-zero key (invalid)
+	allZero := true
+	for _, b := range data {
+		if b != 0 {
+			allZero = false
+			break
+		}
+	}
+	if allZero {
+		log.Error("Private key cannot be all zeros")
+		return nil, ErrInvalidPrivateKey
+	}
+
+	key := Curve25519PrivateKey(make([]byte, x25519.PrivateKeySize))
+	copy(key, data)
+	log.Debug("Curve25519PrivateKey created successfully")
+	return &key, nil
 }
 
 var _ types.PrivateEncryptionKey = &Curve25519PrivateKey{}

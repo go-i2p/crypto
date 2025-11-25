@@ -10,6 +10,24 @@ import (
 // Curve25519PublicKey represents a Curve25519 public key for encryption and signature verification.
 // This type implements the types.PublicEncryptionKey interface and provides X25519 elliptic curve
 // cryptographic operations for I2P network encryption and ECDH key exchange protocols.
+//
+// CRITICAL: Always use NewCurve25519PublicKey() to create instances. Direct construction causes nil panics.
+//
+// WRONG - Will panic:
+//
+//	var key Curve25519PublicKey  // nil slice - methods will fail
+//	copy(key[:], data)           // panic: copy to nil slice
+//
+// CORRECT - Use constructor:
+//
+//	key, err := curve25519.NewCurve25519PublicKey(data)
+//	if err != nil {
+//	    return err
+//	}
+//
+// Deprecated patterns (avoid in new code):
+//
+//	x25519Key := CreateCurve25519PublicKey(data)  // Use NewCurve25519PublicKey instead
 type Curve25519PublicKey []byte
 
 // Bytes returns the raw byte representation of the Curve25519 public key.
@@ -67,22 +85,48 @@ func (k Curve25519PublicKey) NewEncrypter() (types.Encrypter, error) {
 	return enc, nil
 }
 
+// NewCurve25519PublicKey creates a validated Curve25519 public key from bytes.
+// This is the REQUIRED constructor - do not use var declarations or direct construction.
+//
+// Parameters:
+//   - data: Must be exactly 32 bytes (x25519.PublicKeySize)
+//
+// Returns error if data length is invalid.
+//
+// Example usage:
+//
+//	pubKey, err := curve25519.NewCurve25519PublicKey(pubBytes)
+//	if err != nil {
+//	    return err
+//	}
+func NewCurve25519PublicKey(data []byte) (*Curve25519PublicKey, error) {
+	if len(data) != x25519.PublicKeySize {
+		log.WithField("expected_length", x25519.PublicKeySize).
+			WithField("actual_length", len(data)).
+			Error("Invalid data length for Curve25519PublicKey")
+		return nil, ErrInvalidPublicKey
+	}
+	key := Curve25519PublicKey(make([]byte, x25519.PublicKeySize))
+	copy(key, data)
+	log.Debug("Curve25519PublicKey created successfully")
+	return &key, nil
+}
+
 // CreateCurve25519PublicKey creates a Curve25519 public key from raw byte data.
 // This function validates the input data length and constructs a proper X25519 public key.
 // The data must be exactly 32 bytes to match the X25519 public key size specification.
 // Returns nil if the input data length is invalid, otherwise returns a pointer to the created key.
+//
+// Deprecated: Use NewCurve25519PublicKey instead. This function will be removed in v2.0.
 func CreateCurve25519PublicKey(data []byte) (k *x25519.PublicKey) {
+	log.Warn("CreateCurve25519PublicKey is deprecated, use NewCurve25519PublicKey")
 	log.WithField("data_length", len(data)).Debug("Creating Curve25519PublicKey")
-	if len(data) == x25519.PublicKeySize { // Validate input is exactly 32 bytes
-		k2 := x25519.PublicKey{}
-		copy(k2[:], data)
-		k = &k2
-		log.Debug("Curve25519PublicKey created successfully")
-	} else {
-		log.WithField("expected_length", x25519.PublicKeySize).
-			Warn("Invalid data length for Curve25519PublicKey")
+	key, err := NewCurve25519PublicKey(data)
+	if err != nil {
+		return nil
 	}
-	return
+	x25519Key := x25519.PublicKey(*key)
+	return &x25519Key
 }
 
 var _ types.PublicEncryptionKey = &Curve25519PublicKey{}
