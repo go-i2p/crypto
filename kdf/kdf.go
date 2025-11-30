@@ -72,6 +72,11 @@ const (
 	// PurposeHandshake is for deriving handshake-related keys
 	PurposeHandshake
 
+	// PurposeAttachPayload is for deriving keys for attached payload encryption
+	// in New Session (NS) and New Session Reply (NSR) messages.
+	// Java I2P compatible - uses "AttachPayloadKDF" info string.
+	PurposeAttachPayload
+
 	// PurposeEncryptedLeaseSetEncryption is used when deriving symmetric
 	// encryption keys for EncryptedLeaseSet inner data.
 	//
@@ -87,15 +92,24 @@ const (
 )
 
 // Standard info strings for each key purpose
+//
+// JAVA I2P COMPATIBILITY:
+// - SessionReplyTags (PurposeSessionTag) matches Java I2P 0.9.67 exactly
+// - AttachPayloadKDF (PurposeAttachPayload) matches Java I2P 0.9.67 exactly
+// - Source: Java I2P router/java/src/net/i2p/router/crypto/ratchet/ECIESAEADEngine.java
+// - Test vectors: JAVA_I2P_TEST_VECTORS.yaml
+//
+// Other strings are go-i2p specific and not yet verified against Java I2P.
 var purposeInfo = map[KeyPurpose]string{
-	PurposeTunnelEncryption:            "I2P-Tunnel-Encryption-v1",
-	PurposeGarlicEncryption:            "I2P-Garlic-Encryption-v1",
-	PurposeSessionTag:                  "I2P-Session-Tag-v1",
-	PurposeRatchetChain:                "I2P-Ratchet-Chain-v1",
-	PurposeIVGeneration:                "I2P-IV-Generation-v1",
-	PurposeMessageKey:                  "I2P-Message-Key-v1",
-	PurposeHandshake:                   "I2P-Handshake-v1",
-	PurposeEncryptedLeaseSetEncryption: "i2p-encrypted-leaseset-encryption",
+	PurposeTunnelEncryption:            "I2P-Tunnel-Encryption-v1",          // Not yet verified
+	PurposeGarlicEncryption:            "I2P-Garlic-Encryption-v1",          // Not yet verified
+	PurposeSessionTag:                  "SessionReplyTags",                  // ✅ Java I2P v0.9.67
+	PurposeRatchetChain:                "I2P-Ratchet-Chain-v1",              // Not yet verified
+	PurposeIVGeneration:                "I2P-IV-Generation-v1",              // Not yet verified
+	PurposeMessageKey:                  "I2P-Message-Key-v1",                // Not yet verified
+	PurposeHandshake:                   "I2P-Handshake-v1",                  // Not yet verified
+	PurposeAttachPayload:               "AttachPayloadKDF",                  // ✅ Java I2P v0.9.67
+	PurposeEncryptedLeaseSetEncryption: "i2p-encrypted-leaseset-encryption", // I2P Proposal 123
 }
 
 // Package-level logger
