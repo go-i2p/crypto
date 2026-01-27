@@ -1,14 +1,16 @@
 module github.com/go-i2p/crypto
 
-go 1.24.4
+go 1.24.5
+
+toolchain go1.24.12
 
 require (
 	filippo.io/edwards25519 v1.1.0
 	github.com/go-i2p/elgamal v0.0.2
 	github.com/go-i2p/logger v0.1.0
-	github.com/samber/oops v1.19.4
-	go.step.sm/crypto v0.75.0
-	golang.org/x/crypto v0.46.0
+	github.com/samber/oops v1.21.0
+	go.step.sm/crypto v0.76.0
+	golang.org/x/crypto v0.47.0
 )
 
 require (
@@ -17,9 +19,9 @@ require (
 	github.com/oklog/ulid/v2 v2.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/samber/lo v1.52.0 // indirect
-	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/sirupsen/logrus v1.9.4 // indirect
 	go.opentelemetry.io/otel v1.39.0 // indirect
 	go.opentelemetry.io/otel/trace v1.39.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
 )
