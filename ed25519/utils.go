@@ -26,7 +26,7 @@ func GenerateEd25519Key() (types.SigningPrivateKey, error) {
 
 // IsOnCurve checks if the provided byte slice is a valid Ed25519 public key.
 // It returns true if the key is valid, otherwise false.
-func IsOnCurve(key []byte) bool {
+/*func IsOnCurve(key []byte) bool {
 	if len(key) != ed25519.PublicKeySize {
 		return false
 	}
@@ -40,4 +40,4 @@ func IsOnCurve(key []byte) bool {
 	}
 	// Check if the point (x, y) lies on the Ed25519 curve
 	return ed25519.IsPointOnCurve(x, y)
-}
+}*/

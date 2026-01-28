@@ -59,7 +59,7 @@ func NewRSA4096PublicKey(data []byte) (*RSA4096PublicKey, error) {
 
 // Verify implements types.Verifier.
 // This method hashes the data with SHA-512 and verifies the signature
-func (r RSA4096PublicKey) Verify(data []byte, sig []byte) error {
+func (r RSA4096PublicKey) Verify(data, sig []byte) error {
 	log.Debug("Verifying RSA-4096 signature")
 	// Hash the data with SHA-512 (appropriate for RSA-4096)
 	hash := sha512.Sum512(data)
@@ -68,7 +68,7 @@ func (r RSA4096PublicKey) Verify(data []byte, sig []byte) error {
 
 // VerifyHash implements types.Verifier.
 // This method verifies a pre-computed hash against the signature
-func (r RSA4096PublicKey) VerifyHash(h []byte, sig []byte) error {
+func (r RSA4096PublicKey) VerifyHash(h, sig []byte) error {
 	log.Debug("Verifying RSA-4096 signature with pre-computed hash")
 	// Convert I2P byte format to standard RSA public key structure
 	pubKey, err := rsaPublicKeyFromBytes(r[:], 512)

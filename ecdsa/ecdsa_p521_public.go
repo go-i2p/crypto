@@ -43,7 +43,7 @@ func NewECP521PublicKey(data []byte) (*ECP521PublicKey, error) {
 }
 
 // Verify implements types.Verifier.
-func (k ECP521PublicKey) Verify(data []byte, sig []byte) error {
+func (k ECP521PublicKey) Verify(data, sig []byte) error {
 	log.WithField("data_length", len(data)).Debug("Verifying data with ECDSA-P521")
 	verifier, err := k.NewVerifier()
 	if err != nil {
@@ -54,7 +54,7 @@ func (k ECP521PublicKey) Verify(data []byte, sig []byte) error {
 }
 
 // VerifyHash implements types.Verifier.
-func (k ECP521PublicKey) VerifyHash(h []byte, sig []byte) error {
+func (k ECP521PublicKey) VerifyHash(h, sig []byte) error {
 	log.WithField("hash_length", len(h)).Debug("Verifying hash with ECDSA-P521")
 	verifier, err := k.NewVerifier()
 	if err != nil {

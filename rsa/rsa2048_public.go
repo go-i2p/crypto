@@ -66,7 +66,7 @@ func NewRSA2048PublicKey(data []byte) (*RSA2048PublicKey, error) {
 
 // Verify implements types.Verifier.
 // This method hashes the data with SHA-256 and verifies the signature
-func (r RSA2048PublicKey) Verify(data []byte, sig []byte) error {
+func (r RSA2048PublicKey) Verify(data, sig []byte) error {
 	// Hash the data with SHA-256 (appropriate for RSA-2048)
 	hash := sha256.Sum256(data)
 	return r.VerifyHash(hash[:], sig)
@@ -74,7 +74,7 @@ func (r RSA2048PublicKey) Verify(data []byte, sig []byte) error {
 
 // VerifyHash implements types.Verifier.
 // This method verifies a pre-computed hash against the signature
-func (r RSA2048PublicKey) VerifyHash(h []byte, sig []byte) error {
+func (r RSA2048PublicKey) VerifyHash(h, sig []byte) error {
 	// Convert I2P byte format to standard RSA public key structure
 	pubKey, err := rsaPublicKeyFromBytes(r[:], 256)
 	if err != nil {

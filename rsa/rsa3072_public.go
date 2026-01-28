@@ -58,14 +58,14 @@ func NewRSA3072PublicKey(data []byte) (*RSA3072PublicKey, error) {
 }
 
 // Verify implements types.Verifier.
-func (r RSA3072PublicKey) Verify(data []byte, sig []byte) error {
+func (r RSA3072PublicKey) Verify(data, sig []byte) error {
 	// Hash the data with SHA512 (commonly used with RSA3072 in I2P)
 	hash := sha512.Sum512(data)
 	return r.VerifyHash(hash[:], sig)
 }
 
 // VerifyHash implements types.Verifier.
-func (r RSA3072PublicKey) VerifyHash(h []byte, sig []byte) error {
+func (r RSA3072PublicKey) VerifyHash(h, sig []byte) error {
 	// Convert I2P byte format to standard RSA public key structure
 	pubKey, err := rsaPublicKeyFromBytes(r[:], 384)
 	if err != nil {

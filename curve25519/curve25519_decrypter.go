@@ -84,7 +84,7 @@ func (c *Curve25519Decrypter) deriveDecryptionKey(sharedSecret []byte) ([]byte, 
 }
 
 // performAEADDecryption creates the AEAD cipher and performs the actual decryption.
-func (c *Curve25519Decrypter) performAEADDecryption(data []byte, key []byte) ([]byte, error) {
+func (c *Curve25519Decrypter) performAEADDecryption(data, key []byte) ([]byte, error) {
 	aead, err := chacha20poly1305.New(key)
 	if err != nil {
 		return nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)

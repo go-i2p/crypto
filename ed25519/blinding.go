@@ -55,7 +55,7 @@ var (
 //
 // Spec: I2P Proposal 123 - Encrypted LeaseSet
 // Reference: https://ed25519.cr.yp.to/papers.html
-func BlindPublicKey(publicKey [32]byte, alpha [32]byte) ([32]byte, error) {
+func BlindPublicKey(publicKey, alpha [32]byte) ([32]byte, error) {
 	var result [32]byte
 
 	log.Debug("Blinding Ed25519 public key")
@@ -248,7 +248,7 @@ func constructBlindedPrivateKey(blindedScalar *edwards25519.Scalar) [64]byte {
 //	blinded, _ := ed25519.BlindPublicKey(original, alpha)
 //	recovered, _ := ed25519.UnblindPublicKey(blinded, alpha)
 //	// recovered should equal original
-func UnblindPublicKey(blindedPublicKey [32]byte, alpha [32]byte) ([32]byte, error) {
+func UnblindPublicKey(blindedPublicKey, alpha [32]byte) ([32]byte, error) {
 	var result [32]byte
 
 	log.Debug("Unblinding Ed25519 public key")

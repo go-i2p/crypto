@@ -215,7 +215,7 @@ func verifyRoundTrip(rBytes []byte, u *field.Element) bool {
 
 // tryNegativeSquareRoot attempts to use the negative square root as the representative.
 // Returns the negated representative if it maps correctly, or (nil, false) if neither root works.
-func tryNegativeSquareRoot(r *field.Element, u *field.Element) ([]byte, bool) {
+func tryNegativeSquareRoot(r, u *field.Element) ([]byte, bool) {
 	rNeg := new(field.Element).Negate(r)
 	rNegBytes := prepareRepresentativeBytes(rNeg)
 

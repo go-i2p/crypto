@@ -169,7 +169,7 @@ func (a *AEAD) Encrypt(plaintext, associatedData, nonce []byte) (ciphertext []by
 //	    return err
 //	}
 //	// Safe to use plaintext
-func (a *AEAD) Decrypt(ciphertext, tag []byte, associatedData, nonce []byte) (plaintext []byte, err error) {
+func (a *AEAD) Decrypt(ciphertext, tag, associatedData, nonce []byte) (plaintext []byte, err error) {
 	if len(nonce) != NonceSize {
 		return nil, ErrInvalidNonceSize
 	}

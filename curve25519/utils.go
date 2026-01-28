@@ -23,7 +23,7 @@ func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, e
 
 // IsValid checks if the provided byte slice looks kind of like a Curve25519 public key.
 // It returns true if the key seems right, otherwise false.
-func IsValid(key []byte) bool {
+/*func IsValid(key []byte) bool {
 	if len(key) != x25519.PublicKeySize {
 		return false
 	}
@@ -31,4 +31,4 @@ func IsValid(key []byte) bool {
 	// Attempt to perform scalar multiplication with the basepoint
 	_, err := x25519.ScalarMult(publicKey, x25519.Basepoint)
 	return err == nil
-}
+}*/
