@@ -26,17 +26,48 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-type Argon2id struct{}
+type Argon2id struct {
+	TimeCost    uint32
+	MemoryCost  uint32
+	Parallelism uint8
+}
+
+func NewArgon2id(timeCost, memoryCost uint32, parallelism uint8) *Argon2id {
+	return &Argon2id{
+		TimeCost:    timeCost,
+		MemoryCost:  memoryCost,
+		Parallelism: parallelism,
+	}
+}
 
 // Derive derives a key of the specified length from the input key material (IKM) using Argon2id.
 func (a *Argon2id) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 	// get timeCost, memoryCost, and parallelism from parameters or use defaults
-	timeCost := defaultTimeCost
-	memoryCost := defaultMemoryCost
-	parallelism := defaultParallelism
+	timeCost := a.TimeCost
+	memoryCost := a.MemoryCost
+	parallelism := a.Parallelism
 	if len(info) > 0 {
 		// parse info for custom parameters (not implemented in this example)
+		// hypothetically, info could contain custom timeCost, memoryCost, parallelism
+		// For simplicity, we ignore info in this implementation
 	}
+	// validate the parameters. If they are invalid, return an error
+	if keyLen <= 0 {
+		return nil, ErrInvalidKeyLength
+	}
+	if len(salt) == 0 {
+		return nil, ErrInvalidSalt
+	}
+	if timeCost < 1 {
+		return nil, ErrInvalidTimeCost
+	}
+	if memoryCost < 8*1024 {
+		return nil, ErrInsufficientMemory
+	}
+	if parallelism == 0 {
+		return nil, ErrInvalidParallelism
+	}
+	// derive the key using Argon2id
 	derivedKey := argon2.IDKey(ikm, salt, timeCost, memoryCost, parallelism, uint32(keyLen))
 	return derivedKey, nil
 }
@@ -48,4 +79,4 @@ func (a *Argon2id) DeriveDefault(ikm []byte) ([]byte, error) {
 }
 
 // Argon2idKDF is a convenient instance of the Argon2id key derivation function that can be used directly.
-var Argon2idKDF = &Argon2id{}
+var Argon2idKDF = NewArgon2id(defaultTimeCost, defaultMemoryCost, defaultParallelism)
