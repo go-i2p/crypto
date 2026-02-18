@@ -2,7 +2,6 @@ package ed25519
 
 import (
 	"crypto/ed25519"
-	"crypto/sha512"
 
 	"github.com/samber/oops"
 )
@@ -15,8 +14,9 @@ type Ed25519Signer struct {
 }
 
 // Sign creates an Ed25519 digital signature over the provided data.
-// The data is first hashed using SHA-512 before signing to ensure consistent
-// signature generation. Returns the signature bytes or an error if signing fails.
+// The data is passed directly to ed25519.Sign which implements PureEdDSA
+// (RFC 8032) and performs its own internal SHA-512 hashing.
+// Returns the signature bytes or an error if signing fails.
 func (s *Ed25519Signer) Sign(data []byte) (sig []byte, err error) {
 	log.WithField("data_length", len(data)).Debug("Signing data with Ed25519")
 
@@ -26,9 +26,9 @@ func (s *Ed25519Signer) Sign(data []byte) (sig []byte, err error) {
 		err = oops.Errorf("failed to sign: invalid ed25519 private key size")
 		return
 	}
-	// Hash the input data with SHA-512 before signing
-	h := sha512.Sum512(data)
-	sig, err = s.SignHash(h[:])
+	// Sign the data directly — ed25519.Sign implements PureEdDSA (RFC 8032)
+	// which performs its own internal SHA-512 hashing
+	sig = ed25519.Sign(s.k, data)
 	return
 }
 

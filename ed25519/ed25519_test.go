@@ -41,6 +41,44 @@ func TestEd25519(t *testing.T) {
 	}
 }
 
+// TestEd25519RFC8032Interop verifies that Sign()/Verify() produce standard
+// RFC 8032 PureEdDSA signatures that are interoperable with Go's stdlib
+// ed25519.Sign/ed25519.Verify (and by extension Java I2P and i2pd).
+func TestEd25519RFC8032Interop(t *testing.T) {
+	pub, priv, err := ed25519.GenerateKey(rand.Reader)
+	if err != nil {
+		t.Fatal("Failed to generate key:", err)
+	}
+
+	message := make([]byte, 256)
+	io.ReadFull(rand.Reader, message)
+
+	// Sign with our wrapper
+	signer := &Ed25519Signer{k: []byte(priv)}
+	sig, err := signer.Sign(message)
+	if err != nil {
+		t.Fatal("Signer.Sign failed:", err)
+	}
+
+	// Verify with stdlib directly — this proves RFC 8032 interop
+	if !ed25519.Verify(pub, message, sig) {
+		t.Fatal("Signature produced by Ed25519Signer.Sign() is NOT verifiable by stdlib ed25519.Verify — not RFC 8032 compliant")
+	}
+
+	// Sign with stdlib directly
+	stdlibSig := ed25519.Sign(priv, message)
+
+	// Verify with our wrapper — proves we accept standard signatures
+	pubKey := Ed25519PublicKey(pub)
+	verifier, err := pubKey.NewVerifier()
+	if err != nil {
+		t.Fatal("NewVerifier failed:", err)
+	}
+	if err := verifier.Verify(message, stdlibSig); err != nil {
+		t.Fatal("Ed25519Verifier.Verify() rejects a standard ed25519.Sign() signature — not RFC 8032 compliant")
+	}
+}
+
 // TestEd25519PublicKeyBytes tests the Bytes() method to ensure it returns the correct key data.
 // This is a regression test for the bug where Ed25519PublicKey.Bytes() returned empty slices.
 func TestEd25519PublicKeyBytes(t *testing.T) {
