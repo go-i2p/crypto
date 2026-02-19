@@ -297,6 +297,152 @@ func TestHMACKeyUsagePattern(t *testing.T) {
 	})
 }
 
+// TestNew verifies that the New() wrapper produces the same results as crypto/hmac.New.
+func TestNew(t *testing.T) {
+	t.Run("matches crypto/hmac.New output", func(t *testing.T) {
+		key := []byte("test-key-for-hmac-new-function!!")
+		data := []byte("hello world")
+
+		// Use our wrapper
+		mac := New(sha256.New, key)
+		mac.Write(data)
+		got := mac.Sum(nil)
+
+		// Use crypto/hmac directly
+		stdMac := hmac.New(sha256.New, key)
+		stdMac.Write(data)
+		want := stdMac.Sum(nil)
+
+		if !bytes.Equal(got, want) {
+			t.Errorf("New() digest mismatch:\n  got  %x\n  want %x", got, want)
+		}
+	})
+
+	t.Run("streaming writes produce correct result", func(t *testing.T) {
+		key := []byte("streaming-key-for-hmac-testing!!")
+		chunks := [][]byte{
+			[]byte("chunk1"),
+			[]byte("chunk2"),
+			[]byte("chunk3"),
+		}
+
+		// Write in chunks via our wrapper
+		mac := New(sha256.New, key)
+		for _, c := range chunks {
+			mac.Write(c)
+		}
+		got := mac.Sum(nil)
+
+		// Write all at once via crypto/hmac
+		stdMac := hmac.New(sha256.New, key)
+		for _, c := range chunks {
+			stdMac.Write(c)
+		}
+		want := stdMac.Sum(nil)
+
+		if !bytes.Equal(got, want) {
+			t.Errorf("streaming New() digest mismatch:\n  got  %x\n  want %x", got, want)
+		}
+	})
+
+	t.Run("accepts arbitrary length key", func(t *testing.T) {
+		// HMAC spec pads/hashes keys as needed — any length is valid
+		shortKey := []byte("k")
+		longKey := make([]byte, 128)
+		io.ReadFull(rand.Reader, longKey)
+
+		for _, key := range [][]byte{shortKey, longKey} {
+			mac := New(sha256.New, key)
+			mac.Write([]byte("data"))
+			got := mac.Sum(nil)
+
+			stdMac := hmac.New(sha256.New, key)
+			stdMac.Write([]byte("data"))
+			want := stdMac.Sum(nil)
+
+			if !bytes.Equal(got, want) {
+				t.Errorf("New() digest mismatch for key len %d", len(key))
+			}
+		}
+	})
+
+	t.Run("accepts zero-value key for KDF chains", func(t *testing.T) {
+		// NTCP2 KDF may start with all-zero key material
+		zeroKey := make([]byte, 32)
+		mac := New(sha256.New, zeroKey)
+		mac.Write([]byte("kdf-input"))
+		got := mac.Sum(nil)
+
+		stdMac := hmac.New(sha256.New, zeroKey)
+		stdMac.Write([]byte("kdf-input"))
+		want := stdMac.Sum(nil)
+
+		if !bytes.Equal(got, want) {
+			t.Errorf("New() with zero key mismatch:\n  got  %x\n  want %x", got, want)
+		}
+	})
+}
+
+// TestEqual verifies constant-time MAC comparison.
+func TestEqual(t *testing.T) {
+	t.Run("equal MACs return true", func(t *testing.T) {
+		mac := []byte{0x01, 0x02, 0x03, 0x04}
+		if !Equal(mac, mac) {
+			t.Error("Equal returned false for identical slices")
+		}
+		macCopy := make([]byte, len(mac))
+		copy(macCopy, mac)
+		if !Equal(mac, macCopy) {
+			t.Error("Equal returned false for equal slices")
+		}
+	})
+
+	t.Run("different MACs return false", func(t *testing.T) {
+		mac1 := []byte{0x01, 0x02, 0x03, 0x04}
+		mac2 := []byte{0x01, 0x02, 0x03, 0x05}
+		if Equal(mac1, mac2) {
+			t.Error("Equal returned true for different slices")
+		}
+	})
+
+	t.Run("different lengths return false", func(t *testing.T) {
+		mac1 := []byte{0x01, 0x02, 0x03}
+		mac2 := []byte{0x01, 0x02, 0x03, 0x04}
+		if Equal(mac1, mac2) {
+			t.Error("Equal returned true for slices of different length")
+		}
+	})
+
+	t.Run("empty slices are equal", func(t *testing.T) {
+		if !Equal([]byte{}, []byte{}) {
+			t.Error("Equal returned false for empty slices")
+		}
+	})
+
+	t.Run("works with real HMAC digests", func(t *testing.T) {
+		key := []byte("test-key-for-equal-verification!")
+		data := []byte("important data")
+
+		mac1 := New(sha256.New, key)
+		mac1.Write(data)
+		digest1 := mac1.Sum(nil)
+
+		mac2 := New(sha256.New, key)
+		mac2.Write(data)
+		digest2 := mac2.Sum(nil)
+
+		if !Equal(digest1, digest2) {
+			t.Error("Equal returned false for matching HMAC digests")
+		}
+
+		// Flip a bit
+		digest2[0] ^= 0x01
+		if Equal(digest1, digest2) {
+			t.Error("Equal returned true for tampered HMAC digest")
+		}
+	})
+}
+
 // BenchmarkNewHMACKey benchmarks the constructor performance.
 func BenchmarkNewHMACKey(b *testing.B) {
 	keyData := make([]byte, 32)
