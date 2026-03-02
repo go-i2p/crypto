@@ -40,35 +40,33 @@ func NewArgon2id(timeCost, memoryCost uint32, parallelism uint8) *Argon2id {
 	}
 }
 
-// Derive derives a key of the specified length from the input key material (IKM) using Argon2id.
-func (a *Argon2id) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
-	// get timeCost, memoryCost, and parallelism from parameters or use defaults
-	timeCost := a.TimeCost
-	memoryCost := a.MemoryCost
-	parallelism := a.Parallelism
-	if len(info) > 0 {
-		// parse info for custom parameters (not implemented in this example)
-		// hypothetically, info could contain custom timeCost, memoryCost, parallelism
-		// For simplicity, we ignore info in this implementation
-	}
-	// validate the parameters. If they are invalid, return an error
+// validateDeriveParams checks that all Argon2id derivation parameters meet
+// minimum requirements before performing the expensive key derivation operation.
+func validateDeriveParams(keyLen int, salt []byte, timeCost uint32, memoryCost uint32, parallelism uint8) error {
 	if keyLen <= 0 {
-		return nil, ErrInvalidKeyLength
+		return ErrInvalidKeyLength
 	}
 	if len(salt) == 0 {
-		return nil, ErrInvalidSalt
+		return ErrInvalidSalt
 	}
 	if timeCost < 1 {
-		return nil, ErrInvalidTimeCost
+		return ErrInvalidTimeCost
 	}
 	if memoryCost < 8*1024 {
-		return nil, ErrInsufficientMemory
+		return ErrInsufficientMemory
 	}
 	if parallelism == 0 {
-		return nil, ErrInvalidParallelism
+		return ErrInvalidParallelism
 	}
-	// derive the key using Argon2id
-	derivedKey := argon2.IDKey(ikm, salt, timeCost, memoryCost, parallelism, uint32(keyLen))
+	return nil
+}
+
+// Derive derives a key of the specified length from the input key material (IKM) using Argon2id.
+func (a *Argon2id) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
+	if err := validateDeriveParams(keyLen, salt, a.TimeCost, a.MemoryCost, a.Parallelism); err != nil {
+		return nil, err
+	}
+	derivedKey := argon2.IDKey(ikm, salt, a.TimeCost, a.MemoryCost, a.Parallelism, uint32(keyLen))
 	return derivedKey, nil
 }
 
