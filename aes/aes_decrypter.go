@@ -44,20 +44,7 @@ func (d *AESSymmetricDecrypter) Decrypt(data []byte) ([]byte, error) {
 
 // DecryptNoPadding decrypts data using AES-CBC without padding
 func (d *AESSymmetricDecrypter) DecryptNoPadding(data []byte) ([]byte, error) {
-	if len(data)%aes.BlockSize != 0 {
-		return nil, oops.Errorf("data length must be a multiple of block size")
-	}
-
-	block, err := aes.NewCipher(d.Key)
-	if err != nil {
-		return nil, err
-	}
-
-	plaintext := make([]byte, len(data))
-	mode := cipher.NewCBCDecrypter(block, d.IV)
-	mode.CryptBlocks(plaintext, data)
-
-	return plaintext, nil
+	return processCBCNoPadding(d.Key, d.IV, data, cipher.NewCBCDecrypter)
 }
 
 func NewCipher(c []byte) (cipher.Block, error) {

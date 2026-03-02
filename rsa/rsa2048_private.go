@@ -79,20 +79,7 @@ func (r RSA2048PrivateKey) Sign(data []byte) (sig []byte, err error) {
 // SignHash implements types.Signer.
 // Signs a pre-computed hash
 func (r RSA2048PrivateKey) SignHash(h []byte) (sig []byte, err error) {
-	// Convert byte array to rsa.PrivateKey
-	privKey, err := r.toRSAPrivateKey()
-	if err != nil {
-		return nil, oops.Errorf("failed to parse RSA private key: %w", err)
-	}
-
-	// Sign the hash with PKCS#1 v1.5
-	sig, err = rsa.SignPKCS1v15(rand.Reader, privKey, crypto.SHA256, h)
-	if err != nil {
-		return nil, oops.Errorf("failed to sign hash: %w", err)
-	}
-
-	log.Debug("RSA-2048 signature created successfully")
-	return sig, nil
+	return signHashPKCS1v15(r.toRSAPrivateKey, crypto.SHA256, h, "RSA-2048")
 }
 
 // Bytes implements types.PrivateKey.

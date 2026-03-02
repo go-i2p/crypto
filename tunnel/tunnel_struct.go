@@ -105,26 +105,23 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	return result, nil
 }
 
+// processTunnelData performs the dual-layer AES tunnel processing common to both
+// encryption and decryption, using the provided IV operation and CBC block mode
+// constructor to determine the direction of processing.
+func (a *AESEncryptor) processTunnelData(td *TunnelData, ivOp func(dst, src []byte), newBlockMode func(cipher.Block, []byte) cipher.BlockMode, msg string) error {
+	data := *td
+	ivOp(data[16:1024], data[16:1024])
+	layerBlock := newBlockMode(a.layerKey, data[:16])
+	layerBlock.CryptBlocks(data[16:1024], data[16:1024])
+	ivOp(data[16:1024], data[16:1024])
+	log.Debug(msg)
+	return nil
+}
+
 // encryptTunnelData performs the actual in-place AES encryption on tunnel data.
 // This is the internal method that implements the dual-layer encryption process.
 func (a *AESEncryptor) encryptTunnelData(td *TunnelData) error {
-	data := *td
-
-	// First stage: Encrypt the payload data using IV key to randomize the content
-	// This provides initial cryptographic protection before layer encryption
-	a.ivKey.Encrypt(data[16:1024], data[16:1024])
-
-	// Second stage: Apply CBC layer encryption using the first 16 bytes as IV
-	// This creates the main encryption layer with proper CBC chaining
-	layerBlock := cipher.NewCBCEncrypter(a.layerKey, data[:16])
-	layerBlock.CryptBlocks(data[16:1024], data[16:1024])
-
-	// Third stage: Final IV encryption to protect the encrypted data
-	// This dual-encryption approach enhances security against traffic analysis
-	a.ivKey.Encrypt(data[16:1024], data[16:1024])
-
-	log.Debug("AES tunnel data encrypted successfully")
-	return nil
+	return a.processTunnelData(td, a.ivKey.Encrypt, cipher.NewCBCEncrypter, "AES tunnel data encrypted successfully")
 }
 
 // Decrypt decrypts ciphertext data using AES-256-CBC dual-layer decryption.
@@ -158,23 +155,7 @@ func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 // decryptTunnelData performs the actual in-place AES decryption on tunnel data.
 // This is the internal method that implements the dual-layer decryption process.
 func (a *AESEncryptor) decryptTunnelData(td *TunnelData) error {
-	data := *td
-
-	// First stage: Decrypt the outer IV encryption layer
-	// This removes the final encryption layer applied during the encryption process
-	a.ivKey.Decrypt(data[16:1024], data[16:1024])
-
-	// Second stage: Apply CBC layer decryption using the first 16 bytes as IV
-	// This decrypts the main data layer using CBC mode with proper chaining
-	layerBlock := cipher.NewCBCDecrypter(a.layerKey, data[:16])
-	layerBlock.CryptBlocks(data[16:1024], data[16:1024])
-
-	// Third stage: Final IV decryption to recover original plaintext
-	// This completes the dual-layer decryption process
-	a.ivKey.Decrypt(data[16:1024], data[16:1024])
-
-	log.Debug("AES tunnel data decrypted successfully")
-	return nil
+	return a.processTunnelData(td, a.ivKey.Decrypt, cipher.NewCBCDecrypter, "AES tunnel data decrypted successfully")
 }
 
 // Type returns the encryption scheme used by this encryptor (AES-256-CBC).

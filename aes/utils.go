@@ -3,6 +3,7 @@ package aes
 import (
 	"bytes"
 	"crypto/aes"
+	"crypto/cipher"
 
 	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
@@ -50,4 +51,20 @@ func pkcs7Unpad(data []byte) ([]byte, error) {
 	unpadded := data[:paddingStart]
 	log.WithField("unpadded_length", len(unpadded)).Debug("PKCS#7 padding removed")
 	return unpadded, nil
+}
+
+// processCBCNoPadding performs AES-CBC encryption or decryption without padding,
+// using the provided block mode constructor for direction selection.
+func processCBCNoPadding(key, iv, data []byte, newBlockMode func(cipher.Block, []byte) cipher.BlockMode) ([]byte, error) {
+	if len(data)%aes.BlockSize != 0 {
+		return nil, oops.Errorf("data length must be a multiple of block size")
+	}
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+	output := make([]byte, len(data))
+	mode := newBlockMode(block, iv)
+	mode.CryptBlocks(output, data)
+	return output, nil
 }

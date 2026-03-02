@@ -1,9 +1,13 @@
 package rsa
 
 import (
+	"crypto"
+	"crypto/rand"
 	"crypto/rsa"
 	"fmt"
 	"math/big"
+
+	"github.com/samber/oops"
 )
 
 // rsaPublicKeyFromBytes converts raw bytes to an rsa.PublicKey.
@@ -30,6 +34,22 @@ func rsaPublicKeyFromBytes(data []byte, expectedSize int) (*rsa.PublicKey, error
 	}
 
 	return pubKey, nil
+}
+
+// signHashPKCS1v15 signs a pre-computed hash using PKCS#1 v1.5 with the given
+// RSA private key resolver and hash algorithm, consolidating shared signing logic
+// across RSA key sizes.
+func signHashPKCS1v15(toKey func() (*rsa.PrivateKey, error), hashAlgo crypto.Hash, h []byte, label string) ([]byte, error) {
+	privKey, err := toKey()
+	if err != nil {
+		return nil, oops.Errorf("failed to parse RSA private key: %w", err)
+	}
+	sig, err := rsa.SignPKCS1v15(rand.Reader, privKey, hashAlgo, h)
+	if err != nil {
+		return nil, oops.Errorf("failed to sign hash: %w", err)
+	}
+	log.Debug(label + " signature created successfully")
+	return sig, nil
 }
 
 // GenerateRSA2048KeyPair generates a new RSA-2048 key pair for I2P cryptographic operations.

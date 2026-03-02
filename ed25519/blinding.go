@@ -55,31 +55,37 @@ var (
 //
 // Spec: I2P Proposal 123 - Encrypted LeaseSet
 // Reference: https://ed25519.cr.yp.to/papers.html
-func BlindPublicKey(publicKey, alpha [32]byte) ([32]byte, error) {
+// applyPublicKeyTransform applies a transformation to a public key using a blinding
+// factor, consolidating the shared control flow between blinding and unblinding
+// operations that both follow the parse-compute-copy pattern.
+func applyPublicKeyTransform(keyBytes, alpha [32]byte, startMsg, endMsg string, compute func([32]byte, [32]byte) (*edwards25519.Point, error)) ([32]byte, error) {
 	var result [32]byte
-
-	log.Debug("Blinding Ed25519 public key")
-
-	P, err := parsePublicKeyPoint(publicKey)
+	log.Debug(startMsg)
+	point, err := compute(keyBytes, alpha)
 	if err != nil {
 		return result, err
 	}
-
-	alphaScalar, err := parseAlphaScalar(alpha)
-	if err != nil {
-		return result, err
-	}
-
-	blindedPoint, err := computeBlindedPoint(P, alphaScalar)
-	if err != nil {
-		return result, err
-	}
-
-	copy(result[:], blindedPoint.Bytes())
-
-	log.Debug("Public key blinded successfully")
-
+	copy(result[:], point.Bytes())
+	log.Debug(endMsg)
 	return result, nil
+}
+
+func BlindPublicKey(publicKey, alpha [32]byte) ([32]byte, error) {
+	return applyPublicKeyTransform(publicKey, alpha,
+		"Blinding Ed25519 public key",
+		"Public key blinded successfully",
+		func(key, a [32]byte) (*edwards25519.Point, error) {
+			P, err := parsePublicKeyPoint(key)
+			if err != nil {
+				return nil, err
+			}
+			alphaScalar, err := parseAlphaScalar(a)
+			if err != nil {
+				return nil, err
+			}
+			return computeBlindedPoint(P, alphaScalar)
+		},
+	)
 }
 
 // parsePublicKeyPoint parses a public key as an edwards25519 point.
@@ -249,30 +255,21 @@ func constructBlindedPrivateKey(blindedScalar *edwards25519.Scalar) [64]byte {
 //	recovered, _ := ed25519.UnblindPublicKey(blinded, alpha)
 //	// recovered should equal original
 func UnblindPublicKey(blindedPublicKey, alpha [32]byte) ([32]byte, error) {
-	var result [32]byte
-
-	log.Debug("Unblinding Ed25519 public key")
-
-	Pblinded, err := parseBlindedPublicKey(blindedPublicKey)
-	if err != nil {
-		return result, err
-	}
-
-	alphaB, err := computeAlphaBasePoint(alpha)
-	if err != nil {
-		return result, err
-	}
-
-	original, err := subtractAndValidate(Pblinded, alphaB)
-	if err != nil {
-		return result, err
-	}
-
-	copy(result[:], original.Bytes())
-
-	log.Debug("Public key unblinded successfully")
-
-	return result, nil
+	return applyPublicKeyTransform(blindedPublicKey, alpha,
+		"Unblinding Ed25519 public key",
+		"Public key unblinded successfully",
+		func(key, a [32]byte) (*edwards25519.Point, error) {
+			Pblinded, err := parseBlindedPublicKey(key)
+			if err != nil {
+				return nil, err
+			}
+			alphaB, err := computeAlphaBasePoint(a)
+			if err != nil {
+				return nil, err
+			}
+			return subtractAndValidate(Pblinded, alphaB)
+		},
+	)
 }
 
 // parseBlindedPublicKey parses a blinded public key as an edwards25519 point.

@@ -65,26 +65,25 @@ func generateEphemeralKeyPair() ([]byte, x25519.PrivateKey, error) {
 	return ephemeralPub, ephemeralPriv, nil
 }
 
-// deriveEncryptionKey performs X25519 key agreement and derives the encryption key using HKDF.
-func deriveEncryptionKey(ephemeralPriv x25519.PrivateKey, recipientPubKey []byte) ([]byte, error) {
-	// Convert recipient public key to x25519 format
-	recipientKey := x25519.PublicKey(recipientPubKey)
-
-	// Perform X25519 key agreement (ephemeral-static DH)
-	sharedSecret, err := ephemeralPriv.SharedKey(recipientKey)
+// deriveKeyViaX25519 performs X25519 key agreement and derives a symmetric key
+// using HKDF with SHA-256, consolidating the shared key derivation logic between
+// encryption and decryption paths.
+func deriveKeyViaX25519(privKey x25519.PrivateKey, pubKey x25519.PublicKey) ([]byte, error) {
+	sharedSecret, err := privKey.SharedKey(pubKey)
 	if err != nil {
 		return nil, oops.Errorf("X25519 key agreement failed: %w", err)
 	}
-
-	// Derive encryption key using HKDF with SHA-256
-	// This follows the KDF pattern from I2P Proposal 144
 	hkdfReader := hkdf.New(sha256.New, sharedSecret, nil, []byte("ECIES-X25519-AEAD"))
-	encryptionKey := make([]byte, 32)
-	if _, err := io.ReadFull(hkdfReader, encryptionKey); err != nil {
+	derivedKey := make([]byte, 32)
+	if _, err := io.ReadFull(hkdfReader, derivedKey); err != nil {
 		return nil, oops.Errorf("HKDF key derivation failed: %w", err)
 	}
+	return derivedKey, nil
+}
 
-	return encryptionKey, nil
+// deriveEncryptionKey performs X25519 key agreement and derives the encryption key using HKDF.
+func deriveEncryptionKey(ephemeralPriv x25519.PrivateKey, recipientPubKey []byte) ([]byte, error) {
+	return deriveKeyViaX25519(ephemeralPriv, x25519.PublicKey(recipientPubKey))
 }
 
 // encryptWithAEAD encrypts the plaintext using ChaCha20-Poly1305 AEAD with a random nonce.
@@ -180,18 +179,7 @@ func convertKeysToX25519Format(recipientPrivKey, ephemeralPubKey []byte) (x25519
 
 // performKeyAgreementAndDerivation executes X25519 key agreement and derives the decryption key.
 func performKeyAgreementAndDerivation(privKey x25519.PrivateKey, ephemeralKey x25519.PublicKey) ([]byte, error) {
-	sharedSecret, err := privKey.SharedKey(ephemeralKey)
-	if err != nil {
-		return nil, oops.Errorf("X25519 key agreement failed: %w", err)
-	}
-
-	hkdfReader := hkdf.New(sha256.New, sharedSecret, nil, []byte("ECIES-X25519-AEAD"))
-	decryptionKey := make([]byte, 32)
-	if _, err := io.ReadFull(hkdfReader, decryptionKey); err != nil {
-		return nil, oops.Errorf("HKDF key derivation failed: %w", err)
-	}
-
-	return decryptionKey, nil
+	return deriveKeyViaX25519(privKey, ephemeralKey)
 }
 
 // decryptWithAEAD creates an AEAD cipher and performs the final decryption step.

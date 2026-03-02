@@ -3,8 +3,6 @@ package aes
 import (
 	"crypto/aes"
 	"crypto/cipher"
-
-	"github.com/samber/oops"
 )
 
 // AESSymmetricEncrypter implements the Encrypter interface using AES
@@ -34,18 +32,5 @@ func (e *AESSymmetricEncrypter) Encrypt(data []byte) ([]byte, error) {
 
 // EncryptNoPadding encrypts data using AES-CBC without padding
 func (e *AESSymmetricEncrypter) EncryptNoPadding(data []byte) ([]byte, error) {
-	if len(data)%aes.BlockSize != 0 {
-		return nil, oops.Errorf("data length must be a multiple of block size")
-	}
-
-	block, err := aes.NewCipher(e.Key)
-	if err != nil {
-		return nil, err
-	}
-
-	ciphertext := make([]byte, len(data))
-	mode := cipher.NewCBCEncrypter(block, e.IV)
-	mode.CryptBlocks(ciphertext, data)
-
-	return ciphertext, nil
+	return processCBCNoPadding(e.Key, e.IV, data, cipher.NewCBCEncrypter)
 }
