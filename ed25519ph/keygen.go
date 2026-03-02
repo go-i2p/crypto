@@ -4,6 +4,7 @@ import (
 	"crypto/ed25519"
 	"crypto/rand"
 
+	"github.com/go-i2p/crypto/common"
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
 )
@@ -37,19 +38,16 @@ func GenerateEd25519phKey() (types.SigningPrivateKey, error) {
 //	}
 //	defer privKey.Zero()
 func GenerateEd25519phKeyPair() (*Ed25519phPublicKey, *Ed25519phPrivateKey, error) {
-	log.Debug("Generating Ed25519ph key pair")
-
-	pubKeyRaw, privKeyRaw, err := ed25519.GenerateKey(rand.Reader)
+	pubRaw, privRaw, err := common.GenerateKeyPair("Ed25519ph", func() ([]byte, []byte, error) {
+		pub, priv, err := ed25519.GenerateKey(rand.Reader)
+		return []byte(pub), []byte(priv), err
+	}, log)
 	if err != nil {
-		return nil, nil, oops.Errorf("failed to generate Ed25519ph key pair: %w", err)
+		return nil, nil, err
 	}
 
-	pubKey := Ed25519phPublicKey(pubKeyRaw)
-	privKey := Ed25519phPrivateKey(privKeyRaw)
-
-	log.WithField("pubkey_len", len(pubKey)).
-		WithField("privkey_len", len(privKey)).
-		Debug("Ed25519ph key pair generated successfully")
+	pubKey := Ed25519phPublicKey(pubRaw)
+	privKey := Ed25519phPrivateKey(privRaw)
 
 	return &pubKey, &privKey, nil
 }

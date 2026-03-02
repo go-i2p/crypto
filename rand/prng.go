@@ -165,21 +165,28 @@ func (r *Rand) Int() int {
 	return int(u << 1 >> 1) // clear sign bit if int == int32
 }
 
+// boundedRand performs rejection sampling to return a uniformly distributed
+// non-negative pseudo-random int64 in [0, n) using the given bit width and
+// generator function, consolidating the shared logic of Int63n and Int31n.
+func (r *Rand) boundedRand(n int64, bits uint, gen func() int64) int64 {
+	if n&(n-1) == 0 { // n is power of two, can mask
+		return gen() & (n - 1)
+	}
+	max := int64((uint64(1) << bits) - 1 - (uint64(1)<<bits)%uint64(n))
+	v := gen()
+	for v > max {
+		v = gen()
+	}
+	return v % n
+}
+
 // Int63n returns, as an int64, a non-negative pseudo-random number in [0,n)
 // Compatible with math/rand.Int63n
 func (r *Rand) Int63n(n int64) int64 {
 	if n <= 0 {
 		panic(oops.Errorf("invalid argument to Int63n"))
 	}
-	if n&(n-1) == 0 { // n is power of two, can mask
-		return r.Int63() & (n - 1)
-	}
-	max := int64((1 << 63) - 1 - (1<<63)%uint64(n))
-	v := r.Int63()
-	for v > max {
-		v = r.Int63()
-	}
-	return v % n
+	return r.boundedRand(n, 63, r.Int63)
 }
 
 // Int31n returns, as an int32, a non-negative pseudo-random number in [0,n)
@@ -188,15 +195,7 @@ func (r *Rand) Int31n(n int32) int32 {
 	if n <= 0 {
 		panic(oops.Errorf("invalid argument to Int31n"))
 	}
-	if n&(n-1) == 0 { // n is power of two, can mask
-		return r.Int31() & (n - 1)
-	}
-	max := int32((1 << 31) - 1 - (1<<31)%uint32(n))
-	v := r.Int31()
-	for v > max {
-		v = r.Int31()
-	}
-	return v % n
+	return int32(r.boundedRand(int64(n), 31, func() int64 { return int64(r.Int31()) }))
 }
 
 // Intn returns, as an int, a non-negative pseudo-random number in [0,n)

@@ -3,6 +3,7 @@ package red25519
 import (
 	"crypto/rand"
 
+	"github.com/go-i2p/crypto/common"
 	"github.com/go-i2p/crypto/types"
 	upstream "github.com/go-i2p/red25519"
 	"github.com/samber/oops"
@@ -36,19 +37,16 @@ func GenerateRed25519Key() (types.SigningPrivateKey, error) {
 //	}
 //	defer privKey.Zero()
 func GenerateRed25519KeyPair() (*Red25519PublicKey, *Red25519PrivateKey, error) {
-	log.Debug("Generating Red25519 key pair")
-
-	pubKeyRaw, privKeyRaw, err := upstream.GenerateKey(rand.Reader)
+	pubRaw, privRaw, err := common.GenerateKeyPair("Red25519", func() ([]byte, []byte, error) {
+		pub, priv, err := upstream.GenerateKey(rand.Reader)
+		return []byte(pub), []byte(priv), err
+	}, log)
 	if err != nil {
-		return nil, nil, oops.Errorf("failed to generate Red25519 key pair: %w", err)
+		return nil, nil, err
 	}
 
-	pubKey := Red25519PublicKey(pubKeyRaw)
-	privKey := Red25519PrivateKey(privKeyRaw)
-
-	log.WithField("pubkey_len", len(pubKey)).
-		WithField("privkey_len", len(privKey)).
-		Debug("Red25519 key pair generated successfully")
+	pubKey := Red25519PublicKey(pubRaw)
+	privKey := Red25519PrivateKey(privRaw)
 
 	return &pubKey, &privKey, nil
 }
