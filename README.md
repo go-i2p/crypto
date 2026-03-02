@@ -2,6 +2,22 @@
 
 Comprehensive cryptography library for the I2P (Invisible Internet Project) anonymous networking ecosystem, factored out from the main router implementation. This package provides I2P-specific cryptographic implementations including symmetric encryption, asymmetric encryption, digital signatures, and hashing functions required for privacy-preserving communications and onion routing.
 
+## Notes on scope:
+
+go-i2p theoretically has strictly scoped packages for low-level operations.
+This package is one of the better examples of that at this time.
+crypto is intended to only contain crypto primitives and interfaces, NOT whole protocol implementations.
+
+ - [go-i2p/crypto](https://github.com/go-i2p/crypto): Cryptographic primitives only
+
+This package MUST NOT use any of the following libraries, as it is a dependency of them.
+`go-i2p/crypto` is essentially the lowest-level component in the `go-i2p` namespace.
+
+ - [go-i2p/common](https://github.com/go-i2p/common): I2P Common datastructures
+ - [go-i2p/noise](https://github.com/go-i2p/noise): Noise handshake implementations
+ - [go-i2p/go-noise](https://github.com/go-i2p/go-noise): Noise handshake modifications and router interface
+ - [go-i2p/go-i2p](https://github.com/go-i2p/go-i2p): I2P router implementation
+
 ---
 
 ## Installation
