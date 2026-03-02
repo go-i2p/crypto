@@ -13,7 +13,7 @@
         <a href="index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 127 commits
+        📝 128 commits
          • 📜 MIT License
       </div>
     </div>
@@ -44,12 +44,12 @@
       <div class="repo-stats">
         
         <div class="repo-stat">
-          <span>📝</span> <span>127 commits</span>
+          <span>📝</span> <span>128 commits</span>
         </div>
         
         
         <div class="repo-stat">
-          <span>📅</span> <span>Last updated: February 19, 2026</span>
+          <span>📅</span> <span>Last updated: March 2, 2026</span>
         </div>
         
         
@@ -68,6 +68,26 @@
           <h1 id="go-i2p-crypto">go-i2p/crypto</h1>
 
 <p>Comprehensive cryptography library for the I2P (Invisible Internet Project) anonymous networking ecosystem, factored out from the main router implementation. This package provides I2P-specific cryptographic implementations including symmetric encryption, asymmetric encryption, digital signatures, and hashing functions required for privacy-preserving communications and onion routing.</p>
+
+<h2 id="notes-on-scope">Notes on scope:</h2>
+
+<p>go-i2p theoretically has strictly scoped packages for low-level operations.
+This package is one of the better examples of that at this time.
+crypto is intended to only contain crypto primitives and interfaces, NOT whole protocol implementations.</p>
+
+<ul>
+<li><a href="https://github.com/go-i2p/crypto" target="_blank">go-i2p/crypto</a>: Cryptographic primitives only</li>
+</ul>
+
+<p>This package MUST NOT use any of the following libraries, as it is a dependency of them.
+<code>go-i2p/crypto</code> is essentially the lowest-level component in the <code>go-i2p</code> namespace.</p>
+
+<ul>
+<li><a href="https://github.com/go-i2p/common" target="_blank">go-i2p/common</a>: I2P Common datastructures</li>
+<li><a href="https://github.com/go-i2p/noise" target="_blank">go-i2p/noise</a>: Noise handshake implementations</li>
+<li><a href="https://github.com/go-i2p/go-noise" target="_blank">go-i2p/go-noise</a>: Noise handshake modifications and router interface</li>
+<li><a href="https://github.com/go-i2p/go-i2p" target="_blank">go-i2p/go-i2p</a>: I2P router implementation</li>
+</ul>
 
 <hr>
 
@@ -484,7 +504,7 @@ func main() {
                 eyedeekay
               </div>
               <div class="contributor-commits">
-                127 commits
+                128 commits
               </div>
             </div>
           </div>
@@ -496,7 +516,7 @@ func main() {
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2026-03-02 15:41:23 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2026-03-02 16:21:33 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>
