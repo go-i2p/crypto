@@ -22,3 +22,28 @@ func I2PHMAC(data []byte, k HMACKey) (d HMACDigest) {
 	copy(d[:], digest)
 	return
 }
+
+// HMACSHA256 computes HMAC-SHA256 over data using the provided key and returns
+// the 32-byte digest as a fixed-size array. Unlike I2PHMAC, this function
+// accepts arbitrary-length key and data slices, making it suitable as a
+// general-purpose HMAC-SHA256 primitive for use across I2P components such as
+// noise handshakes and NTCP2 KDF chains.
+//
+// Parameters:
+//   - key: HMAC key of arbitrary length (will be hashed internally if >64 bytes)
+//   - data: The message data to authenticate
+//
+// Returns:
+//   - [32]byte: The 32-byte HMAC-SHA256 digest
+//
+// Example usage:
+//
+//	mac := hmac.HMACSHA256(chainKey[:], inputKeyMaterial)
+//	// mac is a [32]byte ready for further KDF chaining
+func HMACSHA256(key, data []byte) [32]byte {
+	mac := hmac.New(sha256.New, key)
+	mac.Write(data)
+	var out [32]byte
+	copy(out[:], mac.Sum(nil))
+	return out
+}

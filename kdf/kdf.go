@@ -303,3 +303,42 @@ func (kd *KeyDerivation) Zero() {
 	}
 	log.Debug("KeyDerivation state cleared")
 }
+
+// StandardHKDF performs a one-shot RFC 5869 HKDF-SHA256 key derivation.
+// This is a convenience function for callers that need a single HKDF invocation
+// without constructing a KeyDerivation context. It is the canonical implementation
+// of raw HKDF extract-and-expand in the crypto layer, replacing ad-hoc inline
+// implementations found in higher-level packages (e.g., noise handshakes, NTCP2).
+//
+// Parameters:
+//   - salt: Optional salt value (can be nil; HKDF will use a zero-filled salt)
+//   - ikm: Input key material (must not be empty)
+//   - info: Optional context/application-specific info (can be nil)
+//   - length: Desired output length in bytes (must be > 0; max 255*32 per RFC 5869)
+//
+// Returns:
+//   - []byte: Derived key material of the requested length
+//   - error: Any error during derivation
+//
+// Example usage:
+//
+//	derived, err := kdf.StandardHKDF(salt, sharedSecret, []byte("NTCP2-KDF"), 32)
+//	if err != nil {
+//	    return err
+//	}
+func StandardHKDF(salt, ikm, info []byte, length int) ([]byte, error) {
+	log.WithField("ikm_length", len(ikm)).
+		WithField("salt_length", len(salt)).
+		WithField("info_length", len(info)).
+		WithField("output_length", length).
+		Debug("StandardHKDF derivation")
+
+	deriver := hkdf.NewHKDF()
+	derived, err := deriver.Derive(ikm, salt, info, length)
+	if err != nil {
+		return nil, oops.Wrapf(err, "StandardHKDF derivation failed")
+	}
+
+	log.WithField("derived_length", len(derived)).Debug("StandardHKDF derivation successful")
+	return derived, nil
+}

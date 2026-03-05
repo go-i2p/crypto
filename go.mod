@@ -6,6 +6,7 @@ toolchain go1.24.12
 
 require (
 	filippo.io/edwards25519 v1.2.0
+	github.com/dchest/siphash v1.2.3
 	github.com/go-i2p/elgamal v0.0.2
 	github.com/go-i2p/logger v0.1.2
 	github.com/go-i2p/red25519 v0.0.0-20260302212615-1093a31f680d
