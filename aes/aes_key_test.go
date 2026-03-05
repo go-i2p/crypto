@@ -368,38 +368,28 @@ func TestAESKeyLen(t *testing.T) {
 }
 
 // Benchmark constructors
-func BenchmarkNewAESKey(b *testing.B) {
-	key := make([]byte, 32)
-	iv := make([]byte, 16)
-	rand.Read(key)
-	rand.Read(iv)
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewAESKey(key, iv)
+func BenchmarkAESKeyConstructors(b *testing.B) {
+	benchmarks := []struct {
+		name    string
+		keyLen  int
+		newFunc func([]byte, []byte) (*AESSymmetricKey, error)
+	}{
+		{"NewAESKey", 32, NewAESKey},
+		{"NewAES256Key", 32, NewAES256Key},
+		{"NewAES128Key", 16, NewAES128Key},
 	}
-}
 
-func BenchmarkNewAES256Key(b *testing.B) {
-	key := make([]byte, 32)
-	iv := make([]byte, 16)
-	rand.Read(key)
-	rand.Read(iv)
+	for _, bm := range benchmarks {
+		b.Run(bm.name, func(b *testing.B) {
+			key := make([]byte, bm.keyLen)
+			iv := make([]byte, 16)
+			rand.Read(key)
+			rand.Read(iv)
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewAES256Key(key, iv)
-	}
-}
-
-func BenchmarkNewAES128Key(b *testing.B) {
-	key := make([]byte, 16)
-	iv := make([]byte, 16)
-	rand.Read(key)
-	rand.Read(iv)
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewAES128Key(key, iv)
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				_, _ = bm.newFunc(key, iv)
+			}
+		})
 	}
 }

@@ -260,16 +260,7 @@ func TestECIESDecryptor_Encrypt_ShouldFail(t *testing.T) {
 }
 
 func TestECIESEncryptorDecryptor_RoundTrip(t *testing.T) {
-	// Generate a test key pair
-	pubKey, privKey, err := ecies.GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("Failed to generate test key pair: %v", err)
-	}
-
-	var recipientPubKey [32]byte
-	var recipientPrivKey [32]byte
-	copy(recipientPubKey[:], pubKey[:])
-	copy(recipientPrivKey[:], privKey[:])
+	recipientPubKey, recipientPrivKey := generateTestECIESKeyPair(t)
 
 	encryptor := NewECIESEncryptor(recipientPubKey)
 	decryptor := NewECIESDecryptor(recipientPrivKey)
@@ -347,16 +338,7 @@ func TestECIESDecryptor_Zero(t *testing.T) {
 }
 
 func TestECIESWrapper_MatchesECIESPackage(t *testing.T) {
-	// Generate a test key pair
-	pubKey, privKey, err := ecies.GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("Failed to generate test key pair: %v", err)
-	}
-
-	var recipientPubKey [32]byte
-	var recipientPrivKey [32]byte
-	copy(recipientPubKey[:], pubKey[:])
-	copy(recipientPrivKey[:], privKey[:])
+	recipientPubKey, recipientPrivKey := generateTestECIESKeyPair(t)
 
 	encryptor := NewECIESEncryptor(recipientPubKey)
 	decryptor := NewECIESDecryptor(recipientPrivKey)
@@ -370,7 +352,7 @@ func TestECIESWrapper_MatchesECIESPackage(t *testing.T) {
 	}
 
 	// Direct decryption using ecies package should work
-	directDecrypted, err := ecies.DecryptECIESX25519(privKey[:], wrapperCiphertext)
+	directDecrypted, err := ecies.DecryptECIESX25519(recipientPrivKey[:], wrapperCiphertext)
 	if err != nil {
 		t.Fatalf("Direct ecies decrypt of wrapper ciphertext failed: %v", err)
 	}
@@ -380,7 +362,7 @@ func TestECIESWrapper_MatchesECIESPackage(t *testing.T) {
 	}
 
 	// Test 2: Our wrapper decrypt should handle direct ecies ciphertext
-	directCiphertext, err := ecies.EncryptECIESX25519(pubKey[:], plaintext)
+	directCiphertext, err := ecies.EncryptECIESX25519(recipientPubKey[:], plaintext)
 	if err != nil {
 		t.Fatalf("Direct ecies encrypt failed: %v", err)
 	}
@@ -393,6 +375,22 @@ func TestECIESWrapper_MatchesECIESPackage(t *testing.T) {
 	if !bytes.Equal(wrapperDecrypted, plaintext) {
 		t.Error("Wrapper decryption not compatible with direct ecies encryption")
 	}
+}
+
+// generateTestECIESKeyPair generates a test ECIES key pair and returns
+// typed pub/priv keys plus an encryptor/decryptor pair.
+func generateTestECIESKeyPair(t *testing.T) ([32]byte, [32]byte) {
+	t.Helper()
+	pubKey, privKey, err := ecies.GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("Failed to generate test key pair: %v", err)
+	}
+
+	var recipientPubKey [32]byte
+	var recipientPrivKey [32]byte
+	copy(recipientPubKey[:], pubKey[:])
+	copy(recipientPrivKey[:], privKey[:])
+	return recipientPubKey, recipientPrivKey
 }
 
 // Helper function to generate a test public key

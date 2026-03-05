@@ -462,37 +462,78 @@ func generateRSA4096PrivateKey() (RSA4096PrivateKey, error) {
 	return privKey, nil
 }
 
-// Test RSA2048 implementation
-func TestRSA2048_SignAndVerify(t *testing.T) {
-	// Generate a proper RSA2048 key pair
-	privKey, err := generateRSA2048PrivateKey()
+// testRSASignAndVerify is a test helper that validates sign-and-verify round-trip
+// for any RSA key size. It generates a key pair, signs test data, and verifies the signature.
+func testRSASignAndVerify(t *testing.T, genKey func() (types.Signer, types.SigningPublicKey, error), label string) {
+	t.Helper()
+
+	signer, pubKey, err := genKey()
 	if err != nil {
-		t.Fatalf("failed to generate RSA2048 key: %v", err)
+		t.Fatalf("failed to generate %s key: %v", label, err)
 	}
 
-	// Get the public key
-	pubKey, err := privKey.Public()
-	if err != nil {
-		t.Fatalf("failed to extract public key: %v", err)
-	}
+	testData := []byte("Hello, " + label + "!")
 
-	// Test data
-	testData := []byte("Hello, RSA2048!")
-
-	// Sign the data
-	signature, err := privKey.Sign(testData)
+	signature, err := signer.Sign(testData)
 	if err != nil {
 		t.Fatalf("failed to sign data: %v", err)
 	}
 
-	// Verify the signature
-	if rsaPub, ok := pubKey.(RSA2048PublicKey); ok {
-		err = rsaPub.Verify(testData, signature)
-		if err != nil {
-			t.Fatalf("failed to verify signature: %v", err)
-		}
-	} else {
-		t.Fatalf("unexpected public key type: %T", pubKey)
+	verifier, err := pubKey.NewVerifier()
+	if err != nil {
+		t.Fatalf("failed to create verifier: %v", err)
+	}
+
+	err = verifier.Verify(testData, signature)
+	if err != nil {
+		t.Fatalf("failed to verify signature: %v", err)
+	}
+}
+
+func TestRSA_SignAndVerify(t *testing.T) {
+	tests := []struct {
+		name   string
+		genKey func() (types.Signer, types.SigningPublicKey, error)
+	}{
+		{
+			name: "RSA2048",
+			genKey: func() (types.Signer, types.SigningPublicKey, error) {
+				priv, err := generateRSA2048PrivateKey()
+				if err != nil {
+					return nil, nil, err
+				}
+				pub, err := priv.Public()
+				return priv, pub, err
+			},
+		},
+		{
+			name: "RSA3072",
+			genKey: func() (types.Signer, types.SigningPublicKey, error) {
+				priv, err := generateRSA3072PrivateKey()
+				if err != nil {
+					return nil, nil, err
+				}
+				pub, err := priv.Public()
+				return priv, pub, err
+			},
+		},
+		{
+			name: "RSA4096",
+			genKey: func() (types.Signer, types.SigningPublicKey, error) {
+				priv, err := generateRSA4096PrivateKey()
+				if err != nil {
+					return nil, nil, err
+				}
+				pub, err := priv.Public()
+				return priv, pub, err
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			testRSASignAndVerify(t, tt.genKey, tt.name)
+		})
 	}
 }
 
@@ -676,73 +717,8 @@ func TestRSA2048_InvalidHashLength(t *testing.T) {
 	}
 }
 
-// Test RSA3072 implementation
-func TestRSA3072_SignAndVerify(t *testing.T) {
-	// Generate a proper RSA3072 key pair
-	privKey, err := generateRSA3072PrivateKey()
-	if err != nil {
-		t.Fatalf("failed to generate RSA3072 key: %v", err)
-	}
-
-	// Get the public key
-	pubKey, err := privKey.Public()
-	if err != nil {
-		t.Fatalf("failed to extract public key: %v", err)
-	}
-
-	// Test data
-	testData := []byte("Hello, RSA3072!")
-
-	// Sign the data
-	signature, err := privKey.Sign(testData)
-	if err != nil {
-		t.Fatalf("failed to sign data: %v", err)
-	}
-
-	// Verify the signature
-	if rsaPub, ok := pubKey.(RSA3072PublicKey); ok {
-		err = rsaPub.Verify(testData, signature)
-		if err != nil {
-			t.Fatalf("failed to verify signature: %v", err)
-		}
-	} else {
-		t.Fatalf("unexpected public key type: %T", pubKey)
-	}
-}
-
-// Test RSA4096 implementation
-func TestRSA4096_SignAndVerify(t *testing.T) {
-	// Generate a proper RSA4096 key pair
-	privKey, err := generateRSA4096PrivateKey()
-	if err != nil {
-		t.Fatalf("failed to generate RSA4096 key: %v", err)
-	}
-
-	// Get the public key
-	pubKey, err := privKey.Public()
-	if err != nil {
-		t.Fatalf("failed to extract public key: %v", err)
-	}
-
-	// Test data
-	testData := []byte("Hello, RSA4096!")
-
-	// Sign the data
-	signature, err := privKey.Sign(testData)
-	if err != nil {
-		t.Fatalf("failed to sign data: %v", err)
-	}
-
-	// Verify the signature
-	if rsaPub, ok := pubKey.(RSA4096PublicKey); ok {
-		err = rsaPub.Verify(testData, signature)
-		if err != nil {
-			t.Fatalf("failed to verify signature: %v", err)
-		}
-	} else {
-		t.Fatalf("unexpected public key type: %T", pubKey)
-	}
-}
+// TestRSA3072_SignAndVerify and TestRSA4096_SignAndVerify consolidated
+// into table-driven TestRSA_SignAndVerify above.
 
 // Test utility functions
 func TestRSAPublicKeyFromBytes(t *testing.T) {

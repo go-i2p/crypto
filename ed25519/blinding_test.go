@@ -30,6 +30,35 @@ func generateValidAlpha() ([32]byte, error) {
 	return alpha, nil
 }
 
+// assertBlindDeterministic is a test helper that verifies a blinding function
+// produces identical results when called multiple times with the same inputs.
+func assertBlindDeterministic(t *testing.T, blindFunc func() ([]byte, error)) {
+	t.Helper()
+
+	blinded1, err := blindFunc()
+	if err != nil {
+		t.Fatalf("First blinding failed: %v", err)
+	}
+
+	blinded2, err := blindFunc()
+	if err != nil {
+		t.Fatalf("Second blinding failed: %v", err)
+	}
+
+	blinded3, err := blindFunc()
+	if err != nil {
+		t.Fatalf("Third blinding failed: %v", err)
+	}
+
+	if !bytes.Equal(blinded1, blinded2) {
+		t.Error("First and second blinding produced different results")
+	}
+
+	if !bytes.Equal(blinded1, blinded3) {
+		t.Error("First and third blinding produced different results")
+	}
+}
+
 func TestBlindPublicKey(t *testing.T) {
 	// Generate a test keypair
 	pub, _, err := ed25519.GenerateKey(rand.Reader)
@@ -76,7 +105,6 @@ func TestBlindPublicKey(t *testing.T) {
 }
 
 func TestBlindPublicKeyDeterminism(t *testing.T) {
-	// Generate a test keypair
 	pub, _, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {
 		t.Fatalf("Failed to generate test key: %v", err)
@@ -85,36 +113,15 @@ func TestBlindPublicKeyDeterminism(t *testing.T) {
 	var pubKey [32]byte
 	copy(pubKey[:], pub)
 
-	var alpha [32]byte
-	alpha, err = generateValidAlpha()
+	alpha, err := generateValidAlpha()
 	if err != nil {
 		t.Fatalf("Failed to generate alpha: %v", err)
 	}
 
-	// Blind the key multiple times
-	blinded1, err := BlindPublicKey(pubKey, alpha)
-	if err != nil {
-		t.Fatalf("First blinding failed: %v", err)
-	}
-
-	blinded2, err := BlindPublicKey(pubKey, alpha)
-	if err != nil {
-		t.Fatalf("Second blinding failed: %v", err)
-	}
-
-	blinded3, err := BlindPublicKey(pubKey, alpha)
-	if err != nil {
-		t.Fatalf("Third blinding failed: %v", err)
-	}
-
-	// Verify all results are identical
-	if !bytes.Equal(blinded1[:], blinded2[:]) {
-		t.Error("First and second blinding produced different results")
-	}
-
-	if !bytes.Equal(blinded1[:], blinded3[:]) {
-		t.Error("First and third blinding produced different results")
-	}
+	assertBlindDeterministic(t, func() ([]byte, error) {
+		b, err := BlindPublicKey(pubKey, alpha)
+		return b[:], err
+	})
 }
 
 func TestBlindPublicKeyInvalidInputs(t *testing.T) {
@@ -228,7 +235,6 @@ func TestBlindPrivateKey(t *testing.T) {
 }
 
 func TestBlindPrivateKeyDeterminism(t *testing.T) {
-	// Generate a test keypair
 	_, priv, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {
 		t.Fatalf("Failed to generate test key: %v", err)
@@ -237,36 +243,15 @@ func TestBlindPrivateKeyDeterminism(t *testing.T) {
 	var privKey [64]byte
 	copy(privKey[:], priv)
 
-	var alpha [32]byte
-	alpha, err = generateValidAlpha()
+	alpha, err := generateValidAlpha()
 	if err != nil {
 		t.Fatalf("Failed to generate alpha: %v", err)
 	}
 
-	// Blind the key multiple times
-	blinded1, err := BlindPrivateKey(privKey, alpha)
-	if err != nil {
-		t.Fatalf("First blinding failed: %v", err)
-	}
-
-	blinded2, err := BlindPrivateKey(privKey, alpha)
-	if err != nil {
-		t.Fatalf("Second blinding failed: %v", err)
-	}
-
-	blinded3, err := BlindPrivateKey(privKey, alpha)
-	if err != nil {
-		t.Fatalf("Third blinding failed: %v", err)
-	}
-
-	// Verify all results are identical
-	if !bytes.Equal(blinded1[:], blinded2[:]) {
-		t.Error("First and second blinding produced different results")
-	}
-
-	if !bytes.Equal(blinded1[:], blinded3[:]) {
-		t.Error("First and third blinding produced different results")
-	}
+	assertBlindDeterministic(t, func() ([]byte, error) {
+		b, err := BlindPrivateKey(privKey, alpha)
+		return b[:], err
+	})
 }
 
 func TestBlindKeysConsistency(t *testing.T) {
@@ -381,67 +366,8 @@ func TestBlindPublicKeyDifferentAlphas(t *testing.T) {
 	}
 }
 
-func TestUnblindPublicKey(t *testing.T) {
-	// Generate a test keypair
-	pub, _, err := ed25519.GenerateKey(rand.Reader)
-	if err != nil {
-		t.Fatalf("Failed to generate test key: %v", err)
-	}
-
-	var original [32]byte
-	copy(original[:], pub)
-
-	var alpha [32]byte
-	alpha, err = generateValidAlpha()
-	if err != nil {
-		t.Fatalf("Failed to generate alpha: %v", err)
-	}
-
-	// Blind the key
-	blinded, err := BlindPublicKey(original, alpha)
-	if err != nil {
-		t.Fatalf("BlindPublicKey failed: %v", err)
-	}
-
-	// Unblind should work
-	unblinded, err := UnblindPublicKey(blinded, alpha)
-	if err != nil {
-		t.Fatalf("UnblindPublicKey failed: %v", err)
-	}
-
-	// Should match original
-	if !bytes.Equal(unblinded[:], original[:]) {
-		t.Error("Unblinded key does not match original")
-	}
-}
-
-func TestBlindingWithEdwards25519Scalars(t *testing.T) {
-	// Generate a test keypair
-	pub, _, err := ed25519.GenerateKey(rand.Reader)
-	if err != nil {
-		t.Fatalf("Failed to generate test key: %v", err)
-	}
-
-	var pubKey [32]byte
-	copy(pubKey[:], pub)
-
-	// Generate a valid alpha using our helper (which uses SetUniformBytes internally)
-	alpha, err := generateValidAlpha()
-	if err != nil {
-		t.Fatalf("Failed to generate alpha: %v", err)
-	}
-
-	// Blind the key
-	blinded, err := BlindPublicKey(pubKey, alpha)
-	if err != nil {
-		t.Fatalf("BlindPublicKey failed: %v", err)
-	}
-
-	// Should produce valid result
-	if len(blinded) != 32 {
-		t.Errorf("Expected 32-byte result, got %d", len(blinded))
-	}
-}
+// TestUnblindPublicKey and TestBlindingWithEdwards25519Scalars removed:
+// covered by TestBlindUnblindRoundTrip and TestBlindPublicKey respectively.
 
 // BenchmarkBlindPublicKey benchmarks public key blinding
 func BenchmarkBlindPublicKey(b *testing.B) {

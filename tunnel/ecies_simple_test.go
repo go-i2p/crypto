@@ -41,16 +41,7 @@ func TestECIESEncryptor_Simple(t *testing.T) {
 }
 
 func TestECIESRoundTrip_Simple(t *testing.T) {
-	// Generate a test key pair
-	pubKey, privKey, err := ecies.GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("Failed to generate test key pair: %v", err)
-	}
-
-	var recipientPubKey [32]byte
-	var recipientPrivKey [32]byte
-	copy(recipientPubKey[:], pubKey[:])
-	copy(recipientPrivKey[:], privKey[:])
+	recipientPubKey, recipientPrivKey := generateTestECIESKeyPair(t)
 
 	encryptor := NewECIESEncryptor(recipientPubKey)
 	decryptor := NewECIESDecryptor(recipientPrivKey)

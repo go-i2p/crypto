@@ -19,20 +19,27 @@ func BenchmarkElgGenerate(b *testing.B) {
 	}
 }
 
-func BenchmarkElgDecrypt(b *testing.B) {
+// setupElgBenchmark generates an ElGamal key pair and encrypter for benchmarks.
+func setupElgBenchmark(b *testing.B) (*elgamal.PrivateKey, *ElgamalEncryption, []byte) {
+	b.Helper()
 	prv := new(elgamal.PrivateKey)
 	err := ElgamalGenerate(prv, rand.Reader)
 	if err != nil {
-		panic(err.Error())
+		b.Fatal(err)
 	}
 	pub := createElgamalPublicKey(prv.Y.Bytes())
 	enc, err := createElgamalEncryption(pub)
 	if err != nil {
-		panic(err.Error())
+		b.Fatal(err)
 	}
 	d := make([]byte, 222)
-	_, _ = io.ReadFull(rand.Reader, d)
-	c, err := enc.Encrypt(d)
+	io.ReadFull(rand.Reader, d)
+	return prv, enc, d
+}
+
+func BenchmarkElgDecrypt(b *testing.B) {
+	prv, enc, d := setupElgBenchmark(b)
+	c, _ := enc.Encrypt(d)
 	fails := 0
 	dec := &elgDecrypter{
 		k: prv,
@@ -49,18 +56,7 @@ func BenchmarkElgDecrypt(b *testing.B) {
 }
 
 func BenchmarkElgEncrypt(b *testing.B) {
-	prv := new(elgamal.PrivateKey)
-	err := ElgamalGenerate(prv, rand.Reader)
-	if err != nil {
-		panic(err.Error())
-	}
-	pub := createElgamalPublicKey(prv.Y.Bytes())
-	enc, err := createElgamalEncryption(pub)
-	if err != nil {
-		panic(err.Error())
-	}
-	d := make([]byte, 222)
-	_, err = io.ReadFull(rand.Reader, d)
+	_, enc, d := setupElgBenchmark(b)
 	fails := 0
 	for n := 0; n < b.N; n++ {
 		_, err := enc.Encrypt(d)

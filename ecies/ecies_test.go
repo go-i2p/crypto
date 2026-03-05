@@ -8,6 +8,27 @@ import (
 	"go.step.sm/crypto/x25519"
 )
 
+// generateTestECIESKeys is a test helper that generates an ECIES key pair
+// and returns typed keys ready for use.
+func generateTestECIESKeys(t *testing.T) (ECIESPublicKey, ECIESPrivateKey, []byte, []byte) {
+	t.Helper()
+	pub, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("Failed to generate key pair: %v", err)
+	}
+
+	var privKey ECIESPrivateKey
+	copy(privKey[:], priv)
+
+	pubInterface, err := privKey.Public()
+	if err != nil {
+		t.Fatalf("Public() failed: %v", err)
+	}
+
+	pubKey := pubInterface.(ECIESPublicKey)
+	return pubKey, privKey, pub, priv
+}
+
 func TestECIESX25519RoundTrip(t *testing.T) {
 	// Generate recipient key pair
 	recipientPub, recipientPriv, err := GenerateKeyPair()
@@ -394,14 +415,7 @@ func TestECIESPrivateKeyPublicDerivation(t *testing.T) {
 // TestECIESPrivateKeyPublicConsistency tests that Public() always returns the same
 // public key for the same private key (deterministic derivation).
 func TestECIESPrivateKeyPublicConsistency(t *testing.T) {
-	// Generate a key pair
-	_, priv, err := GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("Failed to generate key pair: %v", err)
-	}
-
-	var privKey ECIESPrivateKey
-	copy(privKey[:], priv)
+	_, privKey, _, _ := generateTestECIESKeys(t)
 
 	// Derive public key multiple times
 	pub1, err := privKey.Public()
@@ -436,22 +450,7 @@ func TestECIESPrivateKeyPublicConsistency(t *testing.T) {
 // TestECIESPublicKeyEncryptDecryptRoundTrip tests that encryption/decryption works
 // correctly when using a public key derived via Public() method.
 func TestECIESPublicKeyEncryptDecryptRoundTrip(t *testing.T) {
-	// Generate key pair
-	_, priv, err := GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("Failed to generate key pair: %v", err)
-	}
-
-	var privKey ECIESPrivateKey
-	copy(privKey[:], priv)
-
-	// Derive public key using Public() method
-	pubInterface, err := privKey.Public()
-	if err != nil {
-		t.Fatalf("Public() failed: %v", err)
-	}
-
-	pubKey := pubInterface.(ECIESPublicKey)
+	pubKey, privKey, _, _ := generateTestECIESKeys(t)
 
 	// Test data
 	originalData := []byte("Testing encryption with derived public key")
@@ -477,22 +476,7 @@ func TestECIESPublicKeyEncryptDecryptRoundTrip(t *testing.T) {
 // TestECIESPublicKeyInterfaceMethods tests that ECIESPublicKey properly
 // implements the PublicEncryptionKey interface methods.
 func TestECIESPublicKeyInterfaceMethods(t *testing.T) {
-	// Generate key pair
-	pub, priv, err := GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("Failed to generate key pair: %v", err)
-	}
-
-	var privKey ECIESPrivateKey
-	copy(privKey[:], priv)
-
-	// Derive public key
-	pubInterface, err := privKey.Public()
-	if err != nil {
-		t.Fatalf("Public() failed: %v", err)
-	}
-
-	pubKey := pubInterface.(ECIESPublicKey)
+	pubKey, privKey, pub, _ := generateTestECIESKeys(t)
 
 	// Test Len() method
 	if pubKey.Len() != PublicKeySize {
@@ -540,14 +524,7 @@ func TestECIESPublicKeyInterfaceMethods(t *testing.T) {
 // TestECIESPrivateKeyInterfaceMethods tests that ECIESPrivateKey properly
 // implements the PrivateEncryptionKey interface methods.
 func TestECIESPrivateKeyInterfaceMethods(t *testing.T) {
-	// Generate key pair
-	pub, priv, err := GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("Failed to generate key pair: %v", err)
-	}
-
-	var privKey ECIESPrivateKey
-	copy(privKey[:], priv)
+	_, privKey, pub, priv := generateTestECIESKeys(t)
 
 	// Test Len() method
 	if privKey.Len() != PrivateKeySize {

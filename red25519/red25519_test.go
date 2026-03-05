@@ -10,6 +10,28 @@ import (
 	upstream "github.com/go-i2p/red25519"
 )
 
+// signWithRed25519 is a test helper that generates a Red25519 key pair,
+// signs the given message, and returns the public key, signature, and signer.
+func signWithRed25519(t *testing.T, message []byte) (*Red25519PublicKey, *Red25519PrivateKey, []byte) {
+	t.Helper()
+	pubKey, privKey, err := GenerateRed25519KeyPair()
+	if err != nil {
+		t.Fatal("Failed to generate key:", err)
+	}
+
+	signer, err := privKey.NewSigner()
+	if err != nil {
+		t.Fatal("NewSigner failed:", err)
+	}
+
+	sig, err := signer.Sign(message)
+	if err != nil {
+		t.Fatal("Sign failed:", err)
+	}
+
+	return pubKey, privKey, sig
+}
+
 // TestRed25519SignVerify tests basic sign and verify round-trip.
 func TestRed25519SignVerify(t *testing.T) {
 	pubKey, privKey, err := GenerateRed25519KeyPair()
@@ -149,22 +171,9 @@ func TestRed25519WrongKeyRejects(t *testing.T) {
 // TestRed25519TamperedMessageRejects verifies that modifying the message
 // causes verification to fail.
 func TestRed25519TamperedMessageRejects(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("Failed to generate key:", err)
-	}
-	defer privKey.Zero()
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
-
 	message := []byte("original message")
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Sign failed:", err)
-	}
+	pubKey, privKey, sig := signWithRed25519(t, message)
+	defer privKey.Zero()
 
 	// Tamper with message
 	tampered := []byte("tampered message")
@@ -182,22 +191,9 @@ func TestRed25519TamperedMessageRejects(t *testing.T) {
 // TestRed25519TamperedSignatureRejects verifies that modifying the signature
 // causes verification to fail.
 func TestRed25519TamperedSignatureRejects(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("Failed to generate key:", err)
-	}
-	defer privKey.Zero()
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
-
 	message := []byte("test message for tampered signature")
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Sign failed:", err)
-	}
+	pubKey, privKey, sig := signWithRed25519(t, message)
+	defer privKey.Zero()
 
 	// Tamper with signature
 	sig[0] ^= 0xff
@@ -350,52 +346,56 @@ func TestRed25519PrivateKeyGenerate(t *testing.T) {
 	}
 }
 
-// TestNewRed25519PublicKey tests constructor validation.
-func TestNewRed25519PublicKey(t *testing.T) {
-	// Invalid size
-	_, err := NewRed25519PublicKey([]byte{1, 2, 3})
-	if err == nil {
-		t.Fatal("NewRed25519PublicKey should reject invalid size")
-	}
-
-	// Valid - generate a real public key
-	pubKey, _, err := GenerateRed25519KeyPair()
+// TestNewRed25519KeyConstructors tests constructor validation for both public and private keys.
+func TestNewRed25519KeyConstructors(t *testing.T) {
+	pubKey, privKey, err := GenerateRed25519KeyPair()
 	if err != nil {
 		t.Fatal("GenerateRed25519KeyPair failed:", err)
 	}
+	defer privKey.Zero()
 
-	restored, err := NewRed25519PublicKey(pubKey.Bytes())
-	if err != nil {
-		t.Fatal("NewRed25519PublicKey with valid data failed:", err)
+	tests := []struct {
+		name        string
+		constructor func([]byte) (interface{ Bytes() []byte }, error)
+		invalidData []byte
+		validData   []byte
+	}{
+		{
+			name: "PublicKey",
+			constructor: func(data []byte) (interface{ Bytes() []byte }, error) {
+				return NewRed25519PublicKey(data)
+			},
+			invalidData: []byte{1, 2, 3},
+			validData:   pubKey.Bytes(),
+		},
+		{
+			name: "PrivateKey",
+			constructor: func(data []byte) (interface{ Bytes() []byte }, error) {
+				return NewRed25519PrivateKey(data)
+			},
+			invalidData: []byte{1, 2, 3},
+			validData:   privKey.Bytes(),
+		},
 	}
 
-	if !bytes.Equal(pubKey.Bytes(), restored.Bytes()) {
-		t.Fatal("Restored public key doesn't match original")
-	}
-}
+	for _, tt := range tests {
+		t.Run(tt.name+"_invalid_size", func(t *testing.T) {
+			_, err := tt.constructor(tt.invalidData)
+			if err == nil {
+				t.Fatalf("New%s should reject invalid size", tt.name)
+			}
+		})
 
-// TestNewRed25519PrivateKey tests constructor validation.
-func TestNewRed25519PrivateKey(t *testing.T) {
-	// Invalid size
-	_, err := NewRed25519PrivateKey([]byte{1, 2, 3})
-	if err == nil {
-		t.Fatal("NewRed25519PrivateKey should reject invalid size")
-	}
+		t.Run(tt.name+"_valid_roundtrip", func(t *testing.T) {
+			restored, err := tt.constructor(tt.validData)
+			if err != nil {
+				t.Fatalf("New%s with valid data failed: %v", tt.name, err)
+			}
 
-	// Valid - generate a real private key
-	_, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-
-	restored, err := NewRed25519PrivateKey(privKey.Bytes())
-	if err != nil {
-		t.Fatal("NewRed25519PrivateKey with valid data failed:", err)
-	}
-	defer restored.Zero()
-
-	if !bytes.Equal(privKey.Bytes(), restored.Bytes()) {
-		t.Fatal("Restored private key doesn't match original")
+			if !bytes.Equal(tt.validData, restored.Bytes()) {
+				t.Fatalf("Restored %s doesn't match original", tt.name)
+			}
+		})
 	}
 }
 
