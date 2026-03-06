@@ -321,22 +321,25 @@ func TestGetCurrentBlindingDate(t *testing.T) {
 	}
 }
 
-func TestDeriveBlindingFactorWithEd25519Key(t *testing.T) {
-	// Generate a real Ed25519 keypair
+// deriveBlindingFactorFromEd25519Key generates an Ed25519 keypair, derives a blinding
+// factor from its seed, and returns the public key, secret, and alpha.
+func deriveBlindingFactorFromEd25519Key(t *testing.T, date string) (ed25519.PublicKey, []byte, [32]byte) {
+	t.Helper()
 	pub, priv, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {
 		t.Fatalf("Failed to generate Ed25519 key: %v", err)
 	}
-
-	// Use the seed (first 32 bytes of private key) as the secret
 	secret := priv.Seed()
-
-	date := "2025-11-24"
-
 	alpha, err := DeriveBlindingFactor(secret, date)
 	if err != nil {
-		t.Fatalf("Derivation failed: %v", err)
+		t.Fatalf("DeriveBlindingFactor failed: %v", err)
 	}
+	return pub, secret, alpha
+}
+
+func TestDeriveBlindingFactorWithEd25519Key(t *testing.T) {
+	date := "2025-11-24"
+	pub, secret, alpha := deriveBlindingFactorFromEd25519Key(t, date)
 
 	// Verify alpha is 32 bytes
 	if len(alpha) != 32 {
@@ -450,21 +453,7 @@ func TestDeriveBlindingFactorIntegrationWithEd25519Blinding(t *testing.T) {
 	// This test requires the ed25519 package's BlindPublicKey function
 	// Since we're in the kdf package, we'll verify what we can here:
 	// that the alpha is usable as a canonical scalar.
-
-	// Generate Ed25519 keypair
-	_, priv, err := ed25519.GenerateKey(rand.Reader)
-	if err != nil {
-		t.Fatalf("Failed to generate keypair: %v", err)
-	}
-
-	secret := priv.Seed()
-	date := "2025-11-24"
-
-	// Derive blinding factor using KDF
-	alpha, err := DeriveBlindingFactor(secret, date)
-	if err != nil {
-		t.Fatalf("DeriveBlindingFactor failed: %v", err)
-	}
+	_, _, alpha := deriveBlindingFactorFromEd25519Key(t, "2025-11-24")
 
 	// Verify it can be parsed as a canonical scalar
 	// (This is what ed25519.BlindPublicKey does internally via parseAlphaScalar)

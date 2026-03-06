@@ -146,6 +146,26 @@ func TestEd25519phNotInteropWithPureEdDSA(t *testing.T) {
 	}
 }
 
+// assertSignVerifyRoundTrip signs a message and verifies the signature.
+func assertSignVerifyRoundTrip(t *testing.T, privKey *Ed25519phPrivateKey, pubKey *Ed25519phPublicKey, message []byte) {
+	t.Helper()
+	signer, err := privKey.NewSigner()
+	if err != nil {
+		t.Fatalf("NewSigner failed: %v", err)
+	}
+	sig, err := signer.Sign(message)
+	if err != nil {
+		t.Fatalf("Sign failed: %v", err)
+	}
+	verifier, err := pubKey.NewVerifier()
+	if err != nil {
+		t.Fatalf("NewVerifier failed: %v", err)
+	}
+	if err := verifier.Verify(message, sig); err != nil {
+		t.Fatalf("Verify failed: %v", err)
+	}
+}
+
 // TestEd25519phKeyPairGeneration tests key pair generation and round-trip.
 func TestEd25519phKeyPairGeneration(t *testing.T) {
 	pubKey, privKey, err := GenerateEd25519phKeyPair()
@@ -161,24 +181,7 @@ func TestEd25519phKeyPairGeneration(t *testing.T) {
 		t.Fatalf("Private key length = %d, want %d", privKey.Len(), ed25519.PrivateKeySize)
 	}
 
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
-
-	message := []byte("test message for ed25519ph key pair")
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Sign failed:", err)
-	}
-
-	verifier, err := pubKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
-	}
-	if err := verifier.Verify(message, sig); err != nil {
-		t.Fatal("Verify failed:", err)
-	}
+	assertSignVerifyRoundTrip(t, privKey, pubKey, []byte("test message for ed25519ph key pair"))
 }
 
 // TestEd25519phPublicKeyBytes tests key byte methods.

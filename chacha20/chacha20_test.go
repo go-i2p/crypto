@@ -128,35 +128,41 @@ func TestChaCha20KeyZero(t *testing.T) {
 
 // TestChaCha20KeyEncryptDecrypt tests encryption/decryption with constructor-created keys
 func TestChaCha20KeyEncryptDecrypt(t *testing.T) {
+	key := generateTestKey(t)
+	assertChaCha20RoundTrip(t, key, []byte("hello world"))
+}
+
+// generateTestKey creates a random ChaCha20 key for testing.
+func generateTestKey(t *testing.T) *ChaCha20Key {
+	t.Helper()
 	keyData := make([]byte, 32)
 	rand.Read(keyData)
-
 	key, err := NewChaCha20Key(keyData)
 	if err != nil {
 		t.Fatalf("NewChaCha20Key() failed: %v", err)
 	}
+	return key
+}
 
+// assertChaCha20RoundTrip encrypts and decrypts data, verifying the round-trip.
+func assertChaCha20RoundTrip(t *testing.T, key *ChaCha20Key, plaintext []byte) {
+	t.Helper()
 	encrypter, err := key.NewEncrypter()
 	if err != nil {
 		t.Fatalf("NewEncrypter() failed: %v", err)
 	}
-
 	decrypter, err := key.NewDecrypter()
 	if err != nil {
 		t.Fatalf("NewDecrypter() failed: %v", err)
 	}
-
-	plaintext := []byte("hello world")
 	encrypted, err := encrypter.Encrypt(plaintext)
 	if err != nil {
 		t.Fatalf("Encrypt() failed: %v", err)
 	}
-
 	decrypted, err := decrypter.Decrypt(encrypted)
 	if err != nil {
 		t.Fatalf("Decrypt() failed: %v", err)
 	}
-
 	if !bytes.Equal(plaintext, decrypted) {
 		t.Error("Decrypted data doesn't match original plaintext")
 	}

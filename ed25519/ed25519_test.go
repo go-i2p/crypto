@@ -1,6 +1,7 @@
 package ed25519
 
 import (
+	"bytes"
 	"crypto/ed25519"
 	"crypto/rand"
 	"io"
@@ -489,46 +490,32 @@ func TestEd25519KeyPairConsistency(t *testing.T) {
 			t.Fatalf("Iteration %d: NewEd25519PrivateKey failed: %v", i, err)
 		}
 
-		// Derive public key from private key
+		// Derive public key and verify match using bytes.Equal
 		derivedPubInterface, err := privKey.Public()
 		if err != nil {
 			t.Fatalf("Iteration %d: Public() failed: %v", i, err)
 		}
-
 		derivedPub := derivedPubInterface.(Ed25519PublicKey)
-
-		// Verify derived public key matches original
-		if len(derivedPub.Bytes()) != len(pubKey.Bytes()) {
-			t.Errorf("Iteration %d: derived public key length mismatch", i)
+		if !bytes.Equal(derivedPub.Bytes(), pubKey.Bytes()) {
+			t.Errorf("Iteration %d: derived public key mismatch", i)
 			continue
 		}
 
-		for j := 0; j < len(pubKey.Bytes()); j++ {
-			if derivedPub.Bytes()[j] != pubKey.Bytes()[j] {
-				t.Errorf("Iteration %d: derived public key mismatch at byte %d", i, j)
-				break
-			}
-		}
-
-		// Test signature verification
+		// Sign and verify round-trip
 		message := []byte("Consistency test message")
 		signer, err := privKey.NewSigner()
 		if err != nil {
 			t.Fatalf("Iteration %d: NewSigner failed: %v", i, err)
 		}
-
 		sig, err := signer.Sign(message)
 		if err != nil {
 			t.Fatalf("Iteration %d: Sign failed: %v", i, err)
 		}
-
 		verifier, err := pubKey.NewVerifier()
 		if err != nil {
 			t.Fatalf("Iteration %d: NewVerifier failed: %v", i, err)
 		}
-
-		err = verifier.Verify(message, sig)
-		if err != nil {
+		if err := verifier.Verify(message, sig); err != nil {
 			t.Errorf("Iteration %d: Verify failed: %v", i, err)
 		}
 	}

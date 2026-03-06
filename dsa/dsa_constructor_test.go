@@ -385,21 +385,16 @@ func TestDSAKeyPairConsistency(t *testing.T) {
 func TestDSAPrivateKeyZero(t *testing.T) {
 	keyBytes := make([]byte, 20)
 	keyBytes[19] = 5 // Valid value
-
 	key, err := NewDSAPrivateKey(keyBytes)
 	if err != nil {
 		t.Fatalf("NewDSAPrivateKey() failed: %v", err)
 	}
 
-	// Verify key is not zero before Zero()
+	// Verify key is non-zero, then zero it
 	if key[19] == 0 {
 		t.Error("Key should not be zero before Zero() is called")
 	}
-
-	// Call Zero() - this uses a pointer receiver
 	key.Zero()
-
-	// Verify key is zeroed
 	for i, b := range key {
 		if b != 0 {
 			t.Errorf("Key byte %d = %d, want 0 after Zero()", i, b)

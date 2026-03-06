@@ -10,47 +10,42 @@ func TestGenerateX25519KeyPair(t *testing.T) {
 		t.Fatalf("GenerateX25519KeyPair failed: %v", err)
 	}
 
-	if pubKey == nil {
-		t.Error("Public key is nil")
+	// Verify keys are non-nil with correct sizes
+	for _, tc := range []struct {
+		name string
+		key  interface{ Bytes() []byte }
+		size int
+	}{
+		{"PublicKey", pubKey, 32},
+		{"PrivateKey", privKey, 32},
+	} {
+		if tc.key == nil {
+			t.Fatalf("%s is nil", tc.name)
+		}
+		if got := len(tc.key.Bytes()); got != tc.size {
+			t.Errorf("%s size: expected %d, got %d", tc.name, tc.size, got)
+		}
 	}
 
-	if privKey == nil {
-		t.Error("Private key is nil")
-	}
-
-	// Verify key sizes
-	if len(*pubKey) != 32 {
-		t.Errorf("Public key size: expected 32, got %d", len(*pubKey))
-	}
-
-	if len(*privKey) != 32 {
-		t.Errorf("Private key size: expected 32, got %d", len(*privKey))
-	}
-
-	// Verify can create encrypter
+	// Verify encrypt/decrypt round-trip
 	encrypter, err := pubKey.NewEncrypter()
 	if err != nil {
 		t.Fatalf("NewEncrypter failed: %v", err)
 	}
-
-	// Verify can create decrypter
 	decrypter, err := privKey.NewDecrypter()
 	if err != nil {
 		t.Fatalf("NewDecrypter failed: %v", err)
 	}
 
-	// Test encryption and decryption
 	plaintext := []byte("test message")
 	ciphertext, err := encrypter.Encrypt(plaintext)
 	if err != nil {
 		t.Fatalf("Encrypt failed: %v", err)
 	}
-
 	decrypted, err := decrypter.Decrypt(ciphertext)
 	if err != nil {
 		t.Fatalf("Decrypt failed: %v", err)
 	}
-
 	if string(decrypted) != string(plaintext) {
 		t.Errorf("Decrypted text doesn't match: got %q, want %q", decrypted, plaintext)
 	}

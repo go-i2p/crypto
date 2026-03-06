@@ -52,45 +52,40 @@ func generateRed25519TestSignerVerifier(t *testing.T) (types.Signer, types.Verif
 	return signer, verifier, privKey
 }
 
-// TestRed25519SignVerify tests basic sign and verify round-trip.
-func TestRed25519SignVerify(t *testing.T) {
-	signer, verifier, privKey := generateRed25519TestSignerVerifier(t)
-	defer privKey.Zero()
-
-	message := make([]byte, 256)
-	io.ReadFull(rand.Reader, message)
-
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Failed to sign message:", err)
+// TestRed25519SignVerifyRoundTrips tests both Sign/Verify and SignHash/VerifyHash round-trips.
+func TestRed25519SignVerifyRoundTrips(t *testing.T) {
+	tests := []struct {
+		name    string
+		msgSize int
+		sign    func(types.Signer, []byte) ([]byte, error)
+		verify  func(types.Verifier, []byte, []byte) error
+	}{
+		{"Sign/Verify", 256, types.Signer.Sign, types.Verifier.Verify},
+		{"SignHash/VerifyHash", 512, types.Signer.SignHash, types.Verifier.VerifyHash},
 	}
 
-	if len(sig) != SignatureSize {
-		t.Fatalf("Signature size = %d, want %d", len(sig), SignatureSize)
-	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			signer, verifier, privKey := generateRed25519TestSignerVerifier(t)
+			defer privKey.Zero()
 
-	err = verifier.Verify(message, sig)
-	if err != nil {
-		t.Fatal("Failed to verify message:", err)
-	}
-}
+			message := make([]byte, tt.msgSize)
+			io.ReadFull(rand.Reader, message)
 
-// TestRed25519SignHashRoundTrip tests signing and verifying via SignHash.
-func TestRed25519SignHashRoundTrip(t *testing.T) {
-	signer, verifier, privKey := generateRed25519TestSignerVerifier(t)
-	defer privKey.Zero()
+			sig, err := tt.sign(signer, message)
+			if err != nil {
+				t.Fatalf("%s failed: %v", tt.name, err)
+			}
 
-	message := make([]byte, 512)
-	io.ReadFull(rand.Reader, message)
+			if tt.name == "Sign/Verify" && len(sig) != SignatureSize {
+				t.Fatalf("Signature size = %d, want %d", len(sig), SignatureSize)
+			}
 
-	sig, err := signer.SignHash(message)
-	if err != nil {
-		t.Fatal("SignHash failed:", err)
-	}
-
-	err = verifier.VerifyHash(message, sig)
-	if err != nil {
-		t.Fatal("VerifyHash failed:", err)
+			err = tt.verify(verifier, message, sig)
+			if err != nil {
+				t.Fatalf("%s verification failed: %v", tt.name, err)
+			}
+		})
 	}
 }
 
@@ -210,28 +205,27 @@ func TestRed25519KeyPairGeneration(t *testing.T) {
 	}
 	defer privKey.Zero()
 
-	if pubKey.Len() != PublicKeySize {
-		t.Fatalf("Public key length = %d, want %d", pubKey.Len(), PublicKeySize)
-	}
-	if privKey.Len() != PrivateKeySize {
-		t.Fatalf("Private key length = %d, want %d", privKey.Len(), PrivateKeySize)
+	// Verify key sizes
+	for _, tc := range []struct {
+		name string
+		got  int
+		want int
+	}{
+		{"PublicKey", pubKey.Len(), PublicKeySize},
+		{"PrivateKey", privKey.Len(), PrivateKeySize},
+	} {
+		if tc.got != tc.want {
+			t.Fatalf("%s length = %d, want %d", tc.name, tc.got, tc.want)
+		}
 	}
 
-	// Test round-trip via interface methods
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
-
+	// Test round-trip via generateRed25519TestSignerVerifier
+	signer, verifier, privKey2 := generateRed25519TestSignerVerifier(t)
+	defer privKey2.Zero()
 	message := []byte("test message for key pair generation")
 	sig, err := signer.Sign(message)
 	if err != nil {
 		t.Fatal("Sign failed:", err)
-	}
-
-	verifier, err := pubKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
 	}
 	if err := verifier.Verify(message, sig); err != nil {
 		t.Fatal("Verify failed:", err)

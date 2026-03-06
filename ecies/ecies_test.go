@@ -29,6 +29,23 @@ func generateTestECIESKeys(t *testing.T) (ECIESPublicKey, ECIESPrivateKey, []byt
 	return pubKey, privKey, pub, priv
 }
 
+// assertEncryptDecryptMatch encrypts data with pub, decrypts with priv, and asserts equality.
+func assertEncryptDecryptMatch(t *testing.T, pub, priv, originalData []byte) {
+	t.Helper()
+	ciphertext, err := EncryptECIESX25519(pub, originalData)
+	if err != nil {
+		t.Fatalf("Encryption failed: %v", err)
+	}
+	plaintext, err := DecryptECIESX25519(priv, ciphertext)
+	if err != nil {
+		t.Errorf("Decryption failed: %v", err)
+		return
+	}
+	if !bytes.Equal(plaintext, originalData) {
+		t.Errorf("Plaintext mismatch")
+	}
+}
+
 func TestECIESX25519RoundTrip(t *testing.T) {
 	// Generate recipient key pair
 	recipientPub, recipientPriv, err := GenerateKeyPair()
@@ -235,20 +252,15 @@ func TestECIESX25519DifferentKeys(t *testing.T) {
 
 	// Encrypt with first public key
 	originalData := []byte("This should only decrypt with the correct private key")
+
+	// Decryption with correct private key should succeed
+	assertEncryptDecryptMatch(t, pub1, priv1, originalData)
+
+	// Decryption with wrong private key should fail
 	ciphertext, err := EncryptECIESX25519(pub1, originalData)
 	if err != nil {
 		t.Fatalf("Encryption failed: %v", err)
 	}
-
-	// Decryption with correct private key should succeed
-	plaintext, err := DecryptECIESX25519(priv1, ciphertext)
-	if err != nil {
-		t.Errorf("Decryption with correct private key failed: %v", err)
-	} else if !bytes.Equal(plaintext, originalData) {
-		t.Errorf("Plaintext mismatch with correct key")
-	}
-
-	// Decryption with wrong private key should fail
 	_, err = DecryptECIESX25519(priv2, ciphertext)
 	if err == nil {
 		t.Errorf("Expected decryption to fail with wrong private key")
@@ -281,19 +293,8 @@ func TestECIESX25519Deterministic(t *testing.T) {
 	}
 
 	// Both should decrypt to same plaintext
-	plaintext1, err := DecryptECIESX25519(recipientPriv, ciphertext1)
-	if err != nil {
-		t.Errorf("Decryption of first ciphertext failed: %v", err)
-	}
-
-	plaintext2, err := DecryptECIESX25519(recipientPriv, ciphertext2)
-	if err != nil {
-		t.Errorf("Decryption of second ciphertext failed: %v", err)
-	}
-
-	if !bytes.Equal(plaintext1, originalData) || !bytes.Equal(plaintext2, originalData) {
-		t.Error("Both plaintexts should match original data")
-	}
+	assertEncryptDecryptMatch(t, recipientPub, recipientPriv, originalData)
+	assertEncryptDecryptMatch(t, recipientPub, recipientPriv, originalData)
 }
 
 func TestGenerateKeyPair(t *testing.T) {
@@ -344,41 +345,14 @@ func TestECIESX25519CompatibilityWithX25519(t *testing.T) {
 
 	// Test: encrypt with our key, decrypt with x25519 (converted)
 	testData := []byte("Cross-compatibility test")
-
-	ciphertext, err := EncryptECIESX25519(ourPub, testData)
-	if err != nil {
-		t.Fatalf("Encryption with our key failed: %v", err)
-	}
-
-	// Convert our private key to x25519 format and decrypt
-	plaintext, err := DecryptECIESX25519(ourPriv, ciphertext)
-	if err != nil {
-		t.Fatalf("Decryption with our key failed: %v", err)
-	}
-
-	if !bytes.Equal(plaintext, testData) {
-		t.Error("Round-trip with our keys failed")
-	}
+	assertEncryptDecryptMatch(t, ourPub, ourPriv, testData)
 
 	// Test: encrypt with x25519 key (converted), decrypt with our function
 	x25519PubBytes := make([]byte, 32)
 	x25519PrivBytes := make([]byte, 32)
 	copy(x25519PubBytes, x25519Pub[:])
 	copy(x25519PrivBytes, x25519Priv[:])
-
-	ciphertext2, err := EncryptECIESX25519(x25519PubBytes, testData)
-	if err != nil {
-		t.Fatalf("Encryption with x25519 key failed: %v", err)
-	}
-
-	plaintext2, err := DecryptECIESX25519(x25519PrivBytes, ciphertext2)
-	if err != nil {
-		t.Fatalf("Decryption with x25519 key failed: %v", err)
-	}
-
-	if !bytes.Equal(plaintext2, testData) {
-		t.Error("Round-trip with x25519 keys failed")
-	}
+	assertEncryptDecryptMatch(t, x25519PubBytes, x25519PrivBytes, testData)
 }
 
 // TestECIESPrivateKeyPublicDerivation tests that Public() correctly derives the public key
@@ -488,72 +462,78 @@ func assertKeyLenAndBytes(t *testing.T, label string, actualLen int, expectedLen
 	}
 }
 
-// TestECIESPublicKeyInterfaceMethods tests that ECIESPublicKey properly
-// implements the PublicEncryptionKey interface methods.
-func TestECIESPublicKeyInterfaceMethods(t *testing.T) {
-	pubKey, privKey, pub, _ := generateTestECIESKeys(t)
+// TestECIESKeyInterfaceMethods tests that both ECIESPublicKey and ECIESPrivateKey
+// properly implement their respective interface methods via a table-driven test.
+func TestECIESKeyInterfaceMethods(t *testing.T) {
+	pubKey, privKey, pub, priv := generateTestECIESKeys(t)
 
-	assertKeyLenAndBytes(t, "PublicKey", pubKey.Len(), PublicKeySize, pubKey.Bytes(), pub)
-
-	// Test NewEncrypter() method
-	encrypter, err := pubKey.NewEncrypter()
-	if err != nil {
-		t.Fatalf("NewEncrypter() failed: %v", err)
+	tests := []struct {
+		name      string
+		testData  []byte
+		assertKey func(t *testing.T)
+		roundTrip func(t *testing.T)
+	}{
+		{
+			name:     "PublicKey/Encrypter",
+			testData: []byte("Test encrypter interface"),
+			assertKey: func(t *testing.T) {
+				assertKeyLenAndBytes(t, "PublicKey", pubKey.Len(), PublicKeySize, pubKey.Bytes(), pub)
+			},
+			roundTrip: func(t *testing.T) {
+				encrypter, err := pubKey.NewEncrypter()
+				if err != nil {
+					t.Fatalf("NewEncrypter() failed: %v", err)
+				}
+				if encrypter == nil {
+					t.Fatal("NewEncrypter() returned nil")
+				}
+				ciphertext, err := encrypter.Encrypt([]byte("Test encrypter interface"))
+				if err != nil {
+					t.Fatalf("Encrypt() failed: %v", err)
+				}
+				plaintext, err := DecryptECIESX25519(privKey[:], ciphertext)
+				if err != nil {
+					t.Fatalf("Decryption failed: %v", err)
+				}
+				if !bytes.Equal(plaintext, []byte("Test encrypter interface")) {
+					t.Error("Round-trip through interface failed")
+				}
+			},
+		},
+		{
+			name:     "PrivateKey/Decrypter",
+			testData: []byte("Test decrypter interface"),
+			assertKey: func(t *testing.T) {
+				assertKeyLenAndBytes(t, "PrivateKey", privKey.Len(), PrivateKeySize, privKey.Bytes(), priv)
+			},
+			roundTrip: func(t *testing.T) {
+				decrypter, err := privKey.NewDecrypter()
+				if err != nil {
+					t.Fatalf("NewDecrypter() failed: %v", err)
+				}
+				if decrypter == nil {
+					t.Fatal("NewDecrypter() returned nil")
+				}
+				ciphertext, err := EncryptECIESX25519(pub, []byte("Test decrypter interface"))
+				if err != nil {
+					t.Fatalf("Encryption failed: %v", err)
+				}
+				plaintext, err := decrypter.Decrypt(ciphertext)
+				if err != nil {
+					t.Fatalf("Decrypt() failed: %v", err)
+				}
+				if !bytes.Equal(plaintext, []byte("Test decrypter interface")) {
+					t.Error("Round-trip through interface failed")
+				}
+			},
+		},
 	}
 
-	if encrypter == nil {
-		t.Error("NewEncrypter() returned nil encrypter")
-	}
-
-	// Test encryption with the encrypter
-	testData := []byte("Test encrypter interface")
-	ciphertext, err := encrypter.Encrypt(testData)
-	if err != nil {
-		t.Fatalf("Encrypter.Encrypt() failed: %v", err)
-	}
-
-	// Verify we can decrypt it
-	plaintext, err := DecryptECIESX25519(privKey[:], ciphertext)
-	if err != nil {
-		t.Fatalf("Decryption failed: %v", err)
-	}
-
-	if !bytes.Equal(plaintext, testData) {
-		t.Error("Encryption/decryption round-trip through interface failed")
-	}
-}
-
-// TestECIESPrivateKeyInterfaceMethods tests that ECIESPrivateKey properly
-// implements the PrivateEncryptionKey interface methods.
-func TestECIESPrivateKeyInterfaceMethods(t *testing.T) {
-	_, privKey, pub, priv := generateTestECIESKeys(t)
-
-	assertKeyLenAndBytes(t, "PrivateKey", privKey.Len(), PrivateKeySize, privKey.Bytes(), priv)
-
-	// Test NewDecrypter() method
-	decrypter, err := privKey.NewDecrypter()
-	if err != nil {
-		t.Fatalf("NewDecrypter() failed: %v", err)
-	}
-
-	if decrypter == nil {
-		t.Error("NewDecrypter() returned nil decrypter")
-	}
-
-	// Test decryption with the decrypter
-	testData := []byte("Test decrypter interface")
-	ciphertext, err := EncryptECIESX25519(pub, testData)
-	if err != nil {
-		t.Fatalf("Encryption failed: %v", err)
-	}
-
-	plaintext, err := decrypter.Decrypt(ciphertext)
-	if err != nil {
-		t.Fatalf("Decrypter.Decrypt() failed: %v", err)
-	}
-
-	if !bytes.Equal(plaintext, testData) {
-		t.Error("Encryption/decryption round-trip through interface failed")
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.assertKey(t)
+			tt.roundTrip(t)
+		})
 	}
 
 	// Note: Zero() method has a value receiver which makes it ineffective.

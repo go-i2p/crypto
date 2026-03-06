@@ -1,7 +1,9 @@
 package curve25519
 
 import (
+	"bytes"
 	"crypto/rand"
+	"fmt"
 	"testing"
 
 	curve25519 "go.step.sm/crypto/x25519"
@@ -389,80 +391,57 @@ func TestNewCurve25519PrivateKey(t *testing.T) {
 func TestCurve25519KeyPairConsistency(t *testing.T) {
 	// Generate 10 key pairs and verify consistency
 	for i := 0; i < 10; i++ {
-		pub, priv, err := curve25519.GenerateKey(rand.Reader)
-		if err != nil {
-			t.Fatalf("Iteration %d: failed to generate key: %v", i, err)
-		}
-
-		pubKey, err := NewCurve25519PublicKey(pub[:])
-		if err != nil {
-			t.Fatalf("Iteration %d: NewCurve25519PublicKey failed: %v", i, err)
-		}
-
-		privKey, err := NewCurve25519PrivateKey(priv[:])
-		if err != nil {
-			t.Fatalf("Iteration %d: NewCurve25519PrivateKey failed: %v", i, err)
-		}
-
-		// Derive public key from private key
-		derivedPubInterface, err := privKey.Public()
-		if err != nil {
-			t.Fatalf("Iteration %d: Public() failed: %v", i, err)
-		}
-
-		derivedPub, ok := derivedPubInterface.(*Curve25519PublicKey)
-		if !ok {
-			t.Fatalf("Iteration %d: Public() returned wrong type", i)
-		}
-
-		// Verify derived public key matches original
-		if len(derivedPub.Bytes()) != len(pubKey.Bytes()) {
-			t.Errorf("Iteration %d: derived public key length mismatch", i)
-			continue
-		}
-
-		for j := 0; j < len(pubKey.Bytes()); j++ {
-			if derivedPub.Bytes()[j] != pubKey.Bytes()[j] {
-				t.Errorf("Iteration %d: derived public key mismatch at byte %d", i, j)
-				break
+		t.Run(fmt.Sprintf("iter_%d", i), func(t *testing.T) {
+			pub, priv, err := curve25519.GenerateKey(rand.Reader)
+			if err != nil {
+				t.Fatalf("failed to generate key: %v", err)
 			}
-		}
 
-		// Test encryption/decryption round-trip
-		message := []byte("Consistency test message")
-
-		encrypter, err := pubKey.NewEncrypter()
-		if err != nil {
-			t.Fatalf("Iteration %d: NewEncrypter failed: %v", i, err)
-		}
-
-		ciphertext, err := encrypter.Encrypt(message)
-		if err != nil {
-			t.Fatalf("Iteration %d: Encrypt failed: %v", i, err)
-		}
-
-		decrypter, err := privKey.NewDecrypter()
-		if err != nil {
-			t.Fatalf("Iteration %d: NewDecrypter failed: %v", i, err)
-		}
-
-		plaintext, err := decrypter.Decrypt(ciphertext)
-		if err != nil {
-			t.Errorf("Iteration %d: Decrypt failed: %v", i, err)
-			continue
-		}
-
-		if len(plaintext) != len(message) {
-			t.Errorf("Iteration %d: plaintext length mismatch", i)
-			continue
-		}
-
-		for j := range message {
-			if plaintext[j] != message[j] {
-				t.Errorf("Iteration %d: plaintext mismatch at byte %d", i, j)
-				break
+			pubKey, err := NewCurve25519PublicKey(pub[:])
+			if err != nil {
+				t.Fatalf("NewCurve25519PublicKey failed: %v", err)
 			}
-		}
+
+			privKey, err := NewCurve25519PrivateKey(priv[:])
+			if err != nil {
+				t.Fatalf("NewCurve25519PrivateKey failed: %v", err)
+			}
+
+			// Derive public key from private key and verify match
+			derivedPubInterface, err := privKey.Public()
+			if err != nil {
+				t.Fatalf("Public() failed: %v", err)
+			}
+			derivedPub, ok := derivedPubInterface.(*Curve25519PublicKey)
+			if !ok {
+				t.Fatalf("Public() returned wrong type")
+			}
+			if !bytes.Equal(derivedPub.Bytes(), pubKey.Bytes()) {
+				t.Error("derived public key mismatch")
+			}
+
+			// Encryption/decryption round-trip
+			message := []byte("Consistency test message")
+			encrypter, err := pubKey.NewEncrypter()
+			if err != nil {
+				t.Fatalf("NewEncrypter failed: %v", err)
+			}
+			ciphertext, err := encrypter.Encrypt(message)
+			if err != nil {
+				t.Fatalf("Encrypt failed: %v", err)
+			}
+			decrypter, err := privKey.NewDecrypter()
+			if err != nil {
+				t.Fatalf("NewDecrypter failed: %v", err)
+			}
+			plaintext, err := decrypter.Decrypt(ciphertext)
+			if err != nil {
+				t.Fatalf("Decrypt failed: %v", err)
+			}
+			if !bytes.Equal(plaintext, message) {
+				t.Error("plaintext mismatch")
+			}
+		})
 	}
 }
 

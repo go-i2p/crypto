@@ -405,8 +405,9 @@ func TestAESEncryptor_DifferentKeysProduceDifferentResults(t *testing.T) {
 	}
 }
 
-// BenchmarkAESEncryptor_Encrypt measures encryption performance
-func BenchmarkAESEncryptor_Encrypt(b *testing.B) {
+// benchmarkAESOperation is a helper that benchmarks a single AES tunnel operation.
+func benchmarkAESOperation(b *testing.B, op func(TunnelEncryptor, []byte) ([]byte, error)) {
+	b.Helper()
 	layerKey := TunnelKey{}
 	ivKey := TunnelKey{}
 	encryptor, _ := NewAESEncryptor(layerKey, ivKey)
@@ -414,21 +415,18 @@ func BenchmarkAESEncryptor_Encrypt(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		_, _ = encryptor.Encrypt(data[:])
+		_, _ = op(encryptor, data[:])
 	}
+}
+
+// BenchmarkAESEncryptor_Encrypt measures encryption performance
+func BenchmarkAESEncryptor_Encrypt(b *testing.B) {
+	benchmarkAESOperation(b, TunnelEncryptor.Encrypt)
 }
 
 // BenchmarkAESEncryptor_Decrypt measures decryption performance
 func BenchmarkAESEncryptor_Decrypt(b *testing.B) {
-	layerKey := TunnelKey{}
-	ivKey := TunnelKey{}
-	encryptor, _ := NewAESEncryptor(layerKey, ivKey)
-	data := &TunnelData{}
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = encryptor.Decrypt(data[:])
-	}
+	benchmarkAESOperation(b, TunnelEncryptor.Decrypt)
 }
 
 // BenchmarkAESEncryptor_RoundTrip measures full encryption-decryption performance

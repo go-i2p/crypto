@@ -377,6 +377,22 @@ func TestECIESWrapper_MatchesECIESPackage(t *testing.T) {
 	}
 }
 
+// assertECIESRoundTrip encrypts and decrypts data, verifying the round-trip.
+func assertECIESRoundTrip(t *testing.T, encryptor TunnelEncryptor, decryptor TunnelEncryptor, plaintext []byte) {
+	t.Helper()
+	ciphertext, err := encryptor.Encrypt(plaintext)
+	if err != nil {
+		t.Fatalf("Encrypt failed: %v", err)
+	}
+	decrypted, err := decryptor.Decrypt(ciphertext)
+	if err != nil {
+		t.Fatalf("Decrypt failed: %v", err)
+	}
+	if !bytes.Equal(decrypted, plaintext) {
+		t.Errorf("Round-trip failed: got %v, want %v", decrypted, plaintext)
+	}
+}
+
 // generateTestECIESKeyPair generates a test ECIES key pair and returns
 // typed pub/priv keys plus an encryptor/decryptor pair.
 func generateTestECIESKeyPair(t *testing.T) ([32]byte, [32]byte) {

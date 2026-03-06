@@ -1,7 +1,6 @@
 package tunnel
 
 import (
-	"bytes"
 	"testing"
 
 	"github.com/go-i2p/crypto/ecies"
@@ -46,24 +45,7 @@ func TestECIESRoundTrip_Simple(t *testing.T) {
 	encryptor := NewECIESEncryptor(recipientPubKey)
 	decryptor := NewECIESDecryptor(recipientPrivKey)
 
-	plaintext := []byte("Hello, I2P tunnel encryption!")
-
-	// Encrypt
-	ciphertext, err := encryptor.Encrypt(plaintext)
-	if err != nil {
-		t.Fatalf("ECIESEncryptor.Encrypt() failed: %v", err)
-	}
-
-	// Decrypt
-	decrypted, err := decryptor.Decrypt(ciphertext)
-	if err != nil {
-		t.Fatalf("ECIESDecryptor.Decrypt() failed: %v", err)
-	}
-
-	// Verify round-trip
-	if !bytes.Equal(decrypted, plaintext) {
-		t.Errorf("Round-trip failed: got %v, want %v", decrypted, plaintext)
-	}
+	assertECIESRoundTrip(t, encryptor, decryptor, []byte("Hello, I2P tunnel encryption!"))
 }
 
 func TestECIESFactory_Simple(t *testing.T) {
