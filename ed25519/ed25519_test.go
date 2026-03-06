@@ -8,6 +8,38 @@ import (
 	"testing"
 )
 
+// assertEd25519SignVerify is a test helper that validates sign-and-verify round-trip
+// using the provided private and public keys.
+func assertEd25519SignVerify(t *testing.T, privKey Ed25519PrivateKey, pubKey Ed25519PublicKey, message []byte) {
+	t.Helper()
+	signer, err := privKey.NewSigner()
+	if err != nil {
+		t.Fatalf("NewSigner() failed: %v", err)
+	}
+	sig, err := signer.Sign(message)
+	if err != nil {
+		t.Fatalf("Sign() failed: %v", err)
+	}
+	verifier, err := pubKey.NewVerifier()
+	if err != nil {
+		t.Fatalf("NewVerifier() failed: %v", err)
+	}
+	if err := verifier.Verify(message, sig); err != nil {
+		t.Errorf("Verify() failed: %v", err)
+	}
+}
+
+// assertBytesZeroed is a test helper that checks all bytes are zero.
+func assertBytesZeroed(t *testing.T, name string, data []byte) {
+	t.Helper()
+	for i, b := range data {
+		if b != 0 {
+			t.Errorf("%s: byte at index %d is %d, expected 0", name, i, b)
+			return
+		}
+	}
+}
+
 func TestEd25519(t *testing.T) {
 	var pubKey Ed25519PublicKey
 
@@ -420,30 +452,7 @@ func TestNewEd25519PrivateKey(t *testing.T) {
 			t.Fatalf("NewEd25519PublicKey failed: %v", err)
 		}
 
-		// Create test message
-		message := []byte("Test message for Ed25519 signature")
-
-		// Sign with private key
-		signer, err := privKey.NewSigner()
-		if err != nil {
-			t.Fatalf("NewSigner() failed: %v", err)
-		}
-
-		signature, err := signer.Sign(message)
-		if err != nil {
-			t.Fatalf("Sign() failed: %v", err)
-		}
-
-		// Verify with public key
-		verifier, err := pubKey.NewVerifier()
-		if err != nil {
-			t.Fatalf("NewVerifier() failed: %v", err)
-		}
-
-		err = verifier.Verify(message, signature)
-		if err != nil {
-			t.Errorf("Verify() failed: %v", err)
-		}
+		assertEd25519SignVerify(t, privKey, pubKey, []byte("Test message for Ed25519 signature"))
 	})
 
 	t.Run("Zero() method", func(t *testing.T) {
@@ -458,15 +467,8 @@ func TestNewEd25519PrivateKey(t *testing.T) {
 			t.Fatalf("NewEd25519PrivateKey failed: %v", err)
 		}
 
-		// Call Zero()
 		privKey.Zero()
-
-		// Verify all bytes are zeroed
-		for i, b := range privKey.Bytes() {
-			if b != 0 {
-				t.Errorf("Zero() failed: byte at index %d is %d, expected 0", i, b)
-			}
-		}
+		assertBytesZeroed(t, "Zero()", privKey.Bytes())
 	})
 }
 
@@ -502,22 +504,7 @@ func TestEd25519KeyPairConsistency(t *testing.T) {
 		}
 
 		// Sign and verify round-trip
-		message := []byte("Consistency test message")
-		signer, err := privKey.NewSigner()
-		if err != nil {
-			t.Fatalf("Iteration %d: NewSigner failed: %v", i, err)
-		}
-		sig, err := signer.Sign(message)
-		if err != nil {
-			t.Fatalf("Iteration %d: Sign failed: %v", i, err)
-		}
-		verifier, err := pubKey.NewVerifier()
-		if err != nil {
-			t.Fatalf("Iteration %d: NewVerifier failed: %v", i, err)
-		}
-		if err := verifier.Verify(message, sig); err != nil {
-			t.Errorf("Iteration %d: Verify failed: %v", i, err)
-		}
+		assertEd25519SignVerify(t, privKey, pubKey, []byte("Consistency test message"))
 	}
 }
 

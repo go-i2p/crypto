@@ -24,49 +24,55 @@ func generateP256TestKey(t *testing.T) (*ecdsa.PrivateKey, []byte) {
 	return privKey, privBytes
 }
 
-// TestNewECP256PrivateKey tests P-256 private key constructor validation
-func TestNewECP256PrivateKey(t *testing.T) {
+// assertConstructorValidation is a test helper that validates a key constructor
+// rejects invalid sizes, empty, and nil inputs consistent with ECDSA key requirements.
+func assertConstructorValidation(t *testing.T, name string, constructor func([]byte) (interface{}, error), validSize int, zeroIsInvalid bool) {
+	t.Helper()
+
 	tests := []struct {
 		name      string
 		input     []byte
 		wantError bool
 	}{
-		{
-			name:      "valid 32-byte key",
-			input:     make([]byte, 32),
-			wantError: true, // all zeros is invalid
-		},
-		{
-			name:      "invalid size - too small",
-			input:     make([]byte, 31),
-			wantError: true,
-		},
-		{
-			name:      "invalid size - too large",
-			input:     make([]byte, 33),
-			wantError: true,
-		},
-		{
-			name:      "empty input",
-			input:     []byte{},
-			wantError: true,
-		},
-		{
-			name:      "nil input",
-			input:     nil,
-			wantError: true,
-		},
+		{"valid key", make([]byte, validSize), zeroIsInvalid},
+		{"invalid size - too small", make([]byte, validSize-1), true},
+		{"invalid size - too large", make([]byte, validSize+1), true},
+		{"empty input", []byte{}, true},
+		{"nil input", nil, true},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			key, err := NewECP256PrivateKey(tt.input)
+			key, err := constructor(tt.input)
 			if (err != nil) != tt.wantError {
-				t.Errorf("NewECP256PrivateKey() error = %v, wantError %v", err, tt.wantError)
+				t.Errorf("%s() error = %v, wantError %v", name, err, tt.wantError)
 			}
 			if err == nil && key == nil {
-				t.Error("NewECP256PrivateKey() returned nil key without error")
+				t.Errorf("%s() returned nil key without error", name)
 			}
+		})
+	}
+}
+
+// TestECDSAConstructorValidation tests all ECDSA key constructors with a common validation pattern.
+func TestECDSAConstructorValidation(t *testing.T) {
+	constructors := []struct {
+		name          string
+		constructor   func([]byte) (interface{}, error)
+		validSize     int
+		zeroIsInvalid bool
+	}{
+		{"NewECP256PrivateKey", func(b []byte) (interface{}, error) { return NewECP256PrivateKey(b) }, 32, true},
+		{"NewECP256PublicKey", func(b []byte) (interface{}, error) { return NewECP256PublicKey(b) }, 64, false},
+		{"NewECP384PrivateKey", func(b []byte) (interface{}, error) { return NewECP384PrivateKey(b) }, 48, true},
+		{"NewECP384PublicKey", func(b []byte) (interface{}, error) { return NewECP384PublicKey(b) }, 96, false},
+		{"NewECP521PrivateKey", func(b []byte) (interface{}, error) { return NewECP521PrivateKey(b) }, 66, true},
+		{"NewECP521PublicKey", func(b []byte) (interface{}, error) { return NewECP521PublicKey(b) }, 132, false},
+	}
+
+	for _, ctor := range constructors {
+		t.Run(ctor.name, func(t *testing.T) {
+			assertConstructorValidation(t, ctor.name, ctor.constructor, ctor.validSize, ctor.zeroIsInvalid)
 		})
 	}
 }
@@ -93,221 +99,6 @@ func TestNewECP256PrivateKeyValidKey(t *testing.T) {
 	}
 	if key == nil {
 		t.Error("NewECP256PrivateKey() returned nil key")
-	}
-}
-
-// TestNewECP256PublicKey tests P-256 public key constructor validation
-func TestNewECP256PublicKey(t *testing.T) {
-	tests := []struct {
-		name      string
-		input     []byte
-		wantError bool
-	}{
-		{
-			name:      "valid 64-byte key",
-			input:     make([]byte, 64),
-			wantError: false,
-		},
-		{
-			name:      "invalid size - too small",
-			input:     make([]byte, 63),
-			wantError: true,
-		},
-		{
-			name:      "invalid size - too large",
-			input:     make([]byte, 65),
-			wantError: true,
-		},
-		{
-			name:      "empty input",
-			input:     []byte{},
-			wantError: true,
-		},
-		{
-			name:      "nil input",
-			input:     nil,
-			wantError: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			key, err := NewECP256PublicKey(tt.input)
-			if (err != nil) != tt.wantError {
-				t.Errorf("NewECP256PublicKey() error = %v, wantError %v", err, tt.wantError)
-			}
-			if err == nil && key == nil {
-				t.Error("NewECP256PublicKey() returned nil key without error")
-			}
-		})
-	}
-}
-
-// TestNewECP384PrivateKey tests P-384 private key constructor validation
-func TestNewECP384PrivateKey(t *testing.T) {
-	tests := []struct {
-		name      string
-		input     []byte
-		wantError bool
-	}{
-		{
-			name:      "valid 48-byte key",
-			input:     make([]byte, 48),
-			wantError: true, // all zeros is invalid
-		},
-		{
-			name:      "invalid size - too small",
-			input:     make([]byte, 47),
-			wantError: true,
-		},
-		{
-			name:      "invalid size - too large",
-			input:     make([]byte, 49),
-			wantError: true,
-		},
-		{
-			name:      "empty input",
-			input:     []byte{},
-			wantError: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			key, err := NewECP384PrivateKey(tt.input)
-			if (err != nil) != tt.wantError {
-				t.Errorf("NewECP384PrivateKey() error = %v, wantError %v", err, tt.wantError)
-			}
-			if err == nil && key == nil {
-				t.Error("NewECP384PrivateKey() returned nil key without error")
-			}
-		})
-	}
-}
-
-// TestNewECP384PublicKey tests P-384 public key constructor validation
-func TestNewECP384PublicKey(t *testing.T) {
-	tests := []struct {
-		name      string
-		input     []byte
-		wantError bool
-	}{
-		{
-			name:      "valid 96-byte key",
-			input:     make([]byte, 96),
-			wantError: false,
-		},
-		{
-			name:      "invalid size - too small",
-			input:     make([]byte, 95),
-			wantError: true,
-		},
-		{
-			name:      "invalid size - too large",
-			input:     make([]byte, 97),
-			wantError: true,
-		},
-		{
-			name:      "empty input",
-			input:     []byte{},
-			wantError: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			key, err := NewECP384PublicKey(tt.input)
-			if (err != nil) != tt.wantError {
-				t.Errorf("NewECP384PublicKey() error = %v, wantError %v", err, tt.wantError)
-			}
-			if err == nil && key == nil {
-				t.Error("NewECP384PublicKey() returned nil key without error")
-			}
-		})
-	}
-}
-
-// TestNewECP521PrivateKey tests P-521 private key constructor validation
-func TestNewECP521PrivateKey(t *testing.T) {
-	tests := []struct {
-		name      string
-		input     []byte
-		wantError bool
-	}{
-		{
-			name:      "valid 66-byte key",
-			input:     make([]byte, 66),
-			wantError: true, // all zeros is invalid
-		},
-		{
-			name:      "invalid size - too small",
-			input:     make([]byte, 65),
-			wantError: true,
-		},
-		{
-			name:      "invalid size - too large",
-			input:     make([]byte, 67),
-			wantError: true,
-		},
-		{
-			name:      "empty input",
-			input:     []byte{},
-			wantError: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			key, err := NewECP521PrivateKey(tt.input)
-			if (err != nil) != tt.wantError {
-				t.Errorf("NewECP521PrivateKey() error = %v, wantError %v", err, tt.wantError)
-			}
-			if err == nil && key == nil {
-				t.Error("NewECP521PrivateKey() returned nil key without error")
-			}
-		})
-	}
-}
-
-// TestNewECP521PublicKey tests P-521 public key constructor validation
-func TestNewECP521PublicKey(t *testing.T) {
-	tests := []struct {
-		name      string
-		input     []byte
-		wantError bool
-	}{
-		{
-			name:      "valid 132-byte key",
-			input:     make([]byte, 132),
-			wantError: false,
-		},
-		{
-			name:      "invalid size - too small",
-			input:     make([]byte, 131),
-			wantError: true,
-		},
-		{
-			name:      "invalid size - too large",
-			input:     make([]byte, 133),
-			wantError: true,
-		},
-		{
-			name:      "empty input",
-			input:     []byte{},
-			wantError: true,
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			key, err := NewECP521PublicKey(tt.input)
-			if (err != nil) != tt.wantError {
-				t.Errorf("NewECP521PublicKey() error = %v, wantError %v", err, tt.wantError)
-			}
-			if err == nil && key == nil {
-				t.Error("NewECP521PublicKey() returned nil key without error")
-			}
-		})
 	}
 }
 
@@ -377,60 +168,33 @@ func TestECDSAConstructorDefensiveCopy(t *testing.T) {
 	})
 }
 
-// Benchmark constructors
-func BenchmarkNewECP256PrivateKey(b *testing.B) {
-	validKey := make([]byte, 32)
-	validKey[0] = 1 // Non-zero
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewECP256PrivateKey(validKey)
+// BenchmarkECDSAConstructors benchmarks all ECDSA key constructors with a table-driven approach.
+func BenchmarkECDSAConstructors(b *testing.B) {
+	constructors := []struct {
+		name        string
+		constructor func([]byte) (interface{}, error)
+		size        int
+		nonZero     bool // whether to set first byte non-zero for private keys
+	}{
+		{"ECP256PrivateKey", func(d []byte) (interface{}, error) { return NewECP256PrivateKey(d) }, 32, true},
+		{"ECP256PublicKey", func(d []byte) (interface{}, error) { return NewECP256PublicKey(d) }, 64, false},
+		{"ECP384PrivateKey", func(d []byte) (interface{}, error) { return NewECP384PrivateKey(d) }, 48, true},
+		{"ECP384PublicKey", func(d []byte) (interface{}, error) { return NewECP384PublicKey(d) }, 96, false},
+		{"ECP521PrivateKey", func(d []byte) (interface{}, error) { return NewECP521PrivateKey(d) }, 66, true},
+		{"ECP521PublicKey", func(d []byte) (interface{}, error) { return NewECP521PublicKey(d) }, 132, false},
 	}
-}
 
-func BenchmarkNewECP256PublicKey(b *testing.B) {
-	validKey := make([]byte, 64)
+	for _, ctor := range constructors {
+		validKey := make([]byte, ctor.size)
+		if ctor.nonZero {
+			validKey[0] = 1
+		}
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewECP256PublicKey(validKey)
-	}
-}
-
-func BenchmarkNewECP384PrivateKey(b *testing.B) {
-	validKey := make([]byte, 48)
-	validKey[0] = 1 // Non-zero
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewECP384PrivateKey(validKey)
-	}
-}
-
-func BenchmarkNewECP384PublicKey(b *testing.B) {
-	validKey := make([]byte, 96)
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewECP384PublicKey(validKey)
-	}
-}
-
-func BenchmarkNewECP521PrivateKey(b *testing.B) {
-	validKey := make([]byte, 66)
-	validKey[0] = 1 // Non-zero
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewECP521PrivateKey(validKey)
-	}
-}
-
-func BenchmarkNewECP521PublicKey(b *testing.B) {
-	validKey := make([]byte, 132)
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _ = NewECP521PublicKey(validKey)
+		b.Run(ctor.name, func(b *testing.B) {
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				_, _ = ctor.constructor(validKey)
+			}
+		})
 	}
 }

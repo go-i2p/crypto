@@ -3,7 +3,6 @@ package chacha20
 import (
 	"bytes"
 	"crypto/rand"
-	"fmt"
 	"io"
 	"testing"
 
@@ -632,49 +631,26 @@ func TestChaCha20PolyDecrypter_DecryptWithWrongAd(t *testing.T) {
 }
 
 func TestChaCha20EncryptDecryptRoundtrip(t *testing.T) {
-	key, err := GenerateKey()
-	if err != nil {
-		t.Fatal(err)
+	key := generateTestKey(t)
+
+	testData := []struct {
+		name string
+		data []byte
+	}{
+		{"empty", []byte{}},
+		{"short", []byte("hello")},
+		{"medium", []byte("hello world")},
+		{"1KB", make([]byte, 1000)},
+		{"10KB", make([]byte, 10000)},
 	}
 
-	encrypter, err := key.NewEncrypter()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	decrypter, err := key.NewDecrypter()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	testData := [][]byte{
-		{},
-		[]byte("hello"),
-		[]byte("hello world"),
-		make([]byte, 1000),
-		make([]byte, 10000),
-	}
-
-	for i, data := range testData {
-		t.Run(fmt.Sprintf("test_%d", i), func(t *testing.T) {
+	for _, tt := range testData {
+		t.Run(tt.name, func(t *testing.T) {
 			// Fill large data with random bytes
-			if len(data) > 20 {
-				io.ReadFull(rand.Reader, data)
+			if len(tt.data) > 20 {
+				io.ReadFull(rand.Reader, tt.data)
 			}
-
-			encrypted, err := encrypter.Encrypt(data)
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			decrypted, err := decrypter.Decrypt(encrypted)
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			if !bytes.Equal(data, decrypted) {
-				t.Error("Round-trip encryption/decryption failed")
-			}
+			assertChaCha20RoundTrip(t, key, tt.data)
 		})
 	}
 }

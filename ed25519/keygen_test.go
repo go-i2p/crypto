@@ -26,21 +26,6 @@ func TestGenerateEd25519KeyPair(t *testing.T) {
 	})
 
 	t.Run("SignVerifyRoundTrip", func(t *testing.T) {
-		signer, err := privKey.NewSigner()
-		if err != nil {
-			t.Fatalf("NewSigner failed: %v", err)
-		}
-		verifier, err := pubKey.NewVerifier()
-		if err != nil {
-			t.Fatalf("NewVerifier failed: %v", err)
-		}
-		message := []byte("test message")
-		signature, err := signer.Sign(message)
-		if err != nil {
-			t.Fatalf("Sign failed: %v", err)
-		}
-		if err := verifier.Verify(message, signature); err != nil {
-			t.Errorf("Verify failed: %v", err)
-		}
+		assertEd25519SignVerify(t, *privKey, *pubKey, []byte("test message"))
 	})
 }
