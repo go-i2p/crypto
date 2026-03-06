@@ -7,6 +7,7 @@ import (
 	"io"
 	"testing"
 
+	"github.com/go-i2p/crypto/types"
 	upstream "github.com/go-i2p/red25519"
 )
 
@@ -32,18 +33,29 @@ func signWithRed25519(t *testing.T, message []byte) (*Red25519PublicKey, *Red255
 	return pubKey, privKey, sig
 }
 
-// TestRed25519SignVerify tests basic sign and verify round-trip.
-func TestRed25519SignVerify(t *testing.T) {
+// generateRed25519TestSignerVerifier generates a Red25519 key pair and returns
+// the signer, verifier, and private key (for deferred Zero).
+func generateRed25519TestSignerVerifier(t *testing.T) (types.Signer, types.Verifier, *Red25519PrivateKey) {
+	t.Helper()
 	pubKey, privKey, err := GenerateRed25519KeyPair()
 	if err != nil {
 		t.Fatal("Failed to generate Red25519 key pair:", err)
 	}
-	defer privKey.Zero()
-
 	signer, err := privKey.NewSigner()
 	if err != nil {
-		t.Fatal("NewSigner error:", err)
+		t.Fatal("NewSigner failed:", err)
 	}
+	verifier, err := pubKey.NewVerifier()
+	if err != nil {
+		t.Fatal("NewVerifier failed:", err)
+	}
+	return signer, verifier, privKey
+}
+
+// TestRed25519SignVerify tests basic sign and verify round-trip.
+func TestRed25519SignVerify(t *testing.T) {
+	signer, verifier, privKey := generateRed25519TestSignerVerifier(t)
+	defer privKey.Zero()
 
 	message := make([]byte, 256)
 	io.ReadFull(rand.Reader, message)
@@ -57,11 +69,6 @@ func TestRed25519SignVerify(t *testing.T) {
 		t.Fatalf("Signature size = %d, want %d", len(sig), SignatureSize)
 	}
 
-	verifier, err := pubKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier error:", err)
-	}
-
 	err = verifier.Verify(message, sig)
 	if err != nil {
 		t.Fatal("Failed to verify message:", err)
@@ -70,16 +77,8 @@ func TestRed25519SignVerify(t *testing.T) {
 
 // TestRed25519SignHashRoundTrip tests signing and verifying via SignHash.
 func TestRed25519SignHashRoundTrip(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("Failed to generate key:", err)
-	}
+	signer, verifier, privKey := generateRed25519TestSignerVerifier(t)
 	defer privKey.Zero()
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
 
 	message := make([]byte, 512)
 	io.ReadFull(rand.Reader, message)
@@ -87,11 +86,6 @@ func TestRed25519SignHashRoundTrip(t *testing.T) {
 	sig, err := signer.SignHash(message)
 	if err != nil {
 		t.Fatal("SignHash failed:", err)
-	}
-
-	verifier, err := pubKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
 	}
 
 	err = verifier.VerifyHash(message, sig)

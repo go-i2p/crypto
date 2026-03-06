@@ -9,14 +9,18 @@ import (
 	"testing"
 )
 
-func TestEd25519ph(t *testing.T) {
+// generateEd25519phTestKeys generates a key pair and returns typed public key and signer.
+func generateEd25519phTestKeys(t *testing.T) (Ed25519phPublicKey, *Ed25519phSigner) {
+	t.Helper()
 	pub, priv, err := ed25519.GenerateKey(rand.Reader)
 	if err != nil {
-		t.Fatal("Failed to generate ed25519 test key:", err)
+		t.Fatalf("Failed to generate ed25519 test key: %v", err)
 	}
+	return Ed25519phPublicKey(pub), &Ed25519phSigner{k: priv}
+}
 
-	pubKey := Ed25519phPublicKey(pub)
-	signer := &Ed25519phSigner{k: priv}
+func TestEd25519ph(t *testing.T) {
+	pubKey, signer := generateEd25519phTestKeys(t)
 
 	message := make([]byte, 256)
 	io.ReadFull(rand.Reader, message)
@@ -39,13 +43,7 @@ func TestEd25519ph(t *testing.T) {
 
 // TestEd25519phSignHashRoundTrip tests signing and verifying a pre-computed hash.
 func TestEd25519phSignHashRoundTrip(t *testing.T) {
-	pub, priv, err := ed25519.GenerateKey(rand.Reader)
-	if err != nil {
-		t.Fatal("Failed to generate key:", err)
-	}
-
-	pubKey := Ed25519phPublicKey(pub)
-	signer := &Ed25519phSigner{k: priv}
+	pubKey, signer := generateEd25519phTestKeys(t)
 
 	message := make([]byte, 512)
 	io.ReadFull(rand.Reader, message)

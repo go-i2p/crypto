@@ -7,6 +7,23 @@ import (
 	"testing"
 )
 
+// generateP256TestKey generates a real P-256 ECDSA key pair and returns
+// the stdlib private key and the padded private key bytes.
+func generateP256TestKey(t *testing.T) (*ecdsa.PrivateKey, []byte) {
+	t.Helper()
+	privKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		t.Fatalf("Failed to generate P-256 key: %v", err)
+	}
+	privBytes := privKey.D.Bytes()
+	if len(privBytes) < 32 {
+		padded := make([]byte, 32)
+		copy(padded[32-len(privBytes):], privBytes)
+		privBytes = padded
+	}
+	return privKey, privBytes
+}
+
 // TestNewECP256PrivateKey tests P-256 private key constructor validation
 func TestNewECP256PrivateKey(t *testing.T) {
 	tests := []struct {
@@ -68,21 +85,7 @@ func TestNewECP256PrivateKeyRejectsZero(t *testing.T) {
 
 // TestNewECP256PrivateKeyValidKey tests with a real generated key
 func TestNewECP256PrivateKeyValidKey(t *testing.T) {
-	// Generate a real P-256 key
-	privKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	if err != nil {
-		t.Fatalf("Failed to generate test key: %v", err)
-	}
-
-	// Get the private key bytes
-	privBytes := privKey.D.Bytes()
-
-	// Pad to 32 bytes if needed
-	if len(privBytes) < 32 {
-		padded := make([]byte, 32)
-		copy(padded[32-len(privBytes):], privBytes)
-		privBytes = padded
-	}
+	_, privBytes := generateP256TestKey(t)
 
 	key, err := NewECP256PrivateKey(privBytes)
 	if err != nil {
@@ -310,19 +313,7 @@ func TestNewECP521PublicKey(t *testing.T) {
 
 // TestECDSAKeyPairConsistencyP256 tests P-256 key generation and constructor round-trip
 func TestECDSAKeyPairConsistencyP256(t *testing.T) {
-	// Generate a real P-256 key pair
-	privKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	if err != nil {
-		t.Fatalf("Failed to generate P-256 key: %v", err)
-	}
-
-	// Get private key bytes
-	privBytes := privKey.D.Bytes()
-	if len(privBytes) < 32 {
-		padded := make([]byte, 32)
-		copy(padded[32-len(privBytes):], privBytes)
-		privBytes = padded
-	}
+	privKey, privBytes := generateP256TestKey(t)
 
 	// Create our private key type
 	ourPrivKey, err := NewECP256PrivateKey(privBytes)

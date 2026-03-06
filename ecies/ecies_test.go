@@ -473,25 +473,27 @@ func TestECIESPublicKeyEncryptDecryptRoundTrip(t *testing.T) {
 	}
 }
 
+// assertKeyLenAndBytes is a helper that validates Len() and Bytes() methods
+// on an ECIES key, checking expected size and byte equality.
+func assertKeyLenAndBytes(t *testing.T, label string, actualLen int, expectedLen int, actualBytes, expectedBytes []byte) {
+	t.Helper()
+	if actualLen != expectedLen {
+		t.Errorf("%s Len() returned %d, expected %d", label, actualLen, expectedLen)
+	}
+	if len(actualBytes) != expectedLen {
+		t.Errorf("%s Bytes() returned %d bytes, expected %d", label, len(actualBytes), expectedLen)
+	}
+	if !bytes.Equal(actualBytes, expectedBytes) {
+		t.Errorf("%s Bytes() returned incorrect key bytes", label)
+	}
+}
+
 // TestECIESPublicKeyInterfaceMethods tests that ECIESPublicKey properly
 // implements the PublicEncryptionKey interface methods.
 func TestECIESPublicKeyInterfaceMethods(t *testing.T) {
 	pubKey, privKey, pub, _ := generateTestECIESKeys(t)
 
-	// Test Len() method
-	if pubKey.Len() != PublicKeySize {
-		t.Errorf("Len() returned %d, expected %d", pubKey.Len(), PublicKeySize)
-	}
-
-	// Test Bytes() method
-	pubBytes := pubKey.Bytes()
-	if len(pubBytes) != PublicKeySize {
-		t.Errorf("Bytes() returned %d bytes, expected %d", len(pubBytes), PublicKeySize)
-	}
-
-	if !bytes.Equal(pubBytes, pub) {
-		t.Error("Bytes() returned incorrect public key bytes")
-	}
+	assertKeyLenAndBytes(t, "PublicKey", pubKey.Len(), PublicKeySize, pubKey.Bytes(), pub)
 
 	// Test NewEncrypter() method
 	encrypter, err := pubKey.NewEncrypter()
@@ -526,20 +528,7 @@ func TestECIESPublicKeyInterfaceMethods(t *testing.T) {
 func TestECIESPrivateKeyInterfaceMethods(t *testing.T) {
 	_, privKey, pub, priv := generateTestECIESKeys(t)
 
-	// Test Len() method
-	if privKey.Len() != PrivateKeySize {
-		t.Errorf("Len() returned %d, expected %d", privKey.Len(), PrivateKeySize)
-	}
-
-	// Test Bytes() method
-	privBytes := privKey.Bytes()
-	if len(privBytes) != PrivateKeySize {
-		t.Errorf("Bytes() returned %d bytes, expected %d", len(privBytes), PrivateKeySize)
-	}
-
-	if !bytes.Equal(privBytes, priv) {
-		t.Error("Bytes() returned incorrect private key bytes")
-	}
+	assertKeyLenAndBytes(t, "PrivateKey", privKey.Len(), PrivateKeySize, privKey.Bytes(), priv)
 
 	// Test NewDecrypter() method
 	decrypter, err := privKey.NewDecrypter()
