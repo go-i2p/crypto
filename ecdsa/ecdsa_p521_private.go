@@ -1,6 +1,12 @@
 package ecdsa
 
 import (
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/sha512"
+	"math/big"
+
 	"github.com/go-i2p/crypto/types"
 	"github.com/samber/oops"
 )
@@ -52,32 +58,94 @@ func NewECP521PrivateKey(data []byte) (*ECP521PrivateKey, error) {
 	return &key, nil
 }
 
+// Len implements types.SigningPrivateKey.
+func (e *ECP521PrivateKey) Len() int {
+	return 66
+}
+
 // Sign implements types.Signer.
 func (e *ECP521PrivateKey) Sign(data []byte) (sig []byte, err error) {
-	panic("unimplemented")
+	hash := sha512.Sum512(data)
+	return e.SignHash(hash[:])
 }
 
 // SignHash implements types.Signer.
 func (e *ECP521PrivateKey) SignHash(h []byte) (sig []byte, err error) {
-	panic("unimplemented")
+	curve := elliptic.P521()
+	privateKey := new(ecdsa.PrivateKey)
+	privateKey.PublicKey.Curve = curve
+	privateKey.D = new(big.Int).SetBytes(e[:])
+	privateKey.PublicKey.X, privateKey.PublicKey.Y = curve.ScalarBaseMult(e[:])
+
+	r, s, err := ecdsa.Sign(rand.Reader, privateKey, h)
+	if err != nil {
+		return nil, oops.Errorf("failed to sign hash: %w", err)
+	}
+
+	sigR := r.Bytes()
+	sigS := s.Bytes()
+
+	sig = make([]byte, 132)
+	copy(sig[66-len(sigR):66], sigR)
+	copy(sig[132-len(sigS):], sigS)
+
+	log.Debug("Generated ECDSA-P521 signature")
+	return sig, nil
 }
 
 // Decrypt implements types.Decrypter.
 func (e *ECP521PrivateKey) Decrypt(data []byte) ([]byte, error) {
-	panic("unimplemented")
+	return nil, oops.Errorf("decryption not supported with ECDSA keys")
 }
 
 // Bytes implements types.PrivateKey.
 func (e *ECP521PrivateKey) Bytes() []byte {
-	panic("unimplemented")
+	return e[:]
 }
 
 // Public implements types.PrivateKey.
 func (e *ECP521PrivateKey) Public() (types.SigningPublicKey, error) {
-	panic("unimplemented")
+	curve := elliptic.P521()
+	x, y := curve.ScalarBaseMult(e[:])
+	if x == nil || y == nil {
+		return nil, oops.Errorf("failed to generate public key from private key")
+	}
+
+	publicKey := ECP521PublicKey{}
+	xBytes := x.Bytes()
+	yBytes := y.Bytes()
+
+	copy(publicKey[66-len(xBytes):66], xBytes)
+	copy(publicKey[132-len(yBytes):], yBytes)
+
+	log.Debug("Generated ECDSA-P521 public key from private key")
+	return publicKey, nil
 }
 
 // Zero implements types.PrivateKey.
 func (e *ECP521PrivateKey) Zero() {
-	panic("unimplemented")
+	for i := range e {
+		e[i] = 0
+	}
+	log.Debug("Zeroed ECDSA-P521 private key")
+}
+
+// Generate implements SigningPrivateKey.Generate
+func (e *ECP521PrivateKey) Generate() (types.SigningPrivateKey, error) {
+	privateKey, err := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)
+	if err != nil {
+		return nil, oops.Errorf("failed to generate ECDSA-P521 key: %w", err)
+	}
+
+	result := &ECP521PrivateKey{}
+	dBytes := privateKey.D.Bytes()
+	copy(result[66-len(dBytes):], dBytes)
+
+	log.Debug("Generated new ECDSA-P521 private key")
+	return result, nil
+}
+
+// NewSigner implements SigningPrivateKey.NewSigner
+func (e *ECP521PrivateKey) NewSigner() (types.Signer, error) {
+	return e, nil
 }
