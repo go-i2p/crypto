@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/ratchet"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 )
@@ -32,7 +33,7 @@ func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
 		return [32]byte{}, [32]byte{}, err
 	}
 
-	log.Debug("Session keys derived successfully")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "DeriveSessionKeys"}).Debug("Session keys derived successfully")
 	return keys[0], keys[1], nil
 }
 
@@ -147,7 +148,7 @@ func DeriveNoiseKeys(sharedSecret, info []byte) ([32]byte, [32]byte, [32]byte, e
 		return [32]byte{}, [32]byte{}, [32]byte{}, err
 	}
 
-	log.Debug("Noise keys derived successfully")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "DeriveNoiseKeys"}).Debug("Noise keys derived successfully")
 	return keys[0], keys[1], keys[2], nil
 }
 

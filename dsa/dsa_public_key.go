@@ -4,6 +4,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -91,7 +92,7 @@ func (k DSAPublicKey) Bytes() []byte {
 // the public key format is invalid or verifier creation fails.
 // Example usage: verifier, err := publicKey.NewVerifier()
 func (k DSAPublicKey) NewVerifier() (v types.Verifier, err error) {
-	log.Debug("Creating new DSA verifier")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPublicKey.NewVerifier"}).Debug("Creating new DSA verifier")
 	// Create verifier with validated public key parameters
 	v = &DSAVerifier{
 		k: createDSAPublicKey(new(big.Int).SetBytes(k[:])),

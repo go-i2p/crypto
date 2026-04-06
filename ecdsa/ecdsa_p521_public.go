@@ -5,6 +5,7 @@ import (
 	"crypto/elliptic"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -44,10 +45,10 @@ func NewECP521PublicKey(data []byte) (*ECP521PublicKey, error) {
 
 // Verify implements types.Verifier.
 func (k ECP521PublicKey) Verify(data, sig []byte) error {
-	log.WithField("data_length", len(data)).Debug("Verifying data with ECDSA-P521")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP521PublicKey.Verify", "data_length": len(data)}).Debug("Verifying data with ECDSA-P521")
 	verifier, err := k.NewVerifier()
 	if err != nil {
-		log.WithError(err).Error("Failed to create verifier")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP521PublicKey.Verify"}).WithError(err).Error("Failed to create verifier")
 		return err
 	}
 	return verifier.Verify(data, sig)
@@ -55,10 +56,10 @@ func (k ECP521PublicKey) Verify(data, sig []byte) error {
 
 // VerifyHash implements types.Verifier.
 func (k ECP521PublicKey) VerifyHash(h, sig []byte) error {
-	log.WithField("hash_length", len(h)).Debug("Verifying hash with ECDSA-P521")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP521PublicKey.VerifyHash", "hash_length": len(h)}).Debug("Verifying hash with ECDSA-P521")
 	verifier, err := k.NewVerifier()
 	if err != nil {
-		log.WithError(err).Error("Failed to create verifier")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP521PublicKey.VerifyHash"}).WithError(err).Error("Failed to create verifier")
 		return err
 	}
 	return verifier.VerifyHash(h, sig)
@@ -73,10 +74,10 @@ func (k ECP521PublicKey) Len() int {
 }
 
 func (k ECP521PublicKey) NewVerifier() (types.Verifier, error) {
-	log.Debug("Creating new P521 ECDSA verifier")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP521PublicKey.NewVerifier"}).Debug("Creating new P521 ECDSA verifier")
 	v, err := CreateECVerifier(elliptic.P521(), crypto.SHA512, k[:])
 	if err != nil {
-		log.WithError(err).Error("Failed to create P521 ECDSA verifier")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP521PublicKey.NewVerifier"}).WithError(err).Error("Failed to create P521 ECDSA verifier")
 	}
 	return v, err
 	// return createECVerifier(elliptic.P521(), crypto.SHA512, k[:])

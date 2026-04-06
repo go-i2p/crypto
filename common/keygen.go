@@ -14,15 +14,14 @@ import (
 // to package-specific types. This consolidates the duplicated key generation
 // pattern shared by ed25519, ed25519ph, and red25519 packages.
 func GenerateKeyPair(name string, genFunc func() ([]byte, []byte, error), log *logger.Logger) ([]byte, []byte, error) {
-	log.Debug("Generating " + name + " key pair")
+	log.WithFields(logger.Fields{"pkg": "common", "func": "GenerateKeyPair"}).Debug("Generating " + name + " key pair")
 
 	pubKeyRaw, privKeyRaw, err := genFunc()
 	if err != nil {
 		return nil, nil, oops.Errorf("failed to generate %s key pair: %w", name, err)
 	}
 
-	log.WithField("pubkey_len", len(pubKeyRaw)).
-		WithField("privkey_len", len(privKeyRaw)).
+	log.WithFields(logger.Fields{"pkg": "common", "func": "GenerateKeyPair", "pubkey_len": len(pubKeyRaw), "privkey_len": len(privKeyRaw)}).
 		Debug(name + " key pair generated successfully")
 
 	return pubKeyRaw, privKeyRaw, nil

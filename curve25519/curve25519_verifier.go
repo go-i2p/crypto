@@ -22,27 +22,29 @@ type Curve25519Verifier struct {
 // or ErrInvalidSignature if verification fails.
 func (v *Curve25519Verifier) VerifyHash(h, sig []byte) error {
 	log.WithFields(logger.Fields{
+		"pkg":              "curve25519",
+		"func":             "Curve25519Verifier.VerifyHash",
 		"hash_length":      len(h),
 		"signature_length": len(sig),
 	}).Debug("Verifying hash with Curve25519")
 
 	if len(sig) != x25519.SignatureSize {
-		log.Error("Bad signature size")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Verifier.VerifyHash"}).Error("Bad signature size")
 		return types.ErrBadSignatureSize
 	}
 
 	if len(v.k) != x25519.PublicKeySize {
-		log.Error("Invalid Curve25519 public key size")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Verifier.VerifyHash"}).Error("Invalid Curve25519 public key size")
 		return ErrInvalidPublicKey
 	}
 
 	// Perform cryptographic signature verification using X25519 algorithms
 	if !x25519.Verify(v.k, h, sig) {
-		log.Error("Invalid signature")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Verifier.VerifyHash"}).Error("Invalid signature")
 		return ErrInvalidSignature
 	}
 
-	log.Debug("Hash verified successfully")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Verifier.VerifyHash"}).Debug("Hash verified successfully")
 	return nil
 }
 
@@ -52,6 +54,8 @@ func (v *Curve25519Verifier) VerifyHash(h, sig []byte) error {
 // using the provided data. This is the primary method for signature verification in I2P protocols.
 func (v *Curve25519Verifier) Verify(data, sig []byte) error {
 	log.WithFields(logger.Fields{
+		"pkg":              "curve25519",
+		"func":             "Curve25519Verifier.Verify",
 		"data_length":      len(data),
 		"signature_length": len(sig),
 	}).Debug("Verifying data with Curve25519")

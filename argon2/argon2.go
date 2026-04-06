@@ -23,6 +23,8 @@ package argon2
  */
 
 import (
+	"github.com/go-i2p/logger"
+
 	"golang.org/x/crypto/argon2"
 )
 
@@ -33,6 +35,7 @@ type Argon2id struct {
 }
 
 func NewArgon2id(timeCost, memoryCost uint32, parallelism uint8) *Argon2id {
+	log.WithFields(logger.Fields{"pkg": "argon2", "func": "NewArgon2id"}).Debug("Creating new Argon2id instance")
 	return &Argon2id{
 		TimeCost:    timeCost,
 		MemoryCost:  memoryCost,
@@ -43,7 +46,9 @@ func NewArgon2id(timeCost, memoryCost uint32, parallelism uint8) *Argon2id {
 // validateDeriveParams checks that all Argon2id derivation parameters meet
 // minimum requirements before performing the expensive key derivation operation.
 func validateDeriveParams(keyLen int, salt []byte, timeCost uint32, memoryCost uint32, parallelism uint8) error {
+	log.WithFields(logger.Fields{"pkg": "argon2", "func": "validateDeriveParams", "key_len": keyLen}).Debug("Validating Argon2id parameters")
 	if keyLen <= 0 {
+		log.WithFields(logger.Fields{"pkg": "argon2", "func": "validateDeriveParams"}).Error("Invalid key length")
 		return ErrInvalidKeyLength
 	}
 	if len(salt) == 0 {
@@ -63,15 +68,19 @@ func validateDeriveParams(keyLen int, salt []byte, timeCost uint32, memoryCost u
 
 // Derive derives a key of the specified length from the input key material (IKM) using Argon2id.
 func (a *Argon2id) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
+	log.WithFields(logger.Fields{"pkg": "argon2", "func": "Argon2id.Derive", "key_len": keyLen}).Debug("Deriving key with Argon2id")
 	if err := validateDeriveParams(keyLen, salt, a.TimeCost, a.MemoryCost, a.Parallelism); err != nil {
+		log.WithFields(logger.Fields{"pkg": "argon2", "func": "Argon2id.Derive"}).WithError(err).Error("Parameter validation failed")
 		return nil, err
 	}
 	derivedKey := argon2.IDKey(ikm, salt, a.TimeCost, a.MemoryCost, a.Parallelism, uint32(keyLen))
+	log.WithFields(logger.Fields{"pkg": "argon2", "func": "Argon2id.Derive"}).Debug("Key derived successfully")
 	return derivedKey, nil
 }
 
 // DeriveDefault derives a key using default parameters for common use cases.
 func (a *Argon2id) DeriveDefault(ikm []byte) ([]byte, error) {
+	log.WithFields(logger.Fields{"pkg": "argon2", "func": "Argon2id.DeriveDefault"}).Debug("Deriving key with default parameters")
 	// Use default parameters: no salt, no info context, and a standard key length of 32 bytes
 	return a.Derive(ikm, nil, nil, 32)
 }

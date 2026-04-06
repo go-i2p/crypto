@@ -1,6 +1,7 @@
 package chacha20
 
 import (
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"golang.org/x/crypto/chacha20poly1305"
 )
@@ -19,7 +20,7 @@ func (e *ChaCha20PolyEncrypter) Encrypt(data []byte) ([]byte, error) {
 // EncryptWithAd encrypts data using ChaCha20-Poly1305 with a random nonce
 // and additional authenticated data
 func (e *ChaCha20PolyEncrypter) EncryptWithAd(data, ad []byte) ([]byte, error) {
-	log.WithField("data_length", len(data)).Debug("Encrypting data with ChaCha20-Poly1305")
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20PolyEncrypter.EncryptWithAd", "data_length": len(data)}).Debug("Encrypting data with ChaCha20-Poly1305")
 
 	// Create AEAD cipher
 	aead, err := chacha20poly1305.New(e.Key[:])
@@ -41,6 +42,6 @@ func (e *ChaCha20PolyEncrypter) EncryptWithAd(data, ad []byte) ([]byte, error) {
 	copy(result[:NonceSize], nonce[:])
 	copy(result[NonceSize:], ciphertext)
 
-	log.WithField("result_length", len(result)).Debug("ChaCha20-Poly1305 encryption successful")
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20PolyEncrypter.EncryptWithAd", "result_length": len(result)}).Debug("ChaCha20-Poly1305 encryption successful")
 	return result, nil
 }

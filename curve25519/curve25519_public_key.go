@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"go.step.sm/crypto/x25519"
 )
 
@@ -42,9 +43,9 @@ func (k Curve25519PublicKey) Bytes() []byte {
 // signatures created with the corresponding Curve25519 private key using X25519 signature algorithms.
 // Returns ErrInvalidPublicKey if the key size is invalid (must be 32 bytes).
 func (k Curve25519PublicKey) NewVerifier() (types.Verifier, error) {
-	log.Debug("Creating Curve25519 verifier")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewVerifier"}).Debug("Creating Curve25519 verifier")
 	if len(k) != x25519.PublicKeySize {
-		log.Error("Invalid public key size")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewVerifier"}).Error("Invalid public key size")
 		return nil, ErrInvalidPublicKey
 	}
 	return &Curve25519Verifier{k: k}, nil
@@ -55,7 +56,7 @@ func (k Curve25519PublicKey) NewVerifier() (types.Verifier, error) {
 // This method is used for key validation and buffer allocation in cryptographic operations.
 func (k Curve25519PublicKey) Len() int {
 	length := len(k)
-	log.WithField("length", length).Debug("Retrieved Curve25519PublicKey length")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.Len", "length": length}).Debug("Retrieved Curve25519PublicKey length")
 	return length
 }
 
@@ -64,10 +65,10 @@ func (k Curve25519PublicKey) Len() int {
 // AEAD encryption to provide secure encryption suitable for I2P network protocols.
 // Returns ErrInvalidPublicKey if the key size is invalid (must be 32 bytes).
 func (k Curve25519PublicKey) NewEncrypter() (types.Encrypter, error) {
-	log.Debug("Creating new Curve25519 Encrypter")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewEncrypter"}).Debug("Creating new Curve25519 Encrypter")
 
 	if len(k) != x25519.PublicKeySize {
-		log.Error("Invalid public key size")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewEncrypter"}).Error("Invalid public key size")
 		return nil, ErrInvalidPublicKey
 	}
 
@@ -81,7 +82,7 @@ func (k Curve25519PublicKey) NewEncrypter() (types.Encrypter, error) {
 		return nil, err
 	}
 
-	log.Debug("Curve25519 Encrypter created successfully")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewEncrypter"}).Debug("Curve25519 Encrypter created successfully")
 	return enc, nil
 }
 
@@ -101,14 +102,13 @@ func (k Curve25519PublicKey) NewEncrypter() (types.Encrypter, error) {
 //	}
 func NewCurve25519PublicKey(data []byte) (*Curve25519PublicKey, error) {
 	if len(data) != x25519.PublicKeySize {
-		log.WithField("expected_length", x25519.PublicKeySize).
-			WithField("actual_length", len(data)).
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "NewCurve25519PublicKey", "expected_length": x25519.PublicKeySize, "actual_length": len(data)}).
 			Error("Invalid data length for Curve25519PublicKey")
 		return nil, ErrInvalidPublicKey
 	}
 	key := Curve25519PublicKey(make([]byte, x25519.PublicKeySize))
 	copy(key, data)
-	log.Debug("Curve25519PublicKey created successfully")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "NewCurve25519PublicKey"}).Debug("Curve25519PublicKey created successfully")
 	return &key, nil
 }
 
@@ -119,8 +119,8 @@ func NewCurve25519PublicKey(data []byte) (*Curve25519PublicKey, error) {
 //
 // Deprecated: Use NewCurve25519PublicKey instead. This function will be removed in v2.0.
 func CreateCurve25519PublicKey(data []byte) (k *x25519.PublicKey) {
-	log.Warn("CreateCurve25519PublicKey is deprecated, use NewCurve25519PublicKey")
-	log.WithField("data_length", len(data)).Debug("Creating Curve25519PublicKey")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "CreateCurve25519PublicKey"}).Warn("CreateCurve25519PublicKey is deprecated, use NewCurve25519PublicKey")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "CreateCurve25519PublicKey", "data_length": len(data)}).Debug("Creating Curve25519PublicKey")
 	key, err := NewCurve25519PublicKey(data)
 	if err != nil {
 		return nil

@@ -4,6 +4,7 @@ import (
 	"crypto/ed25519"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 )
 
 // Ed25519PublicKey represents an Ed25519 public key for signature verification operations.
@@ -69,19 +70,17 @@ func (k Ed25519PublicKey) Bytes() []byte {
 //
 // Deprecated: Use NewEd25519PublicKey instead.
 func createEd25519PublicKey(data []byte) (k *ed25519.PublicKey) {
-	log.Warn("createEd25519PublicKey is deprecated and has been fixed - use NewEd25519PublicKey")
-	log.WithField("data_length", len(data)).Debug("Creating Ed25519 public key")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "createEd25519PublicKey"}).Warn("createEd25519PublicKey is deprecated and has been fixed - use NewEd25519PublicKey")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "createEd25519PublicKey", "data_length": len(data)}).Debug("Creating Ed25519 public key")
 
 	// Fixed implementation - now accepts correct 32-byte keys instead of buggy 256-byte expectation
 	if len(data) == ed25519.PublicKeySize { // Changed from 256 to 32
 		k2 := make(ed25519.PublicKey, ed25519.PublicKeySize)
 		copy(k2, data)
 		k = &k2
-		log.Debug("Ed25519 public key created successfully")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "createEd25519PublicKey"}).Debug("Ed25519 public key created successfully")
 	} else {
-		log.WithField("expected", ed25519.PublicKeySize).
-			WithField("got", len(data)).
-			Warn("Invalid data length for Ed25519 public key")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "createEd25519PublicKey", "expected": ed25519.PublicKeySize, "got": len(data)}).Warn("Invalid data length for Ed25519 public key")
 	}
 	return
 }
@@ -110,16 +109,16 @@ func NewEd25519PublicKey(data []byte) (Ed25519PublicKey, error) {
 //
 // Deprecated: Use NewEd25519PublicKey instead. This function will be removed in v2.0.
 func CreateEd25519PublicKeyFromBytes(data []byte) (Ed25519PublicKey, error) {
-	log.WithField("data_length", len(data)).Debug("Creating Ed25519 public key")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "CreateEd25519PublicKeyFromBytes", "data_length": len(data)}).Debug("Creating Ed25519 public key")
 
 	// Validate input meets Ed25519 public key size requirements
 	if len(data) != ed25519.PublicKeySize {
-		log.WithField("data_length", len(data)).Error("Invalid Ed25519 public key size")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "CreateEd25519PublicKeyFromBytes", "data_length": len(data)}).Error("Invalid Ed25519 public key size")
 		return nil, ErrInvalidPublicKeySize
 	}
 
 	// Return validated public key wrapped in our custom type
 	// Return the Ed25519 public key
-	log.Debug("Ed25519 public key created successfully")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "CreateEd25519PublicKeyFromBytes"}).Debug("Ed25519 public key created successfully")
 	return Ed25519PublicKey(data), nil
 }

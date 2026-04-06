@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -80,13 +81,13 @@ func (k Ed25519phPrivateKey) Generate() (types.SigningPrivateKey, error) {
 // Public extracts the Ed25519 public key from this private key.
 // Returns the corresponding public key for Ed25519ph signature verification.
 func (k Ed25519phPrivateKey) Public() (types.SigningPublicKey, error) {
-	log.WithField("key_length", len(k)).Debug("Ed25519phPrivateKey.Public() called")
+	log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phPrivateKey.Public", "key_length": len(k)}).Debug("Ed25519phPrivateKey.Public() called")
 	if len(k) != ed25519.PrivateKeySize {
 		return nil, oops.Errorf("invalid ed25519ph private key size: expected %d, got %d",
 			ed25519.PrivateKeySize, len(k))
 	}
 	pubKey := ed25519.PrivateKey(k).Public().(ed25519.PublicKey)
-	log.WithField("pubkey_length", len(pubKey)).Debug("Ed25519phPrivateKey.Public() extracted public key")
+	log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phPrivateKey.Public", "pubkey_length": len(pubKey)}).Debug("Ed25519phPrivateKey.Public() extracted public key")
 	return Ed25519phPublicKey(pubKey), nil
 }
 

@@ -4,6 +4,7 @@ import (
 	"crypto/ed25519"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 )
 
 // Ed25519phPublicKey represents an Ed25519 public key for Ed25519ph signature verification.
@@ -55,10 +56,10 @@ func (k Ed25519phPublicKey) Bytes() []byte {
 //
 // Returns error if data length is invalid.
 func NewEd25519phPublicKey(data []byte) (Ed25519phPublicKey, error) {
-	log.WithField("data_length", len(data)).Debug("Creating Ed25519ph public key")
+	log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "NewEd25519phPublicKey", "data_length": len(data)}).Debug("Creating Ed25519ph public key")
 
 	if len(data) != ed25519.PublicKeySize {
-		log.WithField("data_length", len(data)).Error("Invalid Ed25519ph public key size")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "NewEd25519phPublicKey", "data_length": len(data)}).Error("Invalid Ed25519ph public key size")
 		return nil, ErrInvalidPublicKeySize
 	}
 

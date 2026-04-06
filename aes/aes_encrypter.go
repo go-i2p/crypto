@@ -3,6 +3,8 @@ package aes
 import (
 	"crypto/aes"
 	"crypto/cipher"
+
+	"github.com/go-i2p/logger"
 )
 
 // AESSymmetricEncrypter implements the Encrypter interface using AES
@@ -13,11 +15,11 @@ type AESSymmetricEncrypter struct {
 
 // Encrypt encrypts data using AES-CBC with PKCS#7 padding
 func (e *AESSymmetricEncrypter) Encrypt(data []byte) ([]byte, error) {
-	log.WithField("data_length", len(data)).Debug("Encrypting data")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricEncrypter.Encrypt", "data_length": len(data)}).Debug("Encrypting data")
 
 	block, err := aes.NewCipher(e.Key)
 	if err != nil {
-		log.WithError(err).Error("Failed to create AES cipher")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricEncrypter.Encrypt"}).WithError(err).Error("Failed to create AES cipher")
 		return nil, err
 	}
 
@@ -26,7 +28,7 @@ func (e *AESSymmetricEncrypter) Encrypt(data []byte) ([]byte, error) {
 	mode := cipher.NewCBCEncrypter(block, e.IV)
 	mode.CryptBlocks(ciphertext, plaintext)
 
-	log.WithField("ciphertext_length", len(ciphertext)).Debug("Data encrypted successfully")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricEncrypter.Encrypt", "ciphertext_length": len(ciphertext)}).Debug("Data encrypted successfully")
 	return ciphertext, nil
 }
 

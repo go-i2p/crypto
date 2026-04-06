@@ -52,6 +52,7 @@ import (
 	stdchacha "golang.org/x/crypto/chacha20poly1305"
 
 	"github.com/go-i2p/crypto/rand"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -82,7 +83,7 @@ type AEAD struct {
 //	    log.Fatal(err)
 //	}
 func NewAEAD(key [KeySize]byte) (*AEAD, error) {
-	log.Debug("Creating new ChaCha20-Poly1305 AEAD cipher")
+	log.WithFields(logger.Fields{"pkg": "chacha20poly1305", "func": "NewAEAD"}).Debug("Creating new ChaCha20-Poly1305 AEAD cipher")
 
 	cipher, err := stdchacha.New(key[:])
 	if err != nil {
@@ -122,8 +123,7 @@ func (a *AEAD) Encrypt(plaintext, associatedData, nonce []byte) (ciphertext []by
 		return nil, tag, ErrInvalidNonceSize
 	}
 
-	log.WithField("plaintext_len", len(plaintext)).
-		WithField("aad_len", len(associatedData)).
+	log.WithFields(logger.Fields{"pkg": "chacha20poly1305", "func": "AEAD.Encrypt", "plaintext_len": len(plaintext), "aad_len": len(associatedData)}).
 		Debug("Encrypting with ChaCha20-Poly1305")
 
 	// The golang.org/x/crypto ChaCha20-Poly1305 AEAD appends the tag to the ciphertext
@@ -138,7 +138,7 @@ func (a *AEAD) Encrypt(plaintext, associatedData, nonce []byte) (ciphertext []by
 	ciphertext = sealed[:len(sealed)-TagSize]
 	copy(tag[:], sealed[len(sealed)-TagSize:])
 
-	log.WithField("ciphertext_len", len(ciphertext)).
+	log.WithFields(logger.Fields{"pkg": "chacha20poly1305", "func": "AEAD.Encrypt", "ciphertext_len": len(ciphertext)}).
 		Debug("Encryption successful")
 
 	return ciphertext, tag, nil
@@ -178,8 +178,7 @@ func (a *AEAD) Decrypt(ciphertext, tag, associatedData, nonce []byte) (plaintext
 		return nil, oops.Errorf("invalid tag size: expected %d, got %d", TagSize, len(tag))
 	}
 
-	log.WithField("ciphertext_len", len(ciphertext)).
-		WithField("aad_len", len(associatedData)).
+	log.WithFields(logger.Fields{"pkg": "chacha20poly1305", "func": "AEAD.Decrypt", "ciphertext_len": len(ciphertext), "aad_len": len(associatedData)}).
 		Debug("Decrypting with ChaCha20-Poly1305")
 
 	// Reconstruct the sealed format: ciphertext || tag
@@ -190,11 +189,11 @@ func (a *AEAD) Decrypt(ciphertext, tag, associatedData, nonce []byte) (plaintext
 	// Decrypt and verify
 	plaintext, err = a.cipher.Open(nil, nonce, sealed, associatedData)
 	if err != nil {
-		log.WithError(err).Warn("ChaCha20-Poly1305 authentication failed")
+		log.WithFields(logger.Fields{"pkg": "chacha20poly1305", "func": "AEAD.Decrypt"}).WithError(err).Warn("ChaCha20-Poly1305 authentication failed")
 		return nil, ErrAuthenticationFailed
 	}
 
-	log.WithField("plaintext_len", len(plaintext)).
+	log.WithFields(logger.Fields{"pkg": "chacha20poly1305", "func": "AEAD.Decrypt", "plaintext_len": len(plaintext)}).
 		Debug("Decryption successful")
 
 	return plaintext, nil

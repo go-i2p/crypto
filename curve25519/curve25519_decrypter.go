@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"io"
 
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 	"golang.org/x/crypto/chacha20poly1305"
@@ -23,7 +24,7 @@ type Curve25519Decrypter struct {
 // using HKDF-SHA256, and then decrypts the data using ChaCha20-Poly1305 authenticated encryption.
 // The minimum data size is 60 bytes (32-byte public key + 12-byte nonce + 16-byte tag).
 func (c *Curve25519Decrypter) Decrypt(data []byte) ([]byte, error) {
-	log.WithField("data_length", len(data)).Debug("Decrypting data with Curve25519")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Decrypter.Decrypt", "data_length": len(data)}).Debug("Decrypting data with Curve25519")
 
 	if err := c.validateDecryptionData(data); err != nil {
 		return nil, err
@@ -44,7 +45,7 @@ func (c *Curve25519Decrypter) Decrypt(data []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	log.Debug("Data decrypted successfully")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Decrypter.Decrypt"}).Debug("Data decrypted successfully")
 	return plaintext, nil
 }
 

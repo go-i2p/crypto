@@ -4,6 +4,8 @@ import (
 	"crypto/dsa"
 	"io"
 	"math/big"
+
+	"github.com/go-i2p/logger"
 )
 
 // generateDSA creates a new DSA keypair using the predefined I2P parameters.
@@ -12,7 +14,7 @@ import (
 // The generated keypair is compatible with I2P DSA signature operations and follows
 // the FIPS 186-2 DSA specification used by the I2P network protocol.
 func generateDSA(priv *dsa.PrivateKey, rand io.Reader) error {
-	log.Debug("Generating DSA key pair")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "generateDSA"}).Debug("Generating DSA key pair")
 	// Initialize with I2P-standard DSA parameters (P, Q, G)
 	priv.P = param.P
 	priv.Q = param.Q
@@ -20,9 +22,9 @@ func generateDSA(priv *dsa.PrivateKey, rand io.Reader) error {
 	// Generate cryptographically secure keypair using provided entropy source
 	err := dsa.GenerateKey(priv, rand)
 	if err != nil {
-		log.WithError(err).Error("Failed to generate DSA key pair")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "generateDSA"}).WithError(err).Error("Failed to generate DSA key pair")
 	} else {
-		log.Debug("DSA key pair generated successfully")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "generateDSA"}).Debug("DSA key pair generated successfully")
 	}
 	return err
 }
@@ -32,7 +34,7 @@ func generateDSA(priv *dsa.PrivateKey, rand io.Reader) error {
 // parameters and the provided public key value Y. The resulting key can be used
 // for signature verification operations in the I2P network context.
 func createDSAPublicKey(Y *big.Int) *dsa.PublicKey {
-	log.Debug("Creating DSA public key")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "createDSAPublicKey"}).Debug("Creating DSA public key")
 	// Construct public key with I2P parameters and provided Y value
 	return &dsa.PublicKey{
 		Parameters: param,
@@ -46,7 +48,7 @@ func createDSAPublicKey(Y *big.Int) *dsa.PublicKey {
 // public key Y = g^X mod p and validates that X is within the valid range (0 < X < p).
 // Returns a fully initialized private key suitable for DSA signing operations.
 func createDSAPrivkey(X *big.Int) (k *dsa.PrivateKey) {
-	log.Debug("Creating DSA private key")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "createDSAPrivkey"}).Debug("Creating DSA private key")
 	// Validate that private key X is within valid range (0 < X < p)
 	if X.Cmp(dsap) == -1 {
 		// Compute public key Y = g^X mod p using modular exponentiation
@@ -60,10 +62,10 @@ func createDSAPrivkey(X *big.Int) (k *dsa.PrivateKey) {
 			},
 			X: X,
 		}
-		log.Debug("DSA private key created successfully")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "createDSAPrivkey"}).Debug("DSA private key created successfully")
 	} else {
 		// Private key X exceeds modulus p - cryptographically invalid
-		log.Warn("Failed to create DSA private key: X is not less than p")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "createDSAPrivkey"}).Warn("Failed to create DSA private key: X is not less than p")
 	}
 	return
 }

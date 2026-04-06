@@ -20,6 +20,8 @@ type ECDSAVerifier struct {
 // verify a signature given the hash
 func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "ecdsa",
+		"func":        "ECDSAVerifier.VerifyHash",
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying ECDSA signature hash")
@@ -30,6 +32,8 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 
 	if len(sig) != expectedSigLen {
 		log.WithFields(logger.Fields{
+			"pkg":             "ecdsa",
+			"func":            "ECDSAVerifier.VerifyHash",
 			"expected_length": expectedSigLen,
 			"actual_length":   len(sig),
 		}).Error("Unsupported ECDSA signature format or length")
@@ -42,10 +46,10 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 	s := new(big.Int).SetBytes(sig[curveOrderBytes:])
 
 	if !ecdsa.Verify(v.k, h, r, s) {
-		log.Warn("Invalid ECDSA signature")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECDSAVerifier.VerifyHash"}).Warn("Invalid ECDSA signature")
 		err = types.ErrInvalidSignature
 	} else {
-		log.Debug("ECDSA signature verified successfully")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECDSAVerifier.VerifyHash"}).Debug("ECDSA signature verified successfully")
 	}
 	return
 }
@@ -53,6 +57,8 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 // verify a block of data by hashing it and comparing the hash against the signature
 func (v *ECDSAVerifier) Verify(data, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "ecdsa",
+		"func":        "ECDSAVerifier.Verify",
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying ECDSA signature")
@@ -67,12 +73,14 @@ func (v *ECDSAVerifier) Verify(data, sig []byte) (err error) {
 
 func CreateECVerifier(c elliptic.Curve, h crypto.Hash, k []byte) (ev *ECDSAVerifier, err error) {
 	log.WithFields(logger.Fields{
+		"pkg":   "ecdsa",
+		"func":  "CreateECVerifier",
 		"curve": c.Params().Name,
 		"hash":  h.String(),
 	}).Debug("Creating ECDSA verifier")
 	x, y := elliptic.Unmarshal(c, k[:])
 	if x == nil {
-		log.Error("Invalid ECDSA key format")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Error("Invalid ECDSA key format")
 		err = types.ErrInvalidKeyFormat
 	} else {
 		ev = &ECDSAVerifier{
@@ -80,7 +88,7 @@ func CreateECVerifier(c elliptic.Curve, h crypto.Hash, k []byte) (ev *ECDSAVerif
 			h: h,
 		}
 		ev.k = &ecdsa.PublicKey{c, x, y}
-		log.Debug("ECDSA verifier created successfully")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Debug("ECDSA verifier created successfully")
 	}
 	return
 }

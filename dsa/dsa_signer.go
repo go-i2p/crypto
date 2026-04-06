@@ -5,6 +5,8 @@ import (
 	"crypto/rand"
 	"crypto/sha1"
 	"math/big"
+
+	"github.com/go-i2p/logger"
 )
 
 // DSASigner provides DSA digital signature creation functionality.
@@ -21,7 +23,7 @@ type DSASigner struct {
 // as a 40-byte array containing r (20 bytes) followed by s (20 bytes).
 // Returns the signature bytes or an error if signing fails due to invalid key or data.
 func (ds *DSASigner) Sign(data []byte) (sig []byte, err error) {
-	log.WithField("data_length", len(data)).Debug("Signing data with DSA")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSASigner.Sign", "data_length": len(data)}).Debug("Signing data with DSA")
 	// Hash data with SHA-1 as required by I2P DSA specification
 	h := sha1.Sum(data)
 	sig, err = ds.SignHash(h[:])
@@ -34,7 +36,7 @@ func (ds *DSASigner) Sign(data []byte) (sig []byte, err error) {
 // Returns a 40-byte signature in I2P format (r||s) or an error if signing fails.
 // This is the primary signing method for performance-critical applications.
 func (ds *DSASigner) SignHash(h []byte) (sig []byte, err error) {
-	log.WithField("hash_length", len(h)).Debug("Signing hash with DSA")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSASigner.SignHash", "hash_length": len(h)}).Debug("Signing hash with DSA")
 	var r, s *big.Int
 	// Generate DSA signature using cryptographically secure randomness
 	r, s, err = dsa.Sign(rand.Reader, ds.k, h)
@@ -49,9 +51,9 @@ func (ds *DSASigner) SignHash(h []byte) (sig []byte, err error) {
 		sl := len(sb)
 		// Zero-pad s value to 20 bytes (big-endian format)
 		copy(sig[20+(20-sl):], sb)
-		log.WithField("sig_length", len(sig)).Debug("DSA signature created successfully")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSASigner.SignHash", "sig_length": len(sig)}).Debug("DSA signature created successfully")
 	} else {
-		log.WithError(err).Error("Failed to create DSA signature")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSASigner.SignHash"}).WithError(err).Error("Failed to create DSA signature")
 	}
 	return
 }

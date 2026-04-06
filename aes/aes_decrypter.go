@@ -4,6 +4,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -15,16 +16,16 @@ type AESSymmetricDecrypter struct {
 
 // Decrypt decrypts data using AES-CBC with PKCS#7 padding
 func (d *AESSymmetricDecrypter) Decrypt(data []byte) ([]byte, error) {
-	log.WithField("data_length", len(data)).Debug("Decrypting data")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricDecrypter.Decrypt", "data_length": len(data)}).Debug("Decrypting data")
 
 	block, err := aes.NewCipher(d.Key)
 	if err != nil {
-		log.WithError(err).Error("Failed to create AES cipher")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricDecrypter.Decrypt"}).WithError(err).Error("Failed to create AES cipher")
 		return nil, err
 	}
 
 	if len(data)%aes.BlockSize != 0 {
-		log.Error("Ciphertext is not a multiple of the block size")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricDecrypter.Decrypt"}).Error("Ciphertext is not a multiple of the block size")
 		return nil, oops.Errorf("ciphertext is not a multiple of the block size")
 	}
 
@@ -34,11 +35,11 @@ func (d *AESSymmetricDecrypter) Decrypt(data []byte) ([]byte, error) {
 
 	plaintext, err = pkcs7Unpad(plaintext)
 	if err != nil {
-		log.WithError(err).Error("Failed to unpad plaintext")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricDecrypter.Decrypt"}).WithError(err).Error("Failed to unpad plaintext")
 		return nil, err
 	}
 
-	log.WithField("plaintext_length", len(plaintext)).Debug("Data decrypted successfully")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricDecrypter.Decrypt", "plaintext_length": len(plaintext)}).Debug("Data decrypted successfully")
 	return plaintext, nil
 }
 

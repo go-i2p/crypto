@@ -3,6 +3,7 @@ package chacha20
 import (
 	"github.com/go-i2p/crypto/rand"
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -41,7 +42,7 @@ func NewChaCha20Key(data []byte) (*ChaCha20Key, error) {
 		}
 	}
 	if allZero {
-		log.Warn("ChaCha20 key is all zeros - this is cryptographically weak")
+		log.WithFields(logger.Fields{"pkg": "chacha20", "func": "NewChaCha20Key"}).Warn("ChaCha20 key is all zeros - this is cryptographically weak")
 	}
 
 	// Create defensive copy
@@ -52,6 +53,7 @@ func NewChaCha20Key(data []byte) (*ChaCha20Key, error) {
 
 // GenerateKey creates a new random ChaCha20 key
 func GenerateKey() (*ChaCha20Key, error) {
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "GenerateKey"}).Debug("Generating new ChaCha20 key")
 	key := new(ChaCha20Key)
 	_, err := rand.Read(key[:])
 	if err != nil {
@@ -72,11 +74,13 @@ func (k *ChaCha20Key) Bytes() []byte {
 
 // NewEncrypter creates a new encrypter using this key
 func (k *ChaCha20Key) NewEncrypter() (types.Encrypter, error) {
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20Key.NewEncrypter"}).Debug("Creating new ChaCha20 encrypter")
 	return &ChaCha20PolyEncrypter{Key: *k}, nil
 }
 
 // NewDecrypter creates a new decrypter using this key
 func (k *ChaCha20Key) NewDecrypter() (types.Decrypter, error) {
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20Key.NewDecrypter"}).Debug("Creating new ChaCha20 decrypter")
 	return &ChaCha20PolyDecrypter{Key: *k}, nil
 }
 
@@ -84,6 +88,7 @@ func (k *ChaCha20Key) NewDecrypter() (types.Decrypter, error) {
 // This method should be called when the key is no longer needed to prevent
 // memory disclosure attacks. After calling Zero, the key becomes unusable.
 func (k *ChaCha20Key) Zero() {
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20Key.Zero"}).Debug("Securely clearing ChaCha20 key from memory")
 	for i := range k {
 		k[i] = 0
 	}

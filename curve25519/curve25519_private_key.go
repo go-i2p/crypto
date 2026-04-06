@@ -2,6 +2,7 @@ package curve25519
 
 import (
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"go.step.sm/crypto/x25519"
 )
 
@@ -55,7 +56,7 @@ func (k Curve25519PrivateKey) Public() (types.PublicEncryptionKey, error) {
 	pubKey := privKey.Public() // This will return the corresponding public key
 	x25519PubKey, ok := pubKey.(x25519.PublicKey)
 	if !ok {
-		log.Error("Failed to convert public key to x25519.PublicKey")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PrivateKey.Public"}).Error("Failed to convert public key to x25519.PublicKey")
 		return nil, ErrInvalidPrivateKey
 	}
 	curve25519PubKey := Curve25519PublicKey(x25519PubKey)
@@ -78,9 +79,9 @@ func (k Curve25519PrivateKey) Zero() {
 // AEAD decryption to provide secure decryption of data encrypted with the corresponding public key.
 // Returns ErrInvalidPrivateKey if the private key size is invalid (must be 32 bytes).
 func (k Curve25519PrivateKey) NewDecrypter() (types.Decrypter, error) {
-	log.Debug("Creating new Curve25519 Decrypter")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PrivateKey.NewDecrypter"}).Debug("Creating new Curve25519 Decrypter")
 	if len(k) != x25519.PrivateKeySize {
-		log.Error("Invalid Curve25519 private key size")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PrivateKey.NewDecrypter"}).Error("Invalid Curve25519 private key size")
 		return nil, ErrInvalidPrivateKey
 	}
 
@@ -98,9 +99,9 @@ func (k Curve25519PrivateKey) NewDecrypter() (types.Decrypter, error) {
 // secure signatures that can be verified using the corresponding Curve25519 public key.
 // Returns ErrInvalidPrivateKey if the private key size is invalid (must be 32 bytes).
 func (k Curve25519PrivateKey) NewSigner() (types.Signer, error) {
-	log.Debug("Creating new Curve25519 Signer")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PrivateKey.NewSigner"}).Debug("Creating new Curve25519 Signer")
 	if len(k) != x25519.PrivateKeySize {
-		log.Error("Invalid Curve25519 private key size")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PrivateKey.NewSigner"}).Error("Invalid Curve25519 private key size")
 		return nil, ErrInvalidPrivateKey
 	}
 	return &Curve25519Signer{k: k}, nil
@@ -123,8 +124,7 @@ func (k Curve25519PrivateKey) NewSigner() (types.Signer, error) {
 //	defer privKey.Zero() // Always zero private keys when done
 func NewCurve25519PrivateKey(data []byte) (*Curve25519PrivateKey, error) {
 	if len(data) != x25519.PrivateKeySize {
-		log.WithField("expected_length", x25519.PrivateKeySize).
-			WithField("actual_length", len(data)).
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "NewCurve25519PrivateKey", "expected_length": x25519.PrivateKeySize, "actual_length": len(data)}).
 			Error("Invalid data length for Curve25519PrivateKey")
 		return nil, ErrInvalidPrivateKey
 	}
@@ -138,13 +138,13 @@ func NewCurve25519PrivateKey(data []byte) (*Curve25519PrivateKey, error) {
 		}
 	}
 	if allZero {
-		log.Error("Private key cannot be all zeros")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "NewCurve25519PrivateKey"}).Error("Private key cannot be all zeros")
 		return nil, ErrInvalidPrivateKey
 	}
 
 	key := Curve25519PrivateKey(make([]byte, x25519.PrivateKeySize))
 	copy(key, data)
-	log.Debug("Curve25519PrivateKey created successfully")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "NewCurve25519PrivateKey"}).Debug("Curve25519PrivateKey created successfully")
 	return &key, nil
 }
 

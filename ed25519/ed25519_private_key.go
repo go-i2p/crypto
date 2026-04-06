@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -106,7 +107,7 @@ func (k Ed25519PrivateKey) Generate() (types.SigningPrivateKey, error) {
 // Returns the corresponding public key that can be used for signature verification.
 // The public key is derived from the private key's embedded public component.
 func (k Ed25519PrivateKey) Public() (types.SigningPublicKey, error) {
-	log.WithField("key_length", len(k)).Debug("Ed25519PrivateKey.Public() called")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519PrivateKey.Public", "key_length": len(k)}).Debug("Ed25519PrivateKey.Public() called")
 	// Validate private key size before extracting public key
 	if len(k) != ed25519.PrivateKeySize {
 		return nil, oops.Errorf("invalid ed25519 private key size: expected %d, got %d",
@@ -115,7 +116,7 @@ func (k Ed25519PrivateKey) Public() (types.SigningPublicKey, error) {
 	// Extract the 32-byte public key portion from the 64-byte private key
 	// Extract public key portion (last 32 bytes)
 	pubKey := ed25519.PrivateKey(k).Public().(ed25519.PublicKey)
-	log.WithField("pubkey_length", len(pubKey)).Debug("Ed25519PrivateKey.Public() extracted public key")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519PrivateKey.Public", "pubkey_length": len(pubKey)}).Debug("Ed25519PrivateKey.Public() extracted public key")
 	return Ed25519PublicKey(pubKey), nil
 }
 

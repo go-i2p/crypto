@@ -5,6 +5,7 @@ import (
 	"crypto/elliptic"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -44,10 +45,10 @@ func NewECP256PublicKey(data []byte) (*ECP256PublicKey, error) {
 
 // Verify implements types.Verifier.
 func (k ECP256PublicKey) Verify(data, sig []byte) error {
-	log.WithField("data_length", len(data)).Debug("Verifying data with ECDSA-P256")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PublicKey.Verify", "data_length": len(data)}).Debug("Verifying data with ECDSA-P256")
 	verifier, err := k.NewVerifier()
 	if err != nil {
-		log.WithError(err).Error("Failed to create verifier")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PublicKey.Verify"}).WithError(err).Error("Failed to create verifier")
 		return err
 	}
 	return verifier.Verify(data, sig)
@@ -55,10 +56,10 @@ func (k ECP256PublicKey) Verify(data, sig []byte) error {
 
 // VerifyHash implements types.Verifier.
 func (k ECP256PublicKey) VerifyHash(h, sig []byte) error {
-	log.WithField("hash_length", len(h)).Debug("Verifying hash with ECDSA-P256")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PublicKey.VerifyHash", "hash_length": len(h)}).Debug("Verifying hash with ECDSA-P256")
 	verifier, err := k.NewVerifier()
 	if err != nil {
-		log.WithError(err).Error("Failed to create verifier")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PublicKey.VerifyHash"}).WithError(err).Error("Failed to create verifier")
 		return err
 	}
 	return verifier.VerifyHash(h, sig)
@@ -66,7 +67,7 @@ func (k ECP256PublicKey) VerifyHash(h, sig []byte) error {
 
 // Encrypt implements types.Encrypter.
 func (k *ECP256PublicKey) Encrypt(data []byte) (enc []byte, err error) {
-	log.Error("Encryption not supported with ECDSA keys")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PublicKey.Encrypt"}).Error("Encryption not supported with ECDSA keys")
 	return nil, oops.Errorf("encryption not supported with ECDSA keys; ECDSA is for signing/verification only")
 }
 
@@ -79,11 +80,11 @@ func (k ECP256PublicKey) Bytes() []byte {
 }
 
 func (k ECP256PublicKey) NewVerifier() (types.Verifier, error) {
-	log.Debug("Creating new P256 ECDSA verifier")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PublicKey.NewVerifier"}).Debug("Creating new P256 ECDSA verifier")
 	// return createECVerifier(elliptic.P256(), crypto.SHA256, k[:])
 	v, err := CreateECVerifier(elliptic.P256(), crypto.SHA256, k[:])
 	if err != nil {
-		log.WithError(err).Error("Failed to create P256 ECDSA verifier")
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PublicKey.NewVerifier"}).WithError(err).Error("Failed to create P256 ECDSA verifier")
 	}
 	return v, err
 }

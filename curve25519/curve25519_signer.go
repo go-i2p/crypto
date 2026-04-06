@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"crypto/sha512"
 
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 )
@@ -20,10 +21,10 @@ type Curve25519Signer struct {
 // The signature can be verified using the corresponding Curve25519 public key and the original data.
 // Returns ErrInvalidPrivateKey if the private key size is invalid (must be 32 bytes).
 func (s *Curve25519Signer) Sign(data []byte) ([]byte, error) {
-	log.WithField("data_length", len(data)).Debug("Signing data with Curve25519")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Signer.Sign", "data_length": len(data)}).Debug("Signing data with Curve25519")
 
 	if len(s.k) != x25519.PrivateKeySize {
-		log.Error("Invalid Curve25519 private key size")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Signer.Sign"}).Error("Invalid Curve25519 private key size")
 		return nil, ErrInvalidPrivateKey
 	}
 
@@ -37,7 +38,7 @@ func (s *Curve25519Signer) Sign(data []byte) ([]byte, error) {
 // using X25519 elliptic curve algorithms. This is useful when the hash has already been computed
 // or when implementing custom hash functions for specific I2P protocol requirements.
 func (s *Curve25519Signer) SignHash(h []byte) ([]byte, error) {
-	log.WithField("hash_length", len(h)).Debug("Signing hash with Curve25519")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Signer.SignHash", "hash_length": len(h)}).Debug("Signing hash with Curve25519")
 
 	sig, err := x25519.Sign(rand.Reader, s.k, h)
 	if err != nil {
@@ -45,6 +46,6 @@ func (s *Curve25519Signer) SignHash(h []byte) ([]byte, error) {
 		return nil, oops.Errorf("failed to sign: %w", err)
 	}
 
-	log.WithField("signature_length", len(sig)).Debug("Hash signed successfully")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Signer.SignHash", "signature_length": len(sig)}).Debug("Hash signed successfully")
 	return sig, nil
 }

@@ -6,6 +6,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -79,7 +80,7 @@ func NewDSAPrivateKey(data []byte) (DSAPrivateKey, error) {
 // the private key format is invalid or signer creation fails.
 // Example usage: signer, err := privateKey.NewSigner()
 func (k DSAPrivateKey) NewSigner() (s types.Signer, err error) {
-	log.Debug("Creating new DSA signer")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.NewSigner"}).Debug("Creating new DSA signer")
 	// Create signer with validated private key parameters
 	s = &DSASigner{
 		k: createDSAPrivkey(new(big.Int).SetBytes(k[:])),
@@ -96,12 +97,12 @@ func (k DSAPrivateKey) Public() (types.SigningPublicKey, error) {
 	// Convert private key to standard DSA format for public key derivation
 	p := createDSAPrivkey(new(big.Int).SetBytes(k[:]))
 	if p == nil {
-		log.Error("Invalid DSA private key format")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Public"}).Error("Invalid DSA private key format")
 		return nil, types.ErrInvalidKeyFormat
 	} else {
 		// Extract public key value Y and store in I2P format (128 bytes)
 		copy(pk[:], p.Y.Bytes())
-		log.Debug("DSA public key derived successfully")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Public"}).Debug("DSA public key derived successfully")
 	}
 	return pk, nil
 }
@@ -119,7 +120,7 @@ func (k DSAPrivateKey) Len() int {
 // The generated private key value X is securely random and mathematically valid for DSA operations.
 // Returns a new DSAPrivateKey or an error if key generation fails due to insufficient entropy.
 func (k DSAPrivateKey) Generate() (types.SigningPrivateKey, error) {
-	log.Debug("Generating new DSA private key")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Generate"}).Debug("Generating new DSA private key")
 	// Use standard DSA key generation with I2P parameters
 	dk := new(dsa.PrivateKey)
 	err := generateDSA(dk, rand.Reader)
@@ -127,10 +128,10 @@ func (k DSAPrivateKey) Generate() (types.SigningPrivateKey, error) {
 		// Convert generated key to I2P format (20-byte private exponent)
 		var newKey DSAPrivateKey
 		copy(newKey[:], dk.X.Bytes())
-		log.Debug("New DSA private key generated successfully")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Generate"}).Debug("New DSA private key generated successfully")
 		return newKey, nil
 	} else {
-		log.WithError(err).Error("Failed to generate new DSA private key")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Generate"}).WithError(err).Error("Failed to generate new DSA private key")
 		return nil, err
 	}
 }
@@ -152,5 +153,5 @@ func (k *DSAPrivateKey) Zero() {
 	for i := range k {
 		k[i] = 0
 	}
-	log.Debug("DSA private key securely erased")
+	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Zero"}).Debug("DSA private key securely erased")
 }

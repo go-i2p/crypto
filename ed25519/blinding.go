@@ -5,6 +5,7 @@ import (
 	"crypto/sha512"
 
 	"filippo.io/edwards25519"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -60,13 +61,13 @@ var (
 // operations that both follow the parse-compute-copy pattern.
 func applyPublicKeyTransform(keyBytes, alpha [32]byte, startMsg, endMsg string, compute func([32]byte, [32]byte) (*edwards25519.Point, error)) ([32]byte, error) {
 	var result [32]byte
-	log.Debug(startMsg)
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "applyPublicKeyTransform"}).Debug(startMsg)
 	point, err := compute(keyBytes, alpha)
 	if err != nil {
 		return result, err
 	}
 	copy(result[:], point.Bytes())
-	log.Debug(endMsg)
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "applyPublicKeyTransform"}).Debug(endMsg)
 	return result, nil
 }
 
@@ -92,7 +93,7 @@ func BlindPublicKey(publicKey, alpha [32]byte) ([32]byte, error) {
 func parsePublicKeyPoint(publicKey [32]byte) (*edwards25519.Point, error) {
 	P, err := (&edwards25519.Point{}).SetBytes(publicKey[:])
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse public key")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "parsePublicKeyPoint", "error": err}).Error("Failed to parse public key")
 		return nil, oops.Wrapf(ErrInvalidPublicKey, "failed to parse public key: %v", err)
 	}
 	return P, nil
@@ -102,7 +103,7 @@ func parsePublicKeyPoint(publicKey [32]byte) (*edwards25519.Point, error) {
 func parseAlphaScalar(alpha [32]byte) (*edwards25519.Scalar, error) {
 	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse blinding factor as scalar")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "parseAlphaScalar", "error": err}).Error("Failed to parse blinding factor as scalar")
 		return nil, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
 	}
 	return alphaScalar, nil
@@ -115,7 +116,7 @@ func computeBlindedPoint(P *edwards25519.Point, alphaScalar *edwards25519.Scalar
 
 	identityPoint := edwards25519.NewIdentityPoint()
 	if blindedPoint.Equal(identityPoint) == 1 {
-		log.Error("Blinded public key is identity point")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "computeBlindedPoint"}).Error("Blinded public key is identity point")
 		return nil, ErrIdentityPoint
 	}
 
@@ -164,7 +165,7 @@ func computeBlindedPoint(P *edwards25519.Point, alphaScalar *edwards25519.Scalar
 func BlindPrivateKey(privateKey [64]byte, alpha [32]byte) ([64]byte, error) {
 	var result [64]byte
 
-	log.Debug("Blinding Ed25519 private key")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "BlindPrivateKey"}).Debug("Blinding Ed25519 private key")
 
 	if len(privateKey) != ed25519.PrivateKeySize {
 		return result, oops.Wrapf(ErrInvalidPrivateKey, "expected %d bytes, got %d", ed25519.PrivateKeySize, len(privateKey))
@@ -182,7 +183,7 @@ func BlindPrivateKey(privateKey [64]byte, alpha [32]byte) ([64]byte, error) {
 
 	result = constructBlindedPrivateKey(blindedScalar)
 
-	log.Debug("Private key blinded successfully")
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "BlindPrivateKey"}).Debug("Private key blinded successfully")
 
 	return result, nil
 }
@@ -196,7 +197,7 @@ func deriveScalarFromSeed(seed []byte) (*edwards25519.Scalar, error) {
 
 	d, err := (&edwards25519.Scalar{}).SetBytesWithClamping(h[:32])
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse private scalar")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "deriveScalarFromSeed", "error": err}).Error("Failed to parse private scalar")
 		return nil, oops.Wrapf(ErrInvalidPrivateKey, "failed to parse private scalar: %v", err)
 	}
 
@@ -207,7 +208,7 @@ func deriveScalarFromSeed(seed []byte) (*edwards25519.Scalar, error) {
 func computeBlindedScalar(d *edwards25519.Scalar, alpha [32]byte) (*edwards25519.Scalar, error) {
 	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse blinding factor")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "computeBlindedScalar", "error": err}).Error("Failed to parse blinding factor")
 		return nil, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
 	}
 
@@ -276,7 +277,7 @@ func UnblindPublicKey(blindedPublicKey, alpha [32]byte) ([32]byte, error) {
 func parseBlindedPublicKey(blindedPublicKey [32]byte) (*edwards25519.Point, error) {
 	Pblinded, err := (&edwards25519.Point{}).SetBytes(blindedPublicKey[:])
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse blinded public key")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "parseBlindedPublicKey", "error": err}).Error("Failed to parse blinded public key")
 		return nil, oops.Wrapf(ErrInvalidPublicKey, "failed to parse blinded public key: %v", err)
 	}
 	return Pblinded, nil
@@ -286,7 +287,7 @@ func parseBlindedPublicKey(blindedPublicKey [32]byte) (*edwards25519.Point, erro
 func computeAlphaBasePoint(alpha [32]byte) (*edwards25519.Point, error) {
 	alphaScalar, err := (&edwards25519.Scalar{}).SetCanonicalBytes(alpha[:])
 	if err != nil {
-		log.WithField("error", err).Error("Failed to parse blinding factor")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "computeAlphaBasePoint", "error": err}).Error("Failed to parse blinding factor")
 		return nil, oops.Wrapf(ErrInvalidScalar, "failed to parse alpha: %v", err)
 	}
 
@@ -300,7 +301,7 @@ func subtractAndValidate(Pblinded, alphaB *edwards25519.Point) (*edwards25519.Po
 
 	identityPoint := edwards25519.NewIdentityPoint()
 	if original.Equal(identityPoint) == 1 {
-		log.Error("Unblinded public key is identity point")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "subtractAndValidate"}).Error("Unblinded public key is identity point")
 		return nil, ErrIdentityPoint
 	}
 

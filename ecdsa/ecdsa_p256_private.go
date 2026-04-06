@@ -8,6 +8,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -96,7 +97,7 @@ func (e *ECP256PrivateKey) SignHash(h []byte) (sig []byte, err error) {
 	copy(sig[32-len(sigR):32], sigR)
 	copy(sig[64-len(sigS):], sigS)
 
-	log.Debug("Generated ECDSA-P256 signature")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PrivateKey.SignHash"}).Debug("Generated ECDSA-P256 signature")
 	return sig, nil
 }
 
@@ -135,7 +136,7 @@ func (e *ECP256PrivateKey) Public() (types.SigningPublicKey, error) {
 	copy(publicKey[0:32], xBytes)
 	copy(publicKey[32:64], yBytes)
 
-	log.Debug("Generated ECDSA-P256 public key from private key")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PrivateKey.Public"}).Debug("Generated ECDSA-P256 public key from private key")
 	return publicKey, nil
 }
 
@@ -145,7 +146,7 @@ func (e *ECP256PrivateKey) Zero() {
 	for i := range e {
 		e[i] = 0
 	}
-	log.Debug("Zeroed ECDSA-P256 private key")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PrivateKey.Zero"}).Debug("Zeroed ECDSA-P256 private key")
 }
 
 // Generate implements SigningPrivateKey.Generate
@@ -163,7 +164,7 @@ func (e *ECP256PrivateKey) Generate() (types.SigningPrivateKey, error) {
 	dBytes := privateKey.D.Bytes()
 	copy(result[32-len(dBytes):], dBytes)
 
-	log.Debug("Generated new ECDSA-P256 private key")
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PrivateKey.Generate"}).Debug("Generated new ECDSA-P256 private key")
 	return result, nil
 }
 

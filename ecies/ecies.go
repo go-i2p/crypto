@@ -10,6 +10,7 @@ package ecies
 
 import (
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 )
@@ -62,7 +63,7 @@ func (k ECIESPrivateKey) Public() (types.PublicEncryptionKey, error) {
 	// Type assert to get the actual public key bytes
 	pubKeyBytes, ok := pubKeyInterface.(x25519.PublicKey)
 	if !ok {
-		log.Error("Failed to type assert X25519 public key")
+		log.WithFields(logger.Fields{"pkg": "ecies", "func": "ECIESPrivateKey.Public"}).Error("Failed to type assert X25519 public key")
 		return nil, oops.Errorf("failed to derive public key from private key")
 	}
 
@@ -70,7 +71,7 @@ func (k ECIESPrivateKey) Public() (types.PublicEncryptionKey, error) {
 	var pubKey ECIESPublicKey
 	copy(pubKey[:], pubKeyBytes)
 
-	log.Debug("ECIES public key derived successfully from private key")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "ECIESPrivateKey.Public"}).Debug("ECIES public key derived successfully from private key")
 	return pubKey, nil
 }
 
@@ -103,11 +104,11 @@ func (d *ECIESDecrypter) Decrypt(data []byte) ([]byte, error) {
 
 // GenerateECIESKeyPair generates a new ECIES key pair using the standard interface types
 func GenerateECIESKeyPair() (*ECIESPublicKey, *ECIESPrivateKey, error) {
-	log.Debug("Generating ECIES key pair")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "GenerateECIESKeyPair"}).Debug("Generating ECIES key pair")
 
 	pubBytes, privBytes, err := GenerateKeyPair()
 	if err != nil {
-		log.WithError(err).Error("Failed to generate ECIES key pair")
+		log.WithFields(logger.Fields{"pkg": "ecies", "func": "GenerateECIESKeyPair"}).WithError(err).Error("Failed to generate ECIES key pair")
 		return nil, nil, err
 	}
 
@@ -117,6 +118,6 @@ func GenerateECIESKeyPair() (*ECIESPublicKey, *ECIESPrivateKey, error) {
 	copy(pubKey[:], pubBytes)
 	copy(privKey[:], privBytes)
 
-	log.Debug("ECIES key pair generated successfully")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "GenerateECIESKeyPair"}).Debug("ECIES key pair generated successfully")
 	return &pubKey, &privKey, nil
 }

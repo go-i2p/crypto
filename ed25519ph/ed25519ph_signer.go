@@ -5,6 +5,7 @@ import (
 	"crypto/ed25519"
 	"crypto/sha512"
 
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -23,10 +24,10 @@ type Ed25519phSigner struct {
 // domain separation as specified in RFC 8032 Section 5.1.
 // Returns the signature bytes or an error if signing fails.
 func (s *Ed25519phSigner) Sign(data []byte) (sig []byte, err error) {
-	log.WithField("data_length", len(data)).Debug("Signing data with Ed25519ph")
+	log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.Sign", "data_length": len(data)}).Debug("Signing data with Ed25519ph")
 
 	if len(s.k) != ed25519.PrivateKeySize {
-		log.Error("Invalid Ed25519ph private key size")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.Sign"}).Error("Invalid Ed25519ph private key size")
 		err = oops.Errorf("failed to sign: invalid ed25519ph private key size")
 		return
 	}
@@ -44,10 +45,10 @@ func (s *Ed25519phSigner) Sign(data []byte) (sig []byte, err error) {
 // Ed25519ph domain separation per RFC 8032 Section 5.1, making it distinct
 // from a PureEdDSA signature over the same hash bytes.
 func (s *Ed25519phSigner) SignHash(h []byte) (sig []byte, err error) {
-	log.WithField("hash_length", len(h)).Debug("Signing hash with Ed25519ph")
+	log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.SignHash", "hash_length": len(h)}).Debug("Signing hash with Ed25519ph")
 
 	if len(s.k) != ed25519.PrivateKeySize {
-		log.Error("Invalid Ed25519ph private key size")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.SignHash"}).Error("Invalid Ed25519ph private key size")
 		err = oops.Errorf("failed to sign: invalid ed25519ph private key size")
 		return
 	}
@@ -58,11 +59,11 @@ func (s *Ed25519phSigner) SignHash(h []byte) (sig []byte, err error) {
 	privKey := ed25519.PrivateKey(s.k)
 	sig, err = privKey.Sign(nil, h, opts)
 	if err != nil {
-		log.WithField("error", err).Error("Ed25519ph signing failed")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.SignHash", "error": err}).Error("Ed25519ph signing failed")
 		err = oops.Errorf("failed to sign with ed25519ph: %w", err)
 		return
 	}
 
-	log.WithField("signature_length", len(sig)).Debug("Ed25519ph signature created successfully")
+	log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.SignHash", "signature_length": len(sig)}).Debug("Ed25519ph signature created successfully")
 	return
 }

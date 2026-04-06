@@ -2,7 +2,11 @@ package argon2
 
 import (
 	"fmt"
+
+	"github.com/go-i2p/logger"
 )
+
+var log = logger.GetGoI2PLogger()
 
 const (
 	defaultTimeCost    uint32 = 3

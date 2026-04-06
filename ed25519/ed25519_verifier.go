@@ -20,19 +20,21 @@ type Ed25519Verifier struct {
 // additional hashing. Returns an error if verification fails or inputs are invalid.
 func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "ed25519",
+		"func":        "Ed25519Verifier.VerifyHash",
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Ed25519 signature hash")
 
 	// Validate signature size meets Ed25519 requirements
 	if len(sig) != ed25519.SignatureSize {
-		log.Error("Bad Ed25519 signature size")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.VerifyHash"}).Error("Bad Ed25519 signature size")
 		err = types.ErrBadSignatureSize
 		return
 	}
 	// Validate public key size before verification
 	if len(v.k) != ed25519.PublicKeySize {
-		log.Error("Invalid Ed25519 public key size")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.VerifyHash"}).Error("Invalid Ed25519 public key size")
 		err = oops.Errorf("failed to verify: invalid ed25519 public key size")
 		return
 	}
@@ -40,10 +42,10 @@ func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
 	// Perform cryptographic signature verification using standard library
 	ok := ed25519.Verify(v.k, h, sig)
 	if !ok {
-		log.Warn("Invalid Ed25519 signature")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.VerifyHash"}).Warn("Invalid Ed25519 signature")
 		err = oops.Errorf("failed to verify: invalid signature")
 	} else {
-		log.Debug("Ed25519 signature verified successfully")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.VerifyHash"}).Debug("Ed25519 signature verified successfully")
 	}
 	return
 }
@@ -54,19 +56,21 @@ func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
 // Returns an error if verification fails.
 func (v *Ed25519Verifier) Verify(data, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "ed25519",
+		"func":        "Ed25519Verifier.Verify",
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Ed25519 signature")
 
 	// Validate signature size meets Ed25519 requirements
 	if len(sig) != ed25519.SignatureSize {
-		log.Error("Bad Ed25519 signature size")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.Verify"}).Error("Bad Ed25519 signature size")
 		err = types.ErrBadSignatureSize
 		return
 	}
 	// Validate public key size before verification
 	if len(v.k) != ed25519.PublicKeySize {
-		log.Error("Invalid Ed25519 public key size")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.Verify"}).Error("Invalid Ed25519 public key size")
 		err = oops.Errorf("failed to verify: invalid ed25519 public key size")
 		return
 	}
@@ -75,10 +79,10 @@ func (v *Ed25519Verifier) Verify(data, sig []byte) (err error) {
 	// (RFC 8032) which performs its own internal SHA-512 hashing
 	ok := ed25519.Verify(v.k, data, sig)
 	if !ok {
-		log.Warn("Invalid Ed25519 signature")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.Verify"}).Warn("Invalid Ed25519 signature")
 		err = oops.Errorf("failed to verify: invalid signature")
 	} else {
-		log.Debug("Ed25519 signature verified successfully")
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.Verify"}).Debug("Ed25519 signature verified successfully")
 	}
 	return
 }

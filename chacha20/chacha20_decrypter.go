@@ -1,6 +1,7 @@
 package chacha20
 
 import (
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"golang.org/x/crypto/chacha20poly1305"
 )
@@ -18,7 +19,7 @@ func (d *ChaCha20PolyDecrypter) Decrypt(data []byte) ([]byte, error) {
 
 // DecryptWithAd decrypts data encrypted with ChaCha20-Poly1305 using additional data
 func (d *ChaCha20PolyDecrypter) DecryptWithAd(data, ad []byte) ([]byte, error) {
-	log.WithField("data_length", len(data)).Debug("Decrypting data with ChaCha20-Poly1305")
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20PolyDecrypter.DecryptWithAd", "data_length": len(data)}).Debug("Decrypting data with ChaCha20-Poly1305")
 
 	// Validate data length
 	if len(data) < NonceSize+TagSize {
@@ -38,10 +39,10 @@ func (d *ChaCha20PolyDecrypter) DecryptWithAd(data, ad []byte) ([]byte, error) {
 	// Decrypt data
 	plaintext, err := aead.Open(nil, nonce, ciphertext, ad)
 	if err != nil {
-		log.WithError(err).Error("ChaCha20-Poly1305 decryption failed")
+		log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20PolyDecrypter.DecryptWithAd"}).WithError(err).Error("ChaCha20-Poly1305 decryption failed")
 		return nil, ErrAuthFailed
 	}
 
-	log.WithField("plaintext_length", len(plaintext)).Debug("ChaCha20-Poly1305 decryption successful")
+	log.WithFields(logger.Fields{"pkg": "chacha20", "func": "ChaCha20PolyDecrypter.DecryptWithAd", "plaintext_length": len(plaintext)}).Debug("ChaCha20-Poly1305 decryption successful")
 	return plaintext, nil
 }

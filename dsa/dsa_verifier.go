@@ -24,6 +24,8 @@ type DSAVerifier struct {
 // Returns nil if the signature is valid, or an error if verification fails.
 func (v *DSAVerifier) Verify(data, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "dsa",
+		"func":        "DSAVerifier.Verify",
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying DSA signature")
@@ -41,6 +43,8 @@ func (v *DSAVerifier) Verify(data, sig []byte) (err error) {
 // method for performance-critical applications.
 func (v *DSAVerifier) VerifyHash(h, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "dsa",
+		"func":        "DSAVerifier.VerifyHash",
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying DSA signature hash")
@@ -52,15 +56,15 @@ func (v *DSAVerifier) VerifyHash(h, sig []byte) (err error) {
 		// Perform cryptographic signature verification using DSA algorithm
 		if dsa.Verify(v.k, h, r, s) {
 			// Signature is mathematically valid
-			log.Debug("DSA signature verified successfully")
+			log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAVerifier.VerifyHash"}).Debug("DSA signature verified successfully")
 		} else {
 			// Signature verification failed - cryptographically invalid
-			log.Warn("Invalid DSA signature")
+			log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAVerifier.VerifyHash"}).Warn("Invalid DSA signature")
 			err = types.ErrInvalidSignature
 		}
 	} else {
 		// Signature length is incorrect for DSA format
-		log.Error("Bad DSA signature size")
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAVerifier.VerifyHash"}).Error("Bad DSA signature size")
 		err = types.ErrBadSignatureSize
 	}
 	return

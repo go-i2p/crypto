@@ -3,6 +3,7 @@ package curve25519
 import (
 	"crypto/rand"
 
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 )
@@ -28,7 +29,7 @@ import (
 //	encrypter, _ := pubKey.NewEncrypter()
 //	ciphertext, _ := encrypter.Encrypt(plaintext)
 func GenerateX25519KeyPair() (*Curve25519PublicKey, *Curve25519PrivateKey, error) {
-	log.Debug("Generating Curve25519 (X25519) key pair")
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "GenerateX25519KeyPair"}).Debug("Generating Curve25519 (X25519) key pair")
 
 	// Generate using X25519 library
 	pubKeyRaw, privKeyRaw, err := x25519.GenerateKey(rand.Reader)
@@ -40,8 +41,7 @@ func GenerateX25519KeyPair() (*Curve25519PublicKey, *Curve25519PrivateKey, error
 	pubKey := Curve25519PublicKey(pubKeyRaw[:])
 	privKey := Curve25519PrivateKey(privKeyRaw)
 
-	log.WithField("pubkey_len", len(pubKey)).
-		WithField("privkey_len", len(privKey)).
+	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "GenerateX25519KeyPair", "pubkey_len": len(pubKey), "privkey_len": len(privKey)}).
 		Debug("X25519 key pair generated successfully")
 
 	return &pubKey, &privKey, nil

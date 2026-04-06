@@ -25,17 +25,19 @@ type Ed25519phVerifier struct {
 // Returns an error if verification fails or inputs are invalid.
 func (v *Ed25519phVerifier) VerifyHash(h, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "ed25519ph",
+		"func":        "Ed25519phVerifier.VerifyHash",
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Ed25519ph signature hash")
 
 	if len(sig) != ed25519.SignatureSize {
-		log.Error("Bad Ed25519ph signature size")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phVerifier.VerifyHash"}).Error("Bad Ed25519ph signature size")
 		err = types.ErrBadSignatureSize
 		return
 	}
 	if len(v.k) != ed25519.PublicKeySize {
-		log.Error("Invalid Ed25519ph public key size")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phVerifier.VerifyHash"}).Error("Invalid Ed25519ph public key size")
 		err = oops.Errorf("failed to verify: invalid ed25519ph public key size")
 		return
 	}
@@ -45,10 +47,10 @@ func (v *Ed25519phVerifier) VerifyHash(h, sig []byte) (err error) {
 	opts := &ed25519.Options{Hash: crypto.SHA512}
 	verifyErr := ed25519.VerifyWithOptions(v.k, h, sig, opts)
 	if verifyErr != nil {
-		log.Warn("Invalid Ed25519ph signature")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phVerifier.VerifyHash"}).Warn("Invalid Ed25519ph signature")
 		err = oops.Errorf("failed to verify: invalid signature")
 	} else {
-		log.Debug("Ed25519ph signature verified successfully")
+		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phVerifier.VerifyHash"}).Debug("Ed25519ph signature verified successfully")
 	}
 	return
 }
@@ -59,6 +61,8 @@ func (v *Ed25519phVerifier) VerifyHash(h, sig []byte) (err error) {
 // Returns an error if verification fails.
 func (v *Ed25519phVerifier) Verify(data, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg":         "ed25519ph",
+		"func":        "Ed25519phVerifier.Verify",
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Ed25519ph signature")

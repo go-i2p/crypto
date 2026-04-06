@@ -2,6 +2,7 @@ package aes
 
 import (
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -128,18 +129,18 @@ func NewAES128Key(key, iv []byte) (*AESSymmetricKey, error) {
 
 // NewEncrypter creates a new AESSymmetricEncrypter
 func (k *AESSymmetricKey) NewEncrypter() (types.Encrypter, error) {
-	log.Debug("Creating new AESSymmetricEncrypter")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.NewEncrypter"}).Debug("Creating new AESSymmetricEncrypter")
 
 	// Validate key size (must be 16, 24, or 32 bytes for AES)
 	keyLen := len(k.Key)
 	if keyLen != 16 && keyLen != 24 && keyLen != 32 {
-		log.WithField("key_length", keyLen).Error("Invalid AES key size")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.NewEncrypter", "key_length": keyLen}).Error("Invalid AES key size")
 		return nil, ErrInvalidKeySize
 	}
 
 	// Validate IV size (must be 16 bytes for AES)
 	if len(k.IV) != 16 {
-		log.WithField("iv_length", len(k.IV)).Error("Invalid AES IV size")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.NewEncrypter", "iv_length": len(k.IV)}).Error("Invalid AES IV size")
 		return nil, ErrInvalidIVSize
 	}
 
@@ -156,18 +157,18 @@ func (k *AESSymmetricKey) Len() int {
 
 // NewDecrypter creates a new AESSymmetricDecrypter
 func (k *AESSymmetricKey) NewDecrypter() (types.Decrypter, error) {
-	log.Debug("Creating new AESSymmetricDecrypter")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.NewDecrypter"}).Debug("Creating new AESSymmetricDecrypter")
 
 	// Validate key size (must be 16, 24, or 32 bytes for AES)
 	keyLen := len(k.Key)
 	if keyLen != 16 && keyLen != 24 && keyLen != 32 {
-		log.WithField("key_length", keyLen).Error("Invalid AES key size")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.NewDecrypter", "key_length": keyLen}).Error("Invalid AES key size")
 		return nil, ErrInvalidKeySize
 	}
 
 	// Validate IV size (must be 16 bytes for AES)
 	if len(k.IV) != 16 {
-		log.WithField("iv_length", len(k.IV)).Error("Invalid AES IV size")
+		log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.NewDecrypter", "iv_length": len(k.IV)}).Error("Invalid AES IV size")
 		return nil, ErrInvalidIVSize
 	}
 
@@ -180,7 +181,7 @@ func (k *AESSymmetricKey) NewDecrypter() (types.Decrypter, error) {
 // Zero implements secure memory cleanup for sensitive key material.
 // Clears both the AES key and IV from memory.
 func (k *AESSymmetricKey) Zero() {
-	log.Debug("Securely clearing AES key material from memory")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.Zero"}).Debug("Securely clearing AES key material from memory")
 
 	// Overwrite key with zeros
 	for i := range k.Key {
@@ -192,5 +193,5 @@ func (k *AESSymmetricKey) Zero() {
 		k.IV[i] = 0
 	}
 
-	log.Debug("AES key material securely erased")
+	log.WithFields(logger.Fields{"pkg": "aes", "func": "AESSymmetricKey.Zero"}).Debug("AES key material securely erased")
 }

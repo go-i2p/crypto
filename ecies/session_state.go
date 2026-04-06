@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/ratchet"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -81,7 +82,7 @@ func NewSession(localPrivKey, remoteStaticPubKey []byte, isInitiator bool) (*Ses
 
 	session.CreatedAt = currentTimestamp()
 
-	log.WithField("session_id", session.SessionID[:8]).Debug("ECIES session created")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "NewSession", "session_id": session.SessionID[:8]}).Debug("ECIES session created")
 	return session, nil
 }
 
@@ -205,7 +206,7 @@ func (s *SessionState) DeriveNextSendingKey() ([32]byte, error) {
 	s.SendingChainKey = newChainKey
 	s.SendingMessageNum++
 
-	log.WithField("message_num", s.SendingMessageNum-1).Debug("Derived sending key")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "SessionState.DeriveNextSendingKey", "message_num": s.SendingMessageNum - 1}).Debug("Derived sending key")
 	return messageKey, nil
 }
 
@@ -224,7 +225,7 @@ func (s *SessionState) DeriveNextReceivingKey() ([32]byte, error) {
 	s.ReceivingChainKey = newChainKey
 	s.ReceivingMessageNum++
 
-	log.WithField("message_num", s.ReceivingMessageNum-1).Debug("Derived receiving key")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "SessionState.DeriveNextReceivingKey", "message_num": s.ReceivingMessageNum - 1}).Debug("Derived receiving key")
 	return messageKey, nil
 }
 
@@ -255,7 +256,7 @@ func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error {
 	// Update tag ratchets with new chain keys
 	updateSessionTagRatchets(s)
 
-	log.WithField("remote_dh_key", remoteDHPubKey[:8]).Debug("DH ratchet performed")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "SessionState.PerformDHRatchet", "remote_dh_key": remoteDHPubKey[:8]}).Debug("DH ratchet performed")
 	return nil
 }
 
@@ -314,7 +315,7 @@ func (s *SessionState) GetNextSendingTag() ([8]byte, error) {
 		return [8]byte{}, oops.Errorf("failed to generate sending tag: %w", err)
 	}
 
-	log.WithField("tag", tag[:]).Debug("Generated sending tag")
+	log.WithFields(logger.Fields{"pkg": "ecies", "func": "SessionState.GetNextSendingTag", "tag": tag[:]}).Debug("Generated sending tag")
 	return tag, nil
 }
 
