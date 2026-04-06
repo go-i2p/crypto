@@ -29,7 +29,7 @@ go get github.com/go-i2p/crypto
 ```
 
 **Requirements:**
-- Go 1.24.2 or later
+- Go 1.25.0 or later
 - CGO_ENABLED=0 for static linking (recommended)
 
 ## Usage
@@ -354,6 +354,37 @@ func main() {
   - **Concrete key generation APIs** (no type assertions needed) ✨ NEW
   - Secure memory cleanup with `Zero()` methods
   - Forward secrecy with ratcheting
+
+---
+
+## Logging
+
+All packages use structured logging via [`github.com/go-i2p/logger`](https://github.com/go-i2p/logger). Every log call includes `"pkg"` and `"func"` fields for precise filtering and tracing:
+
+```go
+log.WithFields(logger.Fields{
+    "pkg":  "curve25519",
+    "func": "Curve25519PublicKey.NewEncrypter",
+}).Debug("Creating new encrypter")
+```
+
+### Enabling Debug Output
+
+Set the `DEBUG_I2P` environment variable to enable debug-level log output:
+
+```bash
+DEBUG_I2P=debug go test ./...
+```
+
+To treat warnings as fatal errors (useful for CI):
+
+```bash
+WARNFAIL_I2P=true DEBUG_I2P=debug go test ./...
+```
+
+### Filtering Logs
+
+Because every log call carries structured `pkg` and `func` fields, you can filter output programmatically by package or function name to isolate specific subsystems during debugging.
 
 ---
 
