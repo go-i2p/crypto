@@ -32,22 +32,6 @@ go get github.com/go-i2p/crypto
 - Go 1.24.2 or later
 - CGO_ENABLED=0 for static linking (recommended)
 
----
-
-## Recent API Improvements
-
-🎉 **Version 2.0** includes major API improvements based on production usage patterns:
-
-- ✅ **Concrete Key Generation**: New `GenerateEd25519KeyPair()` and `GenerateX25519KeyPair()` return concrete types
-- ✅ **ChaCha20-Poly1305 AEAD**: Dedicated authenticated encryption package for I2P tunnel and garlic messages
-- ✅ **Unified Session API**: Single `Session` type manages DH, symmetric, and tag ratchets
-- ✅ **KDF Utilities**: Consistent key derivation with `kdf.KeyDerivation` for all I2P components
-- ✅ **Better Error Handling**: Standardized sentinel errors across all packages
-
-See [AUDIT.md](AUDIT.md) for detailed improvement rationale.
-
----
-
 ## Usage
 
 ### Modern Key Generation (Recommended)
