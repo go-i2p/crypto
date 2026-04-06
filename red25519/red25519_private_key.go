@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	upstream "github.com/go-i2p/red25519"
 	"github.com/samber/oops"
 )
@@ -80,13 +81,13 @@ func (k Red25519PrivateKey) Generate() (types.SigningPrivateKey, error) {
 // Public extracts the Red25519 public key from this private key.
 // Returns the corresponding public key for Red25519 signature verification.
 func (k Red25519PrivateKey) Public() (types.SigningPublicKey, error) {
-	log.WithField("key_length", len(k)).Debug("Red25519PrivateKey.Public() called")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519PrivateKey.Public", "key_length": len(k)}).Debug("Red25519PrivateKey.Public() called")
 	if len(k) != PrivateKeySize {
 		return nil, oops.Errorf("invalid red25519 private key size: expected %d, got %d",
 			PrivateKeySize, len(k))
 	}
 	pubKey := upstream.PrivateKey(k).Public().(upstream.PublicKey)
-	log.WithField("pubkey_length", len(pubKey)).Debug("Red25519PrivateKey.Public() extracted public key")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519PrivateKey.Public", "pubkey_length": len(pubKey)}).Debug("Red25519PrivateKey.Public() extracted public key")
 	return Red25519PublicKey(pubKey), nil
 }
 

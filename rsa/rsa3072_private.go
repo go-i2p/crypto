@@ -8,6 +8,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -57,7 +58,7 @@ func NewRSA3072PrivateKey(data []byte) (*RSA3072PrivateKey, error) {
 	var key RSA3072PrivateKey
 	copy(key.RSA3072PrivateKey[:], data)
 
-	log.Debug("RSA-3072 private key created successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "NewRSA3072PrivateKey"}).Debug("RSA-3072 private key created successfully")
 	return &key, nil
 }
 
@@ -110,7 +111,7 @@ func (r RSA3072PrivateKey) Public() (types.SigningPublicKey, error) {
 		copy(publicKey[:], pubBytes[len(pubBytes)-384:])
 	}
 
-	log.Debug("RSA-3072 public key derived successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA3072PrivateKey.Public"}).Debug("RSA-3072 public key derived successfully")
 	return publicKey, nil
 }
 
@@ -121,7 +122,7 @@ func (r *RSA3072PrivateKey) Zero() {
 	for i := range r.RSA3072PrivateKey {
 		r.RSA3072PrivateKey[i] = 0
 	}
-	log.Debug("RSA-3072 private key securely erased")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA3072PrivateKey.Zero"}).Debug("RSA-3072 private key securely erased")
 }
 
 // Helper method to convert byte array to rsa.PrivateKey
@@ -156,10 +157,10 @@ func (r RSA3072PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 
 // Generate creates a new RSA-3072 private key
 func (r *RSA3072PrivateKey) Generate() (types.SigningPrivateKey, error) {
-	log.Debug("Generating new RSA-3072 private key")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA3072PrivateKey.Generate"}).Debug("Generating new RSA-3072 private key")
 	stdPrivKey, err := rsa.GenerateKey(rand.Reader, 3072)
 	if err != nil {
-		log.WithError(err).Error("Failed to generate RSA-3072 private key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA3072PrivateKey.Generate"}).WithError(err).Error("Failed to generate RSA-3072 private key")
 		return nil, oops.Errorf("failed to generate RSA-3072 key: %w", err)
 	}
 
@@ -182,7 +183,7 @@ func (r *RSA3072PrivateKey) Generate() (types.SigningPrivateKey, error) {
 		copy(newKey.RSA3072PrivateKey[384:], dBytes[len(dBytes)-384:])
 	}
 
-	log.Debug("New RSA-3072 private key generated successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA3072PrivateKey.Generate"}).Debug("New RSA-3072 private key generated successfully")
 	return &newKey, nil
 }
 

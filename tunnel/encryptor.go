@@ -1,6 +1,9 @@
 package tunnel
 
-import "github.com/samber/oops"
+import (
+	"github.com/go-i2p/logger"
+	"github.com/samber/oops"
+)
 
 // TunnelEncryptor defines the interface for tunnel-level encryption operations.
 // This abstraction supports multiple encryption schemes (AES-256-CBC and ECIES-X25519)
@@ -68,7 +71,7 @@ func (t TunnelEncryptionType) String() string {
 //
 // Returns configured TunnelEncryptor or error if creation fails due to invalid parameters.
 func NewTunnelEncryptor(encType TunnelEncryptionType, layerKey, ivKey TunnelKey) (TunnelEncryptor, error) {
-	log.WithField("encryption_type", encType.String()).Debug("Creating tunnel encryptor")
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewTunnelEncryptor", "encryption_type": encType.String()}).Debug("Creating tunnel encryptor")
 
 	switch encType {
 	case TunnelEncryptionAES:

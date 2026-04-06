@@ -307,5 +307,5 @@ func (s *Session) Zero() {
 	}
 	s.messageNum = 0
 
-	log.Debug("Session state cleared")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.Zero"}).Debug("Session state cleared")
 }

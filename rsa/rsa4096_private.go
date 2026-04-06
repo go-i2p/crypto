@@ -8,6 +8,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -57,14 +58,14 @@ func NewRSA4096PrivateKey(data []byte) (*RSA4096PrivateKey, error) {
 	var key RSA4096PrivateKey
 	copy(key.RSA4096PrivateKey[:], data)
 
-	log.Debug("RSA-4096 private key created successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "NewRSA4096PrivateKey"}).Debug("RSA-4096 private key created successfully")
 	return &key, nil
 }
 
 // Sign implements types.Signer.
 // Signs data by first hashing it with SHA-512
 func (r RSA4096PrivateKey) Sign(data []byte) (sig []byte, err error) {
-	log.Debug("Signing data with RSA-4096")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Sign"}).Debug("Signing data with RSA-4096")
 	// Hash the data with SHA-512 (appropriate for RSA-4096)
 	hash := sha512.Sum512(data)
 	return r.SignHash(hash[:])
@@ -73,42 +74,42 @@ func (r RSA4096PrivateKey) Sign(data []byte) (sig []byte, err error) {
 // SignHash implements types.Signer.
 // Signs a pre-computed hash
 func (r RSA4096PrivateKey) SignHash(h []byte) (sig []byte, err error) {
-	log.Debug("Signing hash with RSA-4096")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.SignHash"}).Debug("Signing hash with RSA-4096")
 
 	// Convert I2P format to rsa.PrivateKey
 	privKey, err := r.toRSAPrivateKey()
 	if err != nil {
-		log.WithError(err).Error("Failed to parse RSA-4096 private key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.SignHash"}).WithError(err).Error("Failed to parse RSA-4096 private key")
 		return nil, oops.Errorf("invalid RSA-4096 private key: %w", err)
 	}
 
 	// Sign the hash using PKCS1v15
 	sig, err = rsa.SignPKCS1v15(rand.Reader, privKey, crypto.SHA512, h)
 	if err != nil {
-		log.WithError(err).Error("RSA-4096 signature generation failed")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.SignHash"}).WithError(err).Error("RSA-4096 signature generation failed")
 		return nil, oops.Errorf("failed to generate RSA-4096 signature: %w", err)
 	}
 
-	log.Debug("RSA-4096 signature generated successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.SignHash"}).Debug("RSA-4096 signature generated successfully")
 	return sig, nil
 }
 
 // Bytes implements types.PrivateKey.
 // Returns the raw bytes of the private key
 func (r RSA4096PrivateKey) Bytes() []byte {
-	log.Debug("Getting RSA-4096 private key bytes")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Bytes"}).Debug("Getting RSA-4096 private key bytes")
 	return r.RSA4096PrivateKey[:]
 }
 
 // Public implements types.PrivateKey.
 // Extracts the public key from the private key
 func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
-	log.Debug("Extracting public key from RSA-4096 private key")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Public"}).Debug("Extracting public key from RSA-4096 private key")
 
 	// Convert I2P format to standard RSA private key structure
 	privKey, err := r.toRSAPrivateKey()
 	if err != nil {
-		log.WithError(err).Error("Failed to parse RSA-4096 private key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Public"}).WithError(err).Error("Failed to parse RSA-4096 private key")
 		return nil, oops.Errorf("invalid RSA-4096 private key: %w", err)
 	}
 
@@ -121,7 +122,7 @@ func (r RSA4096PrivateKey) Public() (types.SigningPublicKey, error) {
 	// Ensure proper padding if the modulus has leading zeros for consistent 512-byte size
 	copy(pubKey[512-len(pubKeyBytes):], pubKeyBytes)
 
-	log.Debug("RSA-4096 public key extracted successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Public"}).Debug("RSA-4096 public key extracted successfully")
 	return pubKey, nil
 }
 
@@ -158,7 +159,7 @@ func (r RSA4096PrivateKey) toRSAPrivateKey() (*rsa.PrivateKey, error) {
 // Zero implements types.PrivateKey.
 // Securely clears the private key from memory
 func (r *RSA4096PrivateKey) Zero() {
-	log.Debug("Securely clearing RSA-4096 private key from memory")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Zero"}).Debug("Securely clearing RSA-4096 private key from memory")
 	// Overwrite the key material with zeros to prevent memory leakage
 	// This is critical for security as RSA-4096 keys contain the most sensitive cryptographic material
 	for i := range r.RSA4096PrivateKey {
@@ -178,10 +179,10 @@ func (r RSA4096PrivateKey) NewSigner() (types.Signer, error) {
 
 // Generate implements types.SigningPrivateKey.
 func (r RSA4096PrivateKey) Generate() (types.SigningPrivateKey, error) {
-	log.Debug("Generating new RSA-4096 private key")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Generate"}).Debug("Generating new RSA-4096 private key")
 	stdPrivKey, err := rsa.GenerateKey(rand.Reader, 4096)
 	if err != nil {
-		log.WithError(err).Error("Failed to generate RSA-4096 private key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Generate"}).WithError(err).Error("Failed to generate RSA-4096 private key")
 		return nil, oops.Errorf("failed to generate RSA-4096 key: %w", err)
 	}
 
@@ -204,7 +205,7 @@ func (r RSA4096PrivateKey) Generate() (types.SigningPrivateKey, error) {
 		copy(newKey.RSA4096PrivateKey[512:], dBytes[len(dBytes)-512:])
 	}
 
-	log.Debug("New RSA-4096 private key generated successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PrivateKey.Generate"}).Debug("New RSA-4096 private key generated successfully")
 	return newKey, nil
 }
 

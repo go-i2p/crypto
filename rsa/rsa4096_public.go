@@ -6,6 +6,7 @@ import (
 	"crypto/sha512"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -53,14 +54,14 @@ func NewRSA4096PublicKey(data []byte) (*RSA4096PublicKey, error) {
 	var key RSA4096PublicKey
 	copy(key[:], data)
 
-	log.Debug("RSA-4096 public key created successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "NewRSA4096PublicKey"}).Debug("RSA-4096 public key created successfully")
 	return &key, nil
 }
 
 // Verify implements types.Verifier.
 // This method hashes the data with SHA-512 and verifies the signature
 func (r RSA4096PublicKey) Verify(data, sig []byte) error {
-	log.Debug("Verifying RSA-4096 signature")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PublicKey.Verify"}).Debug("Verifying RSA-4096 signature")
 	// Hash the data with SHA-512 (appropriate for RSA-4096)
 	hash := sha512.Sum512(data)
 	return r.VerifyHash(hash[:], sig)
@@ -69,11 +70,11 @@ func (r RSA4096PublicKey) Verify(data, sig []byte) error {
 // VerifyHash implements types.Verifier.
 // This method verifies a pre-computed hash against the signature
 func (r RSA4096PublicKey) VerifyHash(h, sig []byte) error {
-	log.Debug("Verifying RSA-4096 signature with pre-computed hash")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PublicKey.VerifyHash"}).Debug("Verifying RSA-4096 signature with pre-computed hash")
 	// Convert I2P byte format to standard RSA public key structure
 	pubKey, err := rsaPublicKeyFromBytes(r[:], 512)
 	if err != nil {
-		log.WithError(err).Error("Failed to parse RSA-4096 public key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PublicKey.VerifyHash"}).WithError(err).Error("Failed to parse RSA-4096 public key")
 		return oops.Errorf("invalid RSA-4096 public key: %w", err)
 	}
 
@@ -89,7 +90,7 @@ func (r RSA4096PublicKey) VerifyHash(h, sig []byte) error {
 		return oops.Errorf("RSA signature verification failed: %w", err)
 	}
 
-	log.Debug("RSA-4096 signature verified successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PublicKey.VerifyHash"}).Debug("RSA-4096 signature verified successfully")
 	return nil
 }
 
@@ -108,7 +109,7 @@ func (r RSA4096PublicKey) Len() int {
 // NewVerifier implements SigningPublicKey.
 // Creates a new verifier instance for this public key
 func (r RSA4096PublicKey) NewVerifier() (types.Verifier, error) {
-	log.Debug("Creating new RSA-4096 verifier")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA4096PublicKey.NewVerifier"}).Debug("Creating new RSA-4096 verifier")
 	return r, nil
 }
 

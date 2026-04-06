@@ -8,6 +8,7 @@ import (
 	"math/big"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -64,7 +65,7 @@ func NewRSA2048PrivateKey(data []byte) (*RSA2048PrivateKey, error) {
 	var key RSA2048PrivateKey
 	copy(key.RSA2048PrivateKey[:], data)
 
-	log.Debug("RSA-2048 private key created successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "NewRSA2048PrivateKey"}).Debug("RSA-2048 private key created successfully")
 	return &key, nil
 }
 
@@ -111,7 +112,7 @@ func (r RSA2048PrivateKey) Public() (types.SigningPublicKey, error) {
 		copy(publicKey[:], pubBytes[len(pubBytes)-256:])
 	}
 
-	log.Debug("RSA-2048 public key extracted successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA2048PrivateKey.Public"}).Debug("RSA-2048 public key extracted successfully")
 	return publicKey, nil
 }
 
@@ -123,7 +124,7 @@ func (r *RSA2048PrivateKey) Zero() {
 	for i := range r.RSA2048PrivateKey {
 		r.RSA2048PrivateKey[i] = 0
 	}
-	log.Debug("RSA-2048 private key securely erased")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA2048PrivateKey.Zero"}).Debug("RSA-2048 private key securely erased")
 }
 
 // Len implements types.SigningPrivateKey.
@@ -138,10 +139,10 @@ func (r RSA2048PrivateKey) NewSigner() (types.Signer, error) {
 
 // Generate implements types.SigningPrivateKey.
 func (r RSA2048PrivateKey) Generate() (types.SigningPrivateKey, error) {
-	log.Debug("Generating new RSA2048 private key")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA2048PrivateKey.Generate"}).Debug("Generating new RSA2048 private key")
 	stdPrivKey, err := rsa.GenerateKey(rand.Reader, 2048)
 	if err != nil {
-		log.WithError(err).Error("Failed to generate RSA2048 key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA2048PrivateKey.Generate"}).WithError(err).Error("Failed to generate RSA2048 key")
 		return nil, oops.Errorf("failed to generate RSA2048 key: %w", err)
 	}
 
@@ -165,7 +166,7 @@ func (r RSA2048PrivateKey) Generate() (types.SigningPrivateKey, error) {
 	// Pad with leading zeros to maintain exact 256-byte size requirement
 	copy(privKey.RSA2048PrivateKey[512-len(dBytes):512], dBytes)
 
-	log.Debug("New RSA2048 private key generated successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA2048PrivateKey.Generate"}).Debug("New RSA2048 private key generated successfully")
 	return privKey, nil
 }
 

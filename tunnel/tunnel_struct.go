@@ -4,6 +4,8 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+
+	"github.com/go-i2p/logger"
 )
 
 // AESEncryptor implements tunnel encryption using dual-layer AES-256-CBC scheme.
@@ -28,7 +30,7 @@ type AESEncryptor struct {
 // Returns a configured AESEncryptor instance or an error if cipher creation fails due to invalid keys.
 // Example usage: encryptor, err := NewAESEncryptor(layerKey, ivKey)
 func NewAESEncryptor(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
-	log.Debug("Creating new AES tunnel encryptor")
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewAESEncryptor"}).Debug("Creating new AES tunnel encryptor")
 
 	// Validate key sizes before cipher creation
 	if len(layerKey) != 32 {
@@ -45,7 +47,7 @@ func NewAESEncryptor(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
 	var err error
 	encryptor.layerKey, err = aes.NewCipher(layerKey[:])
 	if err != nil {
-		log.WithError(err).Error("Failed to create layer cipher")
+		log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewAESEncryptor"}).WithError(err).Error("Failed to create layer cipher")
 		return nil, ErrCipherCreationFailed
 	}
 
@@ -53,18 +55,18 @@ func NewAESEncryptor(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
 	// This cipher encrypts initialization vectors for enhanced security
 	encryptor.ivKey, err = aes.NewCipher(ivKey[:])
 	if err != nil {
-		log.WithError(err).Error("Failed to create IV cipher")
+		log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewAESEncryptor"}).WithError(err).Error("Failed to create IV cipher")
 		return nil, ErrCipherCreationFailed
 	}
 
-	log.Debug("AES tunnel encryptor created successfully")
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewAESEncryptor"}).Debug("AES tunnel encryptor created successfully")
 	return encryptor, nil
 }
 
 // NewTunnelCrypto is deprecated. Use NewAESEncryptor instead.
 // This function is kept for backward compatibility and will be removed in a future version.
 func NewTunnelCrypto(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
-	log.Warn("NewTunnelCrypto is deprecated, use NewAESEncryptor instead")
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewTunnelCrypto"}).Warn("NewTunnelCrypto is deprecated, use NewAESEncryptor instead")
 	return NewAESEncryptor(layerKey, ivKey)
 }
 
@@ -74,7 +76,7 @@ func NewTunnelCrypto(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
 // Returns the complete tunnel data (1028 bytes) or error if encryption fails.
 // This implements the TunnelEncryptor interface for AES-256-CBC encryption.
 func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
-	log.Debug("Encrypting data with AES-256-CBC tunnel encryption")
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Encrypt"}).Debug("Encrypting data with AES-256-CBC tunnel encryption")
 
 	// For AES, we expect either 1008 bytes (payload only) or 1028 bytes (full tunnel data)
 	var td TunnelData
@@ -82,7 +84,7 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	if len(plaintext) == 1008 {
 		// Payload only - generate random IV and copy payload
 		if _, err := rand.Read(td[:16]); err != nil {
-			log.WithError(err).Error("Failed to generate IV for AES encryption")
+			log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Encrypt"}).WithError(err).Error("Failed to generate IV for AES encryption")
 			return nil, ErrEncryptionFailed
 		}
 		copy(td[16:], plaintext)
@@ -90,7 +92,7 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 		// Full tunnel data provided
 		copy(td[:], plaintext)
 	} else {
-		log.WithField("length", len(plaintext)).Error("Invalid plaintext length for AES tunnel encryption")
+		log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Encrypt", "length": len(plaintext)}).Error("Invalid plaintext length for AES tunnel encryption")
 		return nil, ErrEncryptionFailed
 	}
 
@@ -114,7 +116,7 @@ func (a *AESEncryptor) processTunnelData(td *TunnelData, ivOp func(dst, src []by
 	layerBlock := newBlockMode(a.layerKey, data[:16])
 	layerBlock.CryptBlocks(data[16:1024], data[16:1024])
 	ivOp(data[16:1024], data[16:1024])
-	log.Debug(msg)
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.processTunnelData"}).Debug(msg)
 	return nil
 }
 
@@ -129,11 +131,11 @@ func (a *AESEncryptor) encryptTunnelData(td *TunnelData) error {
 // Returns the 1008-byte payload (excluding 16-byte IV) or error if decryption fails.
 // This implements the TunnelEncryptor interface for AES-256-CBC decryption.
 func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
-	log.Debug("Decrypting data with AES-256-CBC tunnel decryption")
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Decrypt"}).Debug("Decrypting data with AES-256-CBC tunnel decryption")
 
 	// AES tunnel decryption expects exactly 1028 bytes
 	if len(ciphertext) != 1028 {
-		log.WithField("length", len(ciphertext)).Error("Invalid ciphertext length for AES tunnel decryption")
+		log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Decrypt", "length": len(ciphertext)}).Error("Invalid ciphertext length for AES tunnel decryption")
 		return nil, ErrDecryptionFailed
 	}
 

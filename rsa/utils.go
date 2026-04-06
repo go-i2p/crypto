@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/big"
 
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -48,7 +49,7 @@ func signHashPKCS1v15(toKey func() (*rsa.PrivateKey, error), hashAlgo crypto.Has
 	if err != nil {
 		return nil, oops.Errorf("failed to sign hash: %w", err)
 	}
-	log.Debug(label + " signature created successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "signHashPKCS1v15"}).Debug(label + " signature created successfully")
 	return sig, nil
 }
 
@@ -58,13 +59,13 @@ func signHashPKCS1v15(toKey func() (*rsa.PrivateKey, error), hashAlgo crypto.Has
 // The generated keys follow I2P's standard byte array format for compatibility.
 // Example usage: pubKey, privKey, err := GenerateRSA2048KeyPair()
 func GenerateRSA2048KeyPair() (*RSA2048PublicKey, *RSA2048PrivateKey, error) {
-	log.Debug("Generating RSA-2048 key pair")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA2048KeyPair"}).Debug("Generating RSA-2048 key pair")
 
 	var privKey RSA2048PrivateKey
 	// Generate the private key using the type's Generate method which ensures I2P compliance
 	generatedPrivKey, err := privKey.Generate()
 	if err != nil {
-		log.WithError(err).Error("Failed to generate RSA-2048 private key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA2048KeyPair"}).WithError(err).Error("Failed to generate RSA-2048 private key")
 		return nil, nil, err
 	}
 
@@ -73,13 +74,13 @@ func GenerateRSA2048KeyPair() (*RSA2048PublicKey, *RSA2048PrivateKey, error) {
 	// Extract the corresponding public key from the generated private key
 	pubKey, err := rsaPrivKey.Public()
 	if err != nil {
-		log.WithError(err).Error("Failed to extract RSA-2048 public key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA2048KeyPair"}).WithError(err).Error("Failed to extract RSA-2048 public key")
 		return nil, nil, err
 	}
 
 	// Type assertion to ensure the extracted public key is the correct RSA-2048 type
 	rsaPubKey := pubKey.(RSA2048PublicKey)
-	log.Debug("RSA-2048 key pair generated successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA2048KeyPair"}).Debug("RSA-2048 key pair generated successfully")
 	return &rsaPubKey, &rsaPrivKey, nil
 }
 
@@ -89,13 +90,13 @@ func GenerateRSA2048KeyPair() (*RSA2048PublicKey, *RSA2048PrivateKey, error) {
 // The generated keys follow I2P's standard byte array format for network compatibility.
 // Example usage: pubKey, privKey, err := GenerateRSA3072KeyPair()
 func GenerateRSA3072KeyPair() (*RSA3072PublicKey, *RSA3072PrivateKey, error) {
-	log.Debug("Generating RSA-3072 key pair")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA3072KeyPair"}).Debug("Generating RSA-3072 key pair")
 
 	var privKey RSA3072PrivateKey
 	// Generate the private key using the type's Generate method for I2P format compliance
 	generatedPrivKey, err := privKey.Generate()
 	if err != nil {
-		log.WithError(err).Error("Failed to generate RSA-3072 private key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA3072KeyPair"}).WithError(err).Error("Failed to generate RSA-3072 private key")
 		return nil, nil, err
 	}
 
@@ -104,13 +105,13 @@ func GenerateRSA3072KeyPair() (*RSA3072PublicKey, *RSA3072PrivateKey, error) {
 	// Extract the corresponding public key from the generated private key
 	pubKey, err := rsaPrivKey.Public()
 	if err != nil {
-		log.WithError(err).Error("Failed to extract RSA-3072 public key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA3072KeyPair"}).WithError(err).Error("Failed to extract RSA-3072 public key")
 		return nil, nil, err
 	}
 
 	// Type assertion to ensure the extracted public key is the correct RSA-3072 type
 	rsaPubKey := pubKey.(RSA3072PublicKey)
-	log.Debug("RSA-3072 key pair generated successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA3072KeyPair"}).Debug("RSA-3072 key pair generated successfully")
 	return &rsaPubKey, rsaPrivKey, nil
 }
 
@@ -120,13 +121,13 @@ func GenerateRSA3072KeyPair() (*RSA3072PublicKey, *RSA3072PrivateKey, error) {
 // The generated keys follow I2P's standard byte array format for network interoperability.
 // Example usage: pubKey, privKey, err := GenerateRSA4096KeyPair()
 func GenerateRSA4096KeyPair() (*RSA4096PublicKey, *RSA4096PrivateKey, error) {
-	log.Debug("Generating RSA-4096 key pair")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA4096KeyPair"}).Debug("Generating RSA-4096 key pair")
 
 	var privKey RSA4096PrivateKey
 	// Generate the private key using the type's Generate method for maximum security I2P compliance
 	generatedPrivKey, err := privKey.Generate()
 	if err != nil {
-		log.WithError(err).Error("Failed to generate RSA-4096 private key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA4096KeyPair"}).WithError(err).Error("Failed to generate RSA-4096 private key")
 		return nil, nil, err
 	}
 
@@ -135,12 +136,12 @@ func GenerateRSA4096KeyPair() (*RSA4096PublicKey, *RSA4096PrivateKey, error) {
 	// Extract the corresponding public key from the generated private key
 	pubKey, err := rsaPrivKey.Public()
 	if err != nil {
-		log.WithError(err).Error("Failed to extract RSA-4096 public key")
+		log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA4096KeyPair"}).WithError(err).Error("Failed to extract RSA-4096 public key")
 		return nil, nil, err
 	}
 
 	// Type assertion to ensure the extracted public key is the correct RSA-4096 type
 	rsaPubKey := pubKey.(RSA4096PublicKey)
-	log.Debug("RSA-4096 key pair generated successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "GenerateRSA4096KeyPair"}).Debug("RSA-4096 key pair generated successfully")
 	return &rsaPubKey, &rsaPrivKey, nil
 }

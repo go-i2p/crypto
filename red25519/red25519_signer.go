@@ -1,6 +1,7 @@
 package red25519
 
 import (
+	"github.com/go-i2p/logger"
 	upstream "github.com/go-i2p/red25519"
 	"github.com/samber/oops"
 )
@@ -17,22 +18,22 @@ type Red25519Signer struct {
 // Returns the 64-byte signature (R || S) or an error if signing fails.
 // Supports both normal (64-byte) and blinded (96-byte) private keys.
 func (s *Red25519Signer) Sign(data []byte) (sig []byte, err error) {
-	log.WithField("data_length", len(data)).Debug("Signing data with Red25519")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Signer.Sign", "data_length": len(data)}).Debug("Signing data with Red25519")
 
 	if len(s.k) != PrivateKeySize && len(s.k) != BlindedPrivateKeySize {
-		log.Error("Invalid Red25519 private key size")
+		log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Signer.Sign"}).Error("Invalid Red25519 private key size")
 		err = oops.Errorf("failed to sign: invalid red25519 private key size")
 		return
 	}
 
 	sig = upstream.Sign(s.k, data)
-	log.WithField("signature_length", len(sig)).Debug("Red25519 signature created successfully")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Signer.Sign", "signature_length": len(sig)}).Debug("Red25519 signature created successfully")
 	return
 }
 
 // SignHash creates a Red25519 signature over a pre-computed hash.
 // For Red25519, SignHash treats the hash as the message to sign directly.
 func (s *Red25519Signer) SignHash(h []byte) (sig []byte, err error) {
-	log.WithField("hash_length", len(h)).Debug("Signing hash with Red25519")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Signer.SignHash", "hash_length": len(h)}).Debug("Signing hash with Red25519")
 	return s.Sign(h)
 }

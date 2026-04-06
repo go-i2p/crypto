@@ -299,7 +299,7 @@ func (kd *KeyDerivation) Zero() {
 	for i := range kd.rootKey {
 		kd.rootKey[i] = 0
 	}
-	log.Debug("KeyDerivation state cleared")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "KeyDerivation.Zero"}).Debug("KeyDerivation state cleared")
 }
 
 // StandardHKDF performs a one-shot RFC 5869 HKDF-SHA256 key derivation.
@@ -325,11 +325,7 @@ func (kd *KeyDerivation) Zero() {
 //	    return err
 //	}
 func StandardHKDF(salt, ikm, info []byte, length int) ([]byte, error) {
-	log.WithField("ikm_length", len(ikm)).
-		WithField("salt_length", len(salt)).
-		WithField("info_length", len(info)).
-		WithField("output_length", length).
-		Debug("StandardHKDF derivation")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "StandardHKDF", "ikm_length": len(ikm), "salt_length": len(salt), "info_length": len(info), "output_length": length}).Debug("StandardHKDF derivation")
 
 	deriver := hkdf.NewHKDF()
 	derived, err := deriver.Derive(ikm, salt, info, length)
@@ -337,6 +333,6 @@ func StandardHKDF(salt, ikm, info []byte, length int) ([]byte, error) {
 		return nil, oops.Wrapf(err, "StandardHKDF derivation failed")
 	}
 
-	log.WithField("derived_length", len(derived)).Debug("StandardHKDF derivation successful")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "StandardHKDF", "derived_length": len(derived)}).Debug("StandardHKDF derivation successful")
 	return derived, nil
 }

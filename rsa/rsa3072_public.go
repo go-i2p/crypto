@@ -6,6 +6,7 @@ import (
 	"crypto/sha512"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -53,7 +54,7 @@ func NewRSA3072PublicKey(data []byte) (*RSA3072PublicKey, error) {
 	var key RSA3072PublicKey
 	copy(key[:], data)
 
-	log.Debug("RSA-3072 public key created successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "NewRSA3072PublicKey"}).Debug("RSA-3072 public key created successfully")
 	return &key, nil
 }
 

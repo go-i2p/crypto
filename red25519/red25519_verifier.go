@@ -22,6 +22,7 @@ type Red25519Verifier struct {
 // Returns an error if verification fails or inputs are invalid.
 func (v *Red25519Verifier) VerifyHash(h, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg": "red25519", "func": "Red25519Verifier.VerifyHash",
 		"hash_length": len(h),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Red25519 signature hash")
@@ -33,6 +34,7 @@ func (v *Red25519Verifier) VerifyHash(h, sig []byte) (err error) {
 // Returns an error if verification fails.
 func (v *Red25519Verifier) Verify(data, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
+		"pkg": "red25519", "func": "Red25519Verifier.Verify",
 		"data_length": len(data),
 		"sig_length":  len(sig),
 	}).Debug("Verifying Red25519 signature")
@@ -43,20 +45,20 @@ func (v *Red25519Verifier) Verify(data, sig []byte) (err error) {
 // verify performs the actual Red25519 signature verification using the upstream library.
 func (v *Red25519Verifier) verify(message, sig []byte) error {
 	if len(sig) != SignatureSize {
-		log.Error("Bad Red25519 signature size")
+		log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Verifier.verify"}).Error("Bad Red25519 signature size")
 		return types.ErrBadSignatureSize
 	}
 	if len(v.k) != PublicKeySize {
-		log.Error("Invalid Red25519 public key size")
+		log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Verifier.verify"}).Error("Invalid Red25519 public key size")
 		return oops.Errorf("failed to verify: invalid red25519 public key size")
 	}
 
 	ok := upstream.Verify(v.k, message, sig)
 	if !ok {
-		log.Warn("Invalid Red25519 signature")
+		log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Verifier.verify"}).Warn("Invalid Red25519 signature")
 		return oops.Errorf("failed to verify: invalid signature")
 	}
 
-	log.Debug("Red25519 signature verified successfully")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Verifier.verify"}).Debug("Red25519 signature verified successfully")
 	return nil
 }

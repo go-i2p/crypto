@@ -2,6 +2,7 @@ package red25519
 
 import (
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	upstream "github.com/go-i2p/red25519"
 )
 
@@ -56,15 +57,15 @@ func (k Red25519PublicKey) Bytes() []byte {
 //
 // Returns error if data length is invalid.
 func NewRed25519PublicKey(data []byte) (Red25519PublicKey, error) {
-	log.WithField("data_length", len(data)).Debug("Creating Red25519 public key")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "NewRed25519PublicKey", "data_length": len(data)}).Debug("Creating Red25519 public key")
 
 	if len(data) != PublicKeySize {
-		log.WithField("data_length", len(data)).Error("Invalid Red25519 public key size")
+		log.WithFields(logger.Fields{"pkg": "red25519", "func": "NewRed25519PublicKey", "data_length": len(data)}).Error("Invalid Red25519 public key size")
 		return nil, ErrInvalidPublicKeySize
 	}
 
 	key := make(Red25519PublicKey, PublicKeySize)
 	copy(key, data)
-	log.Debug("Red25519 public key created successfully")
+	log.WithFields(logger.Fields{"pkg": "red25519", "func": "NewRed25519PublicKey"}).Debug("Red25519 public key created successfully")
 	return key, nil
 }

@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 
 	"github.com/go-i2p/crypto/types"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -60,7 +61,7 @@ func NewRSA2048PublicKey(data []byte) (*RSA2048PublicKey, error) {
 	var key RSA2048PublicKey
 	copy(key[:], data)
 
-	log.Debug("RSA-2048 public key created successfully")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "NewRSA2048PublicKey"}).Debug("RSA-2048 public key created successfully")
 	return &key, nil
 }
 
@@ -111,7 +112,7 @@ func (r RSA2048PublicKey) Len() int {
 // NewVerifier implements SigningPublicKey.
 // Creates a new verifier object that can be used to verify signatures
 func (r RSA2048PublicKey) NewVerifier() (types.Verifier, error) {
-	log.Debug("Creating new RSA-2048 verifier")
+	log.WithFields(logger.Fields{"pkg": "rsa", "func": "RSA2048PublicKey.NewVerifier"}).Debug("Creating new RSA-2048 verifier")
 	return r, nil
 }
 

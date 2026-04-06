@@ -1,5 +1,7 @@
 package tunnel
 
+import "github.com/go-i2p/logger"
+
 // TunnelData represents the standardized data structure for I2P tunnel messages (1028 bytes total).
 // The structure follows I2P's tunnel message format where the first 16 bytes serve as the initialization
 // vector (IV) and the remaining 1008 bytes contain the encrypted payload data. This fixed-size format
@@ -54,7 +56,7 @@ func NewTunnelKey(data []byte) (*TunnelKey, error) {
 		}
 	}
 	if allZero {
-		log.Error("Attempted to create all-zero tunnel key")
+		log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewTunnelKey"}).Error("Attempted to create all-zero tunnel key")
 		return nil, ErrInvalidKey
 	}
 
@@ -62,7 +64,7 @@ func NewTunnelKey(data []byte) (*TunnelKey, error) {
 	var key TunnelKey
 	copy(key[:], data)
 
-	log.Debug("Tunnel key created successfully")
+	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewTunnelKey"}).Debug("Tunnel key created successfully")
 	return &key, nil
 }
 

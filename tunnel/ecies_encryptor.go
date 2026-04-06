@@ -4,6 +4,7 @@ package tunnel
 
 import (
 	"github.com/go-i2p/crypto/ecies"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -19,7 +20,8 @@ type ECIESEncryptor struct {
 // The public key must be exactly 32 bytes (X25519 public key format).
 // This encryptor will generate ephemeral keys for each encryption operation.
 func NewECIESEncryptor(recipientPubKey [32]byte) *ECIESEncryptor {
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "NewECIESEncryptor",
 		"operation": "create_ecies_encryptor",
 		"key_type":  "x25519_public",
 		"key_size":  len(recipientPubKey),
@@ -43,7 +45,8 @@ func NewECIESEncryptor(recipientPubKey [32]byte) *ECIESEncryptor {
 // Returns ciphertext in format: [ephemeral_pubkey][nonce][aead_ciphertext]
 func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	if plaintext == nil {
-		log.WithFields(map[string]interface{}{
+		log.WithFields(logger.Fields{
+			"pkg": "tunnel", "func": "ECIESEncryptor.Encrypt",
 			"operation":     "ecies_encrypt",
 			"plaintext_len": 0,
 			"input_type":    "nil",
@@ -51,7 +54,8 @@ func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 		return ecies.EncryptECIESX25519(e.recipientPubKey[:], []byte{})
 	}
 
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESEncryptor.Encrypt",
 		"operation":     "ecies_encrypt",
 		"plaintext_len": len(plaintext),
 		"encryption":    "x25519_chacha20poly1305",
@@ -59,7 +63,8 @@ func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 
 	ciphertext, err := ecies.EncryptECIESX25519(e.recipientPubKey[:], plaintext)
 	if err != nil {
-		log.WithFields(map[string]interface{}{
+		log.WithFields(logger.Fields{
+			"pkg": "tunnel", "func": "ECIESEncryptor.Encrypt",
 			"operation":     "ecies_encrypt",
 			"plaintext_len": len(plaintext),
 			"error":         err.Error(),
@@ -67,7 +72,8 @@ func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 		return nil, oops.Wrapf(ErrECIESEncryptionFailed, "encryption operation failed: %w", err)
 	}
 
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESEncryptor.Encrypt",
 		"operation":      "ecies_encrypt",
 		"plaintext_len":  len(plaintext),
 		"ciphertext_len": len(ciphertext),
@@ -90,7 +96,8 @@ func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	// requires the private key corresponding to the public key used for encryption.
 	// For the interface implementation, we return an error indicating this limitation.
 
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESEncryptor.Decrypt",
 		"operation":   "ecies_decrypt",
 		"component":   "encryptor",
 		"unsupported": true,
@@ -110,7 +117,8 @@ type ECIESDecryptor struct {
 // NewECIESDecryptor creates a new ECIES tunnel decryptor using the recipient's private key.
 // The private key must be exactly 32 bytes (X25519 private key format).
 func NewECIESDecryptor(recipientPrivKey [32]byte) *ECIESDecryptor {
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "NewECIESDecryptor",
 		"operation": "create_ecies_decryptor",
 		"key_type":  "x25519_private",
 		"key_size":  len(recipientPrivKey),
@@ -123,7 +131,8 @@ func NewECIESDecryptor(recipientPrivKey [32]byte) *ECIESDecryptor {
 
 // Encrypt is not supported by the decryptor. Returns an error.
 func (d *ECIESDecryptor) Encrypt(plaintext []byte) ([]byte, error) {
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESDecryptor.Encrypt",
 		"operation":   "ecies_encrypt",
 		"component":   "decryptor",
 		"unsupported": true,
@@ -136,7 +145,8 @@ func (d *ECIESDecryptor) Encrypt(plaintext []byte) ([]byte, error) {
 // operations to the existing ecies package.
 func (d *ECIESDecryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	if ciphertext == nil {
-		log.WithFields(map[string]interface{}{
+		log.WithFields(logger.Fields{
+			"pkg": "tunnel", "func": "ECIESDecryptor.Decrypt",
 			"operation":      "ecies_decrypt",
 			"ciphertext_len": 0,
 			"input_type":     "nil",
@@ -144,7 +154,8 @@ func (d *ECIESDecryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 		return nil, ErrECIESInvalidCiphertext
 	}
 
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESDecryptor.Decrypt",
 		"operation":      "ecies_decrypt",
 		"ciphertext_len": len(ciphertext),
 		"decryption":     "x25519_chacha20poly1305",
@@ -152,7 +163,8 @@ func (d *ECIESDecryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 
 	plaintext, err := ecies.DecryptECIESX25519(d.recipientPrivKey[:], ciphertext)
 	if err != nil {
-		log.WithFields(map[string]interface{}{
+		log.WithFields(logger.Fields{
+			"pkg": "tunnel", "func": "ECIESDecryptor.Decrypt",
 			"operation":      "ecies_decrypt",
 			"ciphertext_len": len(ciphertext),
 			"error":          err.Error(),
@@ -160,7 +172,8 @@ func (d *ECIESDecryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 		return nil, oops.Wrapf(ErrECIESDecryptionFailed, "decryption operation failed: %w", err)
 	}
 
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESDecryptor.Decrypt",
 		"operation":      "ecies_decrypt",
 		"ciphertext_len": len(ciphertext),
 		"plaintext_len":  len(plaintext),
@@ -179,7 +192,8 @@ func (d *ECIESDecryptor) Zero() {
 	for i := range d.recipientPrivKey {
 		d.recipientPrivKey[i] = 0
 	}
-	log.WithFields(map[string]interface{}{
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESDecryptor.Zero",
 		"operation":   "zero_private_key",
 		"component":   "ecies_decryptor",
 		"key_type":    "x25519_private",
