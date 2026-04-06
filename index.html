@@ -13,7 +13,7 @@
         <a href="index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 141 commits
+        📝 146 commits
          • 📜 MIT License
       </div>
     </div>
@@ -44,12 +44,12 @@
       <div class="repo-stats">
         
         <div class="repo-stat">
-          <span>📝</span> <span>141 commits</span>
+          <span>📝</span> <span>146 commits</span>
         </div>
         
         
         <div class="repo-stat">
-          <span>📅</span> <span>Last updated: March 27, 2026</span>
+          <span>📅</span> <span>Last updated: April 6, 2026</span>
         </div>
         
         
@@ -101,27 +101,9 @@ crypto is intended to only contain crypto primitives and interfaces, NOT whole p
 <p><strong>Requirements:</strong></p>
 
 <ul>
-<li>Go 1.24.2 or later</li>
+<li>Go 1.25.0 or later</li>
 <li>CGO_ENABLED=0 for static linking (recommended)</li>
 </ul>
-
-<hr>
-
-<h2 id="recent-api-improvements">Recent API Improvements</h2>
-
-<p>🎉 <strong>Version 2.0</strong> includes major API improvements based on production usage patterns:</p>
-
-<ul>
-<li>✅ <strong>Concrete Key Generation</strong>: New <code>GenerateEd25519KeyPair()</code> and <code>GenerateX25519KeyPair()</code> return concrete types</li>
-<li>✅ <strong>ChaCha20-Poly1305 AEAD</strong>: Dedicated authenticated encryption package for I2P tunnel and garlic messages</li>
-<li>✅ <strong>Unified Session API</strong>: Single <code>Session</code> type manages DH, symmetric, and tag ratchets</li>
-<li>✅ <strong>KDF Utilities</strong>: Consistent key derivation with <code>kdf.KeyDerivation</code> for all I2P components</li>
-<li>✅ <strong>Better Error Handling</strong>: Standardized sentinel errors across all packages</li>
-</ul>
-
-<p>See <a href="AUDIT.md" target="_blank">AUDIT.md</a> for detailed improvement rationale.</p>
-
-<hr>
 
 <h2 id="usage">Usage</h2>
 
@@ -453,6 +435,34 @@ func main() {
 
 <hr>
 
+<h2 id="logging">Logging</h2>
+
+<p>All packages use structured logging via <a href="https://github.com/go-i2p/logger" target="_blank"><code>github.com/go-i2p/logger</code></a>. Every log call includes <code>&quot;pkg&quot;</code> and <code>&quot;func&quot;</code> fields for precise filtering and tracing:</p>
+
+<pre><code class="language-go">log.WithFields(logger.Fields{
+    &quot;pkg&quot;:  &quot;curve25519&quot;,
+    &quot;func&quot;: &quot;Curve25519PublicKey.NewEncrypter&quot;,
+}).Debug(&quot;Creating new encrypter&quot;)
+</code></pre>
+
+<h3 id="enabling-debug-output">Enabling Debug Output</h3>
+
+<p>Set the <code>DEBUG_I2P</code> environment variable to enable debug-level log output:</p>
+
+<pre><code class="language-bash">DEBUG_I2P=debug go test ./...
+</code></pre>
+
+<p>To treat warnings as fatal errors (useful for CI):</p>
+
+<pre><code class="language-bash">WARNFAIL_I2P=true DEBUG_I2P=debug go test ./...
+</code></pre>
+
+<h3 id="filtering-logs">Filtering Logs</h3>
+
+<p>Because every log call carries structured <code>pkg</code> and <code>func</code> fields, you can filter output programmatically by package or function name to isolate specific subsystems during debugging.</p>
+
+<hr>
+
 <h2 id="architecture">Architecture</h2>
 
 <p>The package follows an interface-first design with core cryptographic interfaces defined in the <code>types/</code> package:</p>
@@ -504,7 +514,7 @@ func main() {
                 eyedeekay
               </div>
               <div class="contributor-commits">
-                141 commits
+                146 commits
               </div>
             </div>
           </div>
@@ -516,7 +526,7 @@ func main() {
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2026-04-06 20:36:29 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2026-04-06 21:09:26 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>
