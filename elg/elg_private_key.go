@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-i2p/crypto/types"
 	"github.com/go-i2p/elgamal"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -90,17 +91,17 @@ func (elg ElgPrivateKey) Len() int {
 // Returns a types.Decrypter interface that can decrypt data encrypted with the corresponding public key.
 // Returns error if the private key data is invalid or not in the valid range [1, p-1].
 func (elg ElgPrivateKey) NewDecrypter() (dec types.Decrypter, err error) {
-	log.Debug("Creating new ElGamal decrypter")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.NewDecrypter"}).Debug("Creating new ElGamal decrypter")
 	k := createElgamalPrivateKey(elg[:])
 	if k == nil {
 		err = oops.Errorf("failed to create ElGamal private key: invalid key data")
-		log.WithError(err).Error("ElGamal decrypter creation failed")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.NewDecrypter"}).WithError(err).Error("ElGamal decrypter creation failed")
 		return
 	}
 	dec = &elgDecrypter{
 		k: k,
 	}
-	log.Debug("ElGamal decrypter created successfully")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.NewDecrypter"}).Debug("ElGamal decrypter created successfully")
 	return
 }
 
@@ -117,11 +118,11 @@ func (elg ElgPrivateKey) Bytes() []byte {
 // without exposing sensitive private key material. Returns the public key
 // as ElgPublicKey or an error if key derivation fails.
 func (elg ElgPrivateKey) Public() (types.PublicEncryptionKey, error) {
-	log.Debug("Deriving ElGamal public key from private key")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Public"}).Debug("Deriving ElGamal public key from private key")
 	// Create temporary private key to compute public component
 	privKey := createElgamalPrivateKey(elg[:])
 	if privKey == nil {
-		log.Error("Failed to create private key for public key derivation")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Public"}).Error("Failed to create private key for public key derivation")
 		return nil, oops.Errorf("invalid private key format for public key derivation")
 	}
 
@@ -131,13 +132,13 @@ func (elg ElgPrivateKey) Public() (types.PublicEncryptionKey, error) {
 
 	// Ensure Y is exactly 256 bytes with leading zeros if necessary
 	if len(yBytes) > 256 {
-		log.Error("Public key Y component too large")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Public"}).Error("Public key Y component too large")
 		return nil, oops.Errorf("invalid public key size: %d bytes", len(yBytes))
 	}
 
 	// Copy Y bytes to fixed-size array with proper padding
 	copy(pubKey[256-len(yBytes):], yBytes)
-	log.Debug("ElGamal public key derived successfully")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Public"}).Debug("ElGamal public key derived successfully")
 	return pubKey, nil
 }
 
@@ -156,13 +157,13 @@ func (elg ElgPrivateKey) Zero() {
 // using I2P's standard ElGamal parameters. Returns the generated private key or an error
 // if key generation fails due to insufficient entropy or parameter validation.
 func (elg ElgPrivateKey) Generate() (types.PrivateEncryptionKey, error) {
-	log.Debug("Generating new ElGamal private key")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Generate"}).Debug("Generating new ElGamal private key")
 	var privKey elgamal.PrivateKey
 
 	// Generate key using I2P ElGamal parameters and secure entropy
 	err := ElgamalGenerate(&privKey, nil)
 	if err != nil {
-		log.WithError(err).Error("ElGamal key generation failed")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Generate"}).WithError(err).Error("ElGamal key generation failed")
 		return nil, oops.Errorf("failed to generate ElGamal key: %w", err)
 	}
 
@@ -172,13 +173,13 @@ func (elg ElgPrivateKey) Generate() (types.PrivateEncryptionKey, error) {
 
 	// Ensure X is exactly 256 bytes with leading zeros if necessary
 	if len(xBytes) > 256 {
-		log.Error("Generated private key X component too large")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Generate"}).Error("Generated private key X component too large")
 		return nil, oops.Errorf("invalid private key size: %d bytes", len(xBytes))
 	}
 
 	// Copy X bytes to fixed-size array with proper padding
 	copy(result[256-len(xBytes):], xBytes)
-	log.Debug("ElGamal private key generated successfully")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Generate"}).Debug("ElGamal private key generated successfully")
 	return result, nil
 }
 
@@ -187,9 +188,9 @@ func (elg ElgPrivateKey) Generate() (types.PrivateEncryptionKey, error) {
 // Returns nil if the key data is invalid or outside the acceptable range.
 // create an elgamal private key from byte slice
 func createElgamalPrivateKey(data []byte) (k *elgamal.PrivateKey) {
-	log.WithField("data_length", len(data)).Debug("Creating ElGamal private key")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey", "data_length": len(data)}).Debug("Creating ElGamal private key")
 	if len(data) != 256 {
-		log.Warn("Invalid data length for ElGamal private key")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey"}).Warn("Invalid data length for ElGamal private key")
 		return nil
 	}
 
@@ -198,7 +199,7 @@ func createElgamalPrivateKey(data []byte) (k *elgamal.PrivateKey) {
 	// Validate that private key is in valid range [1, p-1]
 	// This ensures the key can be used for secure ElGamal operations
 	if x.Cmp(one) < 0 || x.Cmp(new(big.Int).Sub(elgp, one)) >= 0 {
-		log.Warn("Private key not in valid range [1, p-1]")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey"}).Warn("Private key not in valid range [1, p-1]")
 		return nil
 	}
 
@@ -213,6 +214,6 @@ func createElgamalPrivateKey(data []byte) (k *elgamal.PrivateKey) {
 		},
 		X: x,
 	}
-	log.Debug("ElGamal private key created successfully")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey"}).Debug("ElGamal private key created successfully")
 	return
 }

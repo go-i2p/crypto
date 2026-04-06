@@ -7,6 +7,7 @@ import (
 	"filippo.io/edwards25519"
 
 	"github.com/go-i2p/crypto/hkdf"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -75,7 +76,7 @@ func DeriveBlindingFactor(secret []byte, date string) ([32]byte, error) {
 		return alpha, err
 	}
 
-	log.WithField("date", date).
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "DeriveBlindingFactor", "date": date}).
 		Debug("Deriving blinding factor")
 
 	alpha, err := deriveAlphaUsingHKDF(secret, date)
@@ -83,7 +84,7 @@ func DeriveBlindingFactor(secret []byte, date string) ([32]byte, error) {
 		return alpha, err
 	}
 
-	log.WithField("date", date).
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "DeriveBlindingFactor", "date": date}).
 		Debug("Blinding factor derived successfully")
 
 	return alpha, nil
@@ -92,7 +93,7 @@ func DeriveBlindingFactor(secret []byte, date string) ([32]byte, error) {
 // validateSecretLength checks if the secret meets the minimum length requirement.
 func validateSecretLength(secret []byte) error {
 	if len(secret) < 32 {
-		log.WithField("secret_length", len(secret)).
+		log.WithFields(logger.Fields{"pkg": "kdf", "func": "validateSecretLength", "secret_length": len(secret)}).
 			Error("Secret too short for blinding factor derivation")
 		return oops.Wrapf(ErrInvalidSecret, "got %d bytes, need at least 32", len(secret))
 	}
@@ -102,7 +103,7 @@ func validateSecretLength(secret []byte) error {
 // validateDateFormatAndValues validates both the format and logical validity of a date string.
 func validateDateFormatAndValues(date string) error {
 	if !dateFormatRegex.MatchString(date) {
-		log.WithField("date", date).
+		log.WithFields(logger.Fields{"pkg": "kdf", "func": "validateDateFormatAndValues", "date": date}).
 			Error("Invalid date format for blinding factor")
 		return oops.Wrapf(ErrInvalidDateFormat, "got %q, expected YYYY-MM-DD", date)
 	}
@@ -169,8 +170,7 @@ func DeriveBlindingFactorWithTimestamp(secret []byte, unixTimestamp int64) ([32]
 	// Format as YYYY-MM-DD
 	date := t.Format("2006-01-02")
 
-	log.WithField("timestamp", unixTimestamp).
-		WithField("date", date).
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "DeriveBlindingFactorWithTimestamp", "timestamp": unixTimestamp, "date": date}).
 		Debug("Converting timestamp to date for blinding factor derivation")
 
 	return DeriveBlindingFactor(secret, date)
@@ -182,8 +182,7 @@ func validateDate(date string) error {
 	// Try to parse the date
 	_, err := time.Parse("2006-01-02", date)
 	if err != nil {
-		log.WithField("date", date).
-			WithField("error", err).
+		log.WithFields(logger.Fields{"pkg": "kdf", "func": "validateDate", "date": date, "error": err}).
 			Error("Invalid date values")
 		return oops.Wrapf(ErrInvalidDate, "failed to parse %q: %v", date, err)
 	}

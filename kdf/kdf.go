@@ -171,7 +171,7 @@ func (kd *KeyDerivation) DeriveForPurpose(purpose KeyPurpose) ([32]byte, error) 
 		return [32]byte{}, oops.Errorf("unknown key purpose: %d", purpose)
 	}
 
-	log.WithField("purpose", info).Debug("Deriving key for purpose")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "KeyDerivation.DeriveForPurpose", "purpose": info}).Debug("Deriving key for purpose")
 
 	return kd.DeriveWithInfo(info)
 }
@@ -194,7 +194,7 @@ func (kd *KeyDerivation) DeriveForPurpose(purpose KeyPurpose) ([32]byte, error) 
 //	// Derive key with session-specific context
 //	sessionKey, _ := kd.DeriveWithInfo(fmt.Sprintf("Session-%s", sessionID))
 func (kd *KeyDerivation) DeriveWithInfo(info string) ([32]byte, error) {
-	log.WithField("info", info).Debug("Deriving key with custom info")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "KeyDerivation.DeriveWithInfo", "info": info}).Debug("Deriving key with custom info")
 
 	hkdfDeriver := hkdf.NewHKDF()
 	derived, err := hkdfDeriver.Derive(kd.rootKey[:], nil, []byte(info), 32)
@@ -231,9 +231,7 @@ func (kd *KeyDerivation) DeriveKeys(info []byte, count int) ([][32]byte, error) 
 		return nil, oops.Errorf("key count must be positive")
 	}
 
-	log.WithField("info", string(info)).
-		WithField("count", count).
-		Debug("Deriving multiple keys")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "KeyDerivation.DeriveKeys", "info": string(info), "count": count}).Debug("Deriving multiple keys")
 
 	// Derive count * 32 bytes
 	outputLen := count * 32
@@ -250,7 +248,7 @@ func (kd *KeyDerivation) DeriveKeys(info []byte, count int) ([][32]byte, error) 
 		copy(keys[i][:], derived[i*32:(i+1)*32])
 	}
 
-	log.WithField("keys_derived", count).Debug("Multi-key derivation successful")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "KeyDerivation.DeriveKeys", "keys_derived": count}).Debug("Multi-key derivation successful")
 
 	return keys, nil
 }
@@ -279,7 +277,7 @@ func (kd *KeyDerivation) DeriveKeys(info []byte, count int) ([][32]byte, error) 
 //	symRatchet := ratchet.NewSymmetricRatchet(symKey)
 //	tagRatchet := ratchet.NewTagRatchet(tagKey)
 func (kd *KeyDerivation) DeriveSessionKeys() (rootKey, symKey, tagKey [32]byte, err error) {
-	log.Debug("Deriving standard session keys")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "KeyDerivation.DeriveSessionKeys"}).Debug("Deriving standard session keys")
 
 	keys, err := kd.DeriveKeys([]byte("ECIES-Session-KDF"), 3)
 	if err != nil {
@@ -290,7 +288,7 @@ func (kd *KeyDerivation) DeriveSessionKeys() (rootKey, symKey, tagKey [32]byte, 
 	symKey = keys[1]
 	tagKey = keys[2]
 
-	log.Debug("Session keys derived successfully")
+	log.WithFields(logger.Fields{"pkg": "kdf", "func": "KeyDerivation.DeriveSessionKeys"}).Debug("Session keys derived successfully")
 
 	return rootKey, symKey, tagKey, nil
 }

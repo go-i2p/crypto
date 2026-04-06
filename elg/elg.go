@@ -64,13 +64,13 @@ import (
 // The generated keys use I2P-standard ElGamal parameters with 2048-bit security.
 // Example usage: pubKey, privKey, err := GenerateKeyPair()
 func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, error) {
-	log.Debug("Generating ElGamal key pair")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "GenerateKeyPair"}).Debug("Generating ElGamal key pair")
 
 	// Generate using standard ElGamal algorithm with I2P parameters
 	var elgPriv elgamal.PrivateKey
 	err := ElgamalGenerate(&elgPriv, nil)
 	if err != nil {
-		log.WithError(err).Error("Failed to generate ElGamal key pair")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "GenerateKeyPair"}).WithError(err).Error("Failed to generate ElGamal key pair")
 		return nil, nil, oops.Errorf("ElGamal key generation failed: %w", err)
 	}
 
@@ -80,7 +80,7 @@ func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, e
 	if len(yBytes) <= 256 {
 		copy(pubKey[256-len(yBytes):], yBytes)
 	} else {
-		log.Error("Generated public key Y component too large")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "GenerateKeyPair"}).Error("Generated public key Y component too large")
 		return nil, nil, oops.Errorf("invalid public key size")
 	}
 
@@ -90,11 +90,11 @@ func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, e
 	if len(xBytes) <= 256 {
 		copy(privKey[256-len(xBytes):], xBytes)
 	} else {
-		log.Error("Generated private key X component too large")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "GenerateKeyPair"}).Error("Generated private key X component too large")
 		return nil, nil, oops.Errorf("invalid private key size")
 	}
 
-	log.Debug("ElGamal key pair generated successfully")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "GenerateKeyPair"}).Debug("ElGamal key pair generated successfully")
 	return pubKey, privKey, nil
 }
 
@@ -114,7 +114,7 @@ type PrivateKey struct {
 // 4. Validate all parameters for cryptographic correctness
 // generate an elgamal key pair
 func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
-	log.Debug("Generating ElGamal key pair")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalGenerate"}).Debug("Generating ElGamal key pair")
 	// Set standard I2P ElGamal domain parameters for network compatibility
 	// These parameters are standardized across the I2P network for interoperability
 	priv.P = elgp // 2048-bit prime modulus
@@ -128,7 +128,7 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 	// This ensures proper entropy and validates randomness quality
 	x, err := rand.ReadBigIntInRange(one, pMinus1)
 	if err != nil {
-		log.WithError(err).Error("Failed to generate secure private key")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalGenerate"}).WithError(err).Error("Failed to generate secure private key")
 		return oops.Errorf("ElGamal private key generation failed: %w", err)
 	}
 
@@ -138,7 +138,7 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 	// This derives the public component from the private exponent using group theory
 	priv.Y = new(big.Int).Exp(priv.G, priv.X, priv.P)
 
-	log.Debug("ElGamal key pair generated successfully")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalGenerate"}).Debug("ElGamal key pair generated successfully")
 	return nil
 }
 
@@ -148,6 +148,8 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 // performing decryption, and validating the integrity of the decrypted message.
 func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (decrypted []byte, err error) {
 	log.WithFields(logger.Fields{
+		"pkg":          "elg",
+		"func":         "elgamalDecrypt",
 		"data_length":  len(data),
 		"zero_padding": zeroPadding,
 	}).Debug("Decrypting ElGamal data")
@@ -161,7 +163,7 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 	// Decrypt using the library's Decrypt method
 	m, err := priv.Decrypt(nil, ciphertext, nil)
 	if err != nil {
-		log.WithError(err).Error("Library decryption failed")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "elgamalDecrypt"}).WithError(err).Error("Library decryption failed")
 		return nil, ElgDecryptFail
 	}
 
@@ -171,7 +173,7 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 		return nil, err
 	}
 
-	log.WithField("decrypted_length", len(decrypted)).Debug("ElGamal decryption successful")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "elgamalDecrypt", "decrypted_length": len(decrypted)}).Debug("ElGamal decryption successful")
 	return
 }
 
@@ -182,7 +184,7 @@ func parseCiphertext(data []byte, zeroPadding bool) ([]byte, error) {
 	if zeroPadding {
 		// Zero-padded format: [0][256 bytes c1][0][256 bytes c2] = 514 bytes
 		if len(data) != 514 {
-			log.WithError(ElgDecryptFail).Error("Invalid ciphertext length for zero-padded format")
+			log.WithFields(logger.Fields{"pkg": "elg", "func": "parseCiphertext"}).WithError(ElgDecryptFail).Error("Invalid ciphertext length for zero-padded format")
 			return nil, ElgDecryptFail
 		}
 		// Extract c1 and c2, removing the zero bytes
@@ -194,7 +196,7 @@ func parseCiphertext(data []byte, zeroPadding bool) ([]byte, error) {
 
 	// Non-padded format: [256 bytes c1][256 bytes c2] = 512 bytes
 	if len(data) != 512 {
-		log.WithError(ElgDecryptFail).Error("Invalid ciphertext length for non-padded format")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "parseCiphertext"}).WithError(ElgDecryptFail).Error("Invalid ciphertext length for non-padded format")
 		return nil, ElgDecryptFail
 	}
 	return data, nil
@@ -206,13 +208,13 @@ func parseCiphertext(data []byte, zeroPadding bool) ([]byte, error) {
 func verifyAndExtractPayload(m []byte) ([]byte, error) {
 	// Verify I2P message format
 	if len(m) != 255 {
-		log.WithField("length", len(m)).Error("Decrypted message has incorrect length")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyAndExtractPayload", "length": len(m)}).Error("Decrypted message has incorrect length")
 		return nil, ElgDecryptFail
 	}
 
 	// Verify message type byte
 	if m[0] != 0xFF {
-		log.WithField("type_byte", m[0]).Error("Invalid message type byte")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyAndExtractPayload", "type_byte": m[0]}).Error("Invalid message type byte")
 		return nil, ElgDecryptFail
 	}
 
@@ -236,7 +238,7 @@ func verifyMessageHash(m []byte) error {
 	good := subtle.ConstantTimeCompare(expectedHash[:], actualHash)
 
 	if good != 1 {
-		log.Error("Hash verification failed")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyMessageHash"}).Error("Hash verification failed")
 		return ElgDecryptFail
 	}
 

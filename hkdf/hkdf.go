@@ -5,6 +5,7 @@ import (
 	"hash"
 	"io"
 
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"golang.org/x/crypto/hkdf"
 )
@@ -13,11 +14,7 @@ import (
 // Parameters: ikm (input key material), salt (optional random value), info (context data), keyLen (output length).
 // Returns derived key bytes or error if derivation fails due to invalid parameters.
 func (h *HKDFImpl) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
-	log.WithField("ikm_length", len(ikm)).
-		WithField("salt_length", len(salt)).
-		WithField("info_length", len(info)).
-		WithField("key_length", keyLen).
-		Debug("Deriving key with HKDF")
+	log.WithFields(logger.Fields{"pkg": "hkdf", "func": "HKDFImpl.Derive", "ikm_length": len(ikm), "salt_length": len(salt), "info_length": len(info), "key_length": keyLen}).Debug("Deriving key with HKDF")
 
 	// Validate input parameters
 	if err := validateDeriveParameters(keyLen, info); err != nil {
@@ -33,7 +30,7 @@ func (h *HKDFImpl) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 		return nil, err
 	}
 
-	log.WithField("derived_key_length", len(key)).Debug("HKDF key derivation successful")
+	log.WithFields(logger.Fields{"pkg": "hkdf", "func": "HKDFImpl.Derive", "derived_key_length": len(key)}).Debug("HKDF key derivation successful")
 	return key, nil
 }
 

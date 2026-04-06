@@ -4,6 +4,7 @@ package ratchet
 import (
 	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/rand"
+	"github.com/go-i2p/logger"
 
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
@@ -66,7 +67,7 @@ func (r *DHRatchet) PerformRatchet() ([ChainKeySize]byte, [ChainKeySize]byte, er
 	// Update root key
 	r.rootKey = rootKey
 
-	log.Debug("DH ratchet performed successfully")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "DHRatchet.PerformRatchet"}).Debug("DH ratchet performed successfully")
 	return sendingChainKey, receivingChainKey, nil
 }
 

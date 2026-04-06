@@ -26,37 +26,33 @@ func NewSecureReader() *SecureReader {
 // Read fills the provided byte slice with cryptographically secure random data
 // and validates entropy before returning
 func (sr *SecureReader) Read(p []byte) (n int, err error) {
-	log := logger.GetGoI2PLogger()
-
 	for attempt := 0; attempt < MaxEntropyRetries; attempt++ {
 		// Read random bytes from crypto/rand
 		n, err = sr.source.Read(p)
 		if err != nil {
-			log.WithError(err).Error("Failed to read from secure random source")
+			log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read"}).WithError(err).Error("Failed to read from secure random source")
 			return 0, oops.Errorf("random read failed: %w", err)
 		}
 
 		// Validate entropy for larger samples
 		if len(p) >= 32 {
 			if !sr.validateEntropy(p) {
-				log.WithField("attempt", attempt+1).Debug("Entropy validation failed, retrying")
+				log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read", "attempt": attempt + 1}).Debug("Entropy validation failed, retrying")
 				continue
 			}
 		}
 
-		log.WithField("bytes_read", n).Debug("Successfully generated secure random bytes")
+		log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read", "bytes_read": n}).Debug("Successfully generated secure random bytes")
 		return n, nil
 	}
 
 	err = oops.Errorf("entropy validation failed after %d attempts", MaxEntropyRetries)
-	log.WithError(err).Error("Secure random generation failed")
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read"}).WithError(err).Error("Secure random generation failed")
 	return 0, err
 }
 
 // ReadBigInt generates a cryptographically secure big.Int in the range [0, max)
 func (sr *SecureReader) ReadBigInt(max *big.Int) (*big.Int, error) {
-	log := logger.GetGoI2PLogger()
-
 	if max.Sign() <= 0 {
 		return nil, oops.Errorf("max must be positive")
 	}
@@ -65,28 +61,26 @@ func (sr *SecureReader) ReadBigInt(max *big.Int) (*big.Int, error) {
 		// Use crypto/rand.Int for secure big integer generation
 		result, err := rand.Int(sr.source, max)
 		if err != nil {
-			log.WithError(err).Error("Failed to generate secure big.Int")
+			log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.ReadBigInt"}).WithError(err).Error("Failed to generate secure big.Int")
 			return nil, oops.Errorf("big.Int generation failed: %w", err)
 		}
 
 		// Additional validation: ensure result is in valid range
 		if result.Cmp(big.NewInt(0)) >= 0 && result.Cmp(max) < 0 {
-			log.WithField("max_bits", max.BitLen()).Debug("Successfully generated secure big.Int")
+			log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.ReadBigInt", "max_bits": max.BitLen()}).Debug("Successfully generated secure big.Int")
 			return result, nil
 		}
 
-		log.WithField("attempt", attempt+1).Debug("Generated big.Int outside valid range, retrying")
+		log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.ReadBigInt", "attempt": attempt + 1}).Debug("Generated big.Int outside valid range, retrying")
 	}
 
 	err := oops.Errorf("failed to generate valid big.Int after %d attempts", MaxEntropyRetries)
-	log.WithError(err).Error("Secure big.Int generation failed")
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.ReadBigInt"}).WithError(err).Error("Secure big.Int generation failed")
 	return nil, err
 }
 
 // ReadBigIntInRange generates a cryptographically secure big.Int in the range [min, max)
 func (sr *SecureReader) ReadBigIntInRange(min, max *big.Int) (*big.Int, error) {
-	log := logger.GetGoI2PLogger()
-
 	if min.Cmp(max) >= 0 {
 		return nil, oops.Errorf("min must be less than max")
 	}
@@ -103,11 +97,7 @@ func (sr *SecureReader) ReadBigIntInRange(min, max *big.Int) (*big.Int, error) {
 	// Add min to get result in [min, max)
 	result := new(big.Int).Add(min, randomInRange)
 
-	log.WithFields(map[string]interface{}{
-		"min":    min.String(),
-		"max":    max.String(),
-		"result": result.String(),
-	}).Debug("Successfully generated secure big.Int in range")
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.ReadBigIntInRange", "min": min.String(), "max": max.String(), "result": result.String()}).Debug("Successfully generated secure big.Int in range")
 
 	return result, nil
 }
@@ -187,8 +177,6 @@ func CryptoInt(reader io.Reader, max *big.Int) (*big.Int, error) {
 // Prime returns a number of the given bit length that is prime with high probability.
 // Compatible with crypto/rand.Prime function
 func Prime(random io.Reader, bits int) (*big.Int, error) {
-	log := logger.GetGoI2PLogger()
-
 	if bits < 2 {
 		return nil, oops.Errorf("prime size must be at least 2 bits")
 	}
@@ -196,11 +184,11 @@ func Prime(random io.Reader, bits int) (*big.Int, error) {
 	// Use crypto/rand.Prime as the underlying implementation
 	prime, err := rand.Prime(random, bits)
 	if err != nil {
-		log.WithError(err).Error("Failed to generate prime number")
+		log.WithFields(logger.Fields{"pkg": "rand", "func": "Prime"}).WithError(err).Error("Failed to generate prime number")
 		return nil, oops.Errorf("prime generation failed: %w", err)
 	}
 
-	log.WithField("bits", bits).Debug("Successfully generated prime number")
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "Prime", "bits": bits}).Debug("Successfully generated prime number")
 	return prime, nil
 }
 

@@ -47,8 +47,7 @@ type cryptoSource struct {
 // Note: Since we use crypto/rand, the seed is used for compatibility but doesn't affect randomness
 // Compatible with math/rand.NewSource
 func NewSource(seed int64) Source {
-	log := logger.GetGoI2PLogger()
-	log.WithField("seed", seed).Debug("Creating new crypto-based PRNG source")
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "NewSource", "seed": seed}).Debug("Creating new crypto-based PRNG source")
 
 	return &cryptoSource{reader: rand.Reader}
 }
@@ -74,8 +73,7 @@ func (c *cryptoSource) Int63() int64 {
 
 func (c *cryptoSource) Seed(seed int64) {
 	// For crypto/rand, seeding doesn't apply, but we implement for compatibility
-	log := logger.GetGoI2PLogger()
-	log.WithField("seed", seed).Debug("Seed called on crypto source (no-op for security)")
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "cryptoSource.Seed", "seed": seed}).Debug("Seed called on crypto source (no-op for security)")
 }
 
 func (c *cryptoSource) Uint64() uint64 {
@@ -108,8 +106,7 @@ type Rand struct {
 // New returns a new Rand that uses random values from src
 // Compatible with math/rand.New
 func New(src Source) *Rand {
-	log := logger.GetGoI2PLogger()
-	log.Debug("Creating new Rand instance")
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "New"}).Debug("Creating new Rand instance")
 
 	r := &Rand{src: src}
 	if s64, ok := src.(Source64); ok {

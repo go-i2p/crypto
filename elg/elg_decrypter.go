@@ -1,6 +1,9 @@
 package elg
 
-import "github.com/go-i2p/elgamal"
+import (
+	"github.com/go-i2p/elgamal"
+	"github.com/go-i2p/logger"
+)
 
 // elgDecrypter implements the types.Decrypter interface for ElGamal decryption.
 // It wraps an ElGamal private key and provides secure decryption operations.
@@ -18,15 +21,15 @@ type elgDecrypter struct {
 // The decryption process validates message integrity using SHA-256 checksums
 // and implements constant-time operations to prevent side-channel attacks.
 func (elg *elgDecrypter) Decrypt(data []byte) (dec []byte, err error) {
-	log.WithField("data_length", len(data)).Debug("Decrypting ElGamal data")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "elgDecrypter.Decrypt", "data_length": len(data)}).Debug("Decrypting ElGamal data")
 	// Use zero padding format for I2P compatibility with standard message structure
 	// The zero padding parameter affects how the encrypted data components are parsed
 	// TODO(psi): Verify if zero padding should be configurable for different I2P message types
 	dec, err = elgamalDecrypt(elg.k, data, true) // TODO(psi): should this be true or false?
 	if err != nil {
-		log.WithError(err).Error("Failed to decrypt ElGamal data")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "elgDecrypter.Decrypt"}).WithError(err).Error("Failed to decrypt ElGamal data")
 	} else {
-		log.WithField("decrypted_length", len(dec)).Debug("ElGamal data decrypted successfully")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "elgDecrypter.Decrypt", "decrypted_length": len(dec)}).Debug("ElGamal data decrypted successfully")
 	}
 	return
 }

@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 
 	"github.com/go-i2p/elgamal"
+	"github.com/go-i2p/logger"
 )
 
 // ElgamalEncryption represents an ElGamal encryption wrapper using the go-i2p/elgamal library.
@@ -19,7 +20,7 @@ type ElgamalEncryption struct {
 // This method applies I2P's standard ElGamal message format with SHA-256 integrity
 // protection and automatic zero-padding for network protocol compatibility.
 func (elg *ElgamalEncryption) Encrypt(data []byte) (enc []byte, err error) {
-	log.WithField("data_length", len(data)).Debug("Encrypting data with ElGamal")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalEncryption.Encrypt", "data_length": len(data)}).Debug("Encrypting data with ElGamal")
 	// Use zero padding by default for I2P network message compatibility
 	return elg.EncryptPadding(data, true)
 }
@@ -29,7 +30,7 @@ func (elg *ElgamalEncryption) Encrypt(data []byte) (enc []byte, err error) {
 // Maximum supported data size is 222 bytes due to ElGamal security requirements.
 // This method coordinates the I2P ElGamal encryption process.
 func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (encrypted []byte, err error) {
-	log.WithField("data_length", len(data)).Debug("Encrypting data with ElGamal padding")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalEncryption.EncryptPadding", "data_length": len(data)}).Debug("Encrypting data with ElGamal padding")
 
 	// Validate data size limit for ElGamal security constraints
 	if len(data) > 222 {
@@ -42,14 +43,14 @@ func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (enc
 	// Encrypt using the library's Encrypt method
 	ciphertext, err := elg.pub.Encrypt(rand.Reader, mbytes)
 	if err != nil {
-		log.WithError(err).Error("Failed to encrypt with ElGamal")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalEncryption.EncryptPadding"}).WithError(err).Error("Failed to encrypt with ElGamal")
 		return nil, err
 	}
 
 	// Format output according to padding requirements
 	encrypted = formatCiphertext(ciphertext, zeroPadding)
 
-	log.WithField("encrypted_length", len(encrypted)).Debug("Data encrypted successfully with ElGamal")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalEncryption.EncryptPadding", "encrypted_length": len(encrypted)}).Debug("Data encrypted successfully with ElGamal")
 	return
 }
 
@@ -85,14 +86,14 @@ func formatCiphertext(ciphertext []byte, zeroPadding bool) []byte {
 // createElgamalEncryption initializes a new ElGamal encryption wrapper.
 // Returns an encryption session that uses the go-i2p/elgamal library for all operations.
 func createElgamalEncryption(pub *elgamal.PublicKey) (enc *ElgamalEncryption, err error) {
-	log.Debug("Creating ElGamal encryption session")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalEncryption"}).Debug("Creating ElGamal encryption session")
 	if pub == nil {
-		log.Error("Cannot create encrypter with nil public key")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalEncryption"}).Error("Cannot create encrypter with nil public key")
 		return nil, ElgEncryptTooBig // TODO: create proper error
 	}
 	enc = &ElgamalEncryption{
 		pub: pub,
 	}
-	log.Debug("ElGamal encryption session created successfully")
+	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalEncryption"}).Debug("ElGamal encryption session created successfully")
 	return
 }

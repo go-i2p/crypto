@@ -2,6 +2,7 @@ package ratchet
 
 import (
 	"github.com/go-i2p/crypto/kdf"
+	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 )
 
@@ -55,7 +56,7 @@ type HandshakeResult struct {
 //	// Encrypt message
 //	ciphertext, tag, _ := session.EncryptMessage(plaintext)
 func NewSessionFromECIES(sharedSecret, ourPrivKey, theirPubKey [32]byte) (*Session, error) {
-	log.Debug("Creating new session from ECIES shared secret")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "NewSessionFromECIES"}).Debug("Creating new session from ECIES shared secret")
 
 	// Derive root key and initial chain keys from shared secret using kdf package
 	kd := kdf.NewKeyDerivation(sharedSecret)
@@ -69,7 +70,7 @@ func NewSessionFromECIES(sharedSecret, ourPrivKey, theirPubKey [32]byte) (*Sessi
 	symRatchet := NewSymmetricRatchet(symChainKey)
 	tagRatchet := NewTagRatchet(tagChainKey)
 
-	log.Debug("Session created successfully from ECIES shared secret")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "NewSessionFromECIES"}).Debug("Session created successfully from ECIES shared secret")
 
 	return &Session{
 		dhRatchet:  dhRatchet,
@@ -133,9 +134,7 @@ func NewSessionFromHandshake(handshake HandshakeResult) (*Session, error) {
 //	aead, _ := chacha20poly1305.NewAEAD(messageKey)
 //	ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce)
 func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]byte, err error) {
-	log.WithField("plaintext_len", len(plaintext)).
-		WithField("message_num", s.messageNum).
-		Debug("Encrypting message")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.EncryptMessage", "plaintext_len": len(plaintext), "message_num": s.messageNum}).Debug("Encrypting message")
 
 	// Generate session tag for this message
 	tag, err = s.tagRatchet.GenerateNextTag()
@@ -157,8 +156,7 @@ func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]
 	// Increment message number
 	s.messageNum++
 
-	log.WithField("session_tag", tag).
-		Debug("Message encrypted successfully")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.EncryptMessage", "session_tag": tag}).Debug("Message encrypted successfully")
 
 	return messageKey, tag, nil
 }
@@ -184,9 +182,7 @@ func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]
 //	aead, _ := chacha20poly1305.NewAEAD(messageKey)
 //	plaintext, _ := aead.Decrypt(ciphertext, authTag, sessionTag[:], nonce)
 func (s *Session) DecryptMessage(tag [8]byte) (messageKey [32]byte, err error) {
-	log.WithField("session_tag", tag).
-		WithField("message_num", s.messageNum).
-		Debug("Decrypting message")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.DecryptMessage", "session_tag": tag, "message_num": s.messageNum}).Debug("Decrypting message")
 
 	if err := s.verifySessionTag(tag); err != nil {
 		return messageKey, err
@@ -197,7 +193,7 @@ func (s *Session) DecryptMessage(tag [8]byte) (messageKey [32]byte, err error) {
 		return messageKey, err
 	}
 
-	log.Debug("Message decrypted successfully")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.DecryptMessage"}).Debug("Message decrypted successfully")
 
 	return messageKey, nil
 }
@@ -210,9 +206,7 @@ func (s *Session) verifySessionTag(tag [8]byte) error {
 	}
 
 	if expectedTag != tag {
-		log.WithField("expected_tag", expectedTag).
-			WithField("received_tag", tag).
-			Warn("Session tag mismatch")
+		log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.verifySessionTag", "expected_tag": expectedTag, "received_tag": tag}).Warn("Session tag mismatch")
 		return oops.Errorf("invalid session tag: tag mismatch")
 	}
 
@@ -257,7 +251,7 @@ func (s *Session) deriveDecryptionKey() ([32]byte, error) {
 //	    return err
 //	}
 func (s *Session) PerformDHRatchet() (sendingKey, receivingKey [32]byte, err error) {
-	log.Debug("Performing DH ratchet")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.PerformDHRatchet"}).Debug("Performing DH ratchet")
 
 	sendingKey, receivingKey, err = s.dhRatchet.PerformRatchet()
 	if err != nil {
@@ -267,7 +261,7 @@ func (s *Session) PerformDHRatchet() (sendingKey, receivingKey [32]byte, err err
 	// Update symmetric ratchet with new sending chain key
 	s.symRatchet = NewSymmetricRatchet(sendingKey)
 
-	log.Debug("DH ratchet completed successfully")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.PerformDHRatchet"}).Debug("DH ratchet completed successfully")
 
 	return sendingKey, receivingKey, nil
 }
@@ -281,7 +275,7 @@ func (s *Session) PerformDHRatchet() (sendingKey, receivingKey [32]byte, err err
 // Returns:
 //   - error: Any error during key update
 func (s *Session) UpdateRemotePublicKey(newPubKey [32]byte) error {
-	log.Debug("Updating remote public key")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.UpdateRemotePublicKey"}).Debug("Updating remote public key")
 	return s.dhRatchet.UpdateKeys(newPubKey[:])
 }
 
