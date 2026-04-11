@@ -1,6 +1,6 @@
 module github.com/go-i2p/crypto
 
-go 1.25.0
+go 1.26.1
 
 require (
 	filippo.io/edwards25519 v1.2.0
@@ -9,7 +9,7 @@ require (
 	github.com/go-i2p/logger v0.1.5
 	github.com/go-i2p/red25519 v0.0.0-20260302212615-1093a31f680d
 	github.com/samber/oops v1.21.0
-	go.step.sm/crypto v0.76.0
+	go.step.sm/crypto v0.77.2
 	golang.org/x/crypto v0.49.0
 )
 
