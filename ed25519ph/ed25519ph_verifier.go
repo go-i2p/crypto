@@ -34,12 +34,12 @@ func (v *Ed25519phVerifier) VerifyHash(h, sig []byte) (err error) {
 	if len(sig) != ed25519.SignatureSize {
 		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phVerifier.VerifyHash"}).Error("Bad Ed25519ph signature size")
 		err = types.ErrBadSignatureSize
-		return
+		return err
 	}
 	if len(v.k) != ed25519.PublicKeySize {
 		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phVerifier.VerifyHash"}).Error("Invalid Ed25519ph public key size")
 		err = oops.Errorf("failed to verify: invalid ed25519ph public key size")
-		return
+		return err
 	}
 
 	// Verify using Ed25519ph mode via VerifyWithOptions with Hash: crypto.SHA512
@@ -52,7 +52,7 @@ func (v *Ed25519phVerifier) VerifyHash(h, sig []byte) (err error) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phVerifier.VerifyHash"}).Debug("Ed25519ph signature verified successfully")
 	}
-	return
+	return err
 }
 
 // Verify validates an Ed25519ph signature against arbitrary data.
@@ -70,5 +70,5 @@ func (v *Ed25519phVerifier) Verify(data, sig []byte) (err error) {
 	// Hash the data with SHA-512 before verification
 	h := sha512.Sum512(data)
 	err = v.VerifyHash(h[:], sig)
-	return
+	return err
 }

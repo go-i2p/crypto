@@ -174,7 +174,7 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 	}
 
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "elgamalDecrypt", "decrypted_length": len(decrypted)}).Debug("ElGamal decryption successful")
-	return
+	return decrypted, err
 }
 
 // parseCiphertext extracts the raw ciphertext from I2P's formatted encrypted data.

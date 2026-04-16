@@ -45,7 +45,7 @@ func NewArgon2id(timeCost, memoryCost uint32, parallelism uint8) *Argon2id {
 
 // validateDeriveParams checks that all Argon2id derivation parameters meet
 // minimum requirements before performing the expensive key derivation operation.
-func validateDeriveParams(keyLen int, salt []byte, timeCost uint32, memoryCost uint32, parallelism uint8) error {
+func validateDeriveParams(keyLen int, salt []byte, timeCost, memoryCost uint32, parallelism uint8) error {
 	log.WithFields(logger.Fields{"pkg": "argon2", "func": "validateDeriveParams", "key_len": keyLen}).Debug("Validating Argon2id parameters")
 	if keyLen <= 0 {
 		log.WithFields(logger.Fields{"pkg": "argon2", "func": "validateDeriveParams"}).Error("Invalid key length")

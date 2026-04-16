@@ -31,5 +31,5 @@ func (elg *elgDecrypter) Decrypt(data []byte) (dec []byte, err error) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "elg", "func": "elgDecrypter.Decrypt", "decrypted_length": len(dec)}).Debug("ElGamal data decrypted successfully")
 	}
-	return
+	return dec, err
 }

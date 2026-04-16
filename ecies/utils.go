@@ -167,7 +167,7 @@ func extractCiphertextComponents(ciphertext []byte) (ephemeralPubKey, nonce, aea
 	ephemeralPubKey = ciphertext[:PublicKeySize]
 	nonce = ciphertext[PublicKeySize : PublicKeySize+NonceSize]
 	aeadCiphertext = ciphertext[PublicKeySize+NonceSize:]
-	return
+	return ephemeralPubKey, nonce, aeadCiphertext
 }
 
 // convertKeysToX25519Format converts raw byte keys to proper X25519 key types.

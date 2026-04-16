@@ -32,7 +32,7 @@ func (v *DSAVerifier) Verify(data, sig []byte) (err error) {
 	// Hash data with SHA-1 as required by I2P DSA specification
 	h := sha1.Sum(data)
 	err = v.VerifyHash(h[:], sig)
-	return
+	return err
 }
 
 // VerifyHash validates a DSA signature against a pre-computed hash digest.
@@ -67,5 +67,5 @@ func (v *DSAVerifier) VerifyHash(h, sig []byte) (err error) {
 		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAVerifier.VerifyHash"}).Error("Bad DSA signature size")
 		err = types.ErrBadSignatureSize
 	}
-	return
+	return err
 }

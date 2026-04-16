@@ -51,7 +51,7 @@ func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (enc
 	encrypted = formatCiphertext(ciphertext, zeroPadding)
 
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalEncryption.EncryptPadding", "encrypted_length": len(encrypted)}).Debug("Data encrypted successfully with ElGamal")
-	return
+	return encrypted, err
 }
 
 // prepareMessageBlock creates an I2P-formatted message block with SHA-256 integrity hash.
@@ -95,5 +95,5 @@ func createElgamalEncryption(pub *elgamal.PublicKey) (enc *ElgamalEncryption, er
 		pub: pub,
 	}
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalEncryption"}).Debug("ElGamal encryption session created successfully")
-	return
+	return enc, err
 }

@@ -96,13 +96,13 @@ func (elg ElgPrivateKey) NewDecrypter() (dec types.Decrypter, err error) {
 	if k == nil {
 		err = oops.Errorf("failed to create ElGamal private key: invalid key data")
 		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.NewDecrypter"}).WithError(err).Error("ElGamal decrypter creation failed")
-		return
+		return dec, err
 	}
 	dec = &elgDecrypter{
 		k: k,
 	}
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.NewDecrypter"}).Debug("ElGamal decrypter created successfully")
-	return
+	return dec, err
 }
 
 // Bytes returns the raw byte representation of this ElGamal private key.
@@ -215,5 +215,5 @@ func createElgamalPrivateKey(data []byte) (k *elgamal.PrivateKey) {
 		X: x,
 	}
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey"}).Debug("ElGamal private key created successfully")
-	return
+	return k
 }

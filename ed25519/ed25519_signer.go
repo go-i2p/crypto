@@ -25,12 +25,12 @@ func (s *Ed25519Signer) Sign(data []byte) (sig []byte, err error) {
 	if len(s.k) != ed25519.PrivateKeySize {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Signer.Sign"}).Error("Invalid Ed25519 private key size")
 		err = oops.Errorf("failed to sign: invalid ed25519 private key size")
-		return
+		return sig, err
 	}
 	// Sign the data directly — ed25519.Sign implements PureEdDSA (RFC 8032)
 	// which performs its own internal SHA-512 hashing
 	sig = ed25519.Sign(s.k, data)
-	return
+	return sig, err
 }
 
 // SignHash creates an Ed25519 signature over a pre-computed hash.
@@ -41,5 +41,5 @@ func (s *Ed25519Signer) SignHash(h []byte) (sig []byte, err error) {
 	// Generate Ed25519 signature using the standard library implementation
 	sig = ed25519.Sign(s.k, h)
 	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Signer.SignHash", "signature_length": len(sig)}).Debug("Ed25519 signature created successfully")
-	return
+	return sig, err
 }

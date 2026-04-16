@@ -23,12 +23,12 @@ func (s *Red25519Signer) Sign(data []byte) (sig []byte, err error) {
 	if len(s.k) != PrivateKeySize && len(s.k) != BlindedPrivateKeySize {
 		log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Signer.Sign"}).Error("Invalid Red25519 private key size")
 		err = oops.Errorf("failed to sign: invalid red25519 private key size")
-		return
+		return sig, err
 	}
 
 	sig = upstream.Sign(s.k, data)
 	log.WithFields(logger.Fields{"pkg": "red25519", "func": "Red25519Signer.Sign", "signature_length": len(sig)}).Debug("Red25519 signature created successfully")
-	return
+	return sig, err
 }
 
 // SignHash creates a Red25519 signature over a pre-computed hash.

@@ -38,7 +38,7 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 			"actual_length":   len(sig),
 		}).Error("Unsupported ECDSA signature format or length")
 		err = oops.Errorf("unsupported ECDSA signature format: got %d bytes, expected %d (R||S)", len(sig), expectedSigLen)
-		return
+		return err
 	}
 
 	// Parse r and s from signature bytes
@@ -51,7 +51,7 @@ func (v *ECDSAVerifier) VerifyHash(h, sig []byte) (err error) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECDSAVerifier.VerifyHash"}).Debug("ECDSA signature verified successfully")
 	}
-	return
+	return err
 }
 
 // verify a block of data by hashing it and comparing the hash against the signature
@@ -68,7 +68,7 @@ func (v *ECDSAVerifier) Verify(data, sig []byte) (err error) {
 	h := hasher.Sum(nil)
 	// verify
 	err = v.VerifyHash(h, sig)
-	return
+	return err
 }
 
 func CreateECVerifier(c elliptic.Curve, h crypto.Hash, k []byte) (ev *ECDSAVerifier, err error) {
@@ -90,5 +90,5 @@ func CreateECVerifier(c elliptic.Curve, h crypto.Hash, k []byte) (ev *ECDSAVerif
 		ev.k = &ecdsa.PublicKey{c, x, y}
 		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Debug("ECDSA verifier created successfully")
 	}
-	return
+	return ev, err
 }

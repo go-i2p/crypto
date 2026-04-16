@@ -30,13 +30,13 @@ func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
 	if len(sig) != ed25519.SignatureSize {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.VerifyHash"}).Error("Bad Ed25519 signature size")
 		err = types.ErrBadSignatureSize
-		return
+		return err
 	}
 	// Validate public key size before verification
 	if len(v.k) != ed25519.PublicKeySize {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.VerifyHash"}).Error("Invalid Ed25519 public key size")
 		err = oops.Errorf("failed to verify: invalid ed25519 public key size")
-		return
+		return err
 	}
 
 	// Perform cryptographic signature verification using standard library
@@ -47,7 +47,7 @@ func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.VerifyHash"}).Debug("Ed25519 signature verified successfully")
 	}
-	return
+	return err
 }
 
 // Verify validates an Ed25519 signature against arbitrary data.
@@ -66,13 +66,13 @@ func (v *Ed25519Verifier) Verify(data, sig []byte) (err error) {
 	if len(sig) != ed25519.SignatureSize {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.Verify"}).Error("Bad Ed25519 signature size")
 		err = types.ErrBadSignatureSize
-		return
+		return err
 	}
 	// Validate public key size before verification
 	if len(v.k) != ed25519.PublicKeySize {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.Verify"}).Error("Invalid Ed25519 public key size")
 		err = oops.Errorf("failed to verify: invalid ed25519 public key size")
-		return
+		return err
 	}
 
 	// Verify the signature directly — ed25519.Verify implements PureEdDSA
@@ -84,5 +84,5 @@ func (v *Ed25519Verifier) Verify(data, sig []byte) (err error) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Verifier.Verify"}).Debug("Ed25519 signature verified successfully")
 	}
-	return
+	return err
 }

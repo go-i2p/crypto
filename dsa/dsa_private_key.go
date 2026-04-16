@@ -85,7 +85,7 @@ func (k DSAPrivateKey) NewSigner() (s types.Signer, err error) {
 	s = &DSASigner{
 		k: createDSAPrivkey(new(big.Int).SetBytes(k[:])),
 	}
-	return
+	return s, err
 }
 
 // Public extracts the corresponding DSA public key from this private key.

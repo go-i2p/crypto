@@ -97,7 +97,7 @@ func (k DSAPublicKey) NewVerifier() (v types.Verifier, err error) {
 	v = &DSAVerifier{
 		k: createDSAPublicKey(new(big.Int).SetBytes(k[:])),
 	}
-	return
+	return v, err
 }
 
 // Len returns the length of this DSA public key in bytes.

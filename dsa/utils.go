@@ -67,5 +67,5 @@ func createDSAPrivkey(X *big.Int) (k *dsa.PrivateKey) {
 		// Private key X exceeds modulus p - cryptographically invalid
 		log.WithFields(logger.Fields{"pkg": "dsa", "func": "createDSAPrivkey"}).Warn("Failed to create DSA private key: X is not less than p")
 	}
-	return
+	return k
 }

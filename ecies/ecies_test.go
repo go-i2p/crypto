@@ -449,7 +449,7 @@ func TestECIESPublicKeyEncryptDecryptRoundTrip(t *testing.T) {
 
 // assertKeyLenAndBytes is a helper that validates Len() and Bytes() methods
 // on an ECIES key, checking expected size and byte equality.
-func assertKeyLenAndBytes(t *testing.T, label string, actualLen int, expectedLen int, actualBytes, expectedBytes []byte) {
+func assertKeyLenAndBytes(t *testing.T, label string, actualLen, expectedLen int, actualBytes, expectedBytes []byte) {
 	t.Helper()
 	if actualLen != expectedLen {
 		t.Errorf("%s Len() returned %d, expected %d", label, actualLen, expectedLen)

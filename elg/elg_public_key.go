@@ -107,7 +107,7 @@ func (elg ElgPublicKey) NewEncrypter() (enc types.Encrypter, err error) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPublicKey.NewEncrypter"}).Debug("ElGamal encrypter created successfully")
 	}
-	return
+	return enc, err
 }
 
 // Generate creates a new ElGamal key pair and returns the public key component.
@@ -158,5 +158,5 @@ func createElgamalPublicKey(data []byte) (k *elgamal.PublicKey) {
 		log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPublicKey"}).Warn("Invalid data length for ElGamal public key")
 	}
 
-	return
+	return k
 }

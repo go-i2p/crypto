@@ -29,7 +29,7 @@ func (s *Ed25519phSigner) Sign(data []byte) (sig []byte, err error) {
 	if len(s.k) != ed25519.PrivateKeySize {
 		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.Sign"}).Error("Invalid Ed25519ph private key size")
 		err = oops.Errorf("failed to sign: invalid ed25519ph private key size")
-		return
+		return sig, err
 	}
 
 	// Hash the message with SHA-512 as required by Ed25519ph
@@ -37,7 +37,7 @@ func (s *Ed25519phSigner) Sign(data []byte) (sig []byte, err error) {
 
 	// Sign the hash using Ed25519ph (with domain separation)
 	sig, err = s.SignHash(h[:])
-	return
+	return sig, err
 }
 
 // SignHash creates an Ed25519ph signature over a pre-computed SHA-512 hash.
@@ -50,7 +50,7 @@ func (s *Ed25519phSigner) SignHash(h []byte) (sig []byte, err error) {
 	if len(s.k) != ed25519.PrivateKeySize {
 		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.SignHash"}).Error("Invalid Ed25519ph private key size")
 		err = oops.Errorf("failed to sign: invalid ed25519ph private key size")
-		return
+		return sig, err
 	}
 
 	// Use Ed25519ph mode via SignWithOptions with Hash: crypto.SHA512
@@ -61,9 +61,9 @@ func (s *Ed25519phSigner) SignHash(h []byte) (sig []byte, err error) {
 	if err != nil {
 		log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.SignHash", "error": err}).Error("Ed25519ph signing failed")
 		err = oops.Errorf("failed to sign with ed25519ph: %w", err)
-		return
+		return sig, err
 	}
 
 	log.WithFields(logger.Fields{"pkg": "ed25519ph", "func": "Ed25519phSigner.SignHash", "signature_length": len(sig)}).Debug("Ed25519ph signature created successfully")
-	return
+	return sig, err
 }

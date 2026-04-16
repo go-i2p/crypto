@@ -27,7 +27,7 @@ func (ds *DSASigner) Sign(data []byte) (sig []byte, err error) {
 	// Hash data with SHA-1 as required by I2P DSA specification
 	h := sha1.Sum(data)
 	sig, err = ds.SignHash(h[:])
-	return
+	return sig, err
 }
 
 // SignHash generates a DSA signature for a pre-computed hash digest.
@@ -55,5 +55,5 @@ func (ds *DSASigner) SignHash(h []byte) (sig []byte, err error) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSASigner.SignHash"}).WithError(err).Error("Failed to create DSA signature")
 	}
-	return
+	return sig, err
 }

@@ -20,7 +20,7 @@ func I2PHMAC(data []byte, k HMACKey) (d HMACDigest) {
 
 	// Copy to our fixed-size return type
 	copy(d[:], digest)
-	return
+	return d
 }
 
 // HMACSHA256 computes HMAC-SHA256 over data using the provided key and returns

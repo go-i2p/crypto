@@ -378,7 +378,7 @@ func TestECIESWrapper_MatchesECIESPackage(t *testing.T) {
 }
 
 // assertECIESRoundTrip encrypts and decrypts data, verifying the round-trip.
-func assertECIESRoundTrip(t *testing.T, encryptor TunnelEncryptor, decryptor TunnelEncryptor, plaintext []byte) {
+func assertECIESRoundTrip(t *testing.T, encryptor, decryptor TunnelEncryptor, plaintext []byte) {
 	t.Helper()
 	ciphertext, err := encryptor.Encrypt(plaintext)
 	if err != nil {

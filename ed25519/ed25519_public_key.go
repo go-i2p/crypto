@@ -82,7 +82,7 @@ func createEd25519PublicKey(data []byte) (k *ed25519.PublicKey) {
 	} else {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "createEd25519PublicKey", "expected": ed25519.PublicKeySize, "got": len(data)}).Warn("Invalid data length for Ed25519 public key")
 	}
-	return
+	return k
 }
 
 // NewEd25519PublicKey creates a validated Ed25519 public key from bytes.
