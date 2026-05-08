@@ -72,7 +72,8 @@ func applyPublicKeyTransform(keyBytes, alpha [32]byte, startMsg, endMsg string, 
 }
 
 func BlindPublicKey(publicKey, alpha [32]byte) ([32]byte, error) {
-	return applyPublicKeyTransform(publicKey, alpha,
+	return applyPublicKeyTransform(
+		publicKey, alpha,
 		"Blinding Ed25519 public key",
 		"Public key blinded successfully",
 		func(key, a [32]byte) (*edwards25519.Point, error) {
@@ -256,7 +257,8 @@ func constructBlindedPrivateKey(blindedScalar *edwards25519.Scalar) [64]byte {
 //	recovered, _ := ed25519.UnblindPublicKey(blinded, alpha)
 //	// recovered should equal original
 func UnblindPublicKey(blindedPublicKey, alpha [32]byte) ([32]byte, error) {
-	return applyPublicKeyTransform(blindedPublicKey, alpha,
+	return applyPublicKeyTransform(
+		blindedPublicKey, alpha,
 		"Unblinding Ed25519 public key",
 		"Public key unblinded successfully",
 		func(key, a [32]byte) (*edwards25519.Point, error) {

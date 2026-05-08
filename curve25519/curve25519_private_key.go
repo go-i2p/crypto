@@ -70,7 +70,7 @@ func (k Curve25519PrivateKey) Public() (types.PublicEncryptionKey, error) {
 func (k Curve25519PrivateKey) Zero() {
 	// Replace the slice with zeroes for secure memory cleanup
 	for i := range k {
-		(k)[i] = 0
+		k[i] = 0
 	}
 }
 

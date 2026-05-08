@@ -104,6 +104,7 @@ func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	}).Debug("ECIES decrypt called on encryptor (requires private key)")
 	return nil, ErrECIESOperationNotSupported
 } // Type returns the tunnel encryption type for this encryptor.
+
 func (e *ECIESEncryptor) Type() TunnelEncryptionType {
 	return TunnelEncryptionECIES
 }
