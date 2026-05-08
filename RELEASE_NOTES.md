@@ -1,4 +1,4 @@
-Release notes for: `crypto` Version `0.1.54`
+Release notes for: `crypto` Version `0.1.55`
 ==============================================
 
 This release is largely unchanged from the last.
