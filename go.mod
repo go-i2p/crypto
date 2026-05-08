@@ -5,12 +5,12 @@ go 1.26.1
 require (
 	filippo.io/edwards25519 v1.2.0
 	github.com/dchest/siphash v1.2.3
-	github.com/go-i2p/elgamal v0.0.2
-	github.com/go-i2p/logger v0.1.52
+	github.com/go-i2p/elgamal v0.1.54
+	github.com/go-i2p/logger v0.1.54
 	github.com/go-i2p/red25519 v0.0.0-20260302212615-1093a31f680d
 	github.com/samber/oops v1.21.0
 	go.step.sm/crypto v0.78.0
-	golang.org/x/crypto v0.50.0
+	golang.org/x/crypto v0.51.0
 )
 
 require (
