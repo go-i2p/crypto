@@ -15,9 +15,6 @@ require (
 
 require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/go-i2p/go-noise v0.1.57-0.20260604144615-610fb8015fa5 // indirect
-	github.com/go-i2p/noise v1.1.1-0.20260327201800-8e41bb3d9f1e // indirect
-	github.com/go-i2p/pool v0.1.56 // indirect
 	github.com/oklog/ulid/v2 v2.1.1 // indirect
 	github.com/samber/lo v1.53.0 // indirect
 	github.com/sirupsen/logrus v1.9.4 // indirect
