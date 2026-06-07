@@ -60,7 +60,10 @@ func selectHashFunction(hashFunc func() hash.Hash) func() hash.Hash {
 // Creates an HKDF reader and derives the requested number of key bytes.
 func performKeyDerivation(hashFunc func() hash.Hash, ikm, salt, info []byte, keyLen int) ([]byte, error) {
 	// Create HKDF reader
-	reader := hkdf.New(hashFunc, ikm, salt, info)
+	// Note: golang.org/x/crypto/hkdf.New(hash, secret, salt, info) computes Extract: HMAC(salt, secret)
+	// i2p-vectors expects HMAC(ikm, salt) in Extract phase, so parameters are swapped:
+	// passing salt as 'secret' and ikm as 'salt' parameter
+	reader := hkdf.New(hashFunc, salt, ikm, info)
 
 	// Derive key
 	key := make([]byte, keyLen)
