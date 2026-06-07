@@ -6,10 +6,10 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dchest/siphash v1.2.3 h1:QXwFc8cFOR2dSa/gE6o/HokBMWtLUaNDVd+22aKHeEA=
 github.com/dchest/siphash v1.2.3/go.mod h1:0NvQU092bT0ipiFN++/rXm69QG9tVxLAlQHIXMPAkHc=
-github.com/go-i2p/elgamal v0.1.599 h1:frdCFUWDtHLoUhKJH4lbVumZ7xB2Yk1qEAYzWZAW4NU=
-github.com/go-i2p/elgamal v0.1.599/go.mod h1:doBqsiGCnCL7TzgKr+mJnfodAD7i5wEWMpap0qgKsAw=
-github.com/go-i2p/logger v0.1.599 h1:wuVTbslxNrSs0rUM24AEyjxRzN3SYcZHJatMPe4uE4M=
-github.com/go-i2p/logger v0.1.599/go.mod h1:WbyfWMndgFGJZ4xIA4oXlIfwgr3iQF/cb0HqMn/YZxk=
+github.com/go-i2p/elgamal v0.1.5999 h1:J9j7hiucVzHP8Xd65KGLld9N7pyKQHzqxo1Z4G0TKNc=
+github.com/go-i2p/elgamal v0.1.5999/go.mod h1:doBqsiGCnCL7TzgKr+mJnfodAD7i5wEWMpap0qgKsAw=
+github.com/go-i2p/logger v0.1.5999 h1:BJy1/QU8iCRf4+sxHkALF7+uoT8tmYu9FQxWd8M0C2Y=
+github.com/go-i2p/logger v0.1.5999/go.mod h1:WbyfWMndgFGJZ4xIA4oXlIfwgr3iQF/cb0HqMn/YZxk=
 github.com/go-i2p/red25519 v0.0.0-20260302212615-1093a31f680d h1:a7DHsr9SOEjybZVtH3e0kJpXy40mZb1V+dGm9tptOl8=
 github.com/go-i2p/red25519 v0.0.0-20260302212615-1093a31f680d/go.mod h1:6bX00E8eUkSstzG2c8L4MIuL6pX5VCYjcWjBVOMXk0M=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
