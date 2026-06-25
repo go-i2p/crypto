@@ -6,8 +6,8 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dchest/siphash v1.2.3 h1:QXwFc8cFOR2dSa/gE6o/HokBMWtLUaNDVd+22aKHeEA=
 github.com/dchest/siphash v1.2.3/go.mod h1:0NvQU092bT0ipiFN++/rXm69QG9tVxLAlQHIXMPAkHc=
-github.com/go-i2p/elgamal v0.1.59999 h1:zK/PL82556guw9OTwIUeyEXtrekLqFEfur4T/7ELpvk=
-github.com/go-i2p/elgamal v0.1.59999/go.mod h1:doBqsiGCnCL7TzgKr+mJnfodAD7i5wEWMpap0qgKsAw=
+github.com/go-i2p/elgamal v0.1.62 h1:ZF5a9vcCz7+ov4j+wibTnKizrJ+rWE2JMAb/Q5MNp74=
+github.com/go-i2p/elgamal v0.1.62/go.mod h1:doBqsiGCnCL7TzgKr+mJnfodAD7i5wEWMpap0qgKsAw=
 github.com/go-i2p/logger v0.1.60000-0.20260612012503-bec4044a2b0d h1:AJWfD1WSsIMYAcCnJ+c2IOvCfm5Wf5UW1fGHgKuasr4=
 github.com/go-i2p/logger v0.1.60000-0.20260612012503-bec4044a2b0d/go.mod h1:ygRTQPZmHNNfwEf+vPtJwJs/EjIW7al5OOo+hEY6KS0=
 github.com/go-i2p/red25519 v0.0.0-20260302212615-1093a31f680d h1:a7DHsr9SOEjybZVtH3e0kJpXy40mZb1V+dGm9tptOl8=
