@@ -24,10 +24,10 @@ require (
 	golang.org/x/text v0.38.0 // indirect
 )
 
-replace github.com/go-i2p/logger => /home/idk/go/src/github.com/go-i2p/logger
+//replace github.com/go-i2p/logger => /home/idk/go/src/github.com/go-i2p/logger
 
-replace github.com/go-i2p/elgamal => /home/idk/go/src/github.com/go-i2p/elgamal
+//replace github.com/go-i2p/elgamal => /home/idk/go/src/github.com/go-i2p/elgamal
 
-replace github.com/go-i2p/su3 => /home/idk/go/src/github.com/go-i2p/su3
+//replace github.com/go-i2p/su3 => /home/idk/go/src/github.com/go-i2p/su3
 
-replace github.com/go-i2p/go-i2p => /home/idk/go/src/github.com/go-i2p/go-i2p
+//replace github.com/go-i2p/go-i2p => /home/idk/go/src/github.com/go-i2p/go-i2p
