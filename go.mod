@@ -5,8 +5,8 @@ go 1.26.8
 require (
 	filippo.io/edwards25519 v1.2.0
 	github.com/dchest/siphash v1.2.3
-	github.com/go-i2p/elgamal v0.1.70000
-	github.com/go-i2p/logger v0.1.70000
+	github.com/go-i2p/elgamal v0.1.70001
+	github.com/go-i2p/logger v0.1.70001
 	github.com/go-i2p/red25519 v0.0.0-20260908204607-9444de34c638
 	github.com/samber/oops v1.23.1
 	go.step.sm/crypto v0.90.0
