@@ -1,4 +1,4 @@
-Release notes for: `crypto` Version `0.1.70000`
+Release notes for: `crypto` Version `0.1.70001`
 ==============================================
 
 Resolve parameter-order issues in HKDF, KDF, Argon2id
