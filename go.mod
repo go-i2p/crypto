@@ -1,13 +1,13 @@
 module github.com/go-i2p/crypto
 
-go 1.26.3
+go 1.26.8
 
 require (
 	filippo.io/edwards25519 v1.2.0
 	github.com/dchest/siphash v1.2.3
 	github.com/go-i2p/elgamal v0.1.60000-0.20260701131626-b5c8141026fc
 	github.com/go-i2p/logger v0.1.60000-0.20260701134448-2648c3b0e040
-	github.com/go-i2p/red25519 v0.0.0-20260908192929-b906f5fda5c0
+	github.com/go-i2p/red25519 v0.0.0-20260908204607-9444de34c638
 	github.com/samber/oops v1.23.1
 	go.step.sm/crypto v0.90.0
 	golang.org/x/crypto v0.57.0
