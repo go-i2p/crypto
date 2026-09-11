@@ -115,9 +115,9 @@ func (a *AESEncryptor) processTunnelData(td *TunnelData, ivOp func(dst, src []by
 	// single-block IV transform, full 1024-byte payload CBC, 1028-byte output.
 	// Step 1: AES-ECB single-block transform on 16-byte IV using ivKey.
 	ivOp(td[:16], td[:16])
-	// Step 2: CBC encrypt/decrypt payload (bytes 16..1027 = 1012 bytes) using layerKey with IV=td[:16].
+	// Step 2: CBC encrypt/decrypt payload (bytes 16..1040 = 1024 bytes, per Java I2P ref: payload=1024) using layerKey with IV=td[:16].
 	layerBlock := newBlockMode(a.layerKey, td[:16])
-	layerBlock.CryptBlocks(td[16:1028], td[16:1028])
+	layerBlock.CryptBlocks(td[16:1040], td[16:1040])
 	// Step 3: AES-ECB single-block transform on 16-byte IV (post-payload).
 	ivOp(td[:16], td[:16])
 	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.processTunnelData"}).Debug(msg)
