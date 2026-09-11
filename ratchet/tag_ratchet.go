@@ -61,8 +61,6 @@ func (r *TagRatchet) PeekNextTag() ([SessionTagSize]byte, error) {
 	return r.deriveTag(r.tagCount)
 }
 
-// deriveTag derives an 8-byte tag from the chain key and tag number.
-// Uses HMAC-SHA256(chainKey, "SessionTag" || tagNum) truncated to 8 bytes.
 func (r *TagRatchet) deriveTag(tagNum uint32) ([SessionTagSize]byte, error) {
 	// Prepare input: "SessionTag" || tagNum
 	input := make([]byte, len("SessionTag")+4)

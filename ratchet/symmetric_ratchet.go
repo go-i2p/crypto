@@ -36,8 +36,6 @@ func NewSymmetricRatchet(initialChainKey [ChainKeySize]byte) *SymmetricRatchet {
 	}
 }
 
-// DeriveMessageKey derives a message encryption key for the given message number.
-// Uses HMAC-SHA256(chainKey, "MessageKey" || messageNum).
 func (r *SymmetricRatchet) DeriveMessageKey(messageNum uint32) ([MessageKeySize]byte, error) {
 	// Prepare input: "MessageKey" || messageNum
 	input := make([]byte, len("MessageKey")+4)
