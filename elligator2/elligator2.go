@@ -258,10 +258,38 @@ func representativeToPublicKey(representative []byte) []byte {
 	r.SetBytes(representative)
 
 	v := computeForwardMap(&r)
-	vBytes := v.Bytes()
 
-	// F016 fix: add epsilon (twist) branch — compute Legendre symbol of v^3 + A*v^2 + v
-	// and select x = v or x = -v - A accordingly (per ecies.rst §2a / i2pd Elligator.cpp:130-154)
-	// For minimal fix: return v (primary branch); full twist selection requires Legendre check.
-	return vBytes
+	// F016 complete fix: epsilon (twist) branch per ecies.rst §2a / i2pd Elligator.cpp:130-154.
+	// Compute t = v^3 + A*v^2 + v = v*(v+A)*(v+1) and check if t is a quadratic residue
+	// (Legendre symbol = 1). If yes, x = v; else x = -v - A (mod p).
+	a := createCurve25519A()
+
+	// v + A
+	vPlusA := new(field.Element).Add(new(field.Element).Set(v), a)
+
+	// v + 1
+	one := new(field.Element).One()
+	vPlusOne := new(field.Element).Add(new(field.Element).Set(v), one)
+
+	// t = v * (v + A) * (v + 1)
+	t := new(field.Element).Multiply(new(field.Element).Set(v), vPlusA)
+	t.Multiply(t, vPlusOne)
+
+	// Legendre symbol check: compute sqrt(t) using SqrtRatio. If t is a perfect square
+	// (wasSquare == 1), then Legendre symbol = 1 (quadratic residue), so x = v.
+	// Otherwise (wasSquare == 0, non-residue), x = -v - A.
+	_, isSquare := new(field.Element).SqrtRatio(t, new(field.Element).One())
+
+	var x *field.Element
+	if isSquare == 1 {
+		// Legendre symbol = 1: x = v
+		x = new(field.Element).Set(v)
+	} else {
+		// Legendre symbol = -1: x = -v - A = p - v - A
+		negV := new(field.Element).Negate(new(field.Element).Set(v))
+		x = new(field.Element).Subtract(negV, a)
+		// Normalize to positive: add p if negative (field arithmetic handles this)
+	}
+
+	return x.Bytes()
 }
