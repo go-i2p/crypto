@@ -111,11 +111,11 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 // encryption and decryption, using the provided IV operation and CBC block mode
 // constructor to determine the direction of processing.
 func (a *AESEncryptor) processTunnelData(td *TunnelData, ivOp func(dst, src []byte), newBlockMode func(cipher.Block, []byte) cipher.BlockMode, msg string) error {
-	data := *td
-	ivOp(data[16:1024], data[16:1024])
-	layerBlock := newBlockMode(a.layerKey, data[:16])
-	layerBlock.CryptBlocks(data[16:1024], data[16:1024])
-	ivOp(data[16:1024], data[16:1024])
+	// F079 fix: operate through pointer (not value copy) so mutations persist
+	ivOp(td[16:1024], td[16:1024])
+	layerBlock := newBlockMode(a.layerKey, td[:16])
+	layerBlock.CryptBlocks(td[16:1024], td[16:1024])
+	ivOp(td[16:1024], td[16:1024])
 	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.processTunnelData"}).Debug(msg)
 	return nil
 }
