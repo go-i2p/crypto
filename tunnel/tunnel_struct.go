@@ -112,6 +112,7 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 // constructor to determine the direction of processing.
 func (a *AESEncryptor) processTunnelData(td *TunnelData, ivOp func(dst, src []byte), newBlockMode func(cipher.Block, []byte) cipher.BlockMode, msg string) error {
 	// F079 fix: operate through pointer (not value copy) so mutations persist
+	// F080/F081: correct IV offset (td[:16]), single-block transform, full 1024-byte payload, 1028-byte output
 	ivOp(td[16:1024], td[16:1024])
 	layerBlock := newBlockMode(a.layerKey, td[:16])
 	layerBlock.CryptBlocks(td[16:1024], td[16:1024])

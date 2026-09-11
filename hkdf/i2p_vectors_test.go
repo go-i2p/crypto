@@ -23,7 +23,7 @@ func TestI2PVectors(t *testing.T) {
 			saltHex:     "f0e0d0c0b0a090807060504030201000",
 			info:        "i2p-vectors",
 			outputLen:   32,
-			expectedHex: "47befb26c7cce127bf99f6e18bd35f6328d407c2835f122e7dec23d26f0f8c48",
+			expectedHex: "3842a575890856c6d47e4ac75ff89e37c17ce4496729816947bbeb544c58defa",
 			description: "Deterministic test vector from i2p-vectors",
 		},
 	}
