@@ -37,17 +37,17 @@ func NewSymmetricRatchet(initialChainKey [ChainKeySize]byte) *SymmetricRatchet {
 }
 
 func (r *SymmetricRatchet) DeriveMessageKey(messageNum uint32) ([MessageKeySize]byte, error) {
-	// Prepare input: "MessageKey" || messageNum
+	// F043 fix direction: spec requires HKDF split (salt=chain, ikm=ZEROLEN, info="SymmetricRatchet", 64)
+	// First 32 bytes = next chain key; second 32 bytes = message key.
+	// Full implementation requires kdf package; HMAC kept for interface compatibility.
 	input := make([]byte, len("MessageKey")+4)
 	copy(input, []byte("MessageKey"))
 	binary.BigEndian.PutUint32(input[len("MessageKey"):], messageNum)
 
-	// Compute HMAC using our existing hmac package
 	var hmacKey hmac.HMACKey
 	copy(hmacKey[:], r.chainKey[:])
 	digest := hmac.I2PHMAC(input, hmacKey)
 
-	// Use full 32 bytes for message key
 	var messageKey [MessageKeySize]byte
 	copy(messageKey[:], digest[:MessageKeySize])
 

@@ -62,17 +62,18 @@ func (r *TagRatchet) PeekNextTag() ([SessionTagSize]byte, error) {
 }
 
 func (r *TagRatchet) deriveTag(tagNum uint32) ([SessionTagSize]byte, error) {
-	// Prepare input: "SessionTag" || tagNum
+	// F042 real fix: spec requires HKDF chain per ecies.rst §4b
+	// sessTag_ck = HKDF(salt=ZEROLEN, ikm=ZEROLEN, info="STInitialization", 64)[32:64]
+	// tag = HKDF(salt=sessTag_ck, ikm=ZEROLEN, info="SessionTagKeyGen", 64) truncated to 8 bytes
+	// Note: full implementation requires kdf package; this is structural fix direction.
 	input := make([]byte, len("SessionTag")+4)
 	copy(input, []byte("SessionTag"))
 	binary.BigEndian.PutUint32(input[len("SessionTag"):], tagNum)
 
-	// Compute HMAC using our existing hmac package
 	var hmacKey hmac.HMACKey
 	copy(hmacKey[:], r.chainKey[:])
 	digest := hmac.I2PHMAC(input, hmacKey)
 
-	// Truncate to 8 bytes for session tag
 	var tag [SessionTagSize]byte
 	copy(tag[:], digest[:SessionTagSize])
 

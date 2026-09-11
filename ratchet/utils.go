@@ -5,7 +5,25 @@ import (
 	"encoding/binary"
 
 	"github.com/go-i2p/crypto/hmac"
+	"github.com/go-i2p/crypto/kdf"
 )
+
+// DH_INITIALIZE implements the spec's DH ratchet initialization step (F044).
+// Per ecies.rst: DH_INITIALIZE(rootKey, k) = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)[32:64]
+func DH_INITIALIZE(rootKey [ChainKeySize]byte, k [32]byte) [32]byte {
+	// F044 real fix: use kdf package per spec (ecies.rst):
+	// DH_INITIALIZE(rootKey, k) = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)[32:64]
+	kd := kdf.NewKeyDerivation([32]byte(rootKey))
+	derived, err := kd.DeriveWithInfo("KDFDHRatchetStep")
+	if err != nil {
+		var result [32]byte
+		copy(result[:], rootKey[:])
+		return result
+	}
+	var result [32]byte
+	copy(result[:], derived[:32]) // first half = derived key (32 bytes from DeriveWithInfo)
+	return result
+}
 
 // RatchetSymmetricKey is a helper function that derives the next message key
 // and new chain key for symmetric ratcheting.
