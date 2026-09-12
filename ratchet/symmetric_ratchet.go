@@ -2,9 +2,7 @@
 package ratchet
 
 import (
-	"encoding/binary"
-
-	"github.com/go-i2p/crypto/hmac"
+	"github.com/go-i2p/crypto/kdf"
 )
 
 // SymmetricRatchet implements the symmetric key ratchet for deriving message keys.
@@ -37,37 +35,27 @@ func NewSymmetricRatchet(initialChainKey [ChainKeySize]byte) *SymmetricRatchet {
 }
 
 func (r *SymmetricRatchet) DeriveMessageKey(messageNum uint32) ([MessageKeySize]byte, error) {
-	// F043 fix direction: spec requires HKDF split (salt=chain, ikm=ZEROLEN, info="SymmetricRatchet", 64)
-	// First 32 bytes = next chain key; second 32 bytes = message key.
-	// Full implementation requires kdf package; HMAC kept for interface compatibility.
-	input := make([]byte, len("MessageKey")+4)
-	copy(input, []byte("MessageKey"))
-	binary.BigEndian.PutUint32(input[len("MessageKey"):], messageNum)
-
-	var hmacKey hmac.HMACKey
-	copy(hmacKey[:], r.chainKey[:])
-	digest := hmac.I2PHMAC(input, hmacKey)
-
+	// F043 real fix: spec requires HKDF split (salt=chain, ikm=ZEROLEN, info="SymmetricRatchet", 64)
+	// Derive 2 keys: first 32 = next chain key; second 32 = message key.
+	kd := kdf.NewKeyDerivation(r.chainKey)
+	keys, err := kd.DeriveKeys([]byte("SymmetricRatchet"), 2)
+	if err != nil {
+		return [MessageKeySize]byte{}, err
+	}
 	var messageKey [MessageKeySize]byte
-	copy(messageKey[:], digest[:MessageKeySize])
-
+	copy(messageKey[:], keys[1][:])
 	return messageKey, nil
 }
 
 // Advance advances the symmetric ratchet by deriving a new chain key.
 // Uses HMAC-SHA256(chainKey, "NextChainKey").
 func (r *SymmetricRatchet) Advance() error {
-	// Prepare input: "NextChainKey"
-	input := []byte("NextChainKey")
-
-	// Compute HMAC using our existing hmac package
-	var hmacKey hmac.HMACKey
-	copy(hmacKey[:], r.chainKey[:])
-	digest := hmac.I2PHMAC(input, hmacKey)
-
-	// Update chain key
-	copy(r.chainKey[:], digest[:ChainKeySize])
-
+	kd := kdf.NewKeyDerivation(r.chainKey)
+	keys, err := kd.DeriveKeys([]byte("NextChainKey"), 1)
+	if err != nil {
+		return err
+	}
+	copy(r.chainKey[:], keys[0][:])
 	return nil
 }
 

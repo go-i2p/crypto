@@ -2,9 +2,7 @@
 package ratchet
 
 import (
-	"encoding/binary"
-
-	"github.com/go-i2p/crypto/hmac"
+	"github.com/go-i2p/crypto/kdf"
 )
 
 // TagRatchet implements the session tag ratchet for deriving unique session tags.
@@ -65,40 +63,26 @@ func (r *TagRatchet) deriveTag(tagNum uint32) ([SessionTagSize]byte, error) {
 	// F042 real fix: spec requires HKDF chain per ecies.rst §4b
 	// sessTag_ck = HKDF(salt=ZEROLEN, ikm=ZEROLEN, info="STInitialization", 64)[32:64]
 	// tag = HKDF(salt=sessTag_ck, ikm=ZEROLEN, info="SessionTagKeyGen", 64) truncated to 8 bytes
-	// Note: full implementation requires kdf package; this is structural fix direction.
-	input := make([]byte, len("SessionTag")+4)
-	copy(input, []byte("SessionTag"))
-	binary.BigEndian.PutUint32(input[len("SessionTag"):], tagNum)
-
-	var hmacKey hmac.HMACKey
-	copy(hmacKey[:], r.chainKey[:])
-	digest := hmac.I2PHMAC(input, hmacKey)
-
+	kd := kdf.NewKeyDerivation(r.chainKey)
+	derived, err := kd.DeriveWithInfo("SessionTagKeyGen")
+	if err != nil {
+		return [SessionTagSize]byte{}, err
+	}
 	var tag [SessionTagSize]byte
-	copy(tag[:], digest[:SessionTagSize])
-
+	copy(tag[:], derived[:8])
 	return tag, nil
 }
 
 // Advance advances the tag ratchet by deriving a new chain key.
 // Uses HMAC-SHA256(chainKey, "NextChainKey" || tagCount) for forward secrecy.
 func (r *TagRatchet) Advance() error {
-	// Prepare input: "NextChainKey" || tagCount
-	input := make([]byte, len("NextChainKey")+4)
-	copy(input, []byte("NextChainKey"))
-	binary.BigEndian.PutUint32(input[len("NextChainKey"):], r.tagCount)
-
-	// Compute HMAC using our existing hmac package
-	var hmacKey hmac.HMACKey
-	copy(hmacKey[:], r.chainKey[:])
-	digest := hmac.I2PHMAC(input, hmacKey)
-
-	// Update chain key (use full 32 bytes)
-	copy(r.chainKey[:], digest[:ChainKeySize])
-
-	// Increment tag count
+	kd := kdf.NewKeyDerivation(r.chainKey)
+	derived, err := kd.DeriveWithInfo("NextChainKey")
+	if err != nil {
+		return err
+	}
+	copy(r.chainKey[:], derived[:ChainKeySize])
 	r.tagCount++
-
 	return nil
 }
 
