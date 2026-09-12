@@ -96,19 +96,6 @@ func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	return plaintext, nil
 }
 
-func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
-	// Note: This is a placeholder implementation. In practice, tunnel decryption
-	// requires the private key corresponding to the public key used for encryption.
-	// For the interface implementation, we return an error indicating this limitation.
-
-	log.WithFields(logger.Fields{
-		"pkg": "tunnel", "func": "ECIESEncryptor.Decrypt",
-		"operation":   "ecies_decrypt",
-		"component":   "encryptor",
-		"unsupported": true,
-	}).Debug("ECIES decrypt called on encryptor (requires private key)")
-	return nil, ErrECIESOperationNotSupported
-} // Type returns the tunnel encryption type for this encryptor.
 
 func (e *ECIESEncryptor) Type() TunnelEncryptionType {
 	return TunnelEncryptionECIES
