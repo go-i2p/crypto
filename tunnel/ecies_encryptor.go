@@ -83,14 +83,19 @@ func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 }
 
 // Decrypt decrypts the ciphertext using ECIES-X25519 scheme.
-// This method wraps ecies.DecryptECIESX25519() and delegates all cryptographic
-// operations to the existing ecies package.
-//
-// Note: For tunnel decryption, this requires the recipient's private key.
-// In a real tunnel implementation, each hop would have its own private key
-// for decrypting its layer of encryption.
-//
-// Expected ciphertext format: [ephemeral_pubkey][nonce][aead_ciphertext]
+// Requires the recipient's private key (each tunnel hop holds its own).
+// Delegates to ecies.DecryptECIESX25519 after extracting ephemeral public key.
+func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
+	if len(ciphertext) < 32+16 {
+		return nil, oops.Errorf("ciphertext too short for ECIES: %d bytes", len(ciphertext))
+	}
+	plaintext, err := ecies.DecryptECIESX25519(e.recipientPubKey[:], ciphertext)
+	if err != nil {
+		return nil, oops.Wrapf(ErrECIESDecryptionFailed, "ECIES decryption failed: %w", err)
+	}
+	return plaintext, nil
+}
+
 func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	// Note: This is a placeholder implementation. In practice, tunnel decryption
 	// requires the private key corresponding to the public key used for encryption.
