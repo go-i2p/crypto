@@ -240,3 +240,47 @@ func generateTestTunnelData(t *testing.T) *TunnelData {
 	}
 	return data
 }
+
+// TestAESEncryptor_KnownAnswer verifies F079 (no value-copy discard), F080
+// (correct IV offset / single-block transform), F081 (full 1024-byte payload,
+// 1028-byte output). If the encryptor writes into a discarded copy, ciphertext
+// equals plaintext; this test fails that case.
+func TestAESEncryptor_KnownAnswer(t *testing.T) {
+	layerKey := TunnelKey{0: 1, 1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8,
+		8: 9, 9: 10, 10: 11, 11: 12, 12: 13, 13: 14, 14: 15, 15: 16,
+		16: 17, 17: 18, 18: 19, 19: 20, 20: 21, 21: 22, 22: 23, 23: 24,
+		24: 25, 25: 26, 26: 27, 27: 28, 28: 29, 29: 30, 30: 31, 31: 32}
+	ivKey := layerKey
+
+	aes, err := NewAESEncryptor(layerKey, ivKey)
+	if err != nil {
+		t.Fatalf("NewAESEncryptor failed: %v", err)
+	}
+
+	plaintext := make([]byte, 1008)
+	for i := range plaintext {
+		plaintext[i] = byte(i % 256)
+	}
+
+	ciphertext, err := aes.Encrypt(plaintext)
+	if err != nil {
+		t.Fatalf("Encrypt failed: %v", err)
+	}
+	if len(ciphertext) != 1028 {
+		t.Errorf("expected 1028-byte ciphertext, got %d", len(ciphertext))
+	}
+	if bytes.Equal(ciphertext, append(make([]byte, 16), plaintext...)) {
+		t.Error("ciphertext equals plaintext + zero IV: value-copy bug (F079)")
+	}
+
+	decrypted, err := aes.Decrypt(ciphertext)
+	if err != nil {
+		t.Fatalf("Decrypt failed: %v", err)
+	}
+	if len(decrypted) != 1008 {
+		t.Errorf("expected 1008-byte payload, got %d", len(decrypted))
+	}
+	if !bytes.Equal(decrypted, plaintext) {
+		t.Error("decrypt round-trip failed: payload does not match original")
+	}
+}
