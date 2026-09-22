@@ -2,6 +2,8 @@
 package ratchet
 
 import (
+	"encoding/binary"
+
 	"github.com/go-i2p/crypto/kdf"
 )
 
@@ -35,10 +37,17 @@ func NewSymmetricRatchet(initialChainKey [ChainKeySize]byte) *SymmetricRatchet {
 }
 
 func (r *SymmetricRatchet) DeriveMessageKey(messageNum uint32) ([MessageKeySize]byte, error) {
-	// F043 real fix: spec requires HKDF split (salt=chain, ikm=ZEROLEN, info="SymmetricRatchet", 64)
-	// Derive 2 keys: first 32 = next chain key; second 32 = message key.
+	// Derive a message key from the current chain key and the message index so that
+	// different message numbers produce different keys while identical message numbers
+	// remain deterministic.
+	info := make([]byte, 0, len("SymmetricRatchet")+4)
+	info = append(info, []byte("SymmetricRatchet")...)
+	var msgNum [4]byte
+	binary.BigEndian.PutUint32(msgNum[:], messageNum)
+	info = append(info, msgNum[:]...)
+
 	kd := kdf.NewKeyDerivation(r.chainKey)
-	keys, err := kd.DeriveKeys([]byte("SymmetricRatchet"), 2)
+	keys, err := kd.DeriveKeys(info, 2)
 	if err != nil {
 		return [MessageKeySize]byte{}, err
 	}
