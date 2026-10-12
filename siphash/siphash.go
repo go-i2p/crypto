@@ -4,6 +4,8 @@
 // SipHash is a fast, cryptographically strong pseudorandom function optimised
 // for short inputs. In I2P it is used by NTCP2 for obfuscated frame-length
 // encoding (SipHash-2-4 with a 128-bit key derived during the handshake).
+// See the NTCP2 specification for how the key is derived and used:
+// https://i2p.net/en/docs/specs/ntcp2/
 //
 // All callers in the go-i2p ecosystem SHOULD import this package instead of
 // the upstream library directly, so that the implementation can be audited

@@ -1,5 +1,3 @@
-// Package ecies constants for ECIES-X25519-AEAD-Ratchet encryption.
-// Moved from: ecies.go
 package ecies
 
 import (

@@ -1,8 +1,19 @@
-// Package elg implements ElGamal encryption and decryption for the I2P anonymous networking protocol.
+// Package elg implements ElGamal encryption and decryption for the I2P
+// anonymous networking protocol.
 //
-// This package provides I2P-compatible ElGamal asymmetric encryption using 2048-bit security parameters.
-// ElGamal encryption enables secure message transmission in the I2P network where the sender encrypts
-// data using the recipient's public key, and only the recipient can decrypt using their private key.
+// # Deprecated: legacy algorithm
+//
+// ElGamal is the original I2P encryption scheme. It is kept for
+// compatibility with older routers and for decrypting legacy data, but new
+// code should use the ecies package (ECIES-X25519-AEAD-Ratchet), which is
+// faster and more secure. See the I2P ECIES specification:
+// https://i2p.net/en/docs/specs/ecies/
+//
+// This package provides I2P-compatible ElGamal asymmetric encryption using
+// 2048-bit security parameters. ElGamal encryption enables secure message
+// transmission in the I2P network where the sender encrypts data using the
+// recipient's public key, and only the recipient can decrypt using their
+// private key.
 //
 // Key Features:
 // - 2048-bit ElGamal encryption with I2P-standard domain parameters
@@ -43,6 +54,9 @@
 // This implementation follows I2P's ElGamal specifications including fixed domain parameters,
 // message formatting with SHA-256 integrity checks, and support for the network's encryption
 // message types used in tunnel building and end-to-end encrypted communications.
+//
+// See the I2P ElGamal/AES specification:
+// https://i2p.net/en/docs/specs/elgamal-aes/
 package elg
 
 import (

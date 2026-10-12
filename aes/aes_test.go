@@ -167,7 +167,7 @@ func TestPKCS7UnpadInvalidInput(t *testing.T) {
 	}{
 		{"Empty slice", []byte{}},
 		{"Invalid padding value", []byte{1, 2, 3, 4, 0}},                                 // Padding value 0 is invalid
-		{"Padding larger than block size", append(bytes.Repeat([]byte{17}, 17))},         // Padding value 17 (>16) is invalid
+		{"Padding larger than block size", bytes.Repeat([]byte{17}, 17)},                 // Padding value 17 (>16) is invalid
 		{"Incorrect padding bytes", []byte{1, 2, 3, 4, 5, 6, 2, 3, 3}},                   // Last padding bytes do not match padding value
 		{"Valid block size but invalid padding", append(bytes.Repeat([]byte{1}, 15), 3)}, // Padding value 3, but bytes are 1
 	}

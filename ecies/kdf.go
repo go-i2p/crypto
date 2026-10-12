@@ -1,4 +1,3 @@
-// Package ecies key derivation functions for ECIES-X25519-AEAD-Ratchet protocol.
 package ecies
 
 import (

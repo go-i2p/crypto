@@ -1,4 +1,3 @@
-// Package tunnel provides I2P tunnel encryption implementations.
 // This file tests the ECIES-X25519 tunnel encryption wrapper functionality.
 package tunnel
 
@@ -10,6 +9,8 @@ import (
 	"github.com/go-i2p/crypto/ecies"
 )
 
+// TestNewECIESEncryptor verifies that NewECIESEncryptor stores the recipient
+// public key and reports the correct encryption type.
 func TestNewECIESEncryptor(t *testing.T) {
 	tests := []struct {
 		name            string
@@ -49,6 +50,8 @@ func TestNewECIESEncryptor(t *testing.T) {
 	}
 }
 
+// TestNewECIESDecryptor verifies that NewECIESDecryptor stores the recipient
+// private key and reports the correct encryption type.
 func TestNewECIESDecryptor(t *testing.T) {
 	tests := []struct {
 		name             string
@@ -88,6 +91,8 @@ func TestNewECIESDecryptor(t *testing.T) {
 	}
 }
 
+// TestECIESEncryptor_Encrypt verifies that ECIESEncryptor.Encrypt produces
+// ciphertexts of the expected size for various plaintext lengths.
 func TestECIESEncryptor_Encrypt(t *testing.T) {
 	// Generate a test key pair
 	pubKey, _, err := ecies.GenerateKeyPair()
@@ -162,6 +167,8 @@ func TestECIESEncryptor_Encrypt(t *testing.T) {
 	}
 }
 
+// TestECIESDecryptor_Decrypt verifies that ECIESDecryptor.Decrypt correctly
+// recovers plaintext from ciphertexts produced by the ecies package.
 func TestECIESDecryptor_Decrypt(t *testing.T) {
 	// Generate a test key pair
 	pubKey, privKey, err := ecies.GenerateKeyPair()
@@ -227,6 +234,8 @@ func TestECIESDecryptor_Decrypt(t *testing.T) {
 	}
 }
 
+// TestECIESDecryptor_Decrypt_NilCiphertext verifies that Decrypt returns an
+// error when given a nil ciphertext.
 func TestECIESDecryptor_Decrypt_NilCiphertext(t *testing.T) {
 	privKey := generateTestPrivateKey(t)
 	decryptor := NewECIESDecryptor(privKey)
@@ -237,6 +246,10 @@ func TestECIESDecryptor_Decrypt_NilCiphertext(t *testing.T) {
 	}
 }
 
+// TestECIESEncryptor_Decrypt_ShouldFail documents that ECIESEncryptor.Decrypt
+// always fails. This is expected: the encryptor holds only the public key, so
+// it cannot decrypt. See AUDIT.md for the underlying bug (it passes the public
+// key as the private key). Use ECIESDecryptor for decryption.
 func TestECIESEncryptor_Decrypt_ShouldFail(t *testing.T) {
 	pubKey := generateTestPublicKey(t)
 	encryptor := NewECIESEncryptor(pubKey)
@@ -248,6 +261,8 @@ func TestECIESEncryptor_Decrypt_ShouldFail(t *testing.T) {
 	}
 }
 
+// TestECIESDecryptor_Encrypt_ShouldFail verifies that ECIESDecryptor.Encrypt
+// returns an error, since the decryptor holds only the private key.
 func TestECIESDecryptor_Encrypt_ShouldFail(t *testing.T) {
 	privKey := generateTestPrivateKey(t)
 	decryptor := NewECIESDecryptor(privKey)
@@ -259,6 +274,9 @@ func TestECIESDecryptor_Encrypt_ShouldFail(t *testing.T) {
 	}
 }
 
+// TestECIESEncryptorDecryptor_RoundTrip verifies that encrypting with
+// ECIESEncryptor and decrypting with ECIESDecryptor recovers the original
+// plaintext across several data patterns.
 func TestECIESEncryptorDecryptor_RoundTrip(t *testing.T) {
 	recipientPubKey, recipientPrivKey := generateTestECIESKeyPair(t)
 
@@ -314,6 +332,8 @@ func TestECIESEncryptorDecryptor_RoundTrip(t *testing.T) {
 	}
 }
 
+// TestECIESDecryptor_Zero verifies that Zero() clears the stored private key,
+// so it can be securely wiped from memory.
 func TestECIESDecryptor_Zero(t *testing.T) {
 	// Create a decryptor with a known private key
 	privKey := [32]byte{}
@@ -337,6 +357,9 @@ func TestECIESDecryptor_Zero(t *testing.T) {
 	}
 }
 
+// TestECIESWrapper_MatchesECIESPackage verifies that the tunnel wrapper's
+// encrypt/decrypt output is compatible with the ecies package's one-shot
+// functions, confirming the wrapper is a thin delegation layer.
 func TestECIESWrapper_MatchesECIESPackage(t *testing.T) {
 	recipientPubKey, recipientPrivKey := generateTestECIESKeyPair(t)
 

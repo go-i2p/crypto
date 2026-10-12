@@ -1,4 +1,3 @@
-// Package ecies session state management for ECIES-X25519-AEAD-Ratchet protocol.
 package ecies
 
 import (

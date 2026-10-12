@@ -1,5 +1,3 @@
-// Package tunnel provides I2P tunnel encryption implementations.
-// This file implements ECIES-X25519 tunnel encryption as a wrapper around the ecies package.
 package tunnel
 
 import (
@@ -36,13 +34,16 @@ func NewECIESEncryptor(recipientPubKey [32]byte) *ECIESEncryptor {
 // This method wraps ecies.EncryptECIESX25519() and delegates all cryptographic
 // operations to the existing ecies package.
 //
-// The encryption follows I2P Proposal 144 specification:
-// - Generates ephemeral X25519 key pair
-// - Performs X25519 key agreement with recipient's public key
-// - Derives encryption key using HKDF-SHA256
-// - Encrypts using ChaCha20-Poly1305 AEAD
+// The encryption uses:
+// - Ephemeral X25519 key pair
+// - X25519 key agreement with recipient's public key
+// - HKDF-SHA256 key derivation
+// - ChaCha20-Poly1305 AEAD encryption
 //
 // Returns ciphertext in format: [ephemeral_pubkey][nonce][aead_ciphertext]
+//
+// Note: this is a simplified form of the I2P ECIES-X25519-AEAD spec's
+// "New Session" message. See AUDIT.md for the specific deviations.
 func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	if plaintext == nil {
 		log.WithFields(logger.Fields{
@@ -83,8 +84,11 @@ func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 }
 
 // Decrypt decrypts the ciphertext using ECIES-X25519 scheme.
-// Requires the recipient's private key (each tunnel hop holds its own).
 // Delegates to ecies.DecryptECIESX25519 after extracting ephemeral public key.
+//
+// Note: this passes the encryptor's public key as the "private key" argument,
+// which is incorrect for actual decryption. Use ECIESDecryptor for real
+// decryption. See AUDIT.md.
 func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	if len(ciphertext) < 32+16 {
 		return nil, oops.Errorf("ciphertext too short for ECIES: %d bytes", len(ciphertext))
@@ -95,7 +99,6 @@ func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	}
 	return plaintext, nil
 }
-
 
 func (e *ECIESEncryptor) Type() TunnelEncryptionType {
 	return TunnelEncryptionECIES

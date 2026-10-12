@@ -1,12 +1,3 @@
-// Package ratchet implements cryptographic ratcheting mechanisms for I2P protocols.
-//
-// This package provides three types of ratchets used in modern I2P encryption:
-// 1. Session Tag Ratchet - Derives unique session tags for message routing
-// 2. Symmetric Key Ratchet - Derives message encryption keys with forward secrecy
-// 3. DH Ratchet - Provides forward secrecy through ephemeral key exchanges
-//
-// The ratcheting mechanisms are used by ECIES-X25519-AEAD-Ratchet and other
-// I2P protocols requiring forward secrecy and secure key derivation.
 package ratchet
 
 import (

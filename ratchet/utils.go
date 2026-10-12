@@ -1,4 +1,3 @@
-// Package ratchet utility functions.
 package ratchet
 
 import (
@@ -27,7 +26,11 @@ func DH_INITIALIZE(rootKey [ChainKeySize]byte, k [32]byte) [32]byte {
 
 // RatchetSymmetricKey is a helper function that derives the next message key
 // and new chain key for symmetric ratcheting.
-// This combines message key derivation and chain key advancement in one operation.
+// This combines message key derivation and chain key advancement in one
+// operation.
+// See [I2P Spec: ECIES KDF](https://i2p.net/en/docs/specs/ecies/) for the
+// spec's Noise-based MixKey. This uses a Signal-style HMAC construction; see
+// AUDIT.md.
 func RatchetSymmetricKey(chainKey [ChainKeySize]byte, messageNum uint32) ([MessageKeySize]byte, [ChainKeySize]byte, error) {
 	// Derive message key: HMAC-SHA256(chainKey, "MessageKey" || messageNum)
 	msgInput := make([]byte, len("MessageKey")+4)

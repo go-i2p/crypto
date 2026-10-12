@@ -1,5 +1,3 @@
-// Package ecies utility functions for ECIES-X25519-AEAD-Ratchet encryption.
-// Moved from: ecies.go
 package ecies
 
 import (
@@ -14,10 +12,12 @@ import (
 )
 
 // EncryptECIESX25519 encrypts plaintext using ECIES-X25519 scheme.
-// This implements the "New Session" message format from I2P Proposal 144.
+// This implements a simplified form of the "New Session" message from the
+// I2P ECIES-X25519-AEAD spec.
+// See [I2P Spec: ECIES-X25519-AEAD](https://i2p.net/en/docs/specs/ecies/) for
+// the full wire format. See AUDIT.md for deviations from the spec.
 // The recipient's public key must be 32 bytes (X25519 public key).
 // Returns ciphertext in the format: [ephemeral_pubkey][nonce][aead_ciphertext]
-// Moved from: ecies.go
 func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
 	if err := validateEncryptionInputs(recipientPubKey, plaintext); err != nil {
 		return nil, err
@@ -68,6 +68,9 @@ func generateEphemeralKeyPair() ([]byte, x25519.PrivateKey, error) {
 // deriveKeyViaX25519 performs X25519 key agreement and derives a symmetric key
 // using HKDF with SHA-256, consolidating the shared key derivation logic between
 // encryption and decryption paths.
+// See [I2P Spec: ECIES KDF](https://i2p.net/en/docs/specs/ecies/) for the
+// spec's Noise-based MixKey. This is a simplified single-HKDF form; see
+// AUDIT.md.
 func deriveKeyViaX25519(privKey x25519.PrivateKey, pubKey x25519.PublicKey) ([]byte, error) {
 	sharedSecret, err := privKey.SharedKey(pubKey)
 	if err != nil {
@@ -86,7 +89,11 @@ func deriveEncryptionKey(ephemeralPriv x25519.PrivateKey, recipientPubKey []byte
 	return deriveKeyViaX25519(ephemeralPriv, x25519.PublicKey(recipientPubKey))
 }
 
-// encryptWithAEAD encrypts the plaintext using ChaCha20-Poly1305 AEAD with a random nonce.
+// encryptWithAEAD encrypts the plaintext using ChaCha20-Poly1305 AEAD with a
+// random nonce.
+// See [I2P Spec: ECIES Cipher](https://i2p.net/en/docs/specs/ecies/) — the
+// spec requires the first 4 nonce bytes to be zero; this uses a fully random
+// nonce. See AUDIT.md.
 func encryptWithAEAD(encryptionKey, plaintext, ephemeralPub []byte) ([]byte, []byte, error) {
 	// Create ChaCha20-Poly1305 AEAD cipher
 	aead, err := chacha20poly1305.New(encryptionKey)

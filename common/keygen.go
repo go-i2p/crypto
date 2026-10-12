@@ -1,6 +1,3 @@
-// Package common provides shared helper functions used across multiple
-// cryptographic sub-packages to eliminate code duplication. This package
-// is a leaf dependency and must not import other project packages.
 package common
 
 import (

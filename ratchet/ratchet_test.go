@@ -1,5 +1,11 @@
-// Package ratchet tests for cryptographic ratcheting mechanisms.
 package ratchet
+
+// This test suite validates the three ratchet types used in I2P's
+// ECIES-X25519-AEAD-Ratchet: the session tag ratchet, the symmetric key
+// ratchet, and the DH ratchet.
+//
+// Note: the symmetric and DH ratchets use a Signal-style HMAC construction,
+// not the spec's Noise-based MixKey. See AUDIT.md for the deviation.
 
 import (
 	"bytes"
@@ -8,7 +14,8 @@ import (
 	"github.com/go-i2p/crypto/rand"
 )
 
-// TestTagRatchet tests the session tag ratchet functionality
+// TestTagRatchet verifies that the session tag ratchet produces a new,
+// different tag on each Advance() call, and that the tag is the correct size.
 func TestTagRatchet(t *testing.T) {
 	t.Run("BasicTagGeneration", func(t *testing.T) {
 		var chainKey [ChainKeySize]byte
@@ -110,7 +117,8 @@ func TestTagRatchet(t *testing.T) {
 	})
 }
 
-// TestSymmetricRatchet tests the symmetric key ratchet functionality
+// TestSymmetricRatchet verifies that the symmetric key ratchet derives a
+// different message key and advances the chain key on each Advance() call.
 func TestSymmetricRatchet(t *testing.T) {
 	t.Run("MessageKeyDerivation", func(t *testing.T) {
 		var chainKey [ChainKeySize]byte
@@ -200,7 +208,8 @@ func TestSymmetricRatchet(t *testing.T) {
 	})
 }
 
-// TestDHRatchet tests the DH ratchet functionality
+// TestDHRatchet verifies that the DH ratchet advances the chain key when a new
+// DH shared secret is mixed in, producing a different key each time.
 func TestDHRatchet(t *testing.T) {
 	t.Run("PerformRatchet", func(t *testing.T) {
 		// Generate two key pairs
@@ -278,7 +287,9 @@ func TestDHRatchet(t *testing.T) {
 	})
 }
 
-// TestRatchetSymmetricKey tests the utility function
+// TestRatchetSymmetricKey verifies that RatchetSymmetricKey derives a message
+// key and a new chain key that both differ from the input chain key and from
+// each other.
 func TestRatchetSymmetricKey(t *testing.T) {
 	var chainKey [ChainKeySize]byte
 	if _, err := rand.Read(chainKey[:]); err != nil {

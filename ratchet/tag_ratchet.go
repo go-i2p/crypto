@@ -1,4 +1,3 @@
-// Package ratchet session tag ratchet implementation.
 package ratchet
 
 import (

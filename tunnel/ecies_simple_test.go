@@ -1,11 +1,17 @@
 package tunnel
 
+// This file contains basic smoke tests for the ECIES tunnel encryptor. The
+// thorough coverage lives in ecies_encryptor_test.go; these tests exist to
+// catch gross breakage quickly.
+
 import (
 	"testing"
 
 	"github.com/go-i2p/crypto/ecies"
 )
 
+// TestECIESEncryptor_Simple is a smoke test: create an encryptor, check its
+// type, and confirm it produces a longer ciphertext than the plaintext.
 func TestECIESEncryptor_Simple(t *testing.T) {
 	// Generate a test key pair
 	pubKey, _, err := ecies.GenerateKeyPair()
@@ -39,6 +45,8 @@ func TestECIESEncryptor_Simple(t *testing.T) {
 	}
 }
 
+// TestECIESRoundTrip_Simple is a smoke test: encrypt with the encryptor and
+// decrypt with the decryptor, confirming the round trip works.
 func TestECIESRoundTrip_Simple(t *testing.T) {
 	recipientPubKey, recipientPrivKey := generateTestECIESKeyPair(t)
 

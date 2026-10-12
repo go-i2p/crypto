@@ -42,7 +42,11 @@ const (
 
 	// TunnelEncryptionECIES represents the modern ECIES-X25519 encryption scheme.
 	// This uses X25519 key agreement with ChaCha20-Poly1305 AEAD encryption.
-	// Tunnel records are 218 bytes (78% smaller than AES), providing significant bandwidth savings.
+	// Tunnel records are 218 bytes (78% smaller than AES), providing significant
+	// bandwidth savings.
+	// See [I2P Spec: ECIES-X25519-AEAD](https://i2p.net/en/docs/specs/ecies/)
+	// for the wire format. Note: this local type (1) is distinct from the LS2
+	// crypto type (4) used in LeaseSet2 records.
 	TunnelEncryptionECIES TunnelEncryptionType = 1
 )
 

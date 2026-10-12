@@ -1,43 +1,39 @@
-// Package kdf provides consistent key derivation functions for the I2P cryptographic ecosystem.
+// Package kdf derives the many different keys that I2P needs from a single
+// shared secret.
 //
-// This package standardizes key derivation across all I2P components, ensuring that
-// keys are derived consistently and securely using HKDF (HMAC-based Key Derivation Function)
-// as defined in RFC 5869.
+// # What this package does
 //
-// # Key Features
+// In I2P, two routers first agree on one shared secret (for example, through
+// an X25519 key exchange). From that single secret, the protocol needs many
+// different keys: one for tunnel encryption, one for message encryption, one
+// for session tags, and so on. This package derives all of those keys in a
+// consistent way.
 //
-//   - Unified API for deriving keys from root secrets
-//   - Standard info strings for different I2P purposes
-//   - Type-safe key purpose enumeration
-//   - Multiple key derivation support
+// It uses HKDF (HMAC-based Key Derivation Function), a standard method
+// defined in RFC 5869, with SHA-256 as the hash. Each key is derived with a
+// purpose-specific "info" string so that keys for different jobs never
+// collide.
 //
-// # Usage Example
+// # Usage
 //
-//	// Derive keys from an ECIES shared secret
-//	kd := kdf.NewKeyDerivation(eciesSharedSecret)
+//	// Start from a shared secret.
+//	kd := kdf.NewKeyDerivation(sharedSecret)
 //
-//	// Derive specific purpose keys
+//	// Derive a key for a specific purpose.
 //	tunnelKey, _ := kd.DeriveForPurpose(kdf.PurposeTunnelEncryption)
-//	garlicKey, _ := kd.DeriveForPurpose(kdf.PurposeGarlicEncryption)
 //
-//	// Derive multiple related keys
-//	keys, _ := kd.DeriveKeys([]byte("custom-context"), 3)
+// # Key purposes
 //
-// # Standard Key Purposes
+// The KeyPurpose type names the standard jobs a derived key can be used for,
+// such as tunnel encryption, garlic message encryption, session tags, and
+// ratchet chains. Using the standard purposes keeps keys consistent across
+// the whole I2P ecosystem.
 //
-// The package defines standard key purposes for I2P protocol components:
-//   - PurposeTunnelEncryption - Keys for tunnel layer encryption
-//   - PurposeGarlicEncryption - Keys for garlic message encryption
-//   - PurposeSessionTag - Keys for session tag generation
-//   - PurposeRatchetChain - Keys for ratchet chain initialization
-//   - PurposeIVGeneration - Keys for IV/nonce generation
+// # Security considerations
 //
-// # Security Considerations
-//
-//   - Root keys should be generated using cryptographically secure random sources
-//   - Use standard key purposes when possible for consistency
-//   - Custom info strings should include context-specific prefixes
-//   - Derived keys should be unique per purpose and context
+//   - Generate root secrets from a cryptographically secure random source.
+//   - Prefer the standard key purposes so keys stay consistent.
+//   - Keep each derived key unique to its purpose and context.
 package kdf
 
 import (
@@ -91,25 +87,18 @@ const (
 	PurposeEncryptedLeaseSetEncryption
 )
 
-// Standard info strings for each key purpose
-//
-// JAVA I2P COMPATIBILITY:
-// - SessionReplyTags (PurposeSessionTag) matches Java I2P 0.9.67 exactly
-// - AttachPayloadKDF (PurposeAttachPayload) matches Java I2P 0.9.67 exactly
-// - Source: Java I2P router/java/src/net/i2p/router/crypto/ratchet/ECIESAEADEngine.java
-// - Test vectors: JAVA_I2P_TEST_VECTORS.yaml
-//
-// Other strings are go-i2p specific and not yet verified against Java I2P.
+// purposeInfo maps each key purpose to the "info" string used by HKDF.
+// These strings are the context that keeps keys for different jobs distinct.
 var purposeInfo = map[KeyPurpose]string{
-	PurposeTunnelEncryption:            "I2P-Tunnel-Encryption-v1",          // Not yet verified
-	PurposeGarlicEncryption:            "I2P-Garlic-Encryption-v1",          // Not yet verified
-	PurposeSessionTag:                  "SessionReplyTags",                  // ✅ Java I2P v0.9.67
-	PurposeRatchetChain:                "I2P-Ratchet-Chain-v1",              // Not yet verified
-	PurposeIVGeneration:                "I2P-IV-Generation-v1",              // Not yet verified
-	PurposeMessageKey:                  "I2P-Message-Key-v1",                // Not yet verified
-	PurposeHandshake:                   "I2P-Handshake-v1",                  // Not yet verified
-	PurposeAttachPayload:               "AttachPayloadKDF",                  // ✅ Java I2P v0.9.67
-	PurposeEncryptedLeaseSetEncryption: "i2p-encrypted-leaseset-encryption", // I2P Proposal 123
+	PurposeTunnelEncryption:            "I2P-Tunnel-Encryption-v1",
+	PurposeGarlicEncryption:            "I2P-Garlic-Encryption-v1",
+	PurposeSessionTag:                  "SessionReplyTags",
+	PurposeRatchetChain:                "I2P-Ratchet-Chain-v1",
+	PurposeIVGeneration:                "I2P-IV-Generation-v1",
+	PurposeMessageKey:                  "I2P-Message-Key-v1",
+	PurposeHandshake:                   "I2P-Handshake-v1",
+	PurposeAttachPayload:               "AttachPayloadKDF",
+	PurposeEncryptedLeaseSetEncryption: "i2p-encrypted-leaseset-encryption",
 }
 
 // Package-level logger

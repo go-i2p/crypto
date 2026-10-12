@@ -5,6 +5,8 @@
 // I2P's ECIES-X25519-AEAD-Ratchet for New Session messages.
 //
 // Specification: https://elligator.cr.yp.to/elligator-20130828.pdf
+// Used in I2P's ECIES-X25519-AEAD spec:
+// https://i2p.net/en/docs/specs/ecies/
 //
 // Key properties:
 //   - Encodes Curve25519 public keys as 32 random-looking bytes

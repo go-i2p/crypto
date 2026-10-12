@@ -7,16 +7,20 @@
 Package ecies constants for ECIES-X25519-AEAD-Ratchet encryption. Moved from:
 ecies.go
 
-Package ecies implements ECIES-X25519-AEAD-Ratchet encryption as specified in
-I2P Proposal 144.
+Package ecies implements the core primitives of ECIES-X25519-AEAD-Ratchet
+encryption from I2P Proposal 144.
 
 This package provides the modern I2P encryption scheme that replaces
 ElGamal/AES+SessionTags. It implements ephemeral-static and ephemeral-ephemeral
 Diffie-Hellman key agreement using X25519, combined with ChaCha20-Poly1305 AEAD
 encryption.
 
-The implementation follows I2P Proposal 144 specification:
-https://geti2p.net/spec/proposals/144-ecies-x25519-aead-ratchet
+The one-shot EncryptECIESX25519/DecryptECIESX25519 functions are a simplified
+form of the spec's "New Session" message (see AUDIT.md for the specific
+deviations from the wire format).
+
+Specification:
+https://i2p.net/en/docs/specs/ecies/
 
 Package ecies key derivation functions for ECIES-X25519-AEAD-Ratchet protocol.
 

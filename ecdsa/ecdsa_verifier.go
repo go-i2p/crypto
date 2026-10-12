@@ -87,7 +87,7 @@ func CreateECVerifier(c elliptic.Curve, h crypto.Hash, k []byte) (ev *ECDSAVerif
 			c: c,
 			h: h,
 		}
-		ev.k = &ecdsa.PublicKey{c, x, y}
+		ev.k = &ecdsa.PublicKey{Curve: c, X: x, Y: y}
 		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Debug("ECDSA verifier created successfully")
 	}
 	return ev, err

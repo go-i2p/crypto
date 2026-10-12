@@ -1,4 +1,3 @@
-// Package ratchet Diffie-Hellman ratchet implementation.
 package ratchet
 
 import (

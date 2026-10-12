@@ -1,4 +1,3 @@
-// Package ratchet symmetric key ratchet implementation.
 package ratchet
 
 import (

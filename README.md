@@ -1,22 +1,52 @@
 # go-i2p/crypto
 
-Comprehensive cryptography library for the I2P (Invisible Internet Project) anonymous networking ecosystem, factored out from the main router implementation. This package provides I2P-specific cryptographic implementations including symmetric encryption, asymmetric encryption, digital signatures, and hashing functions required for privacy-preserving communications and onion routing.
+Cryptography building blocks for I2P (Invisible Internet Project), the
+anonymous network. I2P hides who you are talking to by routing messages
+through a series of relays. This library provides the encryption, signing,
+and key-derivation primitives that make that routing private.
 
-## Notes on scope:
+It was factored out of the main router so that the crypto can be used and
+audited on its own.
 
-go-i2p theoretically has strictly scoped packages for low-level operations.
-This package is one of the better examples of that at this time.
-crypto is intended to only contain crypto primitives and interfaces, NOT whole protocol implementations.
+## Scope
 
- - [go-i2p/crypto](https://github.com/go-i2p/crypto): Cryptographic primitives only
+This package contains **crypto primitives and interfaces only** — not full
+protocol implementations. It is the lowest-level component in the `go-i2p`
+namespace, so it must not depend on the higher-level packages:
 
-This package MUST NOT use any of the following libraries, as it is a dependency of them.
-`go-i2p/crypto` is essentially the lowest-level component in the `go-i2p` namespace.
-
- - [go-i2p/common](https://github.com/go-i2p/common): I2P Common datastructures
+ - [go-i2p/common](https://github.com/go-i2p/common): I2P common data structures
  - [go-i2p/noise](https://github.com/go-i2p/noise): Noise handshake implementations
  - [go-i2p/go-noise](https://github.com/go-i2p/go-noise): Noise handshake modifications and router interface
  - [go-i2p/go-i2p](https://github.com/go-i2p/go-i2p): I2P router implementation
+
+---
+
+## How the pieces fit together
+
+I2P needs three kinds of cryptography. Here is how they build on each other,
+from the simplest idea to the full scheme:
+
+1. **Keys.** Every scheme starts with a key pair. A *public* key can be shared
+   openly; a *private* key must be kept secret. The `ed25519` and `curve25519`
+   packages generate these.
+
+2. **Shared secrets.** Two parties who never met can agree on a secret by
+   combining their keys. This is called *key agreement* (X25519 in the
+   `curve25519` package). The `hkdf` and `kdf` packages then stretch that
+   shared secret into the specific keys each part of the protocol needs.
+
+3. **Encryption.** With a key in hand, data is encrypted. The modern choice is
+   ChaCha20-Poly1305 (`chacha20poly1305`), which also detects tampering.
+
+4. **Forward secrecy.** The `ratchet` package keeps rotating the keys as
+   messages flow, so compromising one key does not expose past messages.
+
+5. **The full scheme.** The `ecies` package ties these together into
+   ECIES-X25519-AEAD-Ratchet, the current I2P encryption standard. The
+   `tunnel` package applies it to I2P tunnel messages.
+
+Start with the package docs on [pkg.go.dev](https://pkg.go.dev/github.com/go-i2p/crypto)
+for details on each piece.
 
 ---
 
@@ -29,7 +59,7 @@ go get github.com/go-i2p/crypto
 ```
 
 **Requirements:**
-- Go 1.25.0 or later
+- Go 1.26.8 or later
 - CGO_ENABLED=0 for static linking (recommended)
 
 ## Usage
@@ -241,7 +271,11 @@ func main() {
 }
 ```
 
-### Asymmetric Encryption (ElGamal)
+### Asymmetric Encryption (ElGamal — legacy)
+
+> **Deprecated.** ElGamal is the original I2P encryption scheme. It is kept
+> only for compatibility with older routers and for decrypting legacy data.
+> New code should use the `ecies` package (ECIES-X25519-AEAD-Ratchet).
 
 ```go
 package main
@@ -330,28 +364,29 @@ func main() {
 ## Features
 
 - **Symmetric Encryption**
-  - AES (128/192/256-bit) with CBC mode
+  - ChaCha20-Poly1305 AEAD (authenticated encryption) — the modern standard
   - ChaCha20 stream cipher
-  - **ChaCha20-Poly1305 AEAD** (authenticated encryption) ✨ NEW
+  - AES (128/192/256-bit) with CBC mode — legacy
 
 - **Asymmetric Encryption**
+  - ECIES-X25519-AEAD-Ratchet with a unified Session API — the modern standard
   - Curve25519 (X25519) key agreement
   - RSA (2048/3072/4096-bit)
-  - ElGamal encryption
-  - **ECIES-X25519-AEAD-Ratchet** with unified Session API ✨ NEW
+  - ElGamal — legacy, kept for compatibility with older routers
 
 - **Digital Signatures**
-  - Ed25519 signatures
-  - DSA (Digital Signature Algorithm)
+  - Ed25519 signatures — the standard I2P signature type
+  - Ed25519ph (pre-hashed variant)
   - ECDSA (P-256, P-384, P-521 curves)
+  - DSA (Digital Signature Algorithm) — legacy
 
 - **Message Authentication**
   - HMAC (Hash-based Message Authentication Code)
   - HKDF (HMAC-based Key Derivation Function)
-  - **Unified KDF utilities** for consistent key derivation ✨ NEW
+  - Unified KDF utilities for consistent key derivation
 
 - **Key Management**
-  - **Concrete key generation APIs** (no type assertions needed) ✨ NEW
+  - Concrete key generation APIs (no type assertions needed)
   - Secure memory cleanup with `Zero()` methods
   - Forward secrecy with ratcheting
 
