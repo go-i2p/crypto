@@ -83,21 +83,18 @@ func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	return ciphertext, nil
 }
 
-// Decrypt decrypts the ciphertext using ECIES-X25519 scheme.
-// Delegates to ecies.DecryptECIESX25519 after extracting ephemeral public key.
-//
-// Note: this passes the encryptor's public key as the "private key" argument,
-// which is incorrect for actual decryption. Use ECIESDecryptor for real
-// decryption. See AUDIT.md.
+// Decrypt is not supported by the encryptor: it only holds a public key, and
+// ECIES-X25519 decryption requires the recipient's private key. It is present
+// to satisfy the TunnelEncryptor interface and always returns an error. Use
+// ECIESDecryptor for real decryption.
 func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
-	if len(ciphertext) < 32+16 {
-		return nil, oops.Errorf("ciphertext too short for ECIES: %d bytes", len(ciphertext))
-	}
-	plaintext, err := ecies.DecryptECIESX25519(e.recipientPubKey[:], ciphertext)
-	if err != nil {
-		return nil, oops.Wrapf(ErrECIESDecryptionFailed, "ECIES decryption failed: %w", err)
-	}
-	return plaintext, nil
+	log.WithFields(logger.Fields{
+		"pkg": "tunnel", "func": "ECIESEncryptor.Decrypt",
+		"operation":   "ecies_decrypt",
+		"component":   "encryptor",
+		"unsupported": true,
+	}).Debug("ECIES decrypt called on encryptor (not supported)")
+	return nil, ErrECIESOperationNotSupported
 }
 
 func (e *ECIESEncryptor) Type() TunnelEncryptionType {

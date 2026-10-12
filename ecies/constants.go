@@ -33,4 +33,6 @@ var (
 	ErrDecryptionFailed           = oops.Errorf("ECIES-X25519 decryption failed")
 	ErrKeyDerivationFailed        = oops.Errorf("ECIES-X25519 key derivation failed")
 	ErrNotElligator2Representable = oops.Errorf("public key is not Elligator2-representable")
+	ErrKeyGenerationFailed        = oops.Errorf("ECIES-X25519 key generation failed")
+	ErrEncryptionFailed           = oops.Errorf("ECIES-X25519 encryption failed")
 )

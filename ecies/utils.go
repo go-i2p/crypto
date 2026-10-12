@@ -3,214 +3,305 @@ package ecies
 import (
 	"crypto/rand"
 	"crypto/sha256"
+	"encoding/binary"
 	"io"
 
+	"github.com/go-i2p/crypto/elligator2"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 	"golang.org/x/crypto/chacha20poly1305"
+	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/hkdf"
 )
 
-// EncryptECIESX25519 encrypts plaintext using ECIES-X25519 scheme.
-// This implements a simplified form of the "New Session" message from the
-// I2P ECIES-X25519-AEAD spec.
-// See [I2P Spec: ECIES-X25519-AEAD](https://i2p.net/en/docs/specs/ecies/) for
-// the full wire format. See AUDIT.md for deviations from the spec.
-// The recipient's public key must be 32 bytes (X25519 public key).
-// Returns ciphertext in the format: [ephemeral_pubkey][nonce][aead_ciphertext]
+// noiseProtocolName is the Noise protocol name for the one-time (IK) pattern
+// used by I2P ECIES-X25519-AEAD.
+//
+// Spec: https://i2p.net/en/docs/specs/ecies/ (section 1f, "Key Derivation")
+const noiseProtocolName = "Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256"
+
+// oneTimeCiphertextOverhead is the number of bytes of overhead added to the
+// plaintext by the one-time ECIES-X25519-AEAD format:
+//
+//	[Elligator2-encoded ephemeral public key 32]
+//	[flags section: ChaCha20 ciphertext 32 + Poly1305 tag 16]
+//	[payload section: Poly1305 tag 16]
+//
+// = 32 + 48 + 16 = 96 bytes.
+const oneTimeCiphertextOverhead = 96
+
+// flagsSectionSize is the size of the (decrypted) flags section in the
+// one-time format. The decrypted flags are 32 bytes of all zeros for the
+// one-time format.
+const flagsSectionSize = 32
+
+// EncryptECIESX25519 encrypts data using the I2P ECIES-X25519-AEAD one-time
+// format.
+//
+// The ciphertext layout (spec section 1d) is:
+//
+//	[Elligator2-encoded ephemeral public key 32 bytes]
+//	[flags section: ChaCha20 ciphertext 32 bytes + Poly1305 tag 16 bytes]
+//	[payload section: ChaCha20 ciphertext N bytes + Poly1305 tag 16 bytes]
+//
+// The key schedule follows the Noise "IK" + "es" + "N" patterns (spec
+// section 1f):
+//
+//	protocol_name = "Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256"
+//	h = SHA256(protocol_name)
+//	chainKey = h
+//	h = SHA256(h)                       // MixHash with empty prologue
+//	h = SHA256(h || bpk)                // MixHash with Bob's static public key
+//	h = SHA256(h || aepk)               // MixHash with Alice's ephemeral public key
+//	sharedSecret = DH(aesk, bpk)
+//	keydata = HKDF(salt=chainKey, ikm=sharedSecret, info="", 64)
+//	k = keydata[32:64]
+//
+// The flags section encrypts 32 bytes of all zeros with nonce 0 and
+// associated data h; the payload is then encrypted with nonce 1 and the
+// updated h. Both sections use the same key k.
+//
+// Parameters:
+//   - recipientPubKey: The recipient's 32-byte X25519 public key (Bob's static key)
+//   - plaintext: The data to encrypt
+//
+// Returns:
+//   - ciphertext: The encrypted data in the one-time format
+//   - error: Any error during encryption
 func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
-	if err := validateEncryptionInputs(recipientPubKey, plaintext); err != nil {
-		return nil, err
-	}
-
-	ephemeralPub, ephemeralPriv, err := generateEphemeralKeyPair()
-	if err != nil {
-		return nil, err
-	}
-
-	encryptionKey, err := deriveEncryptionKey(ephemeralPriv, recipientPubKey)
-	if err != nil {
-		return nil, err
-	}
-
-	nonce, ciphertext, err := encryptWithAEAD(encryptionKey, plaintext, ephemeralPub)
-	if err != nil {
-		return nil, err
-	}
-
-	result := buildCiphertextResult(ephemeralPub, nonce, ciphertext)
-	return result, nil
-}
-
-// validateEncryptionInputs checks that the recipient public key and plaintext are valid.
-func validateEncryptionInputs(recipientPubKey, plaintext []byte) error {
 	if len(recipientPubKey) != PublicKeySize {
-		return ErrInvalidPublicKey
+		return nil, oops.Wrapf(ErrInvalidPublicKey, "public key must be %d bytes, got %d", PublicKeySize, len(recipientPubKey))
 	}
-
 	if len(plaintext) > MaxPlaintextSize {
-		return ErrDataTooBig
+		return nil, oops.Wrapf(ErrDataTooBig, "plaintext exceeds maximum size of %d bytes", MaxPlaintextSize)
 	}
 
-	return nil
-}
-
-// generateEphemeralKeyPair creates a new ephemeral X25519 key pair for encryption.
-func generateEphemeralKeyPair() ([]byte, x25519.PrivateKey, error) {
-	ephemeralPub, ephemeralPriv, err := x25519.GenerateKey(rand.Reader)
+	// Generate an ephemeral X25519 key pair whose public key is
+	// Elligator2-representable (spec section 2). GenerateKeyPair returns
+	// (publicKey, privateKey, error).
+	aepk, aesk, err := elligator2.GenerateKeyPair()
 	if err != nil {
-		return nil, nil, oops.Errorf("failed to generate ephemeral key pair: %w", err)
+		return nil, oops.Wrapf(ErrKeyGenerationFailed, "failed to generate Elligator2-representable ephemeral key: %w", err)
 	}
 
-	return ephemeralPub, ephemeralPriv, nil
-}
-
-// deriveKeyViaX25519 performs X25519 key agreement and derives a symmetric key
-// using HKDF with SHA-256, consolidating the shared key derivation logic between
-// encryption and decryption paths.
-// See [I2P Spec: ECIES KDF](https://i2p.net/en/docs/specs/ecies/) for the
-// spec's Noise-based MixKey. This is a simplified single-HKDF form; see
-// AUDIT.md.
-func deriveKeyViaX25519(privKey x25519.PrivateKey, pubKey x25519.PublicKey) ([]byte, error) {
-	sharedSecret, err := privKey.SharedKey(pubKey)
+	// Elligator2-encode the ephemeral public key for the wire.
+	encodedAepk, err := elligator2.Encode(aepk)
 	if err != nil {
-		return nil, oops.Errorf("X25519 key agreement failed: %w", err)
+		return nil, oops.Wrapf(ErrNotElligator2Representable, "ephemeral public key not Elligator2-representable: %w", err)
 	}
-	hkdfReader := hkdf.New(sha256.New, sharedSecret, nil, []byte("ECIES-X25519-AEAD"))
-	derivedKey := make([]byte, 32)
-	if _, err := io.ReadFull(hkdfReader, derivedKey); err != nil {
-		return nil, oops.Errorf("HKDF key derivation failed: %w", err)
-	}
-	return derivedKey, nil
-}
 
-// deriveEncryptionKey performs X25519 key agreement and derives the encryption key using HKDF.
-func deriveEncryptionKey(ephemeralPriv x25519.PrivateKey, recipientPubKey []byte) ([]byte, error) {
-	return deriveKeyViaX25519(ephemeralPriv, x25519.PublicKey(recipientPubKey))
-}
-
-// encryptWithAEAD encrypts the plaintext using ChaCha20-Poly1305 AEAD with a
-// random nonce.
-// See [I2P Spec: ECIES Cipher](https://i2p.net/en/docs/specs/ecies/) — the
-// spec requires the first 4 nonce bytes to be zero; this uses a fully random
-// nonce. See AUDIT.md.
-func encryptWithAEAD(encryptionKey, plaintext, ephemeralPub []byte) ([]byte, []byte, error) {
-	// Create ChaCha20-Poly1305 AEAD cipher
-	aead, err := chacha20poly1305.New(encryptionKey)
+	// Run the Noise IK + es key schedule.
+	h, k, err := deriveOneTimeKey(recipientPubKey, aesk, aepk, nil)
 	if err != nil {
-		return nil, nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
+		return nil, err
 	}
 
-	// Generate random nonce
-	nonce := make([]byte, NonceSize)
-	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
-		return nil, nil, oops.Errorf("failed to generate nonce: %w", err)
+	// Encrypt the flags section (32 bytes of all zeros) with nonce 0.
+	flagsCt, err := encryptSection(k, h, make([]byte, flagsSectionSize), 0)
+	if err != nil {
+		return nil, err
 	}
 
-	// Encrypt plaintext with associated data = ephemeral public key
-	ciphertext := aead.Seal(nil, nonce, plaintext, ephemeralPub)
+	// MixHash with the flags ciphertext.
+	h = sha256.Sum256(append(h[:], flagsCt...))
 
-	return nonce, ciphertext, nil
+	// Encrypt the payload with nonce 1.
+	payloadCt, err := encryptSection(k, h, plaintext, 1)
+	if err != nil {
+		return nil, err
+	}
+
+	// Assemble: [encodedAepk 32][flagsCt 48][payloadCt N+16]
+	ciphertext := make([]byte, 0, len(encodedAepk)+len(flagsCt)+len(payloadCt))
+	ciphertext = append(ciphertext, encodedAepk...)
+	ciphertext = append(ciphertext, flagsCt...)
+	ciphertext = append(ciphertext, payloadCt...)
+
+	return ciphertext, nil
 }
 
-// buildCiphertextResult assembles the final ciphertext in the format [ephemeral_pubkey][nonce][aead_ciphertext].
-func buildCiphertextResult(ephemeralPub, nonce, ciphertext []byte) []byte {
-	result := make([]byte, PublicKeySize+NonceSize+len(ciphertext))
-	offset := 0
-
-	copy(result[offset:], ephemeralPub)
-	offset += PublicKeySize
-
-	copy(result[offset:], nonce)
-	offset += NonceSize
-
-	copy(result[offset:], ciphertext)
-
-	return result
-}
-
-// DecryptECIESX25519 decrypts ciphertext using ECIES-X25519 scheme.
-// The private key must be 32 bytes (X25519 private key).
-// The ciphertext must be in the format: [ephemeral_pubkey][nonce][aead_ciphertext]
-// Moved from: ecies.go
+// DecryptECIESX25519 decrypts data using the I2P ECIES-X25519-AEAD one-time
+// format produced by EncryptECIESX25519.
+//
+// Parameters:
+//   - recipientPrivKey: The recipient's 32-byte X25519 private key (Bob's static key)
+//   - ciphertext: The encrypted data in the one-time format
+//
+// Returns:
+//   - plaintext: The decrypted data
+//   - error: Any error during decryption
 func DecryptECIESX25519(recipientPrivKey, ciphertext []byte) ([]byte, error) {
-	if err := validateDecryptionInputs(recipientPrivKey, ciphertext); err != nil {
-		return nil, err
-	}
-
-	ephemeralPubKey, nonce, aeadCiphertext := extractCiphertextComponents(ciphertext)
-
-	privKey, ephemeralKey := convertKeysToX25519Format(recipientPrivKey, ephemeralPubKey)
-
-	decryptionKey, err := performKeyAgreementAndDerivation(privKey, ephemeralKey)
-	if err != nil {
-		return nil, err
-	}
-
-	plaintext, err := decryptWithAEAD(decryptionKey, nonce, aeadCiphertext, ephemeralPubKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return plaintext, nil
-}
-
-// validateDecryptionInputs checks that the private key and ciphertext are valid for decryption.
-func validateDecryptionInputs(recipientPrivKey, ciphertext []byte) error {
 	if len(recipientPrivKey) != PrivateKeySize {
-		return ErrInvalidPrivateKey
+		return nil, oops.Wrapf(ErrInvalidPrivateKey, "private key must be %d bytes, got %d", PrivateKeySize, len(recipientPrivKey))
+	}
+	if len(ciphertext) < oneTimeCiphertextOverhead {
+		return nil, oops.Wrapf(ErrInvalidCiphertext, "ciphertext too short: %d bytes, minimum %d", len(ciphertext), oneTimeCiphertextOverhead)
 	}
 
-	minSize := PublicKeySize + NonceSize + TagSize
-	if len(ciphertext) < minSize {
-		return ErrInvalidCiphertext
-	}
+	// Split the ciphertext into its components.
+	encodedAepk := ciphertext[:PublicKeySize]
+	flagsCt := ciphertext[PublicKeySize : PublicKeySize+flagsSectionSize+TagSize]
+	payloadCt := ciphertext[PublicKeySize+flagsSectionSize+TagSize:]
 
-	return nil
-}
-
-// extractCiphertextComponents parses the ciphertext format and extracts its components.
-func extractCiphertextComponents(ciphertext []byte) (ephemeralPubKey, nonce, aeadCiphertext []byte) {
-	ephemeralPubKey = ciphertext[:PublicKeySize]
-	nonce = ciphertext[PublicKeySize : PublicKeySize+NonceSize]
-	aeadCiphertext = ciphertext[PublicKeySize+NonceSize:]
-	return ephemeralPubKey, nonce, aeadCiphertext
-}
-
-// convertKeysToX25519Format converts raw byte keys to proper X25519 key types.
-func convertKeysToX25519Format(recipientPrivKey, ephemeralPubKey []byte) (x25519.PrivateKey, x25519.PublicKey) {
-	privKey := x25519.PrivateKey(recipientPrivKey)
-	ephemeralKey := x25519.PublicKey(ephemeralPubKey)
-	return privKey, ephemeralKey
-}
-
-// performKeyAgreementAndDerivation executes X25519 key agreement and derives the decryption key.
-func performKeyAgreementAndDerivation(privKey x25519.PrivateKey, ephemeralKey x25519.PublicKey) ([]byte, error) {
-	return deriveKeyViaX25519(privKey, ephemeralKey)
-}
-
-// decryptWithAEAD creates an AEAD cipher and performs the final decryption step.
-func decryptWithAEAD(decryptionKey, nonce, aeadCiphertext, ephemeralPubKey []byte) ([]byte, error) {
-	aead, err := chacha20poly1305.New(decryptionKey)
+	// Elligator2-decode the ephemeral public key.
+	aepk, err := elligator2.Decode(encodedAepk)
 	if err != nil {
-		return nil, oops.Errorf("failed to create ChaCha20-Poly1305 cipher: %w", err)
+		return nil, oops.Wrapf(ErrInvalidCiphertext, "failed to Elligator2-decode ephemeral public key: %w", err)
 	}
 
-	plaintext, err := aead.Open(nil, nonce, aeadCiphertext, ephemeralPubKey)
+	// Derive Bob's static public key from his private key for the MixHash step.
+	bpk, err := curve25519.X25519(recipientPrivKey, curve25519.Basepoint)
 	if err != nil {
-		return nil, oops.Errorf("ChaCha20-Poly1305 decryption failed: %w", err)
+		return nil, oops.Wrapf(ErrInvalidPrivateKey, "failed to derive public key from private key: %w", err)
+	}
+
+	// Run the same Noise IK + es key schedule as the sender.
+	h, k, err := deriveOneTimeKey(bpk, nil, aepk, recipientPrivKey)
+	if err != nil {
+		return nil, err
+	}
+
+	// Decrypt the flags section with nonce 0 and verify it is all zeros
+	// (the one-time format marker).
+	flags, err := decryptSection(k, h, flagsCt, 0)
+	if err != nil {
+		return nil, oops.Wrapf(ErrDecryptionFailed, "flags section authentication failed: %w", err)
+	}
+	if !isAllZeros(flags) {
+		return nil, oops.Wrapf(ErrDecryptionFailed, "flags section is not all zeros; not a one-time message")
+	}
+
+	// MixHash with the flags ciphertext.
+	h = sha256.Sum256(append(h[:], flagsCt...))
+
+	// Decrypt the payload with nonce 1.
+	plaintext, err := decryptSection(k, h, payloadCt, 1)
+	if err != nil {
+		return nil, oops.Wrapf(ErrDecryptionFailed, "payload authentication failed: %w", err)
 	}
 
 	return plaintext, nil
+}
+
+// deriveOneTimeKey runs the Noise "IK" + "es" key schedule for the one-time
+// format and returns the final hash h and the message key k.
+//
+// Parameters:
+//   - bpk: Bob's static PUBLIC key (always used for the MixHash step)
+//   - aesk: Alice's ephemeral private key (set on the encrypt path, nil on the
+//     decrypt path)
+//   - aepk: Alice's ephemeral public key (decoded, not Elligator2-encoded)
+//   - besk: Bob's static private key (set on the decrypt path, nil on the
+//     encrypt path)
+//
+// The DH step is DH(aesk, bpk) on the encrypt path and DH(besk, aepk) on the
+// decrypt path; both yield the same shared secret.
+func deriveOneTimeKey(bpk, aesk, aepk, besk []byte) (h [32]byte, k [32]byte, err error) {
+	// h = SHA256(protocol_name); chainKey = h
+	protocolHash := sha256.Sum256([]byte(noiseProtocolName))
+	chainKey := protocolHash
+
+	// h = SHA256(h)  (MixHash with empty prologue)
+	h = sha256.Sum256(protocolHash[:])
+
+	// h = SHA256(h || bpk)  (MixHash with Bob's static public key)
+	h = sha256.Sum256(append(h[:], bpk...))
+
+	// h = SHA256(h || aepk)  (MixHash with Alice's ephemeral public key)
+	h = sha256.Sum256(append(h[:], aepk...))
+
+	// "es": sharedSecret = DH(aesk, bpk) on encrypt, DH(besk, aepk) on decrypt.
+	var sharedSecret []byte
+	if aesk != nil {
+		sharedSecret, err = curve25519.X25519(aesk, bpk)
+	} else {
+		sharedSecret, err = curve25519.X25519(besk, aepk)
+	}
+	if err != nil {
+		return [32]byte{}, [32]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "X25519 key agreement failed: %w", err)
+	}
+
+	// keydata = HKDF(salt=chainKey, ikm=sharedSecret, info="", 64)
+	// k = keydata[32:64]
+	keydata, err := hkdfDerive(sharedSecret, chainKey[:], nil, 64)
+	if err != nil {
+		return [32]byte{}, [32]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "Noise MixKey failed: %w", err)
+	}
+	copy(k[:], keydata[32:64])
+
+	return h, k, nil
+}
+
+// hkdfDerive derives keyLen bytes using HKDF-SHA256 with the given ikm, salt
+// and info.
+func hkdfDerive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
+	reader := hkdf.New(sha256.New, ikm, salt, info)
+	out := make([]byte, keyLen)
+	if _, err := io.ReadFull(reader, out); err != nil {
+		return nil, oops.Wrapf(ErrKeyDerivationFailed, "HKDF derivation failed: %w", err)
+	}
+	return out, nil
+}
+
+// encryptSection encrypts a section with ChaCha20-Poly1305 using the spec's
+// 12-byte nonce (first 4 bytes zero, last 8 bytes the little-endian counter)
+// and the given associated data.
+//
+// Returns the ciphertext concatenated with the 16-byte Poly1305 tag.
+func encryptSection(k [32]byte, h [32]byte, plaintext []byte, counter uint64) ([]byte, error) {
+	aead, err := chacha20poly1305.New(k[:])
+	if err != nil {
+		return nil, oops.Wrapf(ErrEncryptionFailed, "failed to create AEAD: %w", err)
+	}
+
+	// Seal appends the 16-byte tag to the ciphertext.
+	return aead.Seal(nil, makeNonce(counter), plaintext, h[:]), nil
+}
+
+// decryptSection decrypts a section with ChaCha20-Poly1305. The wire format
+// is ciphertext followed by the 16-byte Poly1305 tag.
+func decryptSection(k [32]byte, h [32]byte, wire []byte, counter uint64) ([]byte, error) {
+	if len(wire) < TagSize {
+		return nil, oops.Wrapf(ErrInvalidCiphertext, "section too short: %d bytes", len(wire))
+	}
+
+	aead, err := chacha20poly1305.New(k[:])
+	if err != nil {
+		return nil, oops.Wrapf(ErrDecryptionFailed, "failed to create AEAD: %w", err)
+	}
+
+	plaintext, err := aead.Open(nil, makeNonce(counter), wire, h[:])
+	if err != nil {
+		return nil, oops.Wrapf(ErrDecryptionFailed, "ChaCha20-Poly1305 decryption failed: %w", err)
+	}
+
+	return plaintext, nil
+}
+
+// makeNonce builds the spec's 12-byte ChaCha20-Poly1305 nonce: the first 4
+// bytes are zero and the last 8 bytes are the little-endian counter.
+func makeNonce(counter uint64) []byte {
+	nonce := make([]byte, NonceSize)
+	binary.LittleEndian.PutUint64(nonce[4:], counter)
+	return nonce
+}
+
+// isAllZeros reports whether every byte in b is zero.
+func isAllZeros(b []byte) bool {
+	for _, c := range b {
+		if c != 0 {
+			return false
+		}
+	}
+	return true
 }
 
 // GenerateKeyPair generates a new X25519 key pair suitable for ECIES-X25519.
 // Returns (publicKey, privateKey, error) where keys are 32 bytes each.
-// Moved from: ecies.go
 func GenerateKeyPair() ([]byte, []byte, error) {
 	pub, priv, err := x25519.GenerateKey(rand.Reader)
 	if err != nil {
-		return nil, nil, oops.Errorf("failed to generate X25519 key pair: %w", err)
+		return nil, nil, oops.Wrapf(ErrKeyGenerationFailed, "failed to generate X25519 key pair: %w", err)
 	}
 
 	// Return copies to prevent external modification

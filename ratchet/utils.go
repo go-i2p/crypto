@@ -1,9 +1,7 @@
 package ratchet
 
 import (
-	"encoding/binary"
-
-	"github.com/go-i2p/crypto/hmac"
+	"github.com/go-i2p/crypto/hkdf"
 	"github.com/go-i2p/crypto/kdf"
 )
 
@@ -24,37 +22,26 @@ func DH_INITIALIZE(rootKey [ChainKeySize]byte, k [32]byte) [32]byte {
 	return result
 }
 
-// RatchetSymmetricKey is a helper function that derives the next message key
-// and new chain key for symmetric ratcheting.
-// This combines message key derivation and chain key advancement in one
-// operation.
-// See [I2P Spec: ECIES KDF](https://i2p.net/en/docs/specs/ecies/) for the
-// spec's Noise-based MixKey. This uses a Signal-style HMAC construction; see
-// AUDIT.md.
+// RatchetSymmetricKey derives the next message key and new chain key for
+// symmetric ratcheting, per the I2P ECIES spec (section 4c, SymmetricRatchet):
+//
+//	keydata = HKDF(ikm=ZEROLEN, salt=chainKey, info="SymmetricRatchet", 64)
+//	newChainKey = keydata[0:32]
+//	messageKey  = keydata[32:64]
+//
+// The message number is not part of the KDF; it is accepted for API
+// compatibility with existing callers.
 func RatchetSymmetricKey(chainKey [ChainKeySize]byte, messageNum uint32) ([MessageKeySize]byte, [ChainKeySize]byte, error) {
-	// Derive message key: HMAC-SHA256(chainKey, "MessageKey" || messageNum)
-	msgInput := make([]byte, len("MessageKey")+4)
-	copy(msgInput, []byte("MessageKey"))
-	binary.BigEndian.PutUint32(msgInput[len("MessageKey"):], messageNum)
-
-	var msgHmacKey hmac.HMACKey
-	copy(msgHmacKey[:], chainKey[:])
-	msgDigest := hmac.I2PHMAC(msgInput, msgHmacKey)
-
-	var messageKey [MessageKeySize]byte
-	copy(messageKey[:], msgDigest[:MessageKeySize])
-
-	// Derive next chain key: HMAC-SHA256(chainKey, "NextChainKey" || messageNum)
-	chainInput := make([]byte, len("NextChainKey")+4)
-	copy(chainInput, []byte("NextChainKey"))
-	binary.BigEndian.PutUint32(chainInput[len("NextChainKey"):], messageNum)
-
-	var chainHmacKey hmac.HMACKey
-	copy(chainHmacKey[:], chainKey[:])
-	chainDigest := hmac.I2PHMAC(chainInput, chainHmacKey)
+	keydata, err := hkdf.NewHKDF().Derive(nil, chainKey[:], []byte("SymmetricRatchet"), 64)
+	if err != nil {
+		return [MessageKeySize]byte{}, [ChainKeySize]byte{}, err
+	}
 
 	var newChainKey [ChainKeySize]byte
-	copy(newChainKey[:], chainDigest[:ChainKeySize])
+	copy(newChainKey[:], keydata[0:32])
+
+	var messageKey [MessageKeySize]byte
+	copy(messageKey[:], keydata[32:64])
 
 	return messageKey, newChainKey, nil
 }

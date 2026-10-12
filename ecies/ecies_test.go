@@ -4,8 +4,14 @@ package ecies
 // functions. It covers round-trip correctness, size limits, input validation,
 // ciphertext integrity, and key-pair consistency.
 //
-// Note: these tests validate the simplified implementation in this package,
-// not wire compatibility with the I2P spec. See AUDIT.md for the deviations.
+// The wire format follows the I2P spec (Proposal 144, section 1d):
+//
+//	[Elligator2-encoded ephemeral pubkey 32B]
+//	[flags section: ChaCha20 ct 32B + Poly1305 tag 16B]
+//	[payload section: ChaCha20 ct N + Poly1305 tag 16B]
+//
+// so the ciphertext is exactly oneTimeCiphertextOverhead + len(plaintext)
+// bytes.
 
 import (
 	"bytes"
@@ -86,11 +92,12 @@ func TestECIESX25519RoundTrip(t *testing.T) {
 				t.Fatalf("Encryption failed: %v", err)
 			}
 
-			// Verify ciphertext format and size
-			expectedMinSize := PublicKeySize + NonceSize + TagSize + len(tc.data)
-			if len(ciphertext) < expectedMinSize {
-				t.Errorf("Ciphertext too short: got %d, expected at least %d",
-					len(ciphertext), expectedMinSize)
+			// Verify ciphertext size matches the spec layout exactly:
+			// oneTimeCiphertextOverhead + len(plaintext).
+			expectedSize := oneTimeCiphertextOverhead + len(tc.data)
+			if len(ciphertext) != expectedSize {
+				t.Errorf("Ciphertext size mismatch: got %d, expected %d",
+					len(ciphertext), expectedSize)
 			}
 
 			// Decrypt
@@ -196,8 +203,8 @@ func TestECIESX25519InvalidInputs(t *testing.T) {
 		invalidCiphertexts := [][]byte{
 			nil,
 			{},
-			make([]byte, PublicKeySize+NonceSize+TagSize-1), // Too short
-			make([]byte, 10), // Way too short
+			make([]byte, oneTimeCiphertextOverhead-1), // Too short (min is 96)
+			make([]byte, 10),                          // Way too short
 		}
 
 		for i, invalidCiphertext := range invalidCiphertexts {
@@ -227,15 +234,18 @@ func TestECIESX25519CorruptedCiphertext(t *testing.T) {
 		t.Fatalf("Encryption failed: %v", err)
 	}
 
-	// Test corruption at different positions
+	// Test corruption at different positions in the spec layout:
+	// [0:32] ephemeral key, [32:64] flags ct, [64:80] flags tag,
+	// [80:80+N] payload ct, [80+N:] payload tag.
 	testCases := []struct {
 		name     string
 		position int
 	}{
 		{"Corrupt ephemeral public key", 0},
-		{"Corrupt nonce", PublicKeySize},
-		{"Corrupt ciphertext", PublicKeySize + NonceSize},
-		{"Corrupt authentication tag", len(ciphertext) - 1},
+		{"Corrupt flags section", PublicKeySize},
+		{"Corrupt flags tag", PublicKeySize + 32},
+		{"Corrupt payload", oneTimeCiphertextOverhead - TagSize},
+		{"Corrupt payload tag", len(ciphertext) - 1},
 	}
 
 	for _, tc := range testCases {

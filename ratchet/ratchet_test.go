@@ -128,7 +128,10 @@ func TestSymmetricRatchet(t *testing.T) {
 
 		ratchet := NewSymmetricRatchet(chainKey)
 
-		// Derive message keys for different message numbers
+		// Per the I2P spec (section 4c), the message key is derived solely
+		// from the chain key via HKDF; the message number is not part of the
+		// KDF. So any message number yields the same key until Advance() is
+		// called.
 		key0, err := ratchet.DeriveMessageKey(0)
 		if err != nil {
 			t.Fatalf("failed to derive message key 0: %v", err)
@@ -139,19 +142,21 @@ func TestSymmetricRatchet(t *testing.T) {
 			t.Fatalf("failed to derive message key 1: %v", err)
 		}
 
-		// Keys should be different
-		if bytes.Equal(key0[:], key1[:]) {
-			t.Errorf("message keys for different numbers should differ")
+		// Same key regardless of message number (before advance).
+		if !bytes.Equal(key0[:], key1[:]) {
+			t.Errorf("message key should be independent of message number before advance")
 		}
 
-		// Same message number should give same key (before advance)
-		key0Again, err := ratchet.DeriveMessageKey(0)
+		// Advancing the ratchet must produce a different message key.
+		if err := ratchet.Advance(); err != nil {
+			t.Fatalf("failed to advance ratchet: %v", err)
+		}
+		keyAfter, err := ratchet.DeriveMessageKey(0)
 		if err != nil {
-			t.Fatalf("failed to derive message key 0 again: %v", err)
+			t.Fatalf("failed to derive message key after advance: %v", err)
 		}
-
-		if !bytes.Equal(key0[:], key0Again[:]) {
-			t.Errorf("same message number should give same key")
+		if bytes.Equal(key0[:], keyAfter[:]) {
+			t.Errorf("message key should change after advance")
 		}
 	})
 

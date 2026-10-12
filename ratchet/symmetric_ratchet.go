@@ -1,9 +1,7 @@
 package ratchet
 
 import (
-	"encoding/binary"
-
-	"github.com/go-i2p/crypto/kdf"
+	"github.com/go-i2p/crypto/hkdf"
 )
 
 // SymmetricRatchet implements the symmetric key ratchet for deriving message keys.
@@ -35,35 +33,40 @@ func NewSymmetricRatchet(initialChainKey [ChainKeySize]byte) *SymmetricRatchet {
 	}
 }
 
-func (r *SymmetricRatchet) DeriveMessageKey(messageNum uint32) ([MessageKeySize]byte, error) {
-	// Derive a message key from the current chain key and the message index so that
-	// different message numbers produce different keys while identical message numbers
-	// remain deterministic.
-	info := make([]byte, 0, len("SymmetricRatchet")+4)
-	info = append(info, []byte("SymmetricRatchet")...)
-	var msgNum [4]byte
-	binary.BigEndian.PutUint32(msgNum[:], messageNum)
-	info = append(info, msgNum[:]...)
+// deriveKeydata runs the spec's SymmetricRatchet KDF (section 4c):
+//
+//	keydata = HKDF(ikm=ZEROLEN, salt=chainKey, info="SymmetricRatchet", 64)
+//
+// The first 32 bytes are the next chain key and the last 32 bytes are the
+// message key.
+func (r *SymmetricRatchet) deriveKeydata() ([]byte, error) {
+	return hkdf.NewHKDF().Derive(nil, r.chainKey[:], []byte("SymmetricRatchet"), 64)
+}
 
-	kd := kdf.NewKeyDerivation(r.chainKey)
-	keys, err := kd.DeriveKeys(info, 2)
+// DeriveMessageKey derives the message key for the current chain key.
+// Per the I2P ECIES spec (section 4c), the message key is the second half of
+// keydata = HKDF(ikm=ZEROLEN, salt=chainKey, info="SymmetricRatchet", 64).
+// The message number is not part of the KDF; it is accepted for API
+// compatibility with existing callers.
+func (r *SymmetricRatchet) DeriveMessageKey(messageNum uint32) ([MessageKeySize]byte, error) {
+	keydata, err := r.deriveKeydata()
 	if err != nil {
 		return [MessageKeySize]byte{}, err
 	}
 	var messageKey [MessageKeySize]byte
-	copy(messageKey[:], keys[1][:])
+	copy(messageKey[:], keydata[32:64])
 	return messageKey, nil
 }
 
 // Advance advances the symmetric ratchet by deriving a new chain key.
-// Uses HMAC-SHA256(chainKey, "NextChainKey").
+// Per the I2P ECIES spec (section 4c), the new chain key is the first half of
+// keydata = HKDF(ikm=ZEROLEN, salt=chainKey, info="SymmetricRatchet", 64).
 func (r *SymmetricRatchet) Advance() error {
-	kd := kdf.NewKeyDerivation(r.chainKey)
-	keys, err := kd.DeriveKeys([]byte("NextChainKey"), 1)
+	keydata, err := r.deriveKeydata()
 	if err != nil {
 		return err
 	}
-	copy(r.chainKey[:], keys[0][:])
+	copy(r.chainKey[:], keydata[0:32])
 	return nil
 }
 
