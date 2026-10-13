@@ -1,12 +1,11 @@
 package ratchet
 
 import (
+	"github.com/go-i2p/crypto/curve25519"
 	"github.com/go-i2p/crypto/kdf"
-	"github.com/go-i2p/crypto/rand"
 	"github.com/go-i2p/logger"
 
 	"github.com/samber/oops"
-	"go.step.sm/crypto/x25519"
 )
 
 // DHRatchet implements the Diffie-Hellman ratchet for forward secrecy.
@@ -97,27 +96,32 @@ func (r *DHRatchet) UpdateKeys(newTheirPubKey []byte) error {
 
 // GenerateNewKeyPair generates a new ephemeral key pair for this ratchet.
 func (r *DHRatchet) GenerateNewKeyPair() ([PublicKeySize]byte, error) {
-	pubKey, privKey, err := x25519.GenerateKey(rand.Reader)
+	pubKey, privKey, err := curve25519.GenerateX25519KeyPair()
 	if err != nil {
 		return [PublicKeySize]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "failed to generate key pair: %w", err)
 	}
 
-	copy(r.ourPrivKey[:], privKey[:])
+	copy(r.ourPrivKey[:], privKey.Bytes())
 
 	var pubKeyArray [PublicKeySize]byte
-	copy(pubKeyArray[:], pubKey)
+	copy(pubKeyArray[:], pubKey.Bytes())
 	return pubKeyArray, nil
 }
 
 // GetPublicKey returns our current DH public key.
 func (r *DHRatchet) GetPublicKey() ([PublicKeySize]byte, error) {
 	// Derive public key from our private key
-	privKey := x25519.PrivateKey(r.ourPrivKey[:])
-	pubKeyBytes := privKey.Public()
+	privKey, err := curve25519.NewCurve25519PrivateKey(r.ourPrivKey[:])
+	if err != nil {
+		return [PublicKeySize]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "failed to derive public key: %w", err)
+	}
+	pubKey, err := privKey.Public()
+	if err != nil {
+		return [PublicKeySize]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "failed to derive public key: %w", err)
+	}
 
 	var pubKeyArray [PublicKeySize]byte
-	// x25519.PublicKey is []byte, so we can copy it
-	copy(pubKeyArray[:], pubKeyBytes.(x25519.PublicKey))
+	copy(pubKeyArray[:], pubKey.Bytes())
 	return pubKeyArray, nil
 }
 
@@ -130,12 +134,8 @@ func (r *DHRatchet) performDH(privateKey, publicKey []byte) ([]byte, error) {
 		return nil, oops.Wrapf(ErrInvalidPublicKeySize, "expected %d, got %d", PublicKeySize, len(publicKey))
 	}
 
-	// Convert to X25519 key types
-	privKey := x25519.PrivateKey(privateKey)
-	pubKey := x25519.PublicKey(publicKey)
-
-	// Perform X25519 DH
-	sharedSecret, err := privKey.SharedKey(pubKey)
+	// Perform X25519 DH via the canonical go-i2p/crypto/curve25519 wrapper
+	sharedSecret, err := curve25519.SharedKey(privateKey, publicKey)
 	if err != nil {
 		return nil, oops.Wrapf(ErrDHFailed, "X25519 key agreement failed: %w", err)
 	}
