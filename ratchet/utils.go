@@ -5,7 +5,7 @@ import (
 	"github.com/go-i2p/crypto/kdf"
 )
 
-// DH_INITIALIZE implements the spec's DH ratchet initialization step (F044).
+// DH_INITIALIZE implements the spec's DH ratchet initialization step.
 // Per ecies.rst (DH INITIALIZATION KDF):
 //
 //	keydata = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)

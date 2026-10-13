@@ -26,13 +26,25 @@
 //
 // These ratchets are the "ratchets" that replace the old SessionTags in the
 // ECIES-X25519-AEAD-Ratchet specification. The design borrows the idea from
-// the Signal double ratchet. The key-derivation steps here use
-// HMAC-SHA256 with "MessageKey"/"NextChainKey" info strings, which is a
-// Signal-style construction rather than the spec's Noise-based MixKey.
-// See AUDIT.md for the specific deviations.
+// the Signal double ratchet.
+//
+// The key-derivation steps use HKDF-SHA256 (RFC 5869) with the spec's info
+// strings, matching the I2P specification:
+//
+//   - DH_INITIALIZE / DH_INITIALIZEFull: HKDF(rootKey, k, "KDFDHRatchetStep", 64)
+//     followed by HKDF(ck, ZEROLEN, "TagAndKeyGenKeys", 64).
+//   - SessionTagRatchet: HKDF(chainKey, ZEROLEN, "STInitialization", 64) to
+//     seed, then HKDF(chainKey, SESSTAG_CONSTANT, "SessionTagKeyGen", 64) per
+//     step.
+//   - SymmetricKeyRatchet: HKDF(chainKey, ZEROLEN, "SymmetricRatchet", 64).
 //
 // See the official specification for the full protocol:
 // https://i2p.net/en/docs/specs/ecies/
+//
+// Historical note: an earlier revision of this package used a Signal-style
+// HMAC-SHA256 construction ("MessageKey"/"NextChainKey") that did not match
+// the spec. That was corrected to the HKDF construction above; see
+// ../AUDIT.md (finding 8) for the original deviation.
 //
 // # A note on construction
 //

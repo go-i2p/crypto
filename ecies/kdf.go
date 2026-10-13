@@ -16,6 +16,13 @@ import (
 // - Sending chain key (32 bytes)
 // - Receiving chain key (32 bytes)
 // Returns (sendKey, recvKey, error)
+//
+// NOTE: These functions (DeriveSessionKeys, DeriveNoiseKeys, DeriveChaCha20Key,
+// DeriveChaCha20Nonce) implement the legacy ECIES-X25519-AEAD-Ratchet protocol's
+// KDFs. They are NOT the spec-compliant I2P Noise data-phase KDFs. The
+// spec-compliant Noise path (Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256) is
+// implemented in go-noise/ratchet and uses kdf.StandardHKDF directly with the
+// spec-mandated salt/ikm/info values. Do not mix the two protocols.
 func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
 	if len(sharedSecret) == 0 {
 		return [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")

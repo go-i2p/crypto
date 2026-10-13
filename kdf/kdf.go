@@ -106,6 +106,18 @@ var log = logger.GetGoI2PLogger()
 
 // KeyDerivation provides consistent key derivation from a root key.
 // All derived keys use HKDF-SHA256 with purpose-specific info strings.
+//
+// # Protocol scope
+//
+// KeyDerivation is the KDF for the legacy ECIES-X25519-AEAD-Ratchet protocol
+// (see crypto/ecies and crypto/ratchet.Session). It is NOT the KDF used by the
+// spec-compliant I2P Noise path (Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256),
+// which is implemented in go-noise/ratchet and uses StandardHKDF directly with
+// the spec-mandated salt/ikm/info arguments.
+//
+// The two protocols are distinct and self-consistent; do not mix them. For the
+// spec-compliant Noise data-phase KDFs, use StandardHKDF with the exact
+// (salt, ikm, info) values from the I2P spec rather than these methods.
 type KeyDerivation struct {
 	rootKey [32]byte
 }
@@ -246,6 +258,11 @@ func (kd *KeyDerivation) DeriveKeys(info []byte, count int) ([][32]byte, error) 
 // needed for an I2P session: ratchet root key, symmetric chain key, and tag chain key.
 //
 // This is equivalent to DeriveKeys() but with semantic naming for session initialization.
+//
+// NOTE: This uses the legacy ECIES-X25519-AEAD-Ratchet protocol's KDF with the
+// "ECIES-Session-KDF" info string. It is NOT the spec-compliant I2P Noise
+// data-phase KDF (which uses HKDF with the spec's exact salt/ikm/info values).
+// Do not use this for the Noise_IKelg2+hs2 path; use StandardHKDF there instead.
 //
 // Returns:
 //   - rootKey: Key for DH ratchet initialization
