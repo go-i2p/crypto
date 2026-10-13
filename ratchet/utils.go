@@ -6,20 +6,38 @@ import (
 )
 
 // DH_INITIALIZE implements the spec's DH ratchet initialization step (F044).
-// Per ecies.rst: DH_INITIALIZE(rootKey, k) = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)[32:64]
+// Per ecies.rst (DH INITIALIZATION KDF):
+//
+//	keydata = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)
+//	nextRootKey = keydata[0:32]
+//	ck          = keydata[32:64]
+//
+// It returns the chain key (ck) that initializes the new session tag and
+// symmetric key ratchets for the tag set. The nextRootKey (keydata[0:32]) is
+// the KDF input for a subsequent DH ratchet in the same direction; callers
+// that need it should use DH_INITIALIZEFull.
 func DH_INITIALIZE(rootKey [ChainKeySize]byte, k [32]byte) [32]byte {
-	// F044 real fix: use kdf package per spec (ecies.rst):
-	// DH_INITIALIZE(rootKey, k) = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)[32:64]
-	kd := kdf.NewKeyDerivation([32]byte(rootKey))
-	derived, err := kd.DeriveWithInfo("KDFDHRatchetStep")
+	_, ck, err := DH_INITIALIZEFull(rootKey, k)
 	if err != nil {
-		var result [32]byte
-		copy(result[:], rootKey[:])
-		return result
+		// HKDF over a 32-byte salt/ikm cannot fail; fall back to a zeroed
+		// chain key rather than leaking the root key.
+		return [32]byte{}
 	}
-	var result [32]byte
-	copy(result[:], derived[:32]) // first half = derived key (32 bytes from DeriveWithInfo)
-	return result
+	return ck
+}
+
+// DH_INITIALIZEFull implements the full spec DH INITIALIZATION KDF, returning
+// both the next root key (keydata[0:32]) and the chain key (keydata[32:64]).
+//
+//	keydata = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)
+func DH_INITIALIZEFull(rootKey [ChainKeySize]byte, k [32]byte) (nextRootKey [32]byte, ck [32]byte, err error) {
+	keydata, err := kdf.StandardHKDF(rootKey[:], k[:], []byte("KDFDHRatchetStep"), 64)
+	if err != nil {
+		return [32]byte{}, [32]byte{}, err
+	}
+	copy(nextRootKey[:], keydata[0:32])
+	copy(ck[:], keydata[32:64])
+	return nextRootKey, ck, nil
 }
 
 // RatchetSymmetricKey derives the next message key and new chain key for

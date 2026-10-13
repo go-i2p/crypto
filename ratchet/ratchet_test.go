@@ -233,14 +233,16 @@ func TestDHRatchet(t *testing.T) {
 
 		ratchet := NewDHRatchet(rootKey, privKey1, pubKey2)
 
+		oldRootKey := ratchet.rootKey
 		sendKey, recvKey, err := ratchet.PerformRatchet()
 		if err != nil {
 			t.Fatalf("failed to perform DH ratchet: %v", err)
 		}
 
-		// Keys should be different
-		if bytes.Equal(sendKey[:], recvKey[:]) {
-			t.Errorf("sending and receiving keys should differ")
+		// Per the spec, the DH ratchet produces a single ck (newTagSet) for
+		// both directions; the directional split happens in the data-phase KDF.
+		if !bytes.Equal(sendKey[:], recvKey[:]) {
+			t.Errorf("sending and receiving keys should be the same ck per spec")
 		}
 
 		// Keys should be non-zero
@@ -250,6 +252,11 @@ func TestDHRatchet(t *testing.T) {
 		}
 		if bytes.Equal(recvKey[:], zeroKey[:]) {
 			t.Errorf("receiving key should be non-zero")
+		}
+
+		// The root key should have advanced (nextRootKey != old rootKey).
+		if bytes.Equal(ratchet.rootKey[:], oldRootKey[:]) {
+			t.Errorf("root key should have advanced after ratchet")
 		}
 	})
 

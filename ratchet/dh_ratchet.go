@@ -43,8 +43,19 @@ func NewDHRatchet(rootKey, ourPrivKey, theirPubKey [ChainKeySize]byte) *DHRatche
 }
 
 // PerformRatchet performs a DH ratchet step.
-// Returns (sendingChainKey, receivingChainKey, error).
-// This derives new chain keys from a fresh DH exchange.
+//
+// Spec ref: ratchet.md §"DH Ratchet KDF" —
+//
+//	sharedSecret = DH(rask, rbpk)
+//	tagsetKey = HKDF(sharedSecret, ZEROLEN, "XDHRatchetTagSet", 32)
+//	rootKey = nextRootKey // from previous tagset in this direction
+//	newTagSet = DH_INITIALIZE(rootKey, tagsetKey)
+//
+// Returns the new chain key (ck) from DH_INITIALIZE for both directions.
+// The caller derives the tag and symmetric keys from ck via the
+// TagAndKeyGenKeys KDF. The previous rootKey is reused (not re-derived
+// from the sharedSecret), and the nextRootKey from DH_INITIALIZE becomes
+// the new rootKey for the next ratchet step.
 func (r *DHRatchet) PerformRatchet() ([ChainKeySize]byte, [ChainKeySize]byte, error) {
 	// Perform X25519 DH
 	sharedSecret, err := r.performDH(r.ourPrivKey[:], r.theirPubKey[:])
@@ -52,22 +63,26 @@ func (r *DHRatchet) PerformRatchet() ([ChainKeySize]byte, [ChainKeySize]byte, er
 		return [ChainKeySize]byte{}, [ChainKeySize]byte{}, oops.Wrapf(ErrDHFailed, "DH ratchet failed: %w", err)
 	}
 
-	// Use kdf package to derive new root key and chain keys
-	var sharedSecretArray [32]byte
-	copy(sharedSecretArray[:], sharedSecret)
-	kd := kdf.NewKeyDerivation(sharedSecretArray)
+	// tagsetKey = HKDF(sharedSecret, ZEROLEN, "XDHRatchetTagSet", 32)
+	tagsetKeyBytes, err := kdf.StandardHKDF(sharedSecret, nil, []byte("XDHRatchetTagSet"), 32)
+	if err != nil {
+		return [ChainKeySize]byte{}, [ChainKeySize]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "DH ratchet tagset KDF failed: %w", err)
+	}
+	var tagsetKey [ChainKeySize]byte
+	copy(tagsetKey[:], tagsetKeyBytes)
 
-	// Derive rootKey + sendingKey + receivingKey (3 keys total)
-	rootKey, sendingChainKey, receivingChainKey, err := kd.DeriveSessionKeys()
+	// newTagSet = DH_INITIALIZE(rootKey, tagsetKey)
+	// Reuses the previous rootKey (nextRootKey from the prior tagset).
+	nextRootKey, ck, err := DH_INITIALIZEFull(r.rootKey, tagsetKey)
 	if err != nil {
 		return [ChainKeySize]byte{}, [ChainKeySize]byte{}, oops.Wrapf(ErrKeyDerivationFailed, "DH ratchet KDF failed: %w", err)
 	}
 
-	// Update root key
-	r.rootKey = rootKey
+	// Update root key to nextRootKey for the next ratchet step.
+	r.rootKey = nextRootKey
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "DHRatchet.PerformRatchet"}).Debug("DH ratchet performed successfully")
-	return sendingChainKey, receivingChainKey, nil
+	return ck, ck, nil
 }
 
 // UpdateKeys updates the DH ratchet with a new remote public key.
