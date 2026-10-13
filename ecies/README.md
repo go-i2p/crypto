@@ -15,9 +15,10 @@ ElGamal/AES+SessionTags. It implements ephemeral-static and ephemeral-ephemeral
 Diffie-Hellman key agreement using X25519, combined with ChaCha20-Poly1305 AEAD
 encryption.
 
-The one-shot EncryptECIESX25519/DecryptECIESX25519 functions are a simplified
-form of the spec's "New Session" message (see AUDIT.md for the specific
-deviations from the wire format).
+The one-shot EncryptECIESX25519/DecryptECIESX25519 functions implement the
+spec's one-time (IK) pattern exactly: the ephemeral key is Elligator2-encoded
+for the wire, the key is derived with the spec's Noise-based chain, and the
+ciphertext uses the spec's two-section layout (96 bytes of overhead).
 
 Specification:
 https://i2p.net/en/docs/specs/ecies/
@@ -65,9 +66,10 @@ Error constants for ECIES operations Moved from: ecies.go
 ```go
 func DecryptECIESX25519(recipientPrivKey, ciphertext []byte) ([]byte, error)
 ```
-DecryptECIESX25519 decrypts ciphertext using ECIES-X25519 scheme. The private
-key must be 32 bytes (X25519 private key). The ciphertext must be in the format:
-[ephemeral_pubkey][nonce][aead_ciphertext] Moved from: ecies.go
+DecryptECIESX25519 decrypts ciphertext using the ECIES-X25519 one-time format.
+The private key must be 32 bytes (X25519 private key). The ciphertext must be
+in the one-time format: [Elligator2-encoded ephemeral pubkey 32][flags section
+48][payload section N+16]. Moved from: ecies.go
 
 #### func  DeriveChaCha20Key
 
@@ -128,10 +130,10 @@ tag sequence number Returns (tag, error) where tag is 8 bytes
 ```go
 func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error)
 ```
-EncryptECIESX25519 encrypts plaintext using ECIES-X25519 scheme. This implements
-the "New Session" message format from I2P Proposal 144. The recipient's public
-key must be 32 bytes (X25519 public key). Returns ciphertext in the format:
-[ephemeral_pubkey][nonce][aead_ciphertext] Moved from: ecies.go
+EncryptECIESX25519 encrypts plaintext using the ECIES-X25519 one-time format
+from I2P Proposal 144. The recipient's public key must be 32 bytes (X25519
+public key). Returns ciphertext in the one-time format: [Elligator2-encoded
+ephemeral pubkey 32][flags section 48][payload section N+16]. Moved from: ecies.go
 
 #### func  GenerateECIESKeyPair
 

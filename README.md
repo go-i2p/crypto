@@ -371,7 +371,6 @@ func main() {
 - **Asymmetric Encryption**
   - ECIES-X25519-AEAD-Ratchet with a unified Session API — the modern standard
   - Curve25519 (X25519) key agreement
-  - RSA (2048/3072/4096-bit)
   - ElGamal — legacy, kept for compatibility with older routers
 
 - **Digital Signatures**
@@ -379,6 +378,7 @@ func main() {
   - Ed25519ph (pre-hashed variant)
   - ECDSA (P-256, P-384, P-521 curves)
   - DSA (Digital Signature Algorithm) — legacy
+  - RSA (2048/3072/4096-bit) — legacy
 
 - **Message Authentication**
   - HMAC (Hash-based Message Authentication Code)

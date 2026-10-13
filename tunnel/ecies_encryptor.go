@@ -37,13 +37,12 @@ func NewECIESEncryptor(recipientPubKey [32]byte) *ECIESEncryptor {
 // The encryption uses:
 // - Ephemeral X25519 key pair
 // - X25519 key agreement with recipient's public key
-// - HKDF-SHA256 key derivation
+// - The spec's Noise-based key derivation (see the ecies package)
 // - ChaCha20-Poly1305 AEAD encryption
 //
-// Returns ciphertext in format: [ephemeral_pubkey][nonce][aead_ciphertext]
-//
-// Note: this is a simplified form of the I2P ECIES-X25519-AEAD spec's
-// "New Session" message. See AUDIT.md for the specific deviations.
+// Returns ciphertext in the spec's one-time format:
+// [Elligator2-encoded ephemeral public key 32][flags section 48][payload
+// section N+16]. See the ecies package for the full wire format.
 func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	if plaintext == nil {
 		log.WithFields(logger.Fields{

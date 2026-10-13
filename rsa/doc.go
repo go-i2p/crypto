@@ -1,5 +1,11 @@
 // Package rsa provides RSA (Rivest-Shamir-Adleman) signing for I2P.
 //
+// # Deprecated: legacy algorithm
+//
+// RSA is a legacy signature scheme in I2P. It is kept for compatibility with
+// older routers and for verifying legacy data, but new code should use the
+// ed25519 or red25519 packages, which are faster and more secure.
+//
 // RSA is a widely used public-key algorithm. A key pair consists of a public
 // key (for verifying signatures) and a private key (for creating them). This
 // package supports 2048-bit, 3072-bit, and 4096-bit keys.

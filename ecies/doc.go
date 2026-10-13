@@ -26,13 +26,11 @@
 // (Crypto type 0 is the legacy ElGamal scheme; types 1-3 are reserved for a
 // different ECIES variant.)
 //
-// The one-shot EncryptECIESX25519/DecryptECIESX25519 functions provide a
-// self-contained ephemeral-static X25519 + ChaCha20-Poly1305 exchange. They
-// are a simplified form of the spec's "New Session" message: the ephemeral
-// key is not Elligator2-encoded, the nonce is fully random rather than
-// zero-prefixed, and the key is derived with a single HKDF call rather than
-// the spec's Noise-based chain. See AUDIT.md for the full list of
-// deviations from the wire format.
+// The one-shot EncryptECIESX25519/DecryptECIESX25519 functions implement the
+// spec's one-time (IK) pattern exactly: the ephemeral key is
+// Elligator2-encoded for the wire, the key is derived with the spec's
+// Noise-based chain, and the ciphertext uses the spec's two-section layout.
+// See the "The two main operations" section below for the wire format.
 //
 // See the official specification for the full protocol:
 // https://i2p.net/en/docs/specs/ecies/
@@ -42,8 +40,21 @@
 // EncryptECIESX25519 and DecryptECIESX25519 implement a one-shot
 // ephemeral-static exchange: the sender generates a fresh ephemeral key,
 // agrees a shared secret with the recipient's static key, and encrypts with
-// ChaCha20-Poly1305. The ciphertext is laid out as
-// [ephemeral public key][nonce][AEAD ciphertext].
+// ChaCha20-Poly1305.
+//
+// The ciphertext follows the spec's one-time format (section 1d). It has
+// three parts:
+//
+//   - An Elligator2-encoded ephemeral public key (32 bytes).
+//   - A flags section: 32 bytes of ChaCha20 ciphertext plus a 16-byte
+//     Poly1305 tag (48 bytes). The decrypted flags are 32 bytes of zeros.
+//   - A payload section: the ChaCha20 ciphertext of the message plus a
+//     16-byte Poly1305 tag.
+//
+// The total overhead is 96 bytes. The two sections are authenticated
+// separately, so a tampered flags section is rejected without decrypting the
+// payload. The key is derived with the spec's Noise "IK" + "es" + "N"
+// schedule (section 1f), not a single HKDF call.
 //
 // For long-lived sessions that need forward secrecy, see SessionState, which
 // layers the three ratchets (session tag, symmetric key, and DH ratchet) on
