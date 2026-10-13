@@ -20,6 +20,21 @@ const (
 	PublicKeySize = 32
 	// PrivateKeySize is the size of X25519 private keys in bytes
 	PrivateKeySize = 32
+
+	// MaxMessagesPerTagset is the maximum number of messages that may be
+	// encrypted under a single tag set before the DH ratchet must advance.
+	// Per the I2P ECIES spec (section 4): "The maximum number of messages
+	// before the DH must ratchet is 65535."
+	MaxMessagesPerTagset = 65535
+
+	// DefaultLookaheadWindow is the default receiver look-ahead window size
+	// for session tag validation. Per the I2P ECIES spec (section 4b):
+	// "N might be at most 128, but 32 or even less may be a better choice."
+	DefaultLookaheadWindow = 32
+
+	// MaxLookaheadWindow is the maximum receiver look-ahead window size
+	// permitted by the I2P ECIES spec (section 4b).
+	MaxLookaheadWindow = 128
 )
 
 // Error constants for ratchet operations
@@ -30,4 +45,9 @@ var (
 	ErrTagDerivationFailed   = oops.Errorf("session tag derivation failed")
 	ErrKeyDerivationFailed   = oops.Errorf("key derivation failed")
 	ErrDHFailed              = oops.Errorf("Diffie-Hellman exchange failed")
+
+	// ErrTagsetExhausted indicates the current tag set has reached the
+	// maximum number of messages (MaxMessagesPerTagset) and the DH ratchet
+	// must advance before further messages can be sent.
+	ErrTagsetExhausted = oops.Errorf("tag set exhausted: DH ratchet required")
 )

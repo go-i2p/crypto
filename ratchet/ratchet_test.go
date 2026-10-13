@@ -234,29 +234,32 @@ func TestDHRatchet(t *testing.T) {
 		ratchet := NewDHRatchet(rootKey, privKey1, pubKey2)
 
 		oldRootKey := ratchet.rootKey
-		sendKey, recvKey, err := ratchet.PerformRatchet()
+		nextRootKey, ck, err := ratchet.PerformRatchet()
 		if err != nil {
 			t.Fatalf("failed to perform DH ratchet: %v", err)
 		}
 
-		// Per the spec, the DH ratchet produces a single ck (newTagSet) for
-		// both directions; the directional split happens in the data-phase KDF.
-		if !bytes.Equal(sendKey[:], recvKey[:]) {
-			t.Errorf("sending and receiving keys should be the same ck per spec")
-		}
+		// nextRootKey is the updated root key for the next ratchet step; ck is
+		// the chain key output of DH_INITIALIZE. They are distinct values.
+		// The caller applies the TagAndKeyGenKeys KDF to ck to obtain the
+		// session tag and symmetric chain keys.
 
 		// Keys should be non-zero
 		zeroKey := [ChainKeySize]byte{}
-		if bytes.Equal(sendKey[:], zeroKey[:]) {
-			t.Errorf("sending key should be non-zero")
+		if bytes.Equal(nextRootKey[:], zeroKey[:]) {
+			t.Errorf("next root key should be non-zero")
 		}
-		if bytes.Equal(recvKey[:], zeroKey[:]) {
-			t.Errorf("receiving key should be non-zero")
+		if bytes.Equal(ck[:], zeroKey[:]) {
+			t.Errorf("ck should be non-zero")
 		}
 
 		// The root key should have advanced (nextRootKey != old rootKey).
 		if bytes.Equal(ratchet.rootKey[:], oldRootKey[:]) {
 			t.Errorf("root key should have advanced after ratchet")
+		}
+		// The returned nextRootKey should match the ratchet's internal root key.
+		if !bytes.Equal(nextRootKey[:], ratchet.rootKey[:]) {
+			t.Errorf("returned nextRootKey should match internal root key")
 		}
 	})
 
@@ -372,14 +375,14 @@ func TestZeroValueFootguns(t *testing.T) {
 		var badRatchet DHRatchet
 
 		// This will produce weak/invalid keys because all internal state is zero
-		sendKey, recvKey, err := badRatchet.PerformRatchet()
+		nextRootKey, ck, err := badRatchet.PerformRatchet()
 		if err != nil {
 			t.Logf("Expected behavior: DH ratchet with zero keys fails: %v", err)
 		}
 
 		// Even if it succeeds, the keys will be derived from all-zero state
 		zeroKey := [ChainKeySize]byte{}
-		if bytes.Equal(sendKey[:], zeroKey[:]) && bytes.Equal(recvKey[:], zeroKey[:]) {
+		if bytes.Equal(nextRootKey[:], zeroKey[:]) && bytes.Equal(ck[:], zeroKey[:]) {
 			t.Log("Zero-value DHRatchet produces zero keys - cryptographically invalid!")
 		}
 

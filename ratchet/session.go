@@ -16,11 +16,31 @@ import (
 //   - Tag ratchet for session tag generation
 //
 // All ratchets are initialized from the same root key derived from ECIES shared secret.
+//
+// Per the I2P ECIES spec (section 4), the DH ratchet is bidirectional: each
+// direction maintains its own root key, and after each DH ratchet step the
+// resulting chain key is split via the TagAndKeyGenKeys KDF into a session tag
+// chain key and a symmetric message key chain key.
 type Session struct {
 	dhRatchet  *DHRatchet
 	symRatchet *SymmetricRatchet
 	tagRatchet *TagRatchet
 	messageNum uint32
+
+	// sendingRootKey is the root key for the sending direction, used as the
+	// input to DH_INITIALIZE on the next DH ratchet step.
+	sendingRootKey [ChainKeySize]byte
+	// receivingRootKey is the root key for the receiving direction.
+	receivingRootKey [ChainKeySize]byte
+
+	// lookaheadSize is the receiver look-ahead window size for session tag
+	// validation (spec section 4b: "N might be at most 128, but 32 or even
+	// less may be a better choice"). Defaults to DefaultLookaheadWindow.
+	lookaheadSize int
+	// lookaheadTags holds pre-computed session tags for out-of-order delivery
+	// tolerance. Index i is the tag at offset i from the current ratchet
+	// position. Rebuilt after each successful verification and DH ratchet.
+	lookaheadTags [][SessionTagSize]byte
 }
 
 // HandshakeResult contains the output of an ECIES key exchange handshake
@@ -31,7 +51,19 @@ type HandshakeResult struct {
 }
 
 // NewSessionFromECIES creates a new session initialized from an ECIES shared secret.
-// The shared secret is used as input to HKDF to derive all ratchet keys.
+//
+// The shared secret plays the role of "k" in the spec's DH INITIALIZATION KDF
+// (section 4), with a zero initial root key:
+//
+//	keydata = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)
+//	nextRootKey = keydata[0:32]
+//	ck          = keydata[32:64]
+//
+// The chain key is then split via the TagAndKeyGenKeys KDF:
+//
+//	keydata = HKDF(salt=ck, ikm=ZEROLEN, info="TagAndKeyGenKeys", 64)
+//	sessTag_ck = keydata[0:32]
+//	symmKey_ck = keydata[32:64]
 //
 // This is the recommended way to create a session after ECIES key exchange.
 //
@@ -58,25 +90,39 @@ type HandshakeResult struct {
 func NewSessionFromECIES(sharedSecret, ourPrivKey, theirPubKey [32]byte) (*Session, error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "NewSessionFromECIES"}).Debug("Creating new session from ECIES shared secret")
 
-	// Derive root key and initial chain keys from shared secret using kdf package
-	kd := kdf.NewKeyDerivation(sharedSecret)
-	rootKey, symChainKey, tagChainKey, err := kd.DeriveSessionKeys()
+	// DH INITIALIZATION KDF (spec section 4): the shared secret plays the role
+	// of "k" with a zero initial root key.
+	var zeroRootKey [ChainKeySize]byte
+	nextRootKey, ck, err := DH_INITIALIZEFull(zeroRootKey, sharedSecret)
 	if err != nil {
-		return nil, oops.Wrapf(ErrKeyDerivationFailed, "failed to derive session keys: %w", err)
+		return nil, oops.Wrapf(ErrKeyDerivationFailed, "failed to run DH INITIALIZATION KDF: %w", err)
 	}
 
+	// TagAndKeyGenKeys KDF: split the chain key into the session tag chain key
+	// and the symmetric key chain key.
+	keydata, err := kdf.StandardHKDF(ck[:], nil, []byte("TagAndKeyGenKeys"), 64)
+	if err != nil {
+		return nil, oops.Wrapf(ErrKeyDerivationFailed, "failed to run TagAndKeyGenKeys KDF: %w", err)
+	}
+	var sessTagCK, symmKeyCK [ChainKeySize]byte
+	copy(sessTagCK[:], keydata[0:32])
+	copy(symmKeyCK[:], keydata[32:64])
+
 	// Initialize ratchets
-	dhRatchet := NewDHRatchet(rootKey, ourPrivKey, theirPubKey)
-	symRatchet := NewSymmetricRatchet(symChainKey)
-	tagRatchet := NewTagRatchet(tagChainKey)
+	dhRatchet := NewDHRatchet(nextRootKey, ourPrivKey, theirPubKey)
+	symRatchet := NewSymmetricRatchet(symmKeyCK)
+	tagRatchet := NewTagRatchet(sessTagCK)
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "NewSessionFromECIES"}).Debug("Session created successfully from ECIES shared secret")
 
 	return &Session{
-		dhRatchet:  dhRatchet,
-		symRatchet: symRatchet,
-		tagRatchet: tagRatchet,
-		messageNum: 0,
+		dhRatchet:        dhRatchet,
+		symRatchet:       symRatchet,
+		tagRatchet:       tagRatchet,
+		messageNum:       0,
+		sendingRootKey:   nextRootKey,
+		receivingRootKey: nextRootKey,
+		lookaheadSize:    DefaultLookaheadWindow,
 	}, nil
 }
 
@@ -135,6 +181,12 @@ func NewSessionFromHandshake(handshake HandshakeResult) (*Session, error) {
 //	ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce)
 func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.EncryptMessage", "plaintext_len": len(plaintext), "message_num": s.messageNum}).Debug("Encrypting message")
+
+	// The spec caps each tag set at 65535 messages; beyond that the DH ratchet
+	// must be performed to obtain a fresh tag set.
+	if s.messageNum >= MaxMessagesPerTagset {
+		return messageKey, tag, ErrTagsetExhausted
+	}
 
 	// Generate session tag for this message
 	tag, err = s.tagRatchet.GenerateNextTag()
@@ -198,23 +250,67 @@ func (s *Session) DecryptMessage(tag [8]byte) (messageKey [32]byte, err error) {
 	return messageKey, nil
 }
 
-// verifySessionTag validates that the received tag matches the expected tag.
+// verifySessionTag validates that the received tag matches one of the
+// pre-computed lookahead tags. Per the spec (section 4), receivers should
+// implement a look-ahead strategy: the receiver ratchets ahead by the window
+// size and stores the tags, so that out-of-order delivery within the window
+// can still be decrypted.
+//
+// On a match at offset i, the tag ratchet is advanced i times to reach the
+// matched position, and the lookahead window is rebuilt from there.
 func (s *Session) verifySessionTag(tag [8]byte) error {
-	expectedTag, err := s.tagRatchet.PeekNextTag()
-	if err != nil {
-		return oops.Wrapf(err, "failed to peek session tag")
+	if len(s.lookaheadTags) == 0 {
+		s.rebuildLookahead()
 	}
 
-	if expectedTag != tag {
-		log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.verifySessionTag", "expected_tag": expectedTag, "received_tag": tag}).Warn("Session tag mismatch")
-		return oops.Errorf("invalid session tag: tag mismatch")
+	for i, candidate := range s.lookaheadTags {
+		if candidate != tag {
+			continue
+		}
+
+		// Advance the tag ratchet to the matched position.
+		for j := 0; j < i; j++ {
+			if err := s.tagRatchet.Advance(); err != nil {
+				return oops.Wrapf(err, "failed to advance tag ratchet")
+			}
+		}
+
+		// Rebuild the window from the new position.
+		s.rebuildLookahead()
+		return nil
 	}
 
-	if err := s.tagRatchet.Advance(); err != nil {
-		return oops.Wrapf(err, "failed to advance tag ratchet")
+	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.verifySessionTag", "received_tag": tag}).Warn("Session tag not in lookahead window")
+	return oops.Errorf("invalid session tag: tag mismatch")
+}
+
+// rebuildLookahead pre-computes the lookahead window of session tags. Index i
+// of s.lookaheadTags is the tag at offset i from the current ratchet position
+// (i.e., the tag that would be generated after i more Advance steps).
+func (s *Session) rebuildLookahead() {
+	size := s.lookaheadSize
+	if size <= 0 {
+		size = DefaultLookaheadWindow
+	}
+	if size > MaxLookaheadWindow {
+		size = MaxLookaheadWindow
 	}
 
-	return nil
+	// Walk a copy of the tag ratchet so the real ratchet is not advanced.
+	probe := *s.tagRatchet
+	tags := make([][SessionTagSize]byte, 0, size)
+	for i := 0; i < size; i++ {
+		tag, err := probe.PeekNextTag()
+		if err != nil {
+			break
+		}
+		tags = append(tags, tag)
+		if err := probe.Advance(); err != nil {
+			break
+		}
+	}
+
+	s.lookaheadTags = tags
 }
 
 // deriveDecryptionKey derives the message key and advances the symmetric ratchet.
@@ -235,35 +331,64 @@ func (s *Session) deriveDecryptionKey() ([32]byte, error) {
 	return messageKey, nil
 }
 
-// PerformDHRatchet performs a Diffie-Hellman ratchet step to derive new chain keys.
-// This should be called periodically to maintain forward secrecy.
+// PerformDHRatchet performs a Diffie-Hellman ratchet step in the sending
+// direction to derive a new tag set. This should be called periodically to
+// maintain forward secrecy.
+//
+// Per the spec (section 4, DH RATCHET KDF + DH INITIALIZATION KDF), the chain
+// key output of DH_INITIALIZE is split via the TagAndKeyGenKeys KDF:
+//
+//	keydata = HKDF(salt=ck, ikm=ZEROLEN, info="TagAndKeyGenKeys", 64)
+//	sessTag_ck = keydata[0:32]
+//	symmKey_ck = keydata[32:64]
+//
+// The session's symmetric and tag ratchets are reinitialized from the split,
+// and the sending-direction root key is advanced.
 //
 // Returns:
-//   - sendingKey: New chain key for sending messages
-//   - receivingKey: New chain key for receiving messages
+//   - chainKey: The DH chain key (ck) output of DH_INITIALIZE
+//   - nextRootKey: The new root key for the sending direction
 //   - error: Any error during ratchet operation
 //
 // Example:
 //
 //	// Periodically refresh keys
-//	sendKey, recvKey, err := session.PerformDHRatchet()
+//	ck, nextRootKey, err := session.PerformDHRatchet()
 //	if err != nil {
 //	    return err
 //	}
-func (s *Session) PerformDHRatchet() (sendingKey, receivingKey [32]byte, err error) {
+func (s *Session) PerformDHRatchet() (chainKey, nextRootKey [32]byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.PerformDHRatchet"}).Debug("Performing DH ratchet")
 
-	sendingKey, receivingKey, err = s.dhRatchet.PerformRatchet()
-	if err != nil {
-		return sendingKey, receivingKey, err
-	}
+	// Select the sending-direction root key before the ratchet step.
+	s.dhRatchet.SetRootKey(s.sendingRootKey)
 
-	// Update symmetric ratchet with new sending chain key
-	s.symRatchet = NewSymmetricRatchet(sendingKey)
+	nextRootKey, ck, err := s.dhRatchet.PerformRatchet()
+	if err != nil {
+		return chainKey, nextRootKey, err
+	}
+	chainKey = ck
+
+	// TagAndKeyGenKeys KDF: split the chain key into the session tag chain key
+	// and the symmetric key chain key.
+	keydata, err := kdf.StandardHKDF(ck[:], nil, []byte("TagAndKeyGenKeys"), 64)
+	if err != nil {
+		return chainKey, nextRootKey, oops.Wrapf(ErrKeyDerivationFailed, "failed to run TagAndKeyGenKeys KDF: %w", err)
+	}
+	var sessTagCK, symmKeyCK [ChainKeySize]byte
+	copy(sessTagCK[:], keydata[0:32])
+	copy(symmKeyCK[:], keydata[32:64])
+
+	// Reinitialize the ratchets from the split and advance the root key.
+	s.symRatchet = NewSymmetricRatchet(symmKeyCK)
+	s.tagRatchet = NewTagRatchet(sessTagCK)
+	s.sendingRootKey = nextRootKey
+	s.messageNum = 0
+	s.rebuildLookahead()
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.PerformDHRatchet"}).Debug("DH ratchet completed successfully")
 
-	return sendingKey, receivingKey, nil
+	return chainKey, nextRootKey, nil
 }
 
 // UpdateRemotePublicKey updates the remote party's public key for DH ratchet.
@@ -306,6 +431,12 @@ func (s *Session) Zero() {
 		s.tagRatchet.Zero()
 	}
 	s.messageNum = 0
+	s.sendingRootKey = [ChainKeySize]byte{}
+	s.receivingRootKey = [ChainKeySize]byte{}
+	for i := range s.lookaheadTags {
+		s.lookaheadTags[i] = [SessionTagSize]byte{}
+	}
+	s.lookaheadTags = nil
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.Zero"}).Debug("Session state cleared")
 }

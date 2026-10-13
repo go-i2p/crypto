@@ -43,18 +43,17 @@ func NewDHRatchet(rootKey, ourPrivKey, theirPubKey [ChainKeySize]byte) *DHRatche
 
 // PerformRatchet performs a DH ratchet step.
 //
-// Spec ref: ratchet.md §"DH Ratchet KDF" —
+// Spec ref: ecies.rst §"DH Ratchet KDF" —
 //
 //	sharedSecret = DH(rask, rbpk)
 //	tagsetKey = HKDF(sharedSecret, ZEROLEN, "XDHRatchetTagSet", 32)
 //	rootKey = nextRootKey // from previous tagset in this direction
 //	newTagSet = DH_INITIALIZE(rootKey, tagsetKey)
 //
-// Returns the new chain key (ck) from DH_INITIALIZE for both directions.
-// The caller derives the tag and symmetric keys from ck via the
-// TagAndKeyGenKeys KDF. The previous rootKey is reused (not re-derived
-// from the sharedSecret), and the nextRootKey from DH_INITIALIZE becomes
-// the new rootKey for the next ratchet step.
+// Returns (nextRootKey, ck) where nextRootKey is the updated root key for
+// the next ratchet step in this direction, and ck is the chain key output
+// of DH_INITIALIZE. The caller must apply the TagAndKeyGenKeys KDF to ck
+// to obtain the session tag chain key and symmetric key chain key.
 func (r *DHRatchet) PerformRatchet() ([ChainKeySize]byte, [ChainKeySize]byte, error) {
 	// Perform X25519 DH
 	sharedSecret, err := r.performDH(r.ourPrivKey[:], r.theirPubKey[:])
@@ -81,7 +80,14 @@ func (r *DHRatchet) PerformRatchet() ([ChainKeySize]byte, [ChainKeySize]byte, er
 	r.rootKey = nextRootKey
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "DHRatchet.PerformRatchet"}).Debug("DH ratchet performed successfully")
-	return ck, ck, nil
+	return nextRootKey, ck, nil
+}
+
+// SetRootKey sets the root key used as input to DH_INITIALIZE on the next
+// PerformRatchet call. This is used by the Session to select the correct
+// per-direction root key before performing a ratchet step.
+func (r *DHRatchet) SetRootKey(rootKey [ChainKeySize]byte) {
+	r.rootKey = rootKey
 }
 
 // UpdateKeys updates the DH ratchet with a new remote public key.
