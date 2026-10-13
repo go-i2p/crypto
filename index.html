@@ -13,7 +13,7 @@
         <a href="index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 218 commits
+        📝 222 commits
          • 📜 MIT License
       </div>
     </div>
@@ -39,17 +39,17 @@
   <div class="main-content">
     <header class="repo-header">
       <h1>go-i2p/crypto</h1>
-      <div class="repo-description">Comprehensive cryptography library for the I2P (Invisible Internet Project) anonymous networking ecosystem, factored out from the main router imple...</div>
+      <div class="repo-description">Cryptography building blocks for I2P (Invisible Internet Project), the</div>
       
       <div class="repo-stats">
         
         <div class="repo-stat">
-          <span>📝</span> <span>218 commits</span>
+          <span>📝</span> <span>222 commits</span>
         </div>
         
         
         <div class="repo-stat">
-          <span>📅</span> <span>Last updated: September 22, 2026</span>
+          <span>📅</span> <span>Last updated: October 12, 2026</span>
         </div>
         
         
@@ -67,27 +67,57 @@
         <div class="readme-content">
           <h1 id="go-i2p-crypto">go-i2p/crypto</h1>
 
-<p>Comprehensive cryptography library for the I2P (Invisible Internet Project) anonymous networking ecosystem, factored out from the main router implementation. This package provides I2P-specific cryptographic implementations including symmetric encryption, asymmetric encryption, digital signatures, and hashing functions required for privacy-preserving communications and onion routing.</p>
+<p>Cryptography building blocks for I2P (Invisible Internet Project), the
+anonymous network. I2P hides who you are talking to by routing messages
+through a series of relays. This library provides the encryption, signing,
+and key-derivation primitives that make that routing private.</p>
 
-<h2 id="notes-on-scope">Notes on scope:</h2>
+<p>It was factored out of the main router so that the crypto can be used and
+audited on its own.</p>
 
-<p>go-i2p theoretically has strictly scoped packages for low-level operations.
-This package is one of the better examples of that at this time.
-crypto is intended to only contain crypto primitives and interfaces, NOT whole protocol implementations.</p>
+<h2 id="scope">Scope</h2>
+
+<p>This package contains <strong>crypto primitives and interfaces only</strong> — not full
+protocol implementations. It is the lowest-level component in the <code>go-i2p</code>
+namespace, so it must not depend on the higher-level packages:</p>
 
 <ul>
-<li><a href="https://github.com/go-i2p/crypto" target="_blank">go-i2p/crypto</a>: Cryptographic primitives only</li>
-</ul>
-
-<p>This package MUST NOT use any of the following libraries, as it is a dependency of them.
-<code>go-i2p/crypto</code> is essentially the lowest-level component in the <code>go-i2p</code> namespace.</p>
-
-<ul>
-<li><a href="https://github.com/go-i2p/common" target="_blank">go-i2p/common</a>: I2P Common datastructures</li>
+<li><a href="https://github.com/go-i2p/common" target="_blank">go-i2p/common</a>: I2P common data structures</li>
 <li><a href="https://github.com/go-i2p/noise" target="_blank">go-i2p/noise</a>: Noise handshake implementations</li>
 <li><a href="https://github.com/go-i2p/go-noise" target="_blank">go-i2p/go-noise</a>: Noise handshake modifications and router interface</li>
 <li><a href="https://github.com/go-i2p/go-i2p" target="_blank">go-i2p/go-i2p</a>: I2P router implementation</li>
 </ul>
+
+<hr>
+
+<h2 id="how-the-pieces-fit-together">How the pieces fit together</h2>
+
+<p>I2P needs three kinds of cryptography. Here is how they build on each other,
+from the simplest idea to the full scheme:</p>
+
+<ol>
+<li><p><strong>Keys.</strong> Every scheme starts with a key pair. A <em>public</em> key can be shared
+openly; a <em>private</em> key must be kept secret. The <code>ed25519</code> and <code>curve25519</code>
+packages generate these.</p></li>
+
+<li><p><strong>Shared secrets.</strong> Two parties who never met can agree on a secret by
+combining their keys. This is called <em>key agreement</em> (X25519 in the
+<code>curve25519</code> package). The <code>hkdf</code> and <code>kdf</code> packages then stretch that
+shared secret into the specific keys each part of the protocol needs.</p></li>
+
+<li><p><strong>Encryption.</strong> With a key in hand, data is encrypted. The modern choice is
+ChaCha20-Poly1305 (<code>chacha20poly1305</code>), which also detects tampering.</p></li>
+
+<li><p><strong>Forward secrecy.</strong> The <code>ratchet</code> package keeps rotating the keys as
+messages flow, so compromising one key does not expose past messages.</p></li>
+
+<li><p><strong>The full scheme.</strong> The <code>ecies</code> package ties these together into
+ECIES-X25519-AEAD-Ratchet, the current I2P encryption standard. The
+<code>tunnel</code> package applies it to I2P tunnel messages.</p></li>
+</ol>
+
+<p>Start with the package docs on <a href="https://pkg.go.dev/github.com/go-i2p/crypto" target="_blank">pkg.go.dev</a>
+for details on each piece.</p>
 
 <hr>
 
@@ -101,7 +131,7 @@ crypto is intended to only contain crypto primitives and interfaces, NOT whole p
 <p><strong>Requirements:</strong></p>
 
 <ul>
-<li>Go 1.25.0 or later</li>
+<li>Go 1.26.8 or later</li>
 <li>CGO_ENABLED=0 for static linking (recommended)</li>
 </ul>
 
@@ -306,7 +336,13 @@ func main() {
 }
 </code></pre>
 
-<h3 id="asymmetric-encryption-elgamal">Asymmetric Encryption (ElGamal)</h3>
+<h3 id="asymmetric-encryption-elgamal-legacy">Asymmetric Encryption (ElGamal — legacy)</h3>
+
+<blockquote>
+<p><strong>Deprecated.</strong> ElGamal is the original I2P encryption scheme. It is kept
+only for compatibility with older routers and for decrypting legacy data.
+New code should use the <code>ecies</code> package (ECIES-X25519-AEAD-Ratchet).</p>
+</blockquote>
 
 <pre><code class="language-go">package main
 
@@ -394,26 +430,27 @@ func main() {
 <li><p><strong>Symmetric Encryption</strong></p>
 
 <ul>
-<li>AES (128/192/256-bit) with CBC mode</li>
+<li>ChaCha20-Poly1305 AEAD (authenticated encryption) — the modern standard</li>
 <li>ChaCha20 stream cipher</li>
-<li><strong>ChaCha20-Poly1305 AEAD</strong> (authenticated encryption) ✨ NEW</li>
+<li>AES (128/192/256-bit) with CBC mode — legacy</li>
 </ul></li>
 
 <li><p><strong>Asymmetric Encryption</strong></p>
 
 <ul>
+<li>ECIES-X25519-AEAD-Ratchet with a unified Session API — the modern standard</li>
 <li>Curve25519 (X25519) key agreement</li>
 <li>RSA (2048/3072/4096-bit)</li>
-<li>ElGamal encryption</li>
-<li><strong>ECIES-X25519-AEAD-Ratchet</strong> with unified Session API ✨ NEW</li>
+<li>ElGamal — legacy, kept for compatibility with older routers</li>
 </ul></li>
 
 <li><p><strong>Digital Signatures</strong></p>
 
 <ul>
-<li>Ed25519 signatures</li>
-<li>DSA (Digital Signature Algorithm)</li>
+<li>Ed25519 signatures — the standard I2P signature type</li>
+<li>Ed25519ph (pre-hashed variant)</li>
 <li>ECDSA (P-256, P-384, P-521 curves)</li>
+<li>DSA (Digital Signature Algorithm) — legacy</li>
 </ul></li>
 
 <li><p><strong>Message Authentication</strong></p>
@@ -421,13 +458,13 @@ func main() {
 <ul>
 <li>HMAC (Hash-based Message Authentication Code)</li>
 <li>HKDF (HMAC-based Key Derivation Function)</li>
-<li><strong>Unified KDF utilities</strong> for consistent key derivation ✨ NEW</li>
+<li>Unified KDF utilities for consistent key derivation</li>
 </ul></li>
 
 <li><p><strong>Key Management</strong></p>
 
 <ul>
-<li><strong>Concrete key generation APIs</strong> (no type assertions needed) ✨ NEW</li>
+<li>Concrete key generation APIs (no type assertions needed)</li>
 <li>Secure memory cleanup with <code>Zero()</code> methods</li>
 <li>Forward secrecy with ratcheting</li>
 </ul></li>
@@ -514,7 +551,7 @@ func main() {
                 eyedeekay
               </div>
               <div class="contributor-commits">
-                218 commits
+                222 commits
               </div>
             </div>
           </div>
@@ -526,7 +563,7 @@ func main() {
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2026-10-13 00:10:41 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2026-10-13 03:24:38 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>
