@@ -1,5 +1,10 @@
 package chacha20poly1305
 
+// Tests for the ChaCha20-Poly1305 AEAD wrapper. These validate the
+// encrypt/decrypt round-trip and the output layout
+// ([12-byte nonce][ciphertext+tag]). ChaCha20-Poly1305 is the AEAD used by
+// the I2P ECIES-X25519-AEAD scheme (see https://i2p.net/en/docs/specs/ecies/).
+
 import (
 	"bytes"
 	"fmt"

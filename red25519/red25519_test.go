@@ -1,5 +1,10 @@
 package red25519
 
+// Tests for the Red25519 signature scheme. These validate the sign/verify
+// round-trip, key construction, and compatibility with the upstream
+// go-i2p/red25519 implementation. Red25519 is a modern I2P signature scheme
+// (see https://i2p.net/en/docs/specs/cryptography/).
+
 import (
 	"bytes"
 	"crypto/ed25519"

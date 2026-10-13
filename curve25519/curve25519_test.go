@@ -1,5 +1,11 @@
 package curve25519
 
+// Tests for the X25519 ephemeral-static encryption helper. These validate
+// the encrypt/decrypt round-trip, the output layout
+// ([1B zero padding][ephemeral pubkey 32B][nonce 12B][AEAD ciphertext]), and
+// the 1024-byte size limit. X25519 is the key-agreement primitive used by the
+// I2P ECIES-X25519-AEAD scheme (see https://i2p.net/en/docs/specs/ecies/).
+
 import (
 	"bytes"
 	"crypto/rand"

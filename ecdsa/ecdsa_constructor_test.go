@@ -1,5 +1,10 @@
 package ecdsa
 
+// Tests for the ECDSA key constructors. These validate that ECDSA keys are
+// built correctly for each supported curve (P-256, P-384, P-521) and that
+// invalid inputs are rejected. ECDSA is used by I2P for signatures (see
+// https://i2p.net/en/docs/specs/cryptography/).
+
 import (
 	"crypto/ecdsa"
 	"crypto/elliptic"

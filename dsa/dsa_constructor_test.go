@@ -1,5 +1,10 @@
 package dsa
 
+// Tests for the DSA key constructors. These validate that DSA keys are built
+// correctly and that invalid inputs are rejected. DSA with SHA-1 is a legacy
+// I2P signature scheme (see https://i2p.net/en/docs/specs/cryptography/);
+// new code should prefer ed25519 or red25519.
+
 import (
 	"crypto/rand"
 	"math/big"

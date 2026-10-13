@@ -1,5 +1,10 @@
 package aes
 
+// Tests for the AES key constructors. These validate that keys of each
+// supported size (128/192/256-bit) are built correctly and that invalid
+// inputs are rejected. AES is used by the legacy ElGamal/AES+SessionTags
+// scheme (see https://i2p.net/en/docs/specs/elgamal-aes/).
+
 import (
 	"crypto/rand"
 	"testing"

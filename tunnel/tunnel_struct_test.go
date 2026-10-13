@@ -1,5 +1,10 @@
 package tunnel
 
+// Tests for the tunnel message and key structs. These validate the
+// construction and serialization of the fixed 1028-byte tunnel message block
+// and the tunnel keys. The tunnel message format is defined by the I2P
+// specifications (see https://i2p.net/en/docs/specs/ntcp2/).
+
 import (
 	"bytes"
 	"testing"

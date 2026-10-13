@@ -1,5 +1,9 @@
 package rand
 
+// Tests for the deterministic PRNG source. These validate that the seeded
+// source produces a reproducible, well-distributed sequence of values. This
+// is a test-only utility, not used for cryptographic randomness in I2P.
+
 import (
 	"math"
 	"math/big"

@@ -1,5 +1,11 @@
 package ed25519
 
+// Tests for Ed25519 destination blinding. These validate that a blinded
+// destination key is a valid, distinct key and that blinding is
+// deterministic for a given blinding factor. Destination blinding is used by
+// I2P to hide the relationship between a destination and its owner (see
+// https://i2p.net/en/docs/specs/cryptography/).
+
 import (
 	"bytes"
 	"crypto/ed25519"

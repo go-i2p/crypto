@@ -204,7 +204,7 @@ func TestECIESX25519InvalidInputs(t *testing.T) {
 			nil,
 			{},
 			make([]byte, oneTimeCiphertextOverhead-1), // Too short (min is 96)
-			make([]byte, 10),                          // Way too short
+			make([]byte, 10), // Way too short
 		}
 
 		for i, invalidCiphertext := range invalidCiphertexts {

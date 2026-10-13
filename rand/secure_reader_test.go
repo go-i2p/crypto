@@ -1,5 +1,9 @@
 package rand
 
+// Tests for the secure random reader. These validate that the reader draws
+// from the operating system's cryptographic random source and that it
+// correctly produces big integers and byte slices.
+
 import (
 	"math/big"
 	"testing"

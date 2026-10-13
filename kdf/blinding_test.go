@@ -1,5 +1,11 @@
 package kdf
 
+// Tests for the destination-blinding key derivation. These validate that the
+// blinding KDF produces a valid, deterministic blinded key from a blinding
+// factor. Destination blinding is used by I2P to hide the relationship
+// between a destination and its owner (see
+// https://i2p.net/en/docs/specs/cryptography/).
+
 import (
 	"bytes"
 	"crypto/ed25519"

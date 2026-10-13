@@ -1,5 +1,10 @@
 package hkdf
 
+// Tests for the HKDF (HMAC-based Key Derivation Function) implementation.
+// These validate the extract-then-expand derivation against known vectors.
+// HKDF is defined in RFC 5869 (https://tools.ietf.org/html/rfc5869) and is
+// used throughout the I2P ECIES-X25519-AEAD scheme for key derivation.
+
 import (
 	"bytes"
 	"crypto/sha256"

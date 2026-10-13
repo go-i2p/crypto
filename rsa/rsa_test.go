@@ -1,5 +1,11 @@
 package rsa
 
+// Tests for RSA signing. These validate the sign/verify round-trip for each
+// supported key size (2048/3072/4096-bit) and that invalid inputs are
+// rejected. RSA is a legacy I2P signature scheme (see
+// https://i2p.net/en/docs/specs/cryptography/); new code should prefer
+// ed25519 or red25519.
+
 import (
 	"bytes"
 	"crypto/rand"
