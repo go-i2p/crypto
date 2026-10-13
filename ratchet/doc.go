@@ -50,4 +50,14 @@
 //
 // Always create a DHRatchet with NewDHRatchet rather than a struct literal,
 // so that its internal state is initialized correctly.
+//
+// # Session
+//
+// The Session type ties the three ratchets together and enforces the spec's
+// data-phase rules: a maximum of 65535 messages per tag set (after which a
+// DH ratchet step is required, see ErrTagsetExhausted) and a receiver
+// lookahead window (default 32, maximum 128) for out-of-order session tags.
+// NewSessionFromECIES bridges an ecies.SessionState into a spec-compliant
+// Session by deriving the root and chain keys with the spec's
+// DH_INITIALIZE and TagAndKeyGenKeys KDFs.
 package ratchet

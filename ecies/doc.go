@@ -58,7 +58,12 @@
 //
 // For long-lived sessions that need forward secrecy, see SessionState, which
 // layers the three ratchets (session tag, symmetric key, and DH ratchet) on
-// top of the same primitives.
+// top of the same primitives. SessionState is a convenience API: it is not
+// itself a spec-mandated wire format, and its initial key derivation is a
+// pragmatic choice for static-static initialization. The spec-compliant
+// ratchet primitives (session tag, symmetric key, and DH ratchet KDFs) live
+// in the ratchet package, which implements the spec's data-phase KDFs
+// exactly.
 //
 // # Key sizes
 //

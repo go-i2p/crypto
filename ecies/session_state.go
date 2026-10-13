@@ -16,6 +16,12 @@ import (
 // 1. Session Tag Ratchet - Derives unique session tags for message routing
 // 2. Symmetric Key Ratchet - Derives message encryption keys
 // 3. DH Ratchet - Provides forward secrecy through ephemeral key exchanges
+//
+// Deprecated: SessionState is a convenience API that does not fully conform
+// to the I2P ECIES-X25519-AEAD-Ratchet specification
+// (https://i2p.net/en/docs/specs/ecies/). The static-static key
+// initialization and DH ratchet key derivation use non-spec KDF parameters.
+// For spec-compliant ratcheted sessions, use ratchet.Session instead.
 type SessionState struct {
 	mu sync.RWMutex // Protects concurrent access to session state
 
@@ -48,6 +54,13 @@ type SessionState struct {
 
 	// Session creation timestamp
 	CreatedAt int64
+
+	// DH Ratchet root keys (per spec §4, each direction tracks its own root key)
+	SendingRootKey   [32]byte // Root key for the sending direction's tag set
+	ReceivingRootKey [32]byte // Root key for the receiving direction's tag set
+
+	// Receiver lookahead window (spec §4: N ≤ 128, 32 recommended)
+	receivingLookaheadTags [][ratchet.SessionTagSize]byte
 }
 
 // NewSession creates a new ECIES session state.
@@ -146,6 +159,11 @@ func (s *SessionState) deriveInitialKeys(isInitiator bool) error {
 	}
 
 	s.assignChainKeysByRole(keys, isInitiator)
+
+	// Initialize the per-direction root keys to zero (the spec's initial
+	// DH_INITIALIZE input). They are advanced on each DH ratchet step.
+	s.SendingRootKey = [32]byte{}
+	s.ReceivingRootKey = [32]byte{}
 	return nil
 }
 
@@ -158,7 +176,12 @@ func (s *SessionState) performStaticDH() ([]byte, error) {
 	return sharedSecret, nil
 }
 
-// deriveSessionChainKeys derives sending and receiving chain keys using HKDF.
+// deriveSessionChainKeys derives sending and receiving chain keys using
+// spec-convention HKDF (salt-first, per I2P Proposal 144 §1f).
+//
+// Note: the static-static initialization has no spec-defined chainKey seed,
+// so the shared secret is used as the HKDF salt with an empty IKM. This is a
+// pragmatic, non-spec derivation; see the SessionState deprecation notice.
 func deriveSessionChainKeys(sharedSecret []byte, isInitiator bool) ([][32]byte, error) {
 	var info string
 	if isInitiator {
@@ -167,15 +190,14 @@ func deriveSessionChainKeys(sharedSecret []byte, isInitiator bool) ([][32]byte, 
 		info = "ECIES-Session-Responder"
 	}
 
-	var sharedSecretArray [32]byte
-	copy(sharedSecretArray[:], sharedSecret)
-	kd := kdf.NewKeyDerivation(sharedSecretArray)
-
-	keys, err := kd.DeriveKeys([]byte(info), 2)
+	keydata, err := kdf.StandardHKDF(sharedSecret, nil, []byte(info), 64)
 	if err != nil {
 		return nil, err
 	}
 
+	var keys [][32]byte
+	copy(keys[0][:], keydata[0:32])
+	copy(keys[1][:], keydata[32:64])
 	return keys, nil
 }
 
@@ -196,6 +218,11 @@ func (s *SessionState) DeriveNextSendingKey() ([32]byte, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
+	// Spec §4: the maximum number of messages before the DH must ratchet is 65535.
+	if s.SendingMessageNum >= ratchet.MaxMessagesPerTagset {
+		return [32]byte{}, ratchet.ErrTagsetExhausted
+	}
+
 	messageKey, newChainKey, err := ratchet.RatchetSymmetricKey(s.SendingChainKey, s.SendingMessageNum)
 	if err != nil {
 		return [32]byte{}, err
@@ -214,6 +241,11 @@ func (s *SessionState) DeriveNextSendingKey() ([32]byte, error) {
 func (s *SessionState) DeriveNextReceivingKey() ([32]byte, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+
+	// Spec §4: the maximum number of messages before the DH must ratchet is 65535.
+	if s.ReceivingMessageNum >= ratchet.MaxMessagesPerTagset {
+		return [32]byte{}, ratchet.ErrTagsetExhausted
+	}
 
 	messageKey, newChainKey, err := ratchet.RatchetSymmetricKey(s.ReceivingChainKey, s.ReceivingMessageNum)
 	if err != nil {
@@ -238,14 +270,14 @@ func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	// Perform DH and derive new chain keys
-	keys, err := performDHAndDeriveKeys(s.DHRatchetPrivKey[:], remoteDHPubKey)
+	// Perform DH and derive new chain keys and root keys
+	sendingChainKey, receivingChainKey, nextSendingRootKey, nextReceivingRootKey, err := performDHAndDeriveKeys(s.DHRatchetPrivKey[:], remoteDHPubKey, s.SendingRootKey, s.ReceivingRootKey)
 	if err != nil {
 		return err
 	}
 
 	// Update ratchet state with new keys
-	s.updateRatchetChains(keys, remoteDHPubKey)
+	s.updateRatchetChains(sendingChainKey, receivingChainKey, nextSendingRootKey, nextReceivingRootKey, remoteDHPubKey)
 
 	// Generate a new ephemeral key pair for the next ratchet step
 	if err := s.initializeDHRatchet(); err != nil {
@@ -259,39 +291,55 @@ func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error {
 	return nil
 }
 
-// performDHAndDeriveKeys performs Diffie-Hellman key agreement and derives chain keys.
-// Returns 2 keys as [32]byte arrays: receiving key and sending key.
-func performDHAndDeriveKeys(localPrivKey, remotePubKey []byte) ([][32]byte, error) {
+// performDHAndDeriveKeys performs Diffie-Hellman key agreement and derives the
+// new chain keys and root keys for both directions, per I2P Proposal 144 §4:
+//
+//	tagsetKey = HKDF(sharedSecret, ZEROLEN, "XDHRatchetTagSet", 32)
+//	newTagSet = DH_INITIALIZE(rootKey, tagsetKey)   // per direction
+//
+// It returns the new sending/receiving chain keys and the next root keys for
+// each direction.
+func performDHAndDeriveKeys(localPrivKey, remotePubKey []byte, sendingRootKey, receivingRootKey [32]byte) (sendingChainKey, receivingChainKey, nextSendingRootKey, nextReceivingRootKey [32]byte, err error) {
 	// Perform DH with remote's new public key
 	sharedSecret, err := performDH(localPrivKey, remotePubKey)
 	if err != nil {
-		return nil, oops.Errorf("DH ratchet key agreement failed: %w", err)
+		return [32]byte{}, [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("DH ratchet key agreement failed: %w", err)
 	}
 
-	// Use kdf package for consistent derivation
-	var sharedSecretArray [32]byte
-	copy(sharedSecretArray[:], sharedSecret)
-	kd := kdf.NewKeyDerivation(sharedSecretArray)
-
-	// Derive new chain keys from DH output: receiving key + sending key
-	keys, err := kd.DeriveKeys([]byte("ECIES-DH-Ratchet"), 2)
+	// tagsetKey = HKDF(sharedSecret, ZEROLEN, "XDHRatchetTagSet", 32)
+	tagsetKey, err := kdf.StandardHKDF(sharedSecret, nil, []byte("XDHRatchetTagSet"), 32)
 	if err != nil {
-		return nil, oops.Errorf("DH ratchet key derivation failed: %w", err)
+		return [32]byte{}, [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("DH ratchet tagset key derivation failed: %w", err)
+	}
+	var tagsetKeyArray [32]byte
+	copy(tagsetKeyArray[:], tagsetKey)
+
+	// newTagSet = DH_INITIALIZE(rootKey, tagsetKey), per direction
+	nextSendingRootKey, sendingChainKey, err = ratchet.DH_INITIALIZEFull(sendingRootKey, tagsetKeyArray)
+	if err != nil {
+		return [32]byte{}, [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("DH ratchet sending tagset initialization failed: %w", err)
 	}
 
-	return keys, nil
+	nextReceivingRootKey, receivingChainKey, err = ratchet.DH_INITIALIZEFull(receivingRootKey, tagsetKeyArray)
+	if err != nil {
+		return [32]byte{}, [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("DH ratchet receiving tagset initialization failed: %w", err)
+	}
+
+	return sendingChainKey, receivingChainKey, nextSendingRootKey, nextReceivingRootKey, nil
 }
 
-// updateRatchetChains updates the sending and receiving chain keys after a DH ratchet.
-// Resets message counters and stores the remote DH public key.
-func (s *SessionState) updateRatchetChains(keys [][32]byte, remoteDHPubKey []byte) {
+// updateRatchetChains updates the sending and receiving chain keys and root keys
+// after a DH ratchet. Resets message counters and stores the remote DH public key.
+func (s *SessionState) updateRatchetChains(sendingChainKey, receivingChainKey, nextSendingRootKey, nextReceivingRootKey [32]byte, remoteDHPubKey []byte) {
 	// Update receiving chain (we receive with new remote DH key)
-	s.ReceivingChainKey = keys[0]
+	s.ReceivingChainKey = receivingChainKey
+	s.ReceivingRootKey = nextReceivingRootKey
 	s.PreviousChainLength = s.SendingMessageNum
 	s.ReceivingMessageNum = 0
 
 	// Update sending chain (we send with our existing DH key)
-	s.SendingChainKey = keys[1]
+	s.SendingChainKey = sendingChainKey
+	s.SendingRootKey = nextSendingRootKey
 	s.SendingMessageNum = 0
 
 	// Store remote's new DH public key
@@ -318,29 +366,49 @@ func (s *SessionState) GetNextSendingTag() ([8]byte, error) {
 	return tag, nil
 }
 
-// ValidateReceivingTag checks if a received tag matches the expected tag in the receiving ratchet.
+// ValidateReceivingTag checks if a received tag matches any tag in the
+// receiving lookahead window (spec §4: the receiver may be up to N tags ahead,
+// N ≤ 128, 32 recommended). On a match the receiving tag ratchet is advanced
+// to the matched position and the window is rebuilt.
 func (s *SessionState) ValidateReceivingTag(tag [8]byte) (bool, error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
+	s.mu.Lock()
+	defer s.mu.Unlock()
 
-	// For now, generate the expected tag and compare
-	// A production implementation would maintain a window of valid tags
-	expectedTag, err := s.ReceivingTagRatchet.PeekNextTag()
-	if err != nil {
-		return false, err
+	if len(s.receivingLookaheadTags) == 0 {
+		s.rebuildReceivingLookahead()
 	}
 
-	matches := constantTimeEqual(tag[:], expectedTag[:])
-	if matches {
-		// Advance the ratchet on successful match
-		s.mu.RUnlock()
-		s.mu.Lock()
-		_, _ = s.ReceivingTagRatchet.GenerateNextTag()
-		s.mu.Unlock()
-		s.mu.RLock()
+	for i, expected := range s.receivingLookaheadTags {
+		if constantTimeEqual(tag[:], expected[:]) {
+			// Advance the ratchet to the matched position.
+			for j := 0; j <= i; j++ {
+				if _, err := s.ReceivingTagRatchet.GenerateNextTag(); err != nil {
+					return false, err
+				}
+			}
+			s.rebuildReceivingLookahead()
+			return true, nil
+		}
 	}
 
-	return matches, nil
+	return false, nil
+}
+
+// rebuildReceivingLookahead rebuilds the receiving lookahead window by walking
+// a copy of the receiving tag ratchet. The window size is clamped to
+// [DefaultLookaheadWindow, MaxLookaheadWindow].
+func (s *SessionState) rebuildReceivingLookahead() {
+	probe := *s.ReceivingTagRatchet
+	tags := make([][ratchet.SessionTagSize]byte, 0, ratchet.DefaultLookaheadWindow)
+	for i := 0; i < ratchet.DefaultLookaheadWindow; i++ {
+		tag, err := probe.PeekNextTag()
+		if err != nil {
+			break
+		}
+		tags = append(tags, tag)
+		probe.Advance()
+	}
+	s.receivingLookaheadTags = tags
 }
 
 // GetSessionID returns the session identifier.
@@ -370,6 +438,8 @@ func (s *SessionState) Zero() {
 	zeroBytes(s.DHRatchetPrivKey[:])
 	zeroBytes(s.DHRatchetPubKey[:])
 	zeroBytes(s.RemoteDHPubKey[:])
+	zeroBytes(s.SendingRootKey[:])
+	zeroBytes(s.ReceivingRootKey[:])
 
 	if s.SendingTagRatchet != nil {
 		s.SendingTagRatchet.Zero()
@@ -377,6 +447,11 @@ func (s *SessionState) Zero() {
 	if s.ReceivingTagRatchet != nil {
 		s.ReceivingTagRatchet.Zero()
 	}
+
+	for i := range s.receivingLookaheadTags {
+		zeroBytes(s.receivingLookaheadTags[i][:])
+	}
+	s.receivingLookaheadTags = nil
 }
 
 // Helper function to zero a byte slice securely

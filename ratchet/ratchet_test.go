@@ -4,13 +4,15 @@ package ratchet
 // ECIES-X25519-AEAD-Ratchet: the session tag ratchet, the symmetric key
 // ratchet, and the DH ratchet.
 //
-// Note: the symmetric and DH ratchets use a Signal-style HMAC construction,
-// not the spec's Noise-based MixKey. See AUDIT.md for the deviation.
+// The KDFs use HKDF-SHA256 (RFC 5869) with the spec's info strings, matching
+// the I2P specification. See doc.go and ../AUDIT.md for the history of the
+// earlier (non-spec) Signal-style HMAC construction that was corrected.
 
 import (
 	"bytes"
 	"testing"
 
+	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/rand"
 )
 
@@ -477,4 +479,113 @@ func TestZeroValueFootguns(t *testing.T) {
 			t.Error("Properly initialized ratchet produced same tag as zero-state - unexpected!")
 		}
 	})
+}
+
+// TestSessionTagsetLimit verifies that a Session enforces the spec's
+// 65535-message-per-tag-set cap: the first 65535 messages succeed and the
+// next one returns ErrTagsetExhausted, forcing a DH ratchet step.
+func TestSessionTagsetLimit(t *testing.T) {
+	var sharedSecret, ourPriv, theirPub [32]byte
+	rand.Read(sharedSecret[:])
+	rand.Read(ourPriv[:])
+	rand.Read(theirPub[:])
+
+	session, err := NewSessionFromECIES(sharedSecret, ourPriv, theirPub)
+	if err != nil {
+		t.Fatalf("failed to create session: %v", err)
+	}
+
+	// Encrypt exactly MaxMessagesPerTagset messages; all must succeed.
+	for i := 0; i < MaxMessagesPerTagset; i++ {
+		if _, _, err := session.EncryptMessage([]byte("m")); err != nil {
+			t.Fatalf("message %d failed unexpectedly: %v", i, err)
+		}
+	}
+
+	// The next message must fail with ErrTagsetExhausted.
+	// oops.OopsError is not comparable, so compare by message.
+	if _, _, err := session.EncryptMessage([]byte("m")); err == nil || err.Error() != ErrTagsetExhausted.Error() {
+		t.Fatalf("expected ErrTagsetExhausted after %d messages, got: %v", MaxMessagesPerTagset, err)
+	}
+
+	// A DH ratchet step must reset the message counter and allow encryption
+	// to resume.
+	if _, _, err := session.PerformDHRatchet(); err != nil {
+		t.Fatalf("DH ratchet failed: %v", err)
+	}
+	if session.GetMessageNumber() != 0 {
+		t.Fatalf("expected message number to reset to 0 after DH ratchet, got %d", session.GetMessageNumber())
+	}
+	if _, _, err := session.EncryptMessage([]byte("m")); err != nil {
+		t.Fatalf("encryption after DH ratchet failed: %v", err)
+	}
+}
+
+// TestSessionTagAndKeyGenKeys verifies that NewSessionFromECIES splits the DH
+// INITIALIZATION chain key via the spec's TagAndKeyGenKeys KDF into the
+// session tag chain key and the symmetric key chain key, and that the
+// resulting ratchets match an independent derivation.
+func TestSessionTagAndKeyGenKeys(t *testing.T) {
+	var sharedSecret, ourPriv, theirPub [32]byte
+	rand.Read(sharedSecret[:])
+	rand.Read(ourPriv[:])
+	rand.Read(theirPub[:])
+
+	// Independent derivation of the expected chain keys.
+	var zeroRoot [ChainKeySize]byte
+	nextRootKey, ck, err := DH_INITIALIZEFull(zeroRoot, sharedSecret)
+	if err != nil {
+		t.Fatalf("DH_INITIALIZEFull failed: %v", err)
+	}
+	keydata, err := kdf.StandardHKDF(ck[:], nil, []byte("TagAndKeyGenKeys"), 64)
+	if err != nil {
+		t.Fatalf("TagAndKeyGenKeys KDF failed: %v", err)
+	}
+	var sessTagCK, symmKeyCK [ChainKeySize]byte
+	copy(sessTagCK[:], keydata[0:32])
+	copy(symmKeyCK[:], keydata[32:64])
+
+	// The session must produce the same next tag and first message key.
+	session, err := NewSessionFromECIES(sharedSecret, ourPriv, theirPub)
+	if err != nil {
+		t.Fatalf("failed to create session: %v", err)
+	}
+
+	wantTag, err := NewTagRatchet(sessTagCK).PeekNextTag()
+	if err != nil {
+		t.Fatalf("expected tag derivation failed: %v", err)
+	}
+	gotTag, err := session.GetNextTag()
+	if err != nil {
+		t.Fatalf("GetNextTag failed: %v", err)
+	}
+	if gotTag != wantTag {
+		t.Errorf("session tag mismatch:\n got  %x\n want %x", gotTag, wantTag)
+	}
+
+	wantKey, err := NewSymmetricRatchet(symmKeyCK).DeriveMessageKey(0)
+	if err != nil {
+		t.Fatalf("expected key derivation failed: %v", err)
+	}
+	gotKey, _, err := session.EncryptMessage([]byte("m"))
+	if err != nil {
+		t.Fatalf("EncryptMessage failed: %v", err)
+	}
+	if gotKey != wantKey {
+		t.Errorf("message key mismatch:\n got  %x\n want %x", gotKey, wantKey)
+	}
+
+	// The initial sending root key must equal the DH INITIALIZATION output.
+	if session.sendingRootKey != nextRootKey {
+		t.Errorf("initial sending root key mismatch:\n got  %x\n want %x", session.sendingRootKey, nextRootKey)
+	}
+
+	// A DH ratchet step must succeed and produce a non-zero chain key.
+	dhCK, _, err := session.PerformDHRatchet()
+	if err != nil {
+		t.Fatalf("PerformDHRatchet failed: %v", err)
+	}
+	if dhCK == [32]byte{} {
+		t.Error("DH ratchet produced a zero chain key - unexpected")
+	}
 }

@@ -264,6 +264,10 @@ func (kd *KeyDerivation) DeriveKeys(info []byte, count int) ([][32]byte, error) 
 // data-phase KDF (which uses HKDF with the spec's exact salt/ikm/info values).
 // Do not use this for the Noise_IKelg2+hs2 path; use StandardHKDF there instead.
 //
+// Deprecated: This is a legacy, non-spec-compliant KDF. Use
+// [ratchet.Session] (or [ecies.SessionState] for the convenience API) which
+// derive keys with the spec-mandated KDFs.
+//
 // Returns:
 //   - rootKey: Key for DH ratchet initialization
 //   - symKey: Key for symmetric ratchet chain

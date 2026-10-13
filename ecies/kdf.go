@@ -23,6 +23,10 @@ import (
 // spec-compliant Noise path (Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256) is
 // implemented in go-noise/ratchet and uses kdf.StandardHKDF directly with the
 // spec-mandated salt/ikm/info values. Do not mix the two protocols.
+//
+// Deprecated: This is a legacy, non-spec-compliant KDF. Use
+// [ratchet.Session] (or [SessionState] for the convenience API) which derive
+// keys with the spec-mandated KDFs.
 func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
 	if len(sharedSecret) == 0 {
 		return [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")
@@ -138,6 +142,11 @@ func currentTimestamp() int64 {
 // sharedSecret: Output from X25519 DH
 // info: Context string for domain separation
 // Returns (sendKey, recvKey, chainKey, error)
+//
+// Deprecated: This is a legacy, non-spec-compliant KDF and its name is
+// misleading (it does not implement the Noise protocol). Use
+// [ratchet.Session] (or [SessionState] for the convenience API) which derive
+// keys with the spec-mandated KDFs.
 func DeriveNoiseKeys(sharedSecret, info []byte) ([32]byte, [32]byte, [32]byte, error) {
 	if len(sharedSecret) == 0 {
 		return [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")
@@ -169,6 +178,11 @@ func DeriveChaCha20Key(messageKey [32]byte) ([32]byte, error) {
 
 // DeriveChaCha20Nonce derives a ChaCha20 nonce from a message key and message number.
 // Returns a 12-byte nonce suitable for ChaCha20-Poly1305.
+//
+// Deprecated: This derives the nonce from the message key via HKDF, which does
+// not match the spec's ChaCha20-Poly1305 nonce layout (first 4 bytes zero,
+// last 8 bytes the little-endian message number). The spec-compliant
+// [ratchet.Session] does not use this function.
 func DeriveChaCha20Nonce(messageKey [32]byte, messageNum uint32) ([12]byte, error) {
 	// Use kdf package for consistent derivation
 	kd := kdf.NewKeyDerivation(messageKey)
