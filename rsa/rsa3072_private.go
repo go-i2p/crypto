@@ -72,16 +72,17 @@ func (r *RSA3072PrivateKey) NewSigner() (types.Signer, error) {
 	return r, nil
 }
 
-// Sign implements types.Signer - signs data with SHA512 hash
+// Sign implements types.Signer - signs data with SHA-384 hash
 func (r RSA3072PrivateKey) Sign(data []byte) (sig []byte, err error) {
-	// Hash the data with SHA-512 which is appropriate for RSA-3072
-	hash := sha512.Sum512(data)
+	// I2P defines this key type as RSA_SHA384_3072 (signature type 5), so the
+	// digest is SHA-384, not SHA-512.
+	hash := sha512.Sum384(data)
 	return r.SignHash(hash[:])
 }
 
-// SignHash implements types.Signer - signs a pre-computed hash
+// SignHash implements types.Signer - signs a pre-computed SHA-384 hash
 func (r RSA3072PrivateKey) SignHash(h []byte) (sig []byte, err error) {
-	return signHashPKCS1v15(r.toRSAPrivateKey, crypto.SHA512, h, "RSA-3072")
+	return signHashPKCS1v15(r.toRSAPrivateKey, crypto.SHA384, h, "RSA-3072")
 }
 
 // Bytes implements types.PrivateKey - returns raw key bytes

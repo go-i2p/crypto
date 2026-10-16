@@ -25,8 +25,8 @@ import (
 // spec-mandated salt/ikm/info values. Do not mix the two protocols.
 //
 // Deprecated: This is a legacy, non-spec-compliant KDF. Use
-// [ratchet.Session] (or [SessionState] for the convenience API) which derive
-// keys with the spec-mandated KDFs.
+// [ratchet.Session], which derives keys with the spec-mandated KDFs. Note that
+// [SessionState] is itself deprecated for the same reason.
 func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
 	if len(sharedSecret) == 0 {
 		return [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")
@@ -145,8 +145,8 @@ func currentTimestamp() int64 {
 //
 // Deprecated: This is a legacy, non-spec-compliant KDF and its name is
 // misleading (it does not implement the Noise protocol). Use
-// [ratchet.Session] (or [SessionState] for the convenience API) which derive
-// keys with the spec-mandated KDFs.
+// [ratchet.Session], which derives keys with the spec-mandated KDFs. Note that
+// [SessionState] is itself deprecated for the same reason.
 func DeriveNoiseKeys(sharedSecret, info []byte) ([32]byte, [32]byte, [32]byte, error) {
 	if len(sharedSecret) == 0 {
 		return [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")

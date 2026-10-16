@@ -40,18 +40,18 @@ type (
 // This constructor provides mandatory validation to prevent common security issues:
 //   - Rejects inputs that are not exactly 256 bytes
 //   - Rejects keys with Y=0 or Y=1 (cryptographically weak)
-//   - Rejects keys outside the valid range [2, p-1] where p is the ElGamal prime
+//   - Rejects keys outside the valid range [2, p-2] where p is the ElGamal prime
 //   - Returns defensive copy to prevent external mutation
 //
 // The range validation ensures the public key represents a valid group element
 // that can be used for secure encryption operations.
 //
 // Parameters:
-//   - data: Must be exactly 256 bytes and represent a value in range [2, p-1]
+//   - data: Must be exactly 256 bytes and represent a value in range [2, p-2]
 //
 // Returns an error if:
 //   - Input is not exactly 256 bytes
-//   - Input represents a value outside the valid range [2, p-1]
+//   - Input represents a value outside the valid range [2, p-2]
 //
 // Example usage:
 //
@@ -64,7 +64,7 @@ func NewElgPublicKey(data []byte) (*ElgPublicKey, error) {
 		return nil, oops.Errorf("invalid ElGamal public key size: expected 256 bytes, got %d bytes", len(data))
 	}
 
-	// Validate Y is in valid range [2, p-1]
+	// Validate Y is in valid range [2, p-2]
 	// Y=0 and Y=1 are cryptographically weak
 	y := new(big.Int).SetBytes(data)
 	two := big.NewInt(2)

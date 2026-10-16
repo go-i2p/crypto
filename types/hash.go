@@ -13,7 +13,10 @@ type KeyDeriver interface {
 	// Parameters:
 	// - ikm: Input key material, the source entropy for key derivation
 	// - salt: Optional salt value to ensure different outputs for the same IKM
-	// - info: Optional context and application-specific information
+	// - info: Optional context and application-specific information. Not all
+	//   implementations support it; for example Argon2id ignores this parameter
+	//   because the Go standard library does not expose the Argon2 secret/context
+	//   input.
 	// - keyLen: Desired length of the derived key in bytes
 	// Returns the derived key bytes or an error if derivation fails.
 	Derive(ikm, salt, info []byte, keyLen int) ([]byte, error)

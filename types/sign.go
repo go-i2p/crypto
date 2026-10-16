@@ -96,8 +96,10 @@ type SigningPrivateKey interface {
 	// Returns an error if the private key is invalid or public key derivation fails.
 	Public() (SigningPublicKey, error)
 
-	// Generate creates a new private key and stores it in this instance.
-	// This method replaces the current key material with a newly generated private key.
-	// Returns the updated private key instance or an error if key generation fails.
+	// Generate creates a new private key and returns it.
+	// The receiver is not modified; implementations return a freshly generated
+	// key instance, so callers must use the returned value rather than relying
+	// on the receiver being updated in place.
+	// Returns the newly generated private key or an error if key generation fails.
 	Generate() (SigningPrivateKey, error)
 }

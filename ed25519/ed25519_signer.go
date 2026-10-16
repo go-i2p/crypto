@@ -33,9 +33,12 @@ func (s *Ed25519Signer) Sign(data []byte) (sig []byte, err error) {
 	return sig, err
 }
 
-// SignHash creates an Ed25519 signature over a pre-computed hash.
-// This method signs the provided hash directly without additional hashing.
-// The hash should typically be a SHA-512 digest for Ed25519 compatibility.
+// SignHash creates an Ed25519 signature over the provided bytes.
+// Ed25519 is a PureEdDSA scheme (RFC 8032): the input is treated as the message
+// and is NOT assumed to be a digest. Signing a pre-computed hash here produces a
+// signature over those hash bytes as the message, which is not equivalent to
+// signing the original data and is not Ed25519ph. Use [Ed25519Signer.Sign] (an
+// alias with identical behavior) for normal message signing.
 func (s *Ed25519Signer) SignHash(h []byte) (sig []byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Signer.SignHash", "hash_length": len(h)}).Debug("Signing hash with Ed25519")
 	// Generate Ed25519 signature using the standard library implementation

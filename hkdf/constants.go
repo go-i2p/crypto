@@ -24,8 +24,8 @@ var (
 	ErrInvalidSaltLength = oops.Errorf("invalid salt length")
 
 	// ErrInvalidInfoLength indicates that the info parameter exceeds maximum allowed length.
-	// HKDF limits the info parameter to 255 bytes to maintain compatibility with the
-	// underlying HMAC construction and prevent potential security issues.
+	// This package limits the info parameter to 255 bytes as an implementation-defined
+	// safety bound; RFC 5869 itself places no length limit on info.
 	ErrInvalidInfoLength = oops.Errorf("invalid info length")
 
 	// ErrKeyDerivationFailed indicates that the HKDF key derivation process failed.
@@ -42,7 +42,8 @@ const (
 	DefaultKeyLength = 32 // 256 bits for ChaCha20
 
 	// MaxInfoLength defines the maximum allowed length for HKDF info parameter.
-	// Limited to 255 bytes per RFC 5869 specification to ensure compatibility with
-	// HMAC-based key derivation and prevent potential buffer overflow issues.
+	// Set to 255 bytes by this implementation as a defensive bound. RFC 5869 does not
+	// limit the length of info (it only caps the output length L at 255 * HashLen
+	// bytes), so this is a local restriction rather than a spec requirement.
 	MaxInfoLength = 255 // Maximum info length for HKDF
 )

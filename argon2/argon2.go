@@ -45,6 +45,12 @@ func validateDeriveParams(keyLen int, salt []byte, timeCost, memoryCost uint32, 
 }
 
 // Derive derives a key of the specified length from the input key material (IKM) using Argon2id.
+//
+// The info parameter is accepted to satisfy the [types.KeyDeriver] interface but is
+// ignored: the Go standard library's argon2.IDKey has no support for the Argon2
+// secret/context parameter, so two calls that differ only in info produce the same
+// derived key. Bind context into the salt (or into the IKM) instead if separation is
+// required.
 func (a *Argon2id) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 	log.WithFields(logger.Fields{"pkg": "argon2", "func": "Argon2id.Derive", "key_len": keyLen}).Debug("Deriving key with Argon2id")
 	if err := validateDeriveParams(keyLen, salt, a.TimeCost, a.MemoryCost, a.Parallelism); err != nil {

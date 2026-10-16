@@ -18,7 +18,8 @@ type (
 	// CRITICAL: Never create ECP384PrivateKey using zero-value construction (e.g. var key ECP384PrivateKey).
 	// Zero-value construction results in an all-zero key which:
 	//   - Is cryptographically invalid
-	//   - Will panic when calling Public()
+	//   - Makes Sign()/SignHash() return an error (zero private scalar)
+	//   - Makes Public() derive an invalid all-zero public key
 	//   - Violates ECDSA security requirements
 	//
 	// ALWAYS use NewECP384PrivateKey() for safe construction.

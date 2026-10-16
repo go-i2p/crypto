@@ -10,12 +10,14 @@ import (
 )
 
 type (
-	// ECP384PublicKey represents a P-384 ECDSA public key in uncompressed form.
+	// ECP384PublicKey represents a P-384 ECDSA public key as the I2P common
+	// structures encoding: the big-endian X and Y coordinates concatenated,
+	// 48 bytes each, with NO SEC1 0x04 uncompressed-point prefix.
 	//
 	// CRITICAL: Never create ECP384PublicKey using zero-value construction (e.g. var key ECP384PublicKey).
 	// Zero-value construction results in an invalid public key which:
 	//   - Will fail signature verification
-	//   - May panic in cryptographic operations
+	//   - Is rejected by NewVerifier() with types.ErrInvalidKeyFormat
 	//   - Violates ECDSA security requirements
 	//
 	// ALWAYS use NewECP384PublicKey() for safe construction.
@@ -25,7 +27,7 @@ type (
 // NewECP384PublicKey creates a new P-384 ECDSA public key from bytes with validation.
 //
 // This constructor provides mandatory validation to prevent common security issues:
-//   - Rejects inputs that are not exactly 96 bytes (uncompressed X||Y point)
+//   - Rejects inputs that are not exactly 96 bytes (the X||Y coordinate pair)
 //   - Returns defensive copy to prevent external mutation
 //
 // Note: This constructor validates size only. Full curve point validation occurs
@@ -35,7 +37,7 @@ type (
 //   - Input is not exactly 96 bytes
 func NewECP384PublicKey(data []byte) (*ECP384PublicKey, error) {
 	if len(data) != 96 {
-		return nil, oops.Errorf("invalid P-384 public key size: expected 96 bytes (uncompressed point), got %d bytes", len(data))
+		return nil, oops.Errorf("invalid P-384 public key size: expected 96 bytes (X||Y), got %d bytes", len(data))
 	}
 
 	var key ECP384PublicKey

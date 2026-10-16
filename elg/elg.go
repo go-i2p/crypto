@@ -24,7 +24,7 @@
 //
 // Security Considerations:
 // - Maximum plaintext size limited to 222 bytes for cryptographic security
-// - Private keys must be securely generated and stored in range [1, p-1]
+// - Private keys must be securely generated and stored in range [1, p-2]
 // - Ephemeral keys are generated fresh for each encryption to ensure IND-CPA security
 // - All operations use cryptographically secure random number generation
 //
@@ -122,11 +122,11 @@ type PrivateKey struct {
 }
 
 // ElgamalGenerate creates a new ElGamal key pair using I2P's standard parameters.
-// Generates cryptographically secure private keys in the range [1, p-1] using the secure random package.
+// Generates cryptographically secure private keys in the range [1, p-2] using the secure random package.
 // The io.Reader parameter is ignored as we use our own secure random source for enhanced security.
 // This function implements the complete ElGamal key generation process:
 // 1. Initialize with fixed I2P domain parameters (p, g) for network compatibility
-// 2. Generate random private exponent X in valid range [1, p-1]
+// 2. Generate random private exponent X in valid range [1, p-2]
 // 3. Compute public key Y = g^X mod p using modular exponentiation
 // 4. Validate all parameters for cryptographic correctness
 // generate an elgamal key pair
@@ -138,7 +138,7 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 	priv.G = elgg // Generator element (g = 2)
 
 	// Generate cryptographically secure private key using secure random package
-	// Private key must be in range [1, p-1] for ElGamal security requirements
+	// Private key must be in range [1, p-2] for ElGamal security requirements
 	pMinus1 := new(big.Int).Sub(priv.P, one)
 
 	// Use our secure random package for cryptographically secure key generation

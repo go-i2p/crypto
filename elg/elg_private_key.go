@@ -15,7 +15,7 @@ type (
 	//
 	// CRITICAL: Never create ElgPrivateKey using zero-value construction (e.g. var key ElgPrivateKey).
 	// Zero-value construction results in an all-zero key which:
-	//   - Is cryptographically invalid (outside valid range [1, p-1])
+	//   - Is cryptographically invalid (outside valid range [1, p-2])
 	//   - Will fail when calling NewDecrypter()
 	//   - Violates ElGamal security requirements
 	//
@@ -40,7 +40,7 @@ type (
 //
 // This constructor provides mandatory validation to prevent common security issues:
 //   - Rejects inputs that are not exactly 256 bytes
-//   - Rejects keys outside the valid range [1, p-1] where p is the ElGamal prime
+//   - Rejects keys outside the valid range [1, p-2] where p is the ElGamal prime
 //   - Returns defensive copy to prevent external mutation
 //
 // The valid range check ensures that the private key can be used for secure
@@ -48,11 +48,11 @@ type (
 // operations or be trivially breakable.
 //
 // Parameters:
-//   - data: Must be exactly 256 bytes and represent a value in range [1, p-1]
+//   - data: Must be exactly 256 bytes and represent a value in range [1, p-2]
 //
 // Returns an error if:
 //   - Input is not exactly 256 bytes
-//   - Input represents a value outside the valid range [1, p-1]
+//   - Input represents a value outside the valid range [1, p-2]
 //
 // Example usage:
 //
@@ -66,7 +66,7 @@ func NewElgPrivateKey(data []byte) (*ElgPrivateKey, error) {
 		return nil, oops.Errorf("invalid ElGamal private key size: expected 256 bytes, got %d bytes", len(data))
 	}
 
-	// Validate key is in valid range [1, p-1]
+	// Validate key is in valid range [1, p-2]
 	// This uses the existing validation logic
 	x := new(big.Int).SetBytes(data)
 	if x.Cmp(one) < 0 {
@@ -89,7 +89,7 @@ func (elg ElgPrivateKey) Len() int {
 
 // NewDecrypter creates a new ElGamal decrypter using this private key.
 // Returns a types.Decrypter interface that can decrypt data encrypted with the corresponding public key.
-// Returns error if the private key data is invalid or not in the valid range [1, p-1].
+// Returns error if the private key data is invalid or not in the valid range [1, p-2].
 func (elg ElgPrivateKey) NewDecrypter() (dec types.Decrypter, err error) {
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.NewDecrypter"}).Debug("Creating new ElGamal decrypter")
 	k := createElgamalPrivateKey(elg[:])
@@ -157,7 +157,7 @@ func (elg *ElgPrivateKey) Zero() {
 }
 
 // Generate creates a new random ElGamal private key.
-// This method generates a cryptographically secure private key in the valid range [1, p-1]
+// This method generates a cryptographically secure private key in the valid range [1, p-2]
 // using I2P's standard ElGamal parameters. Returns the generated private key or an error
 // if key generation fails due to insufficient entropy or parameter validation.
 func (elg ElgPrivateKey) Generate() (types.PrivateEncryptionKey, error) {
@@ -190,7 +190,7 @@ func (elg ElgPrivateKey) Generate() (types.PrivateEncryptionKey, error) {
 }
 
 // createElgamalPrivateKey converts a 256-byte slice to an ElGamal private key structure.
-// Validates that the private key is in the valid cryptographic range [1, p-1] where p is the ElGamal prime.
+// Validates that the private key is in the valid cryptographic range [1, p-2] where p is the ElGamal prime.
 // Returns nil if the key data is invalid or outside the acceptable range.
 // create an elgamal private key from byte slice
 func createElgamalPrivateKey(data []byte) (k *elgamal.PrivateKey) {
@@ -202,10 +202,10 @@ func createElgamalPrivateKey(data []byte) (k *elgamal.PrivateKey) {
 
 	x := new(big.Int).SetBytes(data)
 
-	// Validate that private key is in valid range [1, p-1]
+	// Validate that private key is in valid range [1, p-2]
 	// This ensures the key can be used for secure ElGamal operations
 	if x.Cmp(one) < 0 || x.Cmp(new(big.Int).Sub(elgp, one)) >= 0 {
-		log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey"}).Warn("Private key not in valid range [1, p-1]")
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey"}).Warn("Private key not in valid range [1, p-2]")
 		return nil
 	}
 

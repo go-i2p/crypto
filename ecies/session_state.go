@@ -397,8 +397,8 @@ func (s *SessionState) ValidateReceivingTag(tag [8]byte) (bool, error) {
 }
 
 // rebuildReceivingLookahead rebuilds the receiving lookahead window by walking
-// a copy of the receiving tag ratchet. The window size is clamped to
-// [DefaultLookaheadWindow, MaxLookaheadWindow].
+// a copy of the receiving tag ratchet. The window always holds
+// [ratchet.DefaultLookaheadWindow] tags (fewer if tag generation fails early).
 func (s *SessionState) rebuildReceivingLookahead() {
 	probe := *s.ReceivingTagRatchet
 	tags := make([][ratchet.SessionTagSize]byte, 0, ratchet.DefaultLookaheadWindow)

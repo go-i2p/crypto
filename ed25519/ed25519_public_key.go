@@ -102,25 +102,23 @@ func createEd25519PublicKey(data []byte) (k *ed25519.PublicKey) {
 //	    return err
 //	}
 func NewEd25519PublicKey(data []byte) (Ed25519PublicKey, error) {
-	return CreateEd25519PublicKeyFromBytes(data)
+	// Validate input meets Ed25519 public key size requirements
+	if len(data) != ed25519.PublicKeySize {
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "NewEd25519PublicKey", "data_length": len(data)}).Error("Invalid Ed25519 public key size")
+		return nil, ErrInvalidPublicKeySize
+	}
+
+	// Return validated public key wrapped in our custom type
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "NewEd25519PublicKey"}).Debug("Ed25519 public key created successfully")
+	return Ed25519PublicKey(data), nil
 }
 
 // CreateEd25519PublicKeyFromBytes constructs an Ed25519 public key from raw byte data.
 // The input data must be exactly 32 bytes representing a valid Ed25519 public key.
 // Returns an error if the data length doesn't match the required Ed25519 public key size.
 //
-// Deprecated: Use NewEd25519PublicKey instead. This function will be removed in v2.0.
+// Deprecated: Use [NewEd25519PublicKey] instead, which performs the identical
+// validation. This function will be removed in v2.0.
 func CreateEd25519PublicKeyFromBytes(data []byte) (Ed25519PublicKey, error) {
-	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "CreateEd25519PublicKeyFromBytes", "data_length": len(data)}).Debug("Creating Ed25519 public key")
-
-	// Validate input meets Ed25519 public key size requirements
-	if len(data) != ed25519.PublicKeySize {
-		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "CreateEd25519PublicKeyFromBytes", "data_length": len(data)}).Error("Invalid Ed25519 public key size")
-		return nil, ErrInvalidPublicKeySize
-	}
-
-	// Return validated public key wrapped in our custom type
-	// Return the Ed25519 public key
-	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "CreateEd25519PublicKeyFromBytes"}).Debug("Ed25519 public key created successfully")
-	return Ed25519PublicKey(data), nil
+	return NewEd25519PublicKey(data)
 }

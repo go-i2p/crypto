@@ -40,7 +40,7 @@ func validateDeriveParameters(keyLen int, info []byte) error {
 		return oops.Wrapf(ErrInvalidKeyLength, "key length must be positive, got %d", keyLen)
 	}
 
-	// Enforce RFC 5869 info length limit to prevent security issues
+	// Enforce this implementation's info length limit (RFC 5869 sets no such limit)
 	if len(info) > MaxInfoLength {
 		return oops.Wrapf(ErrInvalidInfoLength, "info length exceeds maximum %d bytes", MaxInfoLength)
 	}

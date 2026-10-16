@@ -28,7 +28,9 @@ var (
 	ErrCipherCreationFailed = oops.Errorf("failed to create AES cipher block")
 
 	// ErrNilTunnelData indicates that a nil TunnelData pointer was passed to encryption/decryption.
-	// All tunnel operations require valid non-nil TunnelData structures.
+	// It is reserved and is not currently returned by this package: the exported
+	// Encrypt/Decrypt entry points take byte slices and copy them into a
+	// value-type TunnelData, so no code path can observe a nil pointer.
 	ErrNilTunnelData = oops.Errorf("tunnel data cannot be nil")
 
 	// ErrEncryptionFailed indicates that the encryption operation failed.
@@ -54,11 +56,13 @@ var (
 	ErrECIESDecryptionFailed = oops.Errorf("ECIES decryption failed")
 
 	// ErrECIESInvalidPublicKey indicates that an invalid X25519 public key was provided for ECIES encryption.
-	// ECIES public keys must be exactly 32 bytes and contain valid curve points.
+	// ECIES public keys must be exactly 32 bytes. It is reserved and is not currently
+	// returned by this package; the underlying ecies package reports its own errors.
 	ErrECIESInvalidPublicKey = oops.Errorf("invalid X25519 public key for ECIES encryption")
 
 	// ErrECIESInvalidPrivateKey indicates that an invalid X25519 private key was provided for ECIES decryption.
-	// ECIES private keys must be exactly 32 bytes and within the valid scalar range.
+	// ECIES private keys must be exactly 32 bytes. It is reserved and is not currently
+	// returned by this package; the underlying ecies package reports its own errors.
 	ErrECIESInvalidPrivateKey = oops.Errorf("invalid X25519 private key for ECIES decryption")
 
 	// ErrECIESInvalidCiphertext indicates that ECIES ciphertext has invalid format or size.

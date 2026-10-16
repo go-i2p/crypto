@@ -29,7 +29,7 @@
 //	ciphertext, tag, _ := aead.Encrypt(plaintext, associatedData, nonce)
 //
 //	// Decrypt and verify
-//	decrypted, _ := aead.Decrypt(ciphertext, tag, associatedData, nonce)
+//	decrypted, _ := aead.Decrypt(ciphertext, tag[:], associatedData, nonce)
 //
 // # Security Considerations
 //

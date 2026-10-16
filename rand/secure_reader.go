@@ -23,8 +23,10 @@ func NewSecureReader() *SecureReader {
 	}
 }
 
-// Read fills the provided byte slice with cryptographically secure random data
-// and validates entropy before returning
+// Read fills the provided byte slice with cryptographically secure random data.
+// Reads of 32 bytes or more are additionally checked by a heuristic entropy
+// validation pass and retried up to MaxEntropyRetries times if the check fails;
+// shorter reads are returned as-is without validation.
 func (sr *SecureReader) Read(p []byte) (n int, err error) {
 	for attempt := 0; attempt < MaxEntropyRetries; attempt++ {
 		// Read random bytes from crypto/rand
@@ -193,7 +195,8 @@ func Prime(random io.Reader, bits int) (*big.Int, error) {
 	return prime, nil
 }
 
-// Read fills the provided byte slice with cryptographically secure random data
+// Read fills the provided byte slice with cryptographically secure random data.
+// See [SecureReader.Read] for the entropy-validation retry behavior.
 func Read(p []byte) (n int, err error) {
 	return DefaultSecureReader.Read(p)
 }

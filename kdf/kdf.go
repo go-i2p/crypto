@@ -265,8 +265,8 @@ func (kd *KeyDerivation) DeriveKeys(info []byte, count int) ([][32]byte, error) 
 // Do not use this for the Noise_IKelg2+hs2 path; use StandardHKDF there instead.
 //
 // Deprecated: This is a legacy, non-spec-compliant KDF. Use
-// [ratchet.Session] (or [ecies.SessionState] for the convenience API) which
-// derive keys with the spec-mandated KDFs.
+// [ratchet.Session], which derives keys with the spec-mandated KDFs. Note that
+// [ecies.SessionState] is itself deprecated for the same reason.
 //
 // Returns:
 //   - rootKey: Key for DH ratchet initialization

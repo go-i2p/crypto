@@ -18,7 +18,8 @@ type (
 	// CRITICAL: Never create ECP256PrivateKey using zero-value construction (e.g. var key ECP256PrivateKey).
 	// Zero-value construction results in an all-zero key which:
 	//   - Is cryptographically invalid
-	//   - Will panic when calling Public()
+	//   - Makes Sign()/SignHash() return an error (zero private scalar)
+	//   - Makes Public() derive an invalid all-zero public key
 	//   - Violates ECDSA security requirements
 	//
 	// ALWAYS use NewECP256PrivateKey() for safe construction.
@@ -124,10 +125,9 @@ func (e *ECP256PrivateKey) Public() (types.SigningPublicKey, error) {
 		return nil, oops.Errorf("failed to generate public key from private key")
 	}
 
-	// Encode public key as compressed point
+	// Encode public key as the I2P X||Y coordinate pair (no 0x04 prefix).
 	publicKey := ECP256PublicKey{}
 
-	// Format as uncompressed point (0x04 || x || y)
 	xBytes := x.Bytes()
 	yBytes := y.Bytes()
 

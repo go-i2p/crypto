@@ -43,8 +43,10 @@ type cryptoSource struct {
 	mu     sync.Mutex
 }
 
-// NewSource returns a new pseudo-random Source seeded with the given value.
-// Note: Since we use crypto/rand, the seed is used for compatibility but doesn't affect randomness
+// NewSource returns a new Source backed by crypto/rand.
+// The seed parameter is accepted for compatibility with math/rand.NewSource but
+// is ignored: the returned Source draws from the cryptographic random reader, so
+// output is not reproducible for a given seed.
 // Compatible with math/rand.NewSource
 func NewSource(seed int64) Source {
 	log.WithFields(logger.Fields{"pkg": "rand", "func": "NewSource", "seed": seed}).Debug("Creating new crypto-based PRNG source")

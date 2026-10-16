@@ -36,7 +36,8 @@ type Ed25519PrivateKey ed25519.PrivateKey
 // NewVerifier creates a verifier instance from this private key's public component.
 // This method extracts the public key and returns a verifier that can validate signatures
 // created by this private key. Returns an error if the private key size is invalid.
-// NewVerifier implements types.SigningPublicKey.
+// This is a convenience on the private key; the underlying NewVerifier method that
+// satisfies types.SigningPublicKey lives on Ed25519PublicKey.
 func (k *Ed25519PrivateKey) NewVerifier() (types.Verifier, error) {
 	// Validate private key size before proceeding with verifier creation
 	if len(*k) != ed25519.PrivateKeySize {
@@ -136,15 +137,6 @@ func (k Ed25519PrivateKey) Public() (types.SigningPublicKey, error) {
 //	}
 //	defer privKey.Zero() // Always zero private keys when done
 func NewEd25519PrivateKey(data []byte) (Ed25519PrivateKey, error) {
-	return CreateEd25519PrivateKeyFromBytes(data)
-}
-
-// CreateEd25519PrivateKeyFromBytes constructs an Ed25519 private key from raw byte data.
-// The input data must be exactly 64 bytes representing a valid Ed25519 private key.
-// Returns an error if the data length is incorrect or the key format is invalid.
-//
-// Deprecated: Use NewEd25519PrivateKey instead. This function will be removed in v2.0.
-func CreateEd25519PrivateKeyFromBytes(data []byte) (Ed25519PrivateKey, error) {
 	// Validate input byte length matches Ed25519 private key requirements
 	if len(data) != ed25519.PrivateKeySize {
 		return nil, oops.Errorf("invalid ed25519 private key size: expected %d, got %d",
@@ -154,4 +146,14 @@ func CreateEd25519PrivateKeyFromBytes(data []byte) (Ed25519PrivateKey, error) {
 	privKey := make(Ed25519PrivateKey, ed25519.PrivateKeySize)
 	copy(privKey, data)
 	return privKey, nil
+}
+
+// CreateEd25519PrivateKeyFromBytes constructs an Ed25519 private key from raw byte data.
+// The input data must be exactly 64 bytes representing a valid Ed25519 private key.
+// Returns an error if the data length is incorrect or the key format is invalid.
+//
+// Deprecated: Use [NewEd25519PrivateKey] instead, which performs identical
+// validation and copying. This function will be removed in v2.0.
+func CreateEd25519PrivateKeyFromBytes(data []byte) (Ed25519PrivateKey, error) {
+	return NewEd25519PrivateKey(data)
 }

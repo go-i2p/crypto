@@ -15,9 +15,12 @@ type Ed25519Verifier struct {
 	k []byte
 }
 
-// VerifyHash validates an Ed25519 signature against a pre-computed hash.
-// This method verifies the signature directly against the provided hash without
-// additional hashing. Returns an error if verification fails or inputs are invalid.
+// VerifyHash validates an Ed25519 signature against the provided bytes.
+// Ed25519 is a PureEdDSA scheme (RFC 8032), so h is treated as the message and is
+// NOT assumed to be a digest; no additional hashing is performed. A signature
+// produced by [Ed25519Signer.SignHash] verifies here, and one produced by
+// [Ed25519Signer.Sign] verifies with [Ed25519Verifier.Verify]. Returns an error if
+// verification fails or inputs are invalid.
 func (v *Ed25519Verifier) VerifyHash(h, sig []byte) (err error) {
 	log.WithFields(logger.Fields{
 		"pkg":         "ed25519",

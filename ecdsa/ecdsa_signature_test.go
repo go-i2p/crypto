@@ -9,7 +9,10 @@ import (
 	"testing"
 )
 
-// TestSignatureFormatFix validates that the VerifyHash method correctly parses ECDSA signatures
+// TestSignatureFormatFix validates that VerifyHash correctly parses ECDSA
+// signatures, and that CreateECVerifier accepts the I2P common-structures
+// public-key encoding: the raw big-endian X||Y concatenation (64/96/132 bytes
+// for P-256/P-384/P-521) with no SEC1 0x04 uncompressed-point prefix.
 func TestSignatureFormatFix(t *testing.T) {
 	curves := []struct {
 		name  string
@@ -28,8 +31,15 @@ func TestSignatureFormatFix(t *testing.T) {
 				t.Fatalf("Failed to generate key: %v", err)
 			}
 
-			// Marshall the public key
-			pubKeyBytes := elliptic.Marshal(tc.curve, privateKey.PublicKey.X, privateKey.PublicKey.Y)
+			// Serialize the public key the way I2P does: X || Y, each padded
+			// to the curve's coordinate size. elliptic.Marshal must NOT be
+			// used here because it prepends the 0x04 point-format byte.
+			coordSize := (tc.curve.Params().BitSize + 7) / 8
+			pubKeyBytes := make([]byte, 2*coordSize)
+			xBytes := privateKey.PublicKey.X.Bytes()
+			yBytes := privateKey.PublicKey.Y.Bytes()
+			copy(pubKeyBytes[coordSize-len(xBytes):coordSize], xBytes)
+			copy(pubKeyBytes[2*coordSize-len(yBytes):], yBytes)
 
 			// Create our verifier
 			verifier, err := CreateECVerifier(tc.curve, crypto.SHA256, pubKeyBytes)

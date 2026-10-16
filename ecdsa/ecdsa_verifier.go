@@ -78,17 +78,34 @@ func CreateECVerifier(c elliptic.Curve, h crypto.Hash, k []byte) (ev *ECDSAVerif
 		"curve": c.Params().Name,
 		"hash":  h.String(),
 	}).Debug("Creating ECDSA verifier")
-	x, y := elliptic.Unmarshal(c, k[:])
-	if x == nil {
-		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Error("Invalid ECDSA key format")
-		err = types.ErrInvalidKeyFormat
-	} else {
-		ev = &ECDSAVerifier{
-			c: c,
-			h: h,
-		}
-		ev.k = &ecdsa.PublicKey{Curve: c, X: x, Y: y}
-		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Debug("ECDSA verifier created successfully")
+
+	// I2P common structures serialize ECDSA signing public keys as the raw
+	// big-endian X||Y concatenation (64/96/132 bytes for P-256/P-384/P-521),
+	// WITHOUT the SEC1 0x04 uncompressed-point prefix. elliptic.Unmarshal
+	// expects that prefix, so it must not be used here; parse the coordinates
+	// directly instead.
+	coordSize := (c.Params().BitSize + 7) / 8
+	if len(k) != 2*coordSize {
+		log.WithFields(logger.Fields{
+			"pkg":      "ecdsa",
+			"func":     "CreateECVerifier",
+			"key_size": len(k),
+		}).Error("Invalid ECDSA key format")
+		return nil, types.ErrInvalidKeyFormat
 	}
-	return ev, err
+
+	x := new(big.Int).SetBytes(k[:coordSize])
+	y := new(big.Int).SetBytes(k[coordSize:])
+	if !c.IsOnCurve(x, y) {
+		log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Error("ECDSA public key is not on the curve")
+		return nil, types.ErrInvalidKeyFormat
+	}
+
+	ev = &ECDSAVerifier{
+		c: c,
+		h: h,
+	}
+	ev.k = &ecdsa.PublicKey{Curve: c, X: x, Y: y}
+	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "CreateECVerifier"}).Debug("ECDSA verifier created successfully")
+	return ev, nil
 }

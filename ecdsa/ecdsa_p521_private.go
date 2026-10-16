@@ -18,7 +18,8 @@ type (
 	// CRITICAL: Never create ECP521PrivateKey using zero-value construction (e.g. var key ECP521PrivateKey).
 	// Zero-value construction results in an all-zero key which:
 	//   - Is cryptographically invalid
-	//   - Will panic when calling Public()
+	//   - Makes Sign()/SignHash() return an error (zero private scalar)
+	//   - Makes Public() derive an invalid all-zero public key
 	//   - Violates ECDSA security requirements
 	//
 	// ALWAYS use NewECP521PrivateKey() for safe construction.

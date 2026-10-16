@@ -33,7 +33,8 @@ type Curve25519PrivateKey []byte
 
 // Bytes returns the raw byte representation of the Curve25519 private key.
 // The returned slice contains the 32-byte X25519 private key material in little-endian format.
-// This implements the types.PrivateKey interface for key serialization and storage operations.
+// This is the Bytes() method of the types.PrivateEncryptionKey interface for key
+// serialization and storage operations.
 func (k Curve25519PrivateKey) Bytes() []byte {
 	return k // Return the byte slice representation of the private key
 }
@@ -64,7 +65,7 @@ func (k Curve25519PrivateKey) Public() (types.PublicEncryptionKey, error) {
 }
 
 // Zero securely clears the private key material from memory.
-// This method implements the types.PrivateKey interface and overwrites all bytes of the private key
+// This method implements the Zero() method of the types.PrivateEncryptionKey interface and overwrites all bytes of the private key
 // with zeros to prevent sensitive cryptographic material from remaining in memory after use.
 // This is essential for maintaining security in cryptographic applications.
 func (k Curve25519PrivateKey) Zero() {

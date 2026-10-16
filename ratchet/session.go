@@ -85,8 +85,9 @@ type HandshakeResult struct {
 //	}
 //	defer session.Zero()
 //
-//	// Encrypt message
-//	ciphertext, tag, _ := session.EncryptMessage(plaintext)
+//	// Encrypt message: the session yields the per-message key and session tag;
+//	// the caller does the ChaCha20-Poly1305 encryption with them.
+//	messageKey, tag, _ := session.EncryptMessage(plaintext)
 func NewSessionFromECIES(sharedSecret, ourPrivKey, theirPubKey [32]byte) (*Session, error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "NewSessionFromECIES"}).Debug("Creating new session from ECIES shared secret")
 

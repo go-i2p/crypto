@@ -17,8 +17,12 @@
 //
 // Always use the provided constructors (for example
 // NewECP256PrivateKey) to create keys. Constructing a key type directly with
-// a zero value produces an invalid key; operations on it return an error
-// rather than panicking.
+// a zero value produces an invalid key: signing returns an error and
+// verification fails, rather than panicking.
+//
+// Public keys are stored in the I2P common-structures form, the big-endian
+// X||Y coordinate concatenation (64, 96 or 132 bytes for P-256, P-384 and
+// P-521) without the SEC1 0x04 uncompressed-point prefix.
 //
 // See the I2P cryptography overview for the role of ECDSA in I2P:
 // https://i2p.net/en/docs/specs/cryptography/

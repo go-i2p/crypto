@@ -8,8 +8,10 @@ package rsa
 
 import (
 	"bytes"
+	"crypto"
 	"crypto/rand"
 	"crypto/rsa"
+	"crypto/sha512"
 	"testing"
 
 	"github.com/go-i2p/crypto/types"
@@ -598,5 +600,65 @@ func BenchmarkRSA2048_Verify(b *testing.B) {
 		if err != nil {
 			b.Fatal(err)
 		}
+	}
+}
+
+// i2pRSA3072Private builds an RSA3072PrivateKey (modulus || exponent, 384 bytes
+// each) from a stdlib key so both represent the same key pair.
+func i2pRSA3072Private(t *testing.T, stdPriv *rsa.PrivateKey) RSA3072PrivateKey {
+	t.Helper()
+	var priv RSA3072PrivateKey
+	nBytes, dBytes := stdPriv.N.Bytes(), stdPriv.D.Bytes()
+	if len(nBytes) > 384 || len(dBytes) > 384 {
+		t.Fatalf("unexpected component sizes n=%d d=%d", len(nBytes), len(dBytes))
+	}
+	copy(priv.RSA3072PrivateKey[384-len(nBytes):384], nBytes)
+	copy(priv.RSA3072PrivateKey[768-len(dBytes):768], dBytes)
+	return priv
+}
+
+// TestRSA3072_UsesSHA384 pins the digest for the I2P signature type
+// RSA_SHA384_3072 (type 5): SHA-384, not SHA-512. It cross-checks both
+// directions against crypto/rsa so a symmetric-but-wrong hash choice in this
+// package cannot pass a self-consistent round trip.
+func TestRSA3072_UsesSHA384(t *testing.T) {
+	stdPriv, err := generateRSA3072KeyPair()
+	if err != nil {
+		t.Fatalf("failed to generate RSA-3072 key: %v", err)
+	}
+
+	// I2P public key (384-byte modulus) for the same pair.
+	var pub RSA3072PublicKey
+	nBytes := stdPriv.N.Bytes()
+	if len(nBytes) > 384 {
+		t.Fatalf("unexpected modulus size %d", len(nBytes))
+	}
+	copy(pub[384-len(nBytes):], nBytes)
+
+	priv := i2pRSA3072Private(t, stdPriv)
+	data := []byte("RSA-3072 digest binding check")
+	digest384 := sha512.Sum384(data)
+
+	// stdlib signs SHA-384/PKCS1v15 -> this package must verify it.
+	sig384, err := rsa.SignPKCS1v15(rand.Reader, stdPriv, crypto.SHA384, digest384[:])
+	if err != nil {
+		t.Fatalf("stdlib sign: %v", err)
+	}
+	if err := pub.Verify(data, sig384); err != nil {
+		t.Fatalf("Verify() rejected a stdlib SHA-384 signature: %v", err)
+	}
+
+	// this package signs -> stdlib must verify it under SHA-384.
+	ourSig, err := priv.Sign(data)
+	if err != nil {
+		t.Fatalf("Sign: %v", err)
+	}
+	if err := rsa.VerifyPKCS1v15(&stdPriv.PublicKey, crypto.SHA384, digest384[:], ourSig); err != nil {
+		t.Fatalf("stdlib could not verify our signature under SHA-384 (wrong digest?): %v", err)
+	}
+
+	// A SHA-512 (64-byte) digest must be rejected for this key type.
+	if err := pub.VerifyHash(make([]byte, sha512.Size), ourSig); err == nil {
+		t.Fatalf("VerifyHash accepted a %d-byte SHA-512 digest; RSA_SHA384_3072 requires SHA-384", sha512.Size)
 	}
 }
