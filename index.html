@@ -13,7 +13,7 @@
         <a href="index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 227 commits
+        📝 229 commits
          • 📜 MIT License
       </div>
     </div>
@@ -44,12 +44,12 @@
       <div class="repo-stats">
         
         <div class="repo-stat">
-          <span>📝</span> <span>227 commits</span>
+          <span>📝</span> <span>229 commits</span>
         </div>
         
         
         <div class="repo-stat">
-          <span>📅</span> <span>Last updated: October 13, 2026</span>
+          <span>📅</span> <span>Last updated: October 16, 2026</span>
         </div>
         
         
@@ -202,11 +202,16 @@ func main() {
 <pre><code class="language-go">package main
 
 import (
+    &quot;github.com/go-i2p/crypto/chacha20poly1305&quot;
     &quot;github.com/go-i2p/crypto/ratchet&quot;
 )
 
 func main() {
-    // After ECIES key exchange
+    // Inputs from a prior ECIES key exchange:
+    //   eciesSharedSecret, ourEphemeralPrivKey, theirPublicKey ([32]byte each)
+    var eciesSharedSecret, ourEphemeralPrivKey, theirPublicKey [32]byte
+    plaintext := []byte(&quot;Hello, I2P!&quot;)
+
     session, err := ratchet.NewSessionFromECIES(
         eciesSharedSecret,
         ourEphemeralPrivKey,
@@ -216,13 +221,16 @@ func main() {
         panic(err)
     }
     defer session.Zero()
-    
-    // Encrypt message (handles all ratchet operations)
+
+    // Derive the message key and session tag (advances the ratchets).
+    // EncryptMessage does not encrypt the payload itself.
     messageKey, sessionTag, _ := session.EncryptMessage(plaintext)
-    
-    // Use message key with AEAD
+
+    // Use the message key with a ChaCha20-Poly1305 AEAD to encrypt the payload.
+    nonce, _ := chacha20poly1305.GenerateNonce()
     aead, _ := chacha20poly1305.NewAEAD(messageKey)
-    ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce)
+    ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce[:])
+    _, _ = ciphertext, authTag
 }
 </code></pre>
 
@@ -255,7 +263,6 @@ func main() {
 import (
     &quot;github.com/go-i2p/crypto/rand&quot;
     &quot;github.com/go-i2p/crypto/aes&quot;
-    &quot;github.com/go-i2p/crypto/types&quot;
 )
 
 func main() {
@@ -284,13 +291,12 @@ func main() {
 }
 </code></pre>
 
-<h3 id="stream-cipher-encryption-chacha20">Stream Cipher Encryption (ChaCha20)</h3>
+<h3 id="chacha20-poly1305-aead-via-the-chacha20-package">ChaCha20-Poly1305 AEAD (via the chacha20 package)</h3>
 
 <pre><code class="language-go">package main
 
 import (
     &quot;github.com/go-i2p/crypto/chacha20&quot;
-    &quot;github.com/go-i2p/crypto/types&quot;
 )
 
 func main() {
@@ -316,7 +322,6 @@ func main() {
 
 import (
     &quot;github.com/go-i2p/crypto/curve25519&quot;
-    &quot;github.com/go-i2p/crypto/types&quot;
 )
 
 func main() {
@@ -348,7 +353,6 @@ New code should use the <code>ecies</code> package (ECIES-X25519-AEAD-Ratchet).<
 
 import (
     &quot;github.com/go-i2p/crypto/elg&quot;
-    &quot;github.com/go-i2p/crypto/types&quot;
 )
 
 func main() {
@@ -398,7 +402,6 @@ func main() {
 
 import (
     &quot;github.com/go-i2p/crypto/ed25519&quot;
-    &quot;github.com/go-i2p/crypto/types&quot;
 )
 
 func main() {
@@ -431,7 +434,7 @@ func main() {
 
 <ul>
 <li>ChaCha20-Poly1305 AEAD (authenticated encryption) — the modern standard</li>
-<li>ChaCha20 stream cipher</li>
+<li>ChaCha20-Poly1305 via the <code>chacha20</code> package (AEAD, nonce-prefixed output)</li>
 <li>AES (128/192/256-bit) with CBC mode — legacy</li>
 </ul></li>
 
@@ -517,9 +520,9 @@ func main() {
 
 <h2 id="testing">Testing</h2>
 
-<p>Run the comprehensive test suite:</p>
+<p>Run the test suite:</p>
 
-<pre><code class="language-bash">make test
+<pre><code class="language-bash">go test ./...
 </code></pre>
 
 <p>The test suite includes table-driven tests for all cryptographic operations, testing edge cases like empty data, exact block sizes, and large datasets.</p>
@@ -551,7 +554,7 @@ func main() {
                 eyedeekay
               </div>
               <div class="contributor-commits">
-                227 commits
+                229 commits
               </div>
             </div>
           </div>
@@ -563,7 +566,7 @@ func main() {
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2026-10-16 22:32:54 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2026-10-16 23:56:55 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>
