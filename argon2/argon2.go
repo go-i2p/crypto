@@ -56,10 +56,16 @@ func (a *Argon2id) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 	return derivedKey, nil
 }
 
-// DeriveDefault derives a key using default parameters for common use cases.
+// DeriveDefault derives a 32-byte key using the instance's configured costs
+// and no info context.
+//
+// NOTE: Argon2id requires a non-empty salt, and this method passes no salt, so
+// it always returns [ErrInvalidSalt]. Use [Argon2id.Derive] with an explicit
+// salt instead.
 func (a *Argon2id) DeriveDefault(ikm []byte) ([]byte, error) {
 	log.WithFields(logger.Fields{"pkg": "argon2", "func": "Argon2id.DeriveDefault"}).Debug("Deriving key with default parameters")
-	// Use default parameters: no salt, no info context, and a standard key length of 32 bytes
+	// Derive passes salt=nil here, which validateDeriveParams rejects with
+	// ErrInvalidSalt (Argon2id requires a non-empty salt). See the doc note.
 	return a.Derive(ikm, nil, nil, 32)
 }
 

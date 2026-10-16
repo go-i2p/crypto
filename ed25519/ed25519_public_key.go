@@ -11,12 +11,14 @@ import (
 // This key type implements the SigningPublicKey interface and is used to verify digital
 // signatures created by corresponding Ed25519 private keys. Public keys are 32 bytes in length.
 //
-// CRITICAL: Always use NewEd25519PublicKey() to create instances. Direct construction causes nil panics.
+// CRITICAL: Always use NewEd25519PublicKey() to create instances. Direct
+// construction produces an unvalidated (often nil/empty) key whose operations
+// return errors rather than working correctly.
 //
-// WRONG - Will panic:
+// WRONG - No validation:
 //
-//	var key Ed25519PublicKey  // nil slice - Bytes() returns empty, causes runtime errors
-//	copy(key[:], data)        // panic: copy to nil slice
+//	var key Ed25519PublicKey  // nil slice - Bytes() returns empty; Verify returns an error
+//	copy(key[:], data)        // no-op: copies 0 bytes into a zero-length slice (does not grow it)
 //
 // CORRECT - Use constructor:
 //

@@ -12,7 +12,8 @@
 //
 // # How it works
 //
-//   - The signer hashes the data with SHA-256.
+//   - The signer hashes the data with a key-size-appropriate hash: SHA-256
+//     for RSA-2048, and SHA-512 for RSA-3072 and RSA-4096.
 //   - The signer creates a signature using its private key.
 //   - A verifier checks the signature against the signer's public key.
 //

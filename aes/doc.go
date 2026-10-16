@@ -3,9 +3,10 @@
 //
 // AES is a widely used block cipher that encrypts data in fixed-size blocks
 // using a shared secret key. Both the sender and receiver must know the same
-// key. This package implements AES in CBC (Cipher Block Chaining) mode with
-// PKCS#7 padding, which is the mode I2P uses for its legacy tunnel
-// encryption.
+// key. This package implements AES in CBC (Cipher Block Chaining) mode, with
+// and without PKCS#7 padding. The padded form is the general-purpose helper;
+// note that I2P's legacy tunnel encryption (see the tunnel package) uses
+// unpadded CBC over a fixed payload region rather than this package.
 //
 // # How it works
 //

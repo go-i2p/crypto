@@ -14,9 +14,9 @@
 // I2P's ECIES-X25519-AEAD-Ratchet protocol (Proposal 144) uses three
 // ratchets together. This package provides each one:
 //
-//   - SessionTagRatchet: derives the short session tags that identify a
+//   - TagRatchet: derives the short session tags that identify a
 //     message's place in a session.
-//   - SymmetricKeyRatchet: derives the message encryption keys, advancing
+//   - SymmetricRatchet: derives the message encryption keys, advancing
 //     one step per message.
 //   - DHRatchet: periodically performs a fresh X25519 Diffie-Hellman
 //     exchange to refresh the root key, which is the strongest form of
@@ -33,10 +33,10 @@
 //
 //   - DH_INITIALIZE / DH_INITIALIZEFull: HKDF(rootKey, k, "KDFDHRatchetStep", 64)
 //     followed by HKDF(ck, ZEROLEN, "TagAndKeyGenKeys", 64).
-//   - SessionTagRatchet: HKDF(chainKey, ZEROLEN, "STInitialization", 64) to
+//   - TagRatchet: HKDF(chainKey, ZEROLEN, "STInitialization", 64) to
 //     seed, then HKDF(chainKey, SESSTAG_CONSTANT, "SessionTagKeyGen", 64) per
 //     step.
-//   - SymmetricKeyRatchet: HKDF(chainKey, ZEROLEN, "SymmetricRatchet", 64).
+//   - SymmetricRatchet: HKDF(chainKey, ZEROLEN, "SymmetricRatchet", 64).
 //
 // See the official specification for the full protocol:
 // https://i2p.net/en/docs/specs/ecies/

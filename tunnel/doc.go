@@ -33,8 +33,10 @@
 // # Message layout
 //
 // A tunnel message is a fixed 1028-byte block. In the legacy AES scheme the
-// first 16 bytes are the initialization vector (IV) and the remaining 1008
-// bytes are the encrypted payload. The ECIES scheme produces a compact
-// one-time ciphertext of [Elligator2-encoded ephemeral public key 32][flags
-// section 48][payload section N+16], as described in the ecies package.
+// first 16 bytes are the initialization vector (IV) and the following 1008
+// bytes (offsets 16..1024) are the encrypted payload; the final 4 bytes of the
+// block are not processed and are carried through unchanged. The ECIES scheme
+// produces a compact one-time ciphertext of [Elligator2-encoded ephemeral
+// public key 32][flags section 48][payload section N+16], as described in the
+// ecies package.
 package tunnel

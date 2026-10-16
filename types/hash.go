@@ -18,9 +18,12 @@ type KeyDeriver interface {
 	// Returns the derived key bytes or an error if derivation fails.
 	Derive(ikm, salt, info []byte, keyLen int) ([]byte, error)
 
-	// DeriveDefault derives a key using default parameters for common use cases.
-	// This method uses standard parameters: 32-byte output, no salt, and no info context.
-	// It provides a simplified interface for basic key derivation scenarios.
+	// DeriveDefault derives a key using default parameters for common use
+	// cases. This method uses a 32-byte output and no info context.
+	//
+	// Implementations that require a salt (for example Argon2id) cannot honor a
+	// "no salt" default and will return an error; check the concrete type's
+	// documentation.
 	DeriveDefault(ikm []byte) ([]byte, error)
 }
 

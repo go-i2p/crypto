@@ -12,14 +12,15 @@ var log = logger.GetGoI2PLogger()
 
 // Common HKDF errors
 var (
-	// ErrInvalidKeyLength indicates that the requested key derivation length is invalid.
-	// This error occurs when the key length parameter is zero, negative, or exceeds the
-	// maximum output length supported by the underlying hash function (255 * hash_length).
+	// ErrInvalidKeyLength indicates that the requested key derivation length is
+	// invalid. This error is returned when the key length parameter is zero or
+	// negative. An over-long request (beyond 255 * hash_length per RFC 5869) is
+	// not caught here; it surfaces later as ErrKeyDerivationFailed.
 	ErrInvalidKeyLength = oops.Errorf("invalid key length")
 
-	// ErrInvalidSaltLength indicates that the provided salt parameter has invalid length.
-	// While HKDF allows empty salts, this error is triggered for salt values that exceed
-	// implementation-specific limits or fail validation checks.
+	// ErrInvalidSaltLength indicates that the provided salt parameter has an
+	// invalid length. It is reserved and is not currently returned by this
+	// package: HKDF accepts any salt length, including empty.
 	ErrInvalidSaltLength = oops.Errorf("invalid salt length")
 
 	// ErrInvalidInfoLength indicates that the info parameter exceeds maximum allowed length.

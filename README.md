@@ -132,11 +132,16 @@ func main() {
 package main
 
 import (
+    "github.com/go-i2p/crypto/chacha20poly1305"
     "github.com/go-i2p/crypto/ratchet"
 )
 
 func main() {
-    // After ECIES key exchange
+    // Inputs from a prior ECIES key exchange:
+    //   eciesSharedSecret, ourEphemeralPrivKey, theirPublicKey ([32]byte each)
+    var eciesSharedSecret, ourEphemeralPrivKey, theirPublicKey [32]byte
+    plaintext := []byte("Hello, I2P!")
+
     session, err := ratchet.NewSessionFromECIES(
         eciesSharedSecret,
         ourEphemeralPrivKey,
@@ -146,13 +151,16 @@ func main() {
         panic(err)
     }
     defer session.Zero()
-    
-    // Encrypt message (handles all ratchet operations)
+
+    // Derive the message key and session tag (advances the ratchets).
+    // EncryptMessage does not encrypt the payload itself.
     messageKey, sessionTag, _ := session.EncryptMessage(plaintext)
-    
-    // Use message key with AEAD
+
+    // Use the message key with a ChaCha20-Poly1305 AEAD to encrypt the payload.
+    nonce, _ := chacha20poly1305.GenerateNonce()
     aead, _ := chacha20poly1305.NewAEAD(messageKey)
-    ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce)
+    ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce[:])
+    _, _ = ciphertext, authTag
 }
 ```
 
@@ -187,7 +195,6 @@ package main
 import (
     "github.com/go-i2p/crypto/rand"
     "github.com/go-i2p/crypto/aes"
-    "github.com/go-i2p/crypto/types"
 )
 
 func main() {
@@ -216,14 +223,13 @@ func main() {
 }
 ```
 
-### Stream Cipher Encryption (ChaCha20)
+### ChaCha20-Poly1305 AEAD (via the chacha20 package)
 
 ```go
 package main
 
 import (
     "github.com/go-i2p/crypto/chacha20"
-    "github.com/go-i2p/crypto/types"
 )
 
 func main() {
@@ -251,7 +257,6 @@ package main
 
 import (
     "github.com/go-i2p/crypto/curve25519"
-    "github.com/go-i2p/crypto/types"
 )
 
 func main() {
@@ -282,7 +287,6 @@ package main
 
 import (
     "github.com/go-i2p/crypto/elg"
-    "github.com/go-i2p/crypto/types"
 )
 
 func main() {
@@ -335,7 +339,6 @@ package main
 
 import (
     "github.com/go-i2p/crypto/ed25519"
-    "github.com/go-i2p/crypto/types"
 )
 
 func main() {
@@ -365,7 +368,7 @@ func main() {
 
 - **Symmetric Encryption**
   - ChaCha20-Poly1305 AEAD (authenticated encryption) — the modern standard
-  - ChaCha20 stream cipher
+  - ChaCha20-Poly1305 via the `chacha20` package (AEAD, nonce-prefixed output)
   - AES (128/192/256-bit) with CBC mode — legacy
 
 - **Asymmetric Encryption**
@@ -438,10 +441,10 @@ Each cryptographic algorithm is implemented in its own package with consistent e
 
 ## Testing
 
-Run the comprehensive test suite:
+Run the test suite:
 
 ```bash
-make test
+go test ./...
 ```
 
 The test suite includes table-driven tests for all cryptographic operations, testing edge cases like empty data, exact block sizes, and large datasets.

@@ -4,7 +4,8 @@ import "github.com/go-i2p/logger"
 
 // TunnelData represents the standardized data structure for I2P tunnel messages (1028 bytes total).
 // The structure follows I2P's tunnel message format where the first 16 bytes serve as the initialization
-// vector (IV) and the remaining 1008 bytes contain the encrypted payload data. This fixed-size format
+// vector (IV) and the following 1008 bytes (offsets 16..1024) contain the encrypted payload data; the
+// final 4 bytes of the block are not processed by the AES layer. This fixed-size format
 // ensures network compatibility and provides consistent message boundaries for tunnel encryption operations.
 // The 1028-byte size aligns with I2P's network protocol requirements for efficient data transmission.
 // TunnelData represents the data structure for tunnel messages (1028 bytes).

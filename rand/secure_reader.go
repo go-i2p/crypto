@@ -159,7 +159,8 @@ var DefaultSecureReader = NewSecureReader()
 // Compatible with crypto/rand.Reader
 var Reader io.Reader = DefaultSecureReader
 
-// CryptoInt returns a uniform random value in [0, max). It panics if max <= 0.
+// CryptoInt returns a uniform random value in [0, max). Unlike crypto/rand.Int
+// (which panics), this returns an error if max <= 0.
 // Compatible with crypto/rand.Int function
 func CryptoInt(reader io.Reader, max *big.Int) (*big.Int, error) {
 	if max.Sign() <= 0 {

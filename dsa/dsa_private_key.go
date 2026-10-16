@@ -32,7 +32,7 @@ type DSAPrivateKey [20]byte
 //
 // Returns:
 //   - DSAPrivateKey: A validated private key with defensive copy of the input
-//   - error: If data is invalid (wrong size, all-zero, or >= p)
+//   - error: If data is invalid (wrong size, all-zero, or >= q)
 //
 // Example:
 //

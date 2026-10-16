@@ -8,7 +8,8 @@
 //
 // # How it works
 //
-//   - The signer hashes the data with SHA-256.
+//   - The signer hashes the data with a curve-appropriate hash: SHA-256 for
+//     P-256, SHA-384 for P-384, and SHA-512 for P-521.
 //   - The signer creates an (r, s) signature pair using its private key.
 //   - A verifier checks the signature against the signer's public key.
 //
@@ -16,7 +17,8 @@
 //
 // Always use the provided constructors (for example
 // NewECP256PrivateKey) to create keys. Constructing a key type directly with
-// a zero value produces an invalid key that will panic when used.
+// a zero value produces an invalid key; operations on it return an error
+// rather than panicking.
 //
 // See the I2P cryptography overview for the role of ECDSA in I2P:
 // https://i2p.net/en/docs/specs/cryptography/

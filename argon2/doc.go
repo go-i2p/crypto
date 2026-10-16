@@ -14,13 +14,19 @@
 //
 // # Usage
 //
+// Derivation is performed through an [Argon2id] instance (or the ready-made
+// [Argon2idKDF] package variable), not package-level functions:
+//
 //   - Derive with custom parameters:
 //
-//     derivedKey, err := argon2.Derive(ikm, salt, info, keyLen)
+//     derivedKey, err := argon2.Argon2idKDF.Derive(ikm, salt, info, keyLen)
 //
-//   - Derive with sensible defaults:
+//   - Derive with the default costs:
 //
-//     derivedKey, err := argon2.DeriveDefault(ikm)
+//     derivedKey, err := argon2.Argon2idKDF.DeriveDefault(ikm)
+//
+// Note that Argon2id requires a non-empty salt, so DeriveDefault (which passes
+// no salt) returns [ErrInvalidSalt]; call Derive with an explicit salt.
 //
 // This package wraps golang.org/x/crypto/argon2 for the underlying
 // algorithm.

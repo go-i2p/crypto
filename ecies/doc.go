@@ -56,14 +56,13 @@
 // payload. The key is derived with the spec's Noise "IK" + "es" + "N"
 // schedule (section 1f), not a single HKDF call.
 //
-// For long-lived sessions that need forward secrecy, see SessionState, which
-// layers the three ratchets (session tag, symmetric key, and DH ratchet) on
-// top of the same primitives. SessionState is a convenience API: it is not
-// itself a spec-mandated wire format, and its initial key derivation is a
-// pragmatic choice for static-static initialization. The spec-compliant
-// ratchet primitives (session tag, symmetric key, and DH ratchet KDFs) live
-// in the ratchet package, which implements the spec's data-phase KDFs
-// exactly.
+// For long-lived sessions that need forward secrecy, see [ratchet.Session],
+// which layers the three ratchets (session tag, symmetric key, and DH ratchet)
+// on top of the same primitives and implements the spec's data-phase KDFs
+// exactly. The [SessionState] type in this package is a convenience API that is
+// now Deprecated: it is not a spec-mandated wire format and its static-static
+// initial key derivation uses non-spec KDF parameters. Prefer [ratchet.Session]
+// for new code.
 //
 // # Key sizes
 //

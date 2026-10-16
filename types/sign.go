@@ -30,7 +30,10 @@ type Verifier interface {
 	VerifyHash(h, sig []byte) error
 
 	// Verify verifies a digital signature against raw data.
-	// This convenience method hashes the data internally and calls VerifyHash.
+	// For most algorithms this convenience method hashes the data internally and
+	// calls VerifyHash. Note that PureEdDSA schemes (Ed25519, Red25519) verify
+	// the message directly and do NOT pre-hash, so Verify and VerifyHash are not
+	// interchangeable for them: VerifyHash receives the message bytes as-is.
 	// It provides a simplified interface for applications that don't need to manage hashing separately.
 	Verify(data, sig []byte) error
 }
@@ -59,12 +62,17 @@ type SigningPublicKey interface {
 // consistent signing operations across different cryptographic algorithms in the library.
 type Signer interface {
 	// Sign creates a digital signature for the provided data.
-	// This convenience method hashes the data internally and calls SignHash.
+	// For most algorithms this convenience method hashes the data internally and
+	// calls SignHash. Note that PureEdDSA schemes (Ed25519, Red25519) sign the
+	// message directly and do NOT pre-hash, so Sign and SignHash are not
+	// interchangeable for them: SignHash receives the message bytes as-is.
 	// It provides a simplified interface for applications that don't need to manage hashing separately.
 	Sign(data []byte) (sig []byte, err error)
 
 	// SignHash creates a digital signature for a pre-computed hash.
 	// This method accepts a hash digest and returns the signature bytes.
+	// For PureEdDSA schemes (Ed25519, Red25519) the input is treated as the
+	// message to sign, not as a digest.
 	// This is the primary signing method for performance-critical applications and when
 	// custom hashing algorithms or multiple signature operations are needed.
 	SignHash(h []byte) (sig []byte, err error)

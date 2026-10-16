@@ -145,7 +145,11 @@ func (elg ElgPrivateKey) Public() (types.PublicEncryptionKey, error) {
 // Zero securely clears all sensitive private key data from memory.
 // This method should be called when the private key is no longer needed to prevent
 // memory disclosure attacks. After calling Zero, the key becomes unusable.
-func (elg ElgPrivateKey) Zero() {
+//
+// The receiver is a pointer so the caller's key material is actually cleared:
+// ElgPrivateKey is a fixed-size array, and a value receiver would only zero a
+// copy, leaving the original key in memory.
+func (elg *ElgPrivateKey) Zero() {
 	// Clear each byte to prevent memory leakage
 	for i := range elg {
 		elg[i] = 0
@@ -180,7 +184,9 @@ func (elg ElgPrivateKey) Generate() (types.PrivateEncryptionKey, error) {
 	// Copy X bytes to fixed-size array with proper padding
 	copy(result[256-len(xBytes):], xBytes)
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgPrivateKey.Generate"}).Debug("ElGamal private key generated successfully")
-	return result, nil
+	// Return a pointer: types.PrivateEncryptionKey includes Zero() (pointer
+	// receiver), so only *ElgPrivateKey satisfies the interface.
+	return &result, nil
 }
 
 // createElgamalPrivateKey converts a 256-byte slice to an ElGamal private key structure.
@@ -217,3 +223,7 @@ func createElgamalPrivateKey(data []byte) (k *elgamal.PrivateKey) {
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalPrivateKey"}).Debug("ElGamal private key created successfully")
 	return k
 }
+
+// Compile-time assertion that ElgPrivateKey satisfies the encryption-key
+// interface. Zero has a pointer receiver, so only *ElgPrivateKey satisfies it.
+var _ types.PrivateEncryptionKey = &ElgPrivateKey{}

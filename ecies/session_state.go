@@ -195,7 +195,9 @@ func deriveSessionChainKeys(sharedSecret []byte, isInitiator bool) ([][32]byte, 
 		return nil, err
 	}
 
-	var keys [][32]byte
+	// keydata is 64 bytes: the first 32 are the initiator chain key and the
+	// last 32 are the responder chain key. Allocate both slots before writing.
+	keys := make([][32]byte, 2)
 	copy(keys[0][:], keydata[0:32])
 	copy(keys[1][:], keydata[32:64])
 	return keys, nil

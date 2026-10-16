@@ -10,15 +10,15 @@ import (
 //
 // CRITICAL: Never create AESSymmetricKey using zero-value construction or direct struct literals.
 // Zero-value construction results in nil slices which:
-//   - Will panic when calling NewEncrypter() or NewDecrypter()
-//   - Violates AES security requirements
+//   - Cause NewEncrypter() or NewDecrypter() to return an error (invalid key/IV size)
+//   - Violate AES security requirements
 //   - Cannot be detected until runtime
 //
 // ALWAYS use NewAESKey() or variant constructors for safe construction.
 //
-// WRONG - Will panic:
+// WRONG - Returns an error (no validation):
 //
-//	var key AESSymmetricKey              // nil slices - will panic!
+//	var key AESSymmetricKey              // nil slices - NewEncrypter/NewDecrypter error!
 //	key := AESSymmetricKey{...}          // no validation
 //
 // CORRECT - Use constructor:

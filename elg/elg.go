@@ -109,7 +109,10 @@ func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, e
 	}
 
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "GenerateKeyPair"}).Debug("ElGamal key pair generated successfully")
-	return pubKey, privKey, nil
+	// Return a pointer for the private key: types.PrivateEncryptionKey includes
+	// Zero(), which has a pointer receiver on this array type, so only
+	// *ElgPrivateKey satisfies the interface.
+	return pubKey, &privKey, nil
 }
 
 // PrivateKey wraps the standard ElGamal private key with I2P-specific functionality.

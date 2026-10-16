@@ -67,8 +67,12 @@ func (k ECIESPrivateKey) Public() (types.PublicEncryptionKey, error) {
 	return pubKey, nil
 }
 
-// Zero securely clears the private key from memory
-func (k ECIESPrivateKey) Zero() {
+// Zero securely clears the private key from memory.
+//
+// The receiver is a pointer so the caller's key material is actually cleared:
+// ECIESPrivateKey is a fixed-size array, and a value receiver would only zero a
+// copy, leaving the original key in memory.
+func (k *ECIESPrivateKey) Zero() {
 	for i := range k {
 		k[i] = 0
 	}
@@ -113,3 +117,7 @@ func GenerateECIESKeyPair() (*ECIESPublicKey, *ECIESPrivateKey, error) {
 	log.WithFields(logger.Fields{"pkg": "ecies", "func": "GenerateECIESKeyPair"}).Debug("ECIES key pair generated successfully")
 	return &pubKey, &privKey, nil
 }
+
+// Compile-time assertion that ECIESPrivateKey satisfies the encryption-key
+// interface. Zero has a pointer receiver, so only *ECIESPrivateKey satisfies it.
+var _ types.PrivateEncryptionKey = &ECIESPrivateKey{}

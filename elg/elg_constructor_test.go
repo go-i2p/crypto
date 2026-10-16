@@ -288,7 +288,7 @@ func TestElgKeyPairConsistency(t *testing.T) {
 		t.Fatalf("Failed to generate ElGamal key: %v", err)
 	}
 
-	privKey := privKeyInterface.(ElgPrivateKey)
+	privKey := privKeyInterface.(*ElgPrivateKey)
 	privBytes := privKey.Bytes()
 
 	// Create using constructor
@@ -324,9 +324,10 @@ func TestElgKeyPairConsistency(t *testing.T) {
 	}
 }
 
-// TestElgPrivateKeyZero tests the Zero method
-// Note: The current implementation uses a value receiver, so Zero() doesn't
-// actually modify the original key. This is a known limitation.
+// TestElgPrivateKeyZero tests that Zero clears the key material.
+// ElgPrivateKey.Zero uses a pointer receiver, so the caller's key is actually
+// cleared (ElgPrivateKey is a fixed-size array; a value receiver would only
+// zero a copy).
 func TestElgPrivateKeyZero(t *testing.T) {
 	keyBytes := make([]byte, 256)
 	keyBytes[255] = 5 // Valid value
@@ -341,13 +342,14 @@ func TestElgPrivateKeyZero(t *testing.T) {
 		t.Error("Key should not be zero before Zero() is called")
 	}
 
-	// Call Zero() - note this uses a value receiver
-	// so it creates a copy and zeros that
 	key.Zero()
 
-	// Note: Due to value receiver, the original key is NOT zeroed
-	// This is a known limitation of the current API
-	t.Log("Note: ElgPrivateKey.Zero() uses value receiver, so original key is not modified")
+	// With a pointer receiver, the original key must be cleared.
+	for i, b := range *key {
+		if b != 0 {
+			t.Fatalf("ElgPrivateKey.Zero() did not clear byte %d (got %d)", i, b)
+		}
+	}
 }
 
 // Benchmark constructors

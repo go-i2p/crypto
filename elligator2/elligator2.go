@@ -12,7 +12,9 @@
 //   - Encodes Curve25519 public keys as 32 random-looking bytes
 //   - Approximately 50% of Curve25519 private keys produce suitable public keys
 //   - Constant-time operations to prevent timing attacks
-//   - Bijective mapping between representatives and curve points
+//   - The representative-to-public-key map is deliberately many-to-one: the
+//     top 2 bits of the 32-byte representative are random padding masked off on
+//     decode, so 4 representatives map to each curve point.
 //
 // This implementation is based on the reference implementation by Adam Langley
 // and the Tor Project's implementation.

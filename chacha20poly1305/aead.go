@@ -66,14 +66,14 @@ type AEAD struct {
 }
 
 // NewAEAD creates a new ChaCha20-Poly1305 AEAD cipher with the given key.
-// The key must be exactly 32 bytes long.
 //
 // Parameters:
-//   - key: A 32-byte ChaCha20-Poly1305 key
+//   - key: A 32-byte ChaCha20-Poly1305 key. The key length is enforced by the
+//     [KeySize]byte type, so it is always exactly 32 bytes.
 //
 // Returns:
 //   - *AEAD: The initialized AEAD cipher
-//   - error: ErrInvalidKeySize if the key is not 32 bytes
+//   - error: A wrapped error if the underlying cipher cannot be created
 //
 // Example:
 //

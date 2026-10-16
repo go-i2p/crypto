@@ -19,10 +19,10 @@ type Curve25519Decrypter struct {
 }
 
 // Decrypt decrypts data that was encrypted using Curve25519 and ChaCha20-Poly1305 AEAD.
-// The encrypted data format is: [ephemeral_public_key][nonce][aead_ciphertext]
+// The encrypted data format is: [zero padding][ephemeral_public_key][nonce][aead_ciphertext]
 // This method performs X25519 key exchange with the ephemeral public key, derives the decryption key
 // using HKDF-SHA256, and then decrypts the data using ChaCha20-Poly1305 authenticated encryption.
-// The minimum data size is 60 bytes (32-byte public key + 12-byte nonce + 16-byte tag).
+// The minimum data size is 61 bytes (1 zero-padding byte + 32-byte public key + 12-byte nonce + 16-byte tag).
 func (c *Curve25519Decrypter) Decrypt(data []byte) ([]byte, error) {
 	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Decrypter.Decrypt", "data_length": len(data)}).Debug("Decrypting data with Curve25519")
 

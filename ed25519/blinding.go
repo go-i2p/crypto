@@ -23,6 +23,21 @@ var (
 	ErrInvalidPrivateKey = oops.Errorf("invalid Ed25519 private key")
 )
 
+// applyPublicKeyTransform applies a transformation to a public key using a blinding
+// factor, consolidating the shared control flow between blinding and unblinding
+// operations that both follow the parse-compute-copy pattern.
+func applyPublicKeyTransform(keyBytes, alpha [32]byte, startMsg, endMsg string, compute func([32]byte, [32]byte) (*edwards25519.Point, error)) ([32]byte, error) {
+	var result [32]byte
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "applyPublicKeyTransform"}).Debug(startMsg)
+	point, err := compute(keyBytes, alpha)
+	if err != nil {
+		return result, err
+	}
+	copy(result[:], point.Bytes())
+	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "applyPublicKeyTransform"}).Debug(endMsg)
+	return result, nil
+}
+
 // BlindPublicKey blinds an Ed25519 public key using a blinding factor (alpha).
 // This is used to create unlinkable blinded destinations for EncryptedLeaseSet.
 //
@@ -56,21 +71,6 @@ var (
 //
 // Spec: I2P Proposal 123 - Encrypted LeaseSet
 // Reference: https://ed25519.cr.yp.to/papers.html
-// applyPublicKeyTransform applies a transformation to a public key using a blinding
-// factor, consolidating the shared control flow between blinding and unblinding
-// operations that both follow the parse-compute-copy pattern.
-func applyPublicKeyTransform(keyBytes, alpha [32]byte, startMsg, endMsg string, compute func([32]byte, [32]byte) (*edwards25519.Point, error)) ([32]byte, error) {
-	var result [32]byte
-	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "applyPublicKeyTransform"}).Debug(startMsg)
-	point, err := compute(keyBytes, alpha)
-	if err != nil {
-		return result, err
-	}
-	copy(result[:], point.Bytes())
-	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "applyPublicKeyTransform"}).Debug(endMsg)
-	return result, nil
-}
-
 func BlindPublicKey(publicKey, alpha [32]byte) ([32]byte, error) {
 	return applyPublicKeyTransform(
 		publicKey, alpha,

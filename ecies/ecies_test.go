@@ -572,9 +572,25 @@ func TestECIESKeyInterfaceMethods(t *testing.T) {
 		})
 	}
 
-	// Note: Zero() method has a value receiver which makes it ineffective.
-	// This is a known issue but fixing it is outside the scope of the current task.
-	// The Zero() method should have a pointer receiver: func (k *ECIESPrivateKey) Zero()
+	// Zero() uses a pointer receiver so it clears the caller's key material.
+	// ECIESPrivateKey is a fixed-size array; a value receiver would only zero a
+	// copy (see TestECIESPrivateKeyZero).
+}
+
+// TestECIESPrivateKeyZero verifies that Zero clears the private key in place.
+func TestECIESPrivateKeyZero(t *testing.T) {
+	var privKey ECIESPrivateKey
+	for i := range privKey {
+		privKey[i] = 0xAA
+	}
+
+	privKey.Zero()
+
+	for i, b := range privKey {
+		if b != 0 {
+			t.Fatalf("ECIESPrivateKey.Zero() did not clear byte %d (got %d)", i, b)
+		}
+	}
 }
 
 // TestGenerateECIESKeyPair tests the GenerateECIESKeyPair function.
@@ -629,5 +645,43 @@ func TestGenerateECIESKeyPair(t *testing.T) {
 		if !bytes.Equal(plaintext, testData) {
 			t.Errorf("Key pair %d: round-trip failed", i)
 		}
+	}
+}
+
+// TestNewSessionRegression verifies that NewSession returns a usable
+// session instead of panicking. This guards against a regression where
+// deriveSessionChainKeys indexed a nil slice (index out of range panic).
+func TestNewSessionRegression(t *testing.T) {
+	_, alicePriv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("GenerateKeyPair(alice) failed: %v", err)
+	}
+	bobPub, _, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("GenerateKeyPair(bob) failed: %v", err)
+	}
+
+	session, err := NewSession(alicePriv, bobPub, true)
+	if err != nil {
+		t.Fatalf("NewSession failed: %v", err)
+	}
+	if session == nil {
+		t.Fatal("NewSession returned nil session")
+	}
+
+	key, err := session.DeriveNextSendingKey()
+	if err != nil {
+		t.Fatalf("DeriveNextSendingKey failed: %v", err)
+	}
+	if len(key) != 32 {
+		t.Errorf("sending key has wrong length: got %d, want 32", len(key))
+	}
+
+	tag, err := session.GetNextSendingTag()
+	if err != nil {
+		t.Fatalf("GetNextSendingTag failed: %v", err)
+	}
+	if len(tag) != 8 {
+		t.Errorf("session tag has wrong length: got %d, want 8", len(tag))
 	}
 }

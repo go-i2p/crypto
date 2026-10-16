@@ -71,7 +71,9 @@ func NewTunnelCrypto(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
 }
 
 // Encrypt encrypts plaintext data using AES-256-CBC dual-layer encryption.
-// For AES tunnel encryption, the input should be exactly 1008 bytes of payload data.
+// For AES tunnel encryption, the input should be exactly 1008 bytes of payload
+// data (a random 16-byte IV is then prepended); a full 1028-byte record is also
+// accepted and used as-is.
 // The method creates a 1028-byte tunnel structure with a 16-byte IV prefix.
 // Returns the complete tunnel data (1028 bytes) or error if encryption fails.
 // This implements the TunnelEncryptor interface for AES-256-CBC encryption.
@@ -112,10 +114,12 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 // constructor to determine the direction of processing.
 func (a *AESEncryptor) processTunnelData(td *TunnelData, ivOp func(dst, src []byte), newBlockMode func(cipher.Block, []byte) cipher.BlockMode, msg string) error {
 	// F079/F080/F081 complete fix: pointer-based (not value copy), correct IV offset,
-	// single-block IV transform, full 1024-byte payload CBC, 1028-byte output.
+	// single-block IV transform, 1008-byte payload CBC (bytes 16..1024), 1028-byte output.
 	// Step 1: AES-ECB single-block transform on 16-byte IV using ivKey.
 	ivOp(td[:16], td[:16])
-	// Step 2: CBC encrypt/decrypt payload (bytes 16..1040 = 1024 bytes, per Java I2P ref: payload=1024) using layerKey with IV=td[:16].
+	// Step 2: CBC encrypt/decrypt the payload region (bytes 16..1024 = 1008
+	// bytes) using layerKey with IV=td[:16]. Note: the final 4 bytes (1024..1028)
+	// are not part of this region and are carried through unchanged.
 	layerBlock := newBlockMode(a.layerKey, td[:16])
 	layerBlock.CryptBlocks(td[16:1024], td[16:1024])
 	// Step 3: AES-ECB single-block transform on 16-byte IV (post-payload).
@@ -132,7 +136,8 @@ func (a *AESEncryptor) encryptTunnelData(td *TunnelData) error {
 
 // Decrypt decrypts ciphertext data using AES-256-CBC dual-layer decryption.
 // For AES tunnel decryption, the input should be exactly 1028 bytes of tunnel data.
-// Returns the 1008-byte payload (excluding 16-byte IV) or error if decryption fails.
+// Returns the 1008-byte payload from bytes 16..1024 (excluding the 16-byte IV)
+// or error if decryption fails.
 // This implements the TunnelEncryptor interface for AES-256-CBC decryption.
 func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Decrypt"}).Debug("Decrypting data with AES-256-CBC tunnel decryption")

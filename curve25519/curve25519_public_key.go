@@ -12,12 +12,14 @@ import (
 // This type implements the types.PublicEncryptionKey interface and provides X25519 elliptic curve
 // cryptographic operations for I2P network encryption and ECDH key exchange protocols.
 //
-// CRITICAL: Always use NewCurve25519PublicKey() to create instances. Direct construction causes nil panics.
+// CRITICAL: Always use NewCurve25519PublicKey() to create instances. Direct
+// construction produces an unvalidated (often nil/empty) key whose operations
+// return errors rather than working correctly.
 //
-// WRONG - Will panic:
+// WRONG - No validation:
 //
-//	var key Curve25519PublicKey  // nil slice - methods will fail
-//	copy(key[:], data)           // panic: copy to nil slice
+//	var key Curve25519PublicKey  // nil slice - NewEncrypter()/NewVerifier() return an error
+//	copy(key[:], data)           // no-op: copies 0 bytes into a zero-length slice (does not grow it)
 //
 // CORRECT - Use constructor:
 //

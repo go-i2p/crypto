@@ -152,17 +152,20 @@ func NewSessionFromHandshake(handshake HandshakeResult) (*Session, error) {
 	)
 }
 
-// EncryptMessage encrypts a message and returns ciphertext with session tag.
-// This method:
+// EncryptMessage advances the ratchets and returns the message key and session
+// tag for the next outbound message. This method:
 //  1. Generates a unique session tag for this message
 //  2. Derives a message encryption key from the symmetric ratchet
 //  3. Advances both ratchets for forward secrecy
 //
-// The returned session tag should be sent with the ciphertext to allow
-// the recipient to identify which session to use for decryption.
+// It does NOT itself encrypt the plaintext: the caller must use the returned
+// messageKey with a ChaCha20-Poly1305 AEAD to produce the ciphertext, and send
+// that ciphertext together with the returned session tag so the recipient can
+// identify which session (and message) it belongs to.
 //
 // Parameters:
-//   - plaintext: The message to encrypt
+//   - plaintext: The message to derive a key for (used only for logging; the
+//     caller encrypts it with the returned key)
 //
 // Returns:
 //   - messageKey: The 32-byte encryption key to use with ChaCha20-Poly1305
