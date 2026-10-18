@@ -43,8 +43,7 @@
 //
 // Historical note: an earlier revision of this package used a Signal-style
 // HMAC-SHA256 construction ("MessageKey"/"NextChainKey") that did not match
-// the spec. That was corrected to the HKDF construction above; see
-// ../AUDIT.md (finding 8) for the original deviation.
+// the spec. That was corrected to the HKDF construction above.
 //
 // # A note on construction
 //

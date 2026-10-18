@@ -17,8 +17,16 @@
 //
 //	[zero padding][ephemeral public key][nonce][ciphertext + tag]
 //
-// This package is used by I2P network protocols that need to encrypt data to
-// a specific destination. For the full ECIES-X25519-AEAD-Ratchet scheme, see
-// the ecies package and the I2P specification:
-// https://i2p.net/en/docs/specs/ecies/
+// # Relationship to the I2P ECIES specification
+//
+// This package is a generic X25519 + ChaCha20-Poly1305 helper. Its wire format
+// is NOT the I2P ECIES-X25519-AEAD-Ratchet format described at
+// https://i2p.net/en/docs/specs/ecies/ : the spec's New Session / one-time
+// message uses an Elligator2-encoded ephemeral key, a Noise IK/"es" key
+// schedule, a separate authenticated flags/static section, and a counter nonce
+// whose associated data is the running mix-hash. Here the ephemeral key is sent
+// raw, the key is derived with a single plain HKDF call, the nonce is random,
+// and there is no associated data.
+//
+// Use the ecies package for anything that must interoperate with I2P routers.
 package curve25519

@@ -1,6 +1,8 @@
 package ratchet
 
 import (
+	"encoding/binary"
+
 	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
@@ -37,10 +39,45 @@ type Session struct {
 	// validation (spec section 4b: "N might be at most 128, but 32 or even
 	// less may be a better choice"). Defaults to DefaultLookaheadWindow.
 	lookaheadSize int
-	// lookaheadTags holds pre-computed session tags for out-of-order delivery
-	// tolerance. Index i is the tag at offset i from the current ratchet
-	// position. Rebuilt after each successful verification and DH ratchet.
-	lookaheadTags [][SessionTagSize]byte
+	// lookahead holds the receiver's pre-computed window of (session tag,
+	// message key) pairs for out-of-order delivery tolerance, as required by
+	// spec sections 4b and 4c: the receiver ratchets its tag chain ahead by the
+	// window size, and because the session tag ratchet is synchronized with the
+	// symmetric key ratchet, each tag is paired with the message key derived at
+	// the same position. Index i is the entry at offset i from the current
+	// ratchet position. Rebuilt after each successful verification and DH
+	// ratchet.
+	lookahead []lookaheadEntry
+}
+
+// lookaheadEntry is one slot of the receiver's look-ahead window: the session
+// tag on the wire, paired with the message key derived at the same ratchet
+// position and the message number N for that slot. Advancing both chains
+// together keeps the tag and symmetric key ratchets synchronized, as spec
+// sections 4b and 4c require.
+//
+// N is stored alongside each tag because the spec makes the message number the
+// ChaCha20-Poly1305 nonce: "n = The message number N in the current chain, as
+// retrieved from the associated Session Tag" (section 1h). Without it a
+// receiver could not rebuild the nonce for an out-of-order message.
+type lookaheadEntry struct {
+	tag  [SessionTagSize]byte
+	key  [MessageKeySize]byte
+	num  uint32
+	used bool
+}
+
+// DataNonce builds the Existing Session AEAD nonce from a message number, per
+// the I2P ECIES spec section 3: a 12-byte counter nonce whose first four bytes
+// are always zero and whose last eight bytes are the message number n in
+// little-endian order.
+//
+// The spec caps n at 65535 ("Higher values must never be used"); callers should
+// enforce that through the tag-set limit rather than relying on this function.
+func DataNonce(n uint32) [NonceSize]byte {
+	var nonce [NonceSize]byte
+	binary.LittleEndian.PutUint64(nonce[4:], uint64(n))
+	return nonce
 }
 
 // HandshakeResult contains the output of an ECIES key exchange handshake
@@ -67,6 +104,24 @@ type HandshakeResult struct {
 //
 // This is the recommended way to create a session after ECIES key exchange.
 //
+// # Limitation: the initial keys are not derived per the specification
+//
+// The spec obtains the initial ratchet inputs from the New Session Reply
+// handshake: DH_INITIALIZE takes rootKey = "chainKey from Payload Section" and
+// k = "from the New Session KDF or split()", and the two directions get
+// separate tag sets ("The chainKey and k from Bob's NSR Payload Section are
+// used as inputs for the initial ES DH Ratchets (both directions...)").
+//
+// This constructor has no handshake state to draw on, so it substitutes a
+// zero root key with the caller's shared secret as k, and seeds both directions
+// from the same result. The KDFs it then applies (KDFDHRatchetStep,
+// TagAndKeyGenKeys, STInitialization, SessionTagKeyGen, SymmetricRatchet) are
+// exactly the spec's, but the initial seed is not, so a session created here
+// will not interoperate with a Java I2P router. Use it for local ratcheting and
+// tests; for on-network sessions the keys must come from a spec-compliant
+// New Session / New Session Reply handshake, which this package does not
+// implement (see the ecies package docs for the scope boundary).
+//
 // Parameters:
 //   - sharedSecret: The 32-byte ECIES-X25519 shared secret
 //   - ourPrivKey: Our ephemeral private key (for DH ratchet)
@@ -85,9 +140,10 @@ type HandshakeResult struct {
 //	}
 //	defer session.Zero()
 //
-//	// Encrypt message: the session yields the per-message key and session tag;
-//	// the caller does the ChaCha20-Poly1305 encryption with them.
-//	messageKey, tag, _ := session.EncryptMessage(plaintext)
+//	// Encrypt message: the session yields the per-message key, the session tag,
+//	// and the spec's counter nonce; the caller does the ChaCha20-Poly1305
+//	// encryption with them.
+//	messageKey, tag, nonce, _ := session.EncryptMessage(plaintext)
 func NewSessionFromECIES(sharedSecret, ourPrivKey, theirPubKey [32]byte) (*Session, error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "NewSessionFromECIES"}).Debug("Creating new session from ECIES shared secret")
 
@@ -153,16 +209,18 @@ func NewSessionFromHandshake(handshake HandshakeResult) (*Session, error) {
 	)
 }
 
-// EncryptMessage advances the ratchets and returns the message key and session
-// tag for the next outbound message. This method:
+// EncryptMessage advances the ratchets and returns the message key, session
+// tag, and AEAD nonce for the next outbound message. This method:
 //  1. Generates a unique session tag for this message
 //  2. Derives a message encryption key from the symmetric ratchet
-//  3. Advances both ratchets for forward secrecy
+//  3. Computes the spec's counter nonce from the message number
+//  4. Advances both ratchets for forward secrecy
 //
 // It does NOT itself encrypt the plaintext: the caller must use the returned
-// messageKey with a ChaCha20-Poly1305 AEAD to produce the ciphertext, and send
-// that ciphertext together with the returned session tag so the recipient can
-// identify which session (and message) it belongs to.
+// messageKey and nonce with a ChaCha20-Poly1305 AEAD to produce the ciphertext,
+// and send that ciphertext together with the returned session tag so the
+// recipient can identify which session (and message) it belongs to. Per spec
+// section 1h the session tag is the AEAD associated data.
 //
 // Parameters:
 //   - plaintext: The message to derive a key for (used only for logging; the
@@ -170,43 +228,49 @@ func NewSessionFromHandshake(handshake HandshakeResult) (*Session, error) {
 //
 // Returns:
 //   - messageKey: The 32-byte encryption key to use with ChaCha20-Poly1305
-//   - tag: The 8-byte session tag
+//   - tag: The 8-byte session tag (also the AEAD associated data)
+//   - nonce: The 12-byte counter nonce for this message
 //   - error: Any error during encryption
 //
 // Example:
 //
-//	messageKey, sessionTag, err := session.EncryptMessage(plaintext)
+//	messageKey, sessionTag, nonce, err := session.EncryptMessage(plaintext)
 //	if err != nil {
 //	    return err
 //	}
 //
 //	// Use messageKey with ChaCha20-Poly1305 AEAD
 //	aead, _ := chacha20poly1305.NewAEAD(messageKey)
-//	ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce)
-func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]byte, err error) {
+//	ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce[:])
+func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]byte, nonce [NonceSize]byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.EncryptMessage", "plaintext_len": len(plaintext), "message_num": s.messageNum}).Debug("Encrypting message")
 
 	// The spec caps each tag set at 65535 messages; beyond that the DH ratchet
 	// must be performed to obtain a fresh tag set.
 	if s.messageNum >= MaxMessagesPerTagset {
-		return messageKey, tag, ErrTagsetExhausted
+		return messageKey, tag, nonce, ErrTagsetExhausted
 	}
+
+	// The AEAD nonce is this message's number in the chain (spec section 1h:
+	// "n = The message number N in the current chain"), captured before the
+	// counter is advanced.
+	nonce = DataNonce(s.messageNum)
 
 	// Generate session tag for this message
 	tag, err = s.tagRatchet.GenerateNextTag()
 	if err != nil {
-		return messageKey, tag, oops.Wrapf(err, "failed to generate session tag")
+		return messageKey, tag, nonce, oops.Wrapf(err, "failed to generate session tag")
 	}
 
 	// Derive message encryption key
 	messageKey, err = s.symRatchet.DeriveMessageKey(s.messageNum)
 	if err != nil {
-		return messageKey, tag, oops.Wrapf(err, "failed to derive message key")
+		return messageKey, tag, nonce, oops.Wrapf(err, "failed to derive message key")
 	}
 
 	// Advance symmetric ratchet for forward secrecy
 	if err := s.symRatchet.Advance(); err != nil {
-		return messageKey, tag, oops.Wrapf(err, "failed to advance symmetric ratchet")
+		return messageKey, tag, nonce, oops.Wrapf(err, "failed to advance symmetric ratchet")
 	}
 
 	// Increment message number
@@ -214,84 +278,90 @@ func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.EncryptMessage", "session_tag": tag}).Debug("Message encrypted successfully")
 
-	return messageKey, tag, nil
+	return messageKey, tag, nonce, nil
 }
 
-// DecryptMessage prepares to decrypt a message by deriving the message key.
-// This method verifies the session tag and derives the appropriate message key.
+// DecryptMessage looks up a received session tag in the receiver's look-ahead
+// window and returns the message key and AEAD nonce associated with it.
+//
+// Tags are matched against the pre-computed window so that out-of-order delivery
+// within the window still resolves to the correct key; the tag and symmetric key
+// ratchets advance in lockstep as the contiguous head of the window is consumed.
 //
 // Parameters:
 //   - tag: The 8-byte session tag received with the ciphertext
 //
 // Returns:
 //   - messageKey: The 32-byte decryption key to use with ChaCha20-Poly1305
+//   - nonce: The 12-byte counter nonce for this message's number
 //   - error: Any error if the tag is invalid
 //
 // Example:
 //
-//	messageKey, err := session.DecryptMessage(sessionTag)
+//	messageKey, nonce, err := session.DecryptMessage(sessionTag)
 //	if err != nil {
 //	    return err
 //	}
 //
 //	// Use messageKey with ChaCha20-Poly1305 AEAD
 //	aead, _ := chacha20poly1305.NewAEAD(messageKey)
-//	plaintext, _ := aead.Decrypt(ciphertext, authTag, sessionTag[:], nonce)
-func (s *Session) DecryptMessage(tag [8]byte) (messageKey [32]byte, err error) {
+//	plaintext, _ := aead.Decrypt(ciphertext, authTag, sessionTag[:], nonce[:])
+func (s *Session) DecryptMessage(tag [8]byte) (messageKey [32]byte, nonce [NonceSize]byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.DecryptMessage", "session_tag": tag, "message_num": s.messageNum}).Debug("Decrypting message")
 
-	if err := s.verifySessionTag(tag); err != nil {
-		return messageKey, err
+	if len(s.lookahead) == 0 {
+		s.rebuildLookahead()
 	}
 
-	messageKey, err = s.deriveDecryptionKey()
-	if err != nil {
-		return messageKey, err
+	idx := -1
+	for i := range s.lookahead {
+		if s.lookahead[i].tag == tag && !s.lookahead[i].used {
+			idx = i
+			break
+		}
 	}
+	if idx < 0 {
+		log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.DecryptMessage", "received_tag": tag}).Warn("Session tag not in lookahead window")
+		return messageKey, nonce, oops.Errorf("invalid session tag: tag mismatch")
+	}
+
+	matched := s.lookahead[idx]
+	s.lookahead[idx].used = true
+
+	// Advance the real ratchets past the contiguous run of received messages at
+	// the head of the window. Unreceived messages further along keep their
+	// cached keys, so out-of-order delivery within the window still resolves to
+	// the correct key (spec sections 4b and 4c: the receiver "should keep the
+	// 'N' value associated with each session tag" and cache "the keys for any
+	// previous tags that have not yet been received").
+	for len(s.lookahead) > 0 && s.lookahead[0].used {
+		if err := s.tagRatchet.Advance(); err != nil {
+			return messageKey, nonce, oops.Wrapf(err, "failed to advance tag ratchet")
+		}
+		if err := s.symRatchet.Advance(); err != nil {
+			return messageKey, nonce, oops.Wrapf(err, "failed to advance symmetric ratchet")
+		}
+		s.messageNum++
+		s.lookahead = s.lookahead[1:]
+	}
+	s.fillLookahead()
+
+	// The AEAD nonce is the matched message number (spec section 1h: "n = The
+	// message number N in the current chain, as retrieved from the associated
+	// Session Tag"). Returning it lets the caller decrypt an out-of-order
+	// message, since the nonce is not otherwise recoverable from the tag.
+	nonce = DataNonce(matched.num)
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.DecryptMessage"}).Debug("Message decrypted successfully")
 
-	return messageKey, nil
+	return matched.key, nonce, nil
 }
 
-// verifySessionTag validates that the received tag matches one of the
-// pre-computed lookahead tags. Per the spec (section 4), receivers should
-// implement a look-ahead strategy: the receiver ratchets ahead by the window
-// size and stores the tags, so that out-of-order delivery within the window
-// can still be decrypted.
-//
-// On a match at offset i, the tag ratchet is advanced i times to reach the
-// matched position, and the lookahead window is rebuilt from there.
-func (s *Session) verifySessionTag(tag [8]byte) error {
-	if len(s.lookaheadTags) == 0 {
-		s.rebuildLookahead()
-	}
-
-	for i, candidate := range s.lookaheadTags {
-		if candidate != tag {
-			continue
-		}
-
-		// Advance the tag ratchet to the matched position.
-		for j := 0; j < i; j++ {
-			if err := s.tagRatchet.Advance(); err != nil {
-				return oops.Wrapf(err, "failed to advance tag ratchet")
-			}
-		}
-
-		// Rebuild the window from the new position.
-		s.rebuildLookahead()
-		return nil
-	}
-
-	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.verifySessionTag", "received_tag": tag}).Warn("Session tag not in lookahead window")
-	return oops.Errorf("invalid session tag: tag mismatch")
-}
-
-// rebuildLookahead pre-computes the lookahead window of session tags. Index i
-// of s.lookaheadTags is the tag at offset i from the current ratchet position
-// (i.e., the tag that would be generated after i more Advance steps).
-func (s *Session) rebuildLookahead() {
+// fillLookahead extends the receiver's look-ahead window back up to
+// lookaheadSize entries by walking copies of the tag and symmetric ratchets.
+// Existing (possibly already-received) entries are left untouched, so keys
+// cached for out-of-order messages are not discarded.
+func (s *Session) fillLookahead() {
 	size := s.lookaheadSize
 	if size <= 0 {
 		size = DefaultLookaheadWindow
@@ -299,40 +369,51 @@ func (s *Session) rebuildLookahead() {
 	if size > MaxLookaheadWindow {
 		size = MaxLookaheadWindow
 	}
+	if len(s.lookahead) >= size {
+		return
+	}
 
-	// Walk a copy of the tag ratchet so the real ratchet is not advanced.
-	probe := *s.tagRatchet
-	tags := make([][SessionTagSize]byte, 0, size)
-	for i := 0; i < size; i++ {
-		tag, err := probe.PeekNextTag()
+	// Walk copies so the real ratchet positions are not advanced.
+	tagProbe := *s.tagRatchet
+	symProbe := *s.symRatchet
+	// Skip the entries already cached in the window.
+	for i := 0; i < len(s.lookahead); i++ {
+		if err := tagProbe.Advance(); err != nil {
+			break
+		}
+		if err := symProbe.Advance(); err != nil {
+			break
+		}
+	}
+
+	for len(s.lookahead) < size {
+		tag, err := tagProbe.PeekNextTag()
 		if err != nil {
 			break
 		}
-		tags = append(tags, tag)
-		if err := probe.Advance(); err != nil {
+		key, err := symProbe.DeriveMessageKey(0)
+		if err != nil {
+			break
+		}
+		// The slot's message number is its absolute position in the chain: the
+		// number the ratchet will reach once the existing entries are consumed.
+		num := s.messageNum + uint32(len(s.lookahead))
+		s.lookahead = append(s.lookahead, lookaheadEntry{tag: tag, key: key, num: num})
+		if err := tagProbe.Advance(); err != nil {
+			break
+		}
+		if err := symProbe.Advance(); err != nil {
 			break
 		}
 	}
-
-	s.lookaheadTags = tags
 }
 
-// deriveDecryptionKey derives the message key and advances the symmetric ratchet.
-func (s *Session) deriveDecryptionKey() ([32]byte, error) {
-	var messageKey [32]byte
-
-	messageKey, err := s.symRatchet.DeriveMessageKey(s.messageNum)
-	if err != nil {
-		return messageKey, oops.Wrapf(err, "failed to derive message key")
-	}
-
-	if err := s.symRatchet.Advance(); err != nil {
-		return messageKey, oops.Wrapf(err, "failed to advance symmetric ratchet")
-	}
-
-	s.messageNum++
-
-	return messageKey, nil
+// rebuildLookahead discards and recomputes the whole look-ahead window from the
+// current ratchet positions. Called when the ratchets are reinitialized (DH
+// ratchet step) or the window is empty.
+func (s *Session) rebuildLookahead() {
+	s.lookahead = nil
+	s.fillLookahead()
 }
 
 // PerformDHRatchet performs a Diffie-Hellman ratchet step in the sending
@@ -437,10 +518,11 @@ func (s *Session) Zero() {
 	s.messageNum = 0
 	s.sendingRootKey = [ChainKeySize]byte{}
 	s.receivingRootKey = [ChainKeySize]byte{}
-	for i := range s.lookaheadTags {
-		s.lookaheadTags[i] = [SessionTagSize]byte{}
+	// The look-ahead window caches per-message keys, so it must be zeroed too.
+	for i := range s.lookahead {
+		s.lookahead[i] = lookaheadEntry{}
 	}
-	s.lookaheadTags = nil
+	s.lookahead = nil
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.Zero"}).Debug("Session state cleared")
 }

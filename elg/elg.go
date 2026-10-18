@@ -51,12 +51,15 @@
 //	privKey.Zero()
 //
 // I2P Compatibility:
-// This implementation follows I2P's ElGamal specifications including fixed domain parameters,
-// message formatting with SHA-256 integrity checks, and support for the network's encryption
-// message types used in tunnel building and end-to-end encrypted communications.
+// This implementation follows I2P's ElGamal low-level specification: the fixed
+// RFC-3526 2048-bit domain parameters, and the cleartext block layout
+// [random nonzero marker][SHA-256 of the data][data] encrypted into the 514-byte
+// two-part block. On decrypt the marker is only required to be nonzero (as the
+// spec states) and the payload length is recovered from the block structure
+// rather than by trimming trailing zeros, so it interoperates with Java I2P.
 //
-// See the I2P ElGamal/AES specification:
-// https://i2p.net/en/docs/specs/elgamal-aes/
+// See the I2P low-level cryptography specification for the ElGamal block format:
+// https://i2p.net/en/docs/specs/cryptography/
 package elg
 
 import (
@@ -219,59 +222,43 @@ func parseCiphertext(data []byte, zeroPadding bool) ([]byte, error) {
 	return data, nil
 }
 
-// verifyAndExtractPayload validates the decrypted message format and integrity.
-// Checks message length, type byte, and SHA-256 hash before extracting the payload.
-// Returns the verified payload with trailing zeros removed.
+// verifyAndExtractPayload validates the decrypted message format and integrity,
+// then returns the payload at its exact length.
+//
+// The I2P cleartext block is [marker byte][SHA-256 of the data][data], where the
+// marker is a random *nonzero* byte (see the low-level cryptography spec and
+// Java's ElGamalEngine). Because the block is encrypted as a single big integer,
+// the nonzero marker also fixes the most significant byte, so the payload length
+// is recoverable from the decrypted bytes: skip any leading zero bytes (the
+// encoder may have dropped them), then the payload is everything after the
+// 1-byte marker and the 32-byte hash.
+//
+// The marker byte is deliberately NOT compared against a fixed value: the spec
+// requires only that it be nonzero, and Java has made it random since 0.9.28, so
+// requiring 0xFF would reject essentially all live traffic.
 func verifyAndExtractPayload(m []byte) ([]byte, error) {
-	// Verify I2P message format
-	if len(m) != 255 {
-		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyAndExtractPayload", "length": len(m)}).Error("Decrypted message has incorrect length")
+	// Skip leading zero bytes to find the nonzero marker.
+	i := 0
+	for i < len(m) && m[i] == 0x00 {
+		i++
+	}
+
+	// Need at least the marker byte plus the 32-byte hash.
+	if i >= len(m) || len(m)-i < 1+sha256.Size {
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyAndExtractPayload", "length": len(m)}).Error("Decrypted message is too short")
 		return nil, ElgDecryptFail
 	}
 
-	// Verify message type byte
-	if m[0] != 0xFF {
-		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyAndExtractPayload", "type_byte": m[0]}).Error("Invalid message type byte")
+	payload := m[i+1+sha256.Size:]
+
+	// Verify the SHA-256 integrity hash over the payload.
+	expected := sha256.Sum256(payload)
+	if subtle.ConstantTimeCompare(expected[:], m[i+1:i+1+sha256.Size]) != 1 {
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyAndExtractPayload"}).Error("Hash verification failed")
 		return nil, ElgDecryptFail
 	}
 
-	// Verify SHA-256 integrity hash
-	if err := verifyMessageHash(m); err != nil {
-		return nil, err
-	}
-
-	// Extract payload and trim trailing zeros
-	return extractPayload(m), nil
-}
-
-// verifyMessageHash performs constant-time SHA-256 hash verification on the decrypted message.
-// Compares the embedded hash with the computed hash of the payload to ensure data integrity.
-// Uses constant-time comparison to prevent timing attacks.
-func verifyMessageHash(m []byte) error {
-	expectedHash := sha256.Sum256(m[33:255])
-	actualHash := m[1:33]
-
-	// Use constant-time comparison to prevent timing attacks
-	good := subtle.ConstantTimeCompare(expectedHash[:], actualHash)
-
-	if good != 1 {
-		log.WithFields(logger.Fields{"pkg": "elg", "func": "verifyMessageHash"}).Error("Hash verification failed")
-		return ElgDecryptFail
-	}
-
-	return nil
-}
-
-// extractPayload extracts the message payload from the decrypted I2P message.
-// Copies bytes 33-255 and removes trailing zero-byte padding to recover the original plaintext.
-func extractPayload(m []byte) []byte {
-	decrypted := make([]byte, 222)
-	copy(decrypted, m[33:255])
-
-	// Trim trailing zeros from payload
-	for len(decrypted) > 0 && decrypted[len(decrypted)-1] == 0 {
-		decrypted = decrypted[:len(decrypted)-1]
-	}
-
-	return decrypted
+	out := make([]byte, len(payload))
+	copy(out, payload)
+	return out, nil
 }

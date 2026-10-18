@@ -126,15 +126,24 @@ func (e *ECP256PrivateKey) Public() (types.SigningPublicKey, error) {
 	}
 
 	// Encode public key as the I2P X||Y coordinate pair (no 0x04 prefix).
+	//
+	// Each coordinate is a fixed-width 32-byte big-endian field, so it must be
+	// right-aligned (zero-padded on the left). big.Int.Bytes() strips leading
+	// zeros, so a left-aligned copy silently shifts the value and corrupts the
+	// ~1% of public keys whose X or Y has a zero high byte -- the shifted point
+	// is not on the curve, so NewVerifier() rejects the key. P-384 and P-521
+	// already right-align; this matches them.
 	publicKey := ECP256PublicKey{}
 
 	xBytes := x.Bytes()
 	yBytes := y.Bytes()
+	if len(xBytes) > 32 || len(yBytes) > 32 {
+		return nil, oops.Errorf("P-256 public key coordinate exceeds 32 bytes")
+	}
 
-	// Copy coordinates to the public key
-	// P-256 coordinates are 32 bytes each
-	copy(publicKey[0:32], xBytes)
-	copy(publicKey[32:64], yBytes)
+	// Copy coordinates to the public key, right-aligned in their 32-byte fields.
+	copy(publicKey[32-len(xBytes):32], xBytes)
+	copy(publicKey[64-len(yBytes):64], yBytes)
 
 	log.WithFields(logger.Fields{"pkg": "ecdsa", "func": "ECP256PrivateKey.Public"}).Debug("Generated ECDSA-P256 public key from private key")
 	return publicKey, nil

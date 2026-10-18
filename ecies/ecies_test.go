@@ -18,6 +18,7 @@ import (
 	"crypto/rand"
 	"testing"
 
+	"github.com/go-i2p/crypto/ratchet"
 	"go.step.sm/crypto/x25519"
 )
 
@@ -683,5 +684,44 @@ func TestNewSessionRegression(t *testing.T) {
 	}
 	if len(tag) != 8 {
 		t.Errorf("session tag has wrong length: got %d, want 8", len(tag))
+	}
+}
+
+// TestDeriveMessageKeyWalksChain guards against the regression where
+// DeriveMessageKey rebuilt a fresh ratchet from chainKey and returned k_0 for
+// every message number, handing different messages the same key.
+func TestDeriveMessageKeyWalksChain(t *testing.T) {
+	var ck [32]byte
+	for i := range ck {
+		ck[i] = byte(i + 1)
+	}
+
+	// Ground truth: walk the symmetric ratchet chain explicitly.
+	r := ratchet.NewSymmetricRatchet(ck)
+	want := make([][32]byte, 5)
+	for i := range want {
+		k, err := r.DeriveMessageKey(uint32(i))
+		if err != nil {
+			t.Fatalf("DeriveMessageKey: %v", err)
+		}
+		want[i] = k
+		if err := r.Advance(); err != nil {
+			t.Fatalf("Advance: %v", err)
+		}
+	}
+
+	seen := make(map[[32]byte]int)
+	for n := 0; n < 5; n++ {
+		got, err := DeriveMessageKey(ck[:], uint32(n))
+		if err != nil {
+			t.Fatalf("DeriveMessageKey(%d): %v", n, err)
+		}
+		if got != want[n] {
+			t.Errorf("message key %d mismatch:\n got  %x\n want %x", n, got, want[n])
+		}
+		if prev, dup := seen[got]; dup {
+			t.Errorf("message keys %d and %d are identical", prev, n)
+		}
+		seen[got] = n
 	}
 }

@@ -152,12 +152,13 @@ func main() {
     }
     defer session.Zero()
 
-    // Derive the message key and session tag (advances the ratchets).
-    // EncryptMessage does not encrypt the payload itself.
-    messageKey, sessionTag, _ := session.EncryptMessage(plaintext)
+    // Derive the message key, session tag, and spec counter nonce (advances the
+    // ratchets). EncryptMessage does not encrypt the payload itself.
+    messageKey, sessionTag, nonce, _ := session.EncryptMessage(plaintext)
 
-    // Use the message key with a ChaCha20-Poly1305 AEAD to encrypt the payload.
-    nonce, _ := chacha20poly1305.GenerateNonce()
+    // Use the message key and the returned nonce with a ChaCha20-Poly1305 AEAD.
+    // Per the ECIES spec the session tag is the associated data and the nonce is
+    // the message number - do not generate a random nonce here.
     aead, _ := chacha20poly1305.NewAEAD(messageKey)
     ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce[:])
     _, _ = ciphertext, authTag

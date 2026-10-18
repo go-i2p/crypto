@@ -247,9 +247,9 @@ func TestECIESDecryptor_Decrypt_NilCiphertext(t *testing.T) {
 }
 
 // TestECIESEncryptor_Decrypt_ShouldFail documents that ECIESEncryptor.Decrypt
-// always fails. This is expected: the encryptor holds only the public key, so
-// it cannot decrypt. See AUDIT.md for the underlying bug (it passes the public
-// key as the private key). Use ECIESDecryptor for decryption.
+// always returns ErrECIESOperationNotSupported. This is by design: the
+// encryptor holds only the recipient's public key, and ECIES-X25519 decryption
+// requires the private key. Use ECIESDecryptor for decryption.
 func TestECIESEncryptor_Decrypt_ShouldFail(t *testing.T) {
 	pubKey := generateTestPublicKey(t)
 	encryptor := NewECIESEncryptor(pubKey)

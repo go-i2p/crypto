@@ -19,8 +19,11 @@ const (
 	NonceSize = 12
 	// TagSize is the size of Poly1305 authentication tags in bytes
 	TagSize = 16
-	// MaxPlaintextSize is the maximum size of plaintext data for encryption
-	MaxPlaintextSize = 1024
+	// MaxPlaintextSize is the maximum size of plaintext data for encryption.
+	// Per the I2P ECIES spec section 5, an encrypted ChaChaPoly frame is at most
+	// 65535 bytes including the 16-byte Poly1305 tag, so the largest plaintext
+	// is 65519 bytes.
+	MaxPlaintextSize = 65519
 )
 
 // Error constants for ECIES operations

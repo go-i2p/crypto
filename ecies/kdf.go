@@ -47,8 +47,19 @@ func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
 	return keys[0], keys[1], nil
 }
 
-// DeriveMessageKey derives a message encryption key from a chain key.
-// This is used by the symmetric key ratchet.
+// DeriveMessageKey derives the message encryption key at position
+// messageNumber of the symmetric key ratchet chain that starts at chainKey.
+//
+// Per the I2P ECIES spec (section 4c), the chain key must be ratcheted
+// messageNumber times before deriving:
+//
+//	keydata_n = HKDF(symmKey_chainKey_(n-1), SYMMKEY_CONSTANT, "SymmetricRatchet", 64)
+//	k_n       = keydata_n[32:63]
+//
+// The message number is therefore *not* mixed into the KDF itself; it selects
+// how far along the one-way chain the caller walks. Deriving without advancing
+// would return k_0 for every n, handing different messages the same key.
+//
 // chainKey: The current chain key (32 bytes)
 // messageNumber: The message sequence number for this key
 // Returns (messageKey, error)
@@ -61,6 +72,14 @@ func DeriveMessageKey(chainKey []byte, messageNumber uint32) ([32]byte, error) {
 	copy(chainKeyArray[:], chainKey)
 
 	ratchetInstance := ratchet.NewSymmetricRatchet(chainKeyArray)
+
+	// Walk the chain forward to the requested position.
+	for i := uint32(0); i < messageNumber; i++ {
+		if err := ratchetInstance.Advance(); err != nil {
+			return [32]byte{}, err
+		}
+	}
+
 	messageKey, err := ratchetInstance.DeriveMessageKey(messageNumber)
 	if err != nil {
 		return [32]byte{}, err

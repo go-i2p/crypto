@@ -27,7 +27,7 @@ func setupElgBenchmark(b *testing.B) (*elgamal.PrivateKey, *ElgamalEncryption, [
 	if err != nil {
 		b.Fatal(err)
 	}
-	pub := createElgamalPublicKey(prv.Y.Bytes())
+	pub := createElgamalPublicKey(padElgBytes(prv.Y.Bytes()))
 	enc, err := createElgamalEncryption(pub)
 	if err != nil {
 		b.Fatal(err)
@@ -120,9 +120,25 @@ func generateRandomMessage(t *testing.T) ([]byte, error) {
 	return msg, nil
 }
 
+// padElgBytes right-aligns a big-endian big.Int value into the fixed 256-byte
+// field the I2P ElGamal wire format requires. big.Int.Bytes() strips leading
+// zeros, so passing it directly to createElgamalPublicKey intermittently yields
+// a short slice (about 1 in 256 keys) and a nil public key.
+func padElgBytes(v []byte) []byte {
+	if len(v) == 256 {
+		return v
+	}
+	padded := make([]byte, 256)
+	if len(v) > 256 {
+		return padded
+	}
+	copy(padded[256-len(v):], v)
+	return padded
+}
+
 // createElgamalEncrypter sets up an ElGamal encrypter from the given private key.
 func createElgamalEncrypter(t *testing.T, k *elgamal.PrivateKey) (*ElgamalEncryption, error) {
-	pub := createElgamalPublicKey(k.Y.Bytes())
+	pub := createElgamalPublicKey(padElgBytes(k.Y.Bytes()))
 	enc, err := createElgamalEncryption(pub)
 	if err != nil {
 		t.Logf("failed to create encryption: %s", err.Error())
@@ -209,6 +225,66 @@ func TestElgamalKeyValidation(t *testing.T) {
 				t.Errorf("Expected error for %s but got none", tc.name)
 			} else if !tc.shouldError && err != nil {
 				t.Errorf("Unexpected error for %s: %v", tc.name, err)
+			}
+		})
+	}
+}
+
+// TestElgamalPayloadLengths is a regression test for the ElGamal message
+// format. The payload length must be recovered from the structure of the
+// decrypted block ([nonzero marker][SHA-256][data]) rather than by trimming
+// trailing zeros, and the marker must not be required to equal 0xFF (the I2P
+// low-level cryptography spec makes it a random nonzero byte since 0.9.28).
+//
+// The old implementation required m[0] == 0xFF, demanded exactly 255 bytes, and
+// zero-trimmed the payload, which corrupted any plaintext ending in 0x00 and
+// rejected short plaintexts.
+func TestElgamalPayloadLengths(t *testing.T) {
+	pub, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("GenerateKeyPair: %v", err)
+	}
+	enc, err := pub.NewEncrypter()
+	if err != nil {
+		t.Fatalf("NewEncrypter: %v", err)
+	}
+	dec, err := priv.NewDecrypter()
+	if err != nil {
+		t.Fatalf("NewDecrypter: %v", err)
+	}
+
+	cases := []struct {
+		name string
+		data []byte
+	}{
+		{"single byte", []byte{0x41}},
+		{"short", []byte("i2p")},
+		{"trailing zero bytes", append([]byte("payload"), 0x00, 0x00, 0x00)},
+		{"all zeros", make([]byte, 8)},
+		{"full 222", func() []byte {
+			b := make([]byte, 222)
+			if _, err := io.ReadFull(rand.Reader, b); err != nil {
+				t.Fatal(err)
+			}
+			return b
+		}()},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			ct, err := enc.Encrypt(tc.data)
+			if err != nil {
+				t.Fatalf("Encrypt: %v", err)
+			}
+			if len(ct) != 514 {
+				t.Fatalf("ciphertext length = %d, want 514", len(ct))
+			}
+			pt, err := dec.Decrypt(ct)
+			if err != nil {
+				t.Fatalf("Decrypt: %v", err)
+			}
+			if !bytes.Equal(pt, tc.data) {
+				t.Errorf("round trip mismatch: got %d bytes, want %d bytes", len(pt), len(tc.data))
 			}
 		})
 	}

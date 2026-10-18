@@ -5,8 +5,8 @@ package ratchet
 // ratchet, and the DH ratchet.
 //
 // The KDFs use HKDF-SHA256 (RFC 5869) with the spec's info strings, matching
-// the I2P specification. See doc.go and ../AUDIT.md for the history of the
-// earlier (non-spec) Signal-style HMAC construction that was corrected.
+// the I2P specification. See doc.go for the history of the earlier (non-spec)
+// Signal-style HMAC construction that was corrected.
 
 import (
 	"bytes"
@@ -497,14 +497,14 @@ func TestSessionTagsetLimit(t *testing.T) {
 
 	// Encrypt exactly MaxMessagesPerTagset messages; all must succeed.
 	for i := 0; i < MaxMessagesPerTagset; i++ {
-		if _, _, err := session.EncryptMessage([]byte("m")); err != nil {
+		if _, _, _, err := session.EncryptMessage([]byte("m")); err != nil {
 			t.Fatalf("message %d failed unexpectedly: %v", i, err)
 		}
 	}
 
 	// The next message must fail with ErrTagsetExhausted.
 	// oops.OopsError is not comparable, so compare by message.
-	if _, _, err := session.EncryptMessage([]byte("m")); err == nil || err.Error() != ErrTagsetExhausted.Error() {
+	if _, _, _, err := session.EncryptMessage([]byte("m")); err == nil || err.Error() != ErrTagsetExhausted.Error() {
 		t.Fatalf("expected ErrTagsetExhausted after %d messages, got: %v", MaxMessagesPerTagset, err)
 	}
 
@@ -516,7 +516,7 @@ func TestSessionTagsetLimit(t *testing.T) {
 	if session.GetMessageNumber() != 0 {
 		t.Fatalf("expected message number to reset to 0 after DH ratchet, got %d", session.GetMessageNumber())
 	}
-	if _, _, err := session.EncryptMessage([]byte("m")); err != nil {
+	if _, _, _, err := session.EncryptMessage([]byte("m")); err != nil {
 		t.Fatalf("encryption after DH ratchet failed: %v", err)
 	}
 }
@@ -567,7 +567,7 @@ func TestSessionTagAndKeyGenKeys(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected key derivation failed: %v", err)
 	}
-	gotKey, _, err := session.EncryptMessage([]byte("m"))
+	gotKey, _, _, err := session.EncryptMessage([]byte("m"))
 	if err != nil {
 		t.Fatalf("EncryptMessage failed: %v", err)
 	}
@@ -587,5 +587,78 @@ func TestSessionTagAndKeyGenKeys(t *testing.T) {
 	}
 	if dhCK == [32]byte{} {
 		t.Error("DH ratchet produced a zero chain key - unexpected")
+	}
+}
+
+// TestSessionOutOfOrderDelivery is a regression test for the receiver's
+// look-ahead window. The tag and symmetric key ratchets are synchronized, so a
+// tag matched at offset i must yield the message key derived at that same
+// position - not the key at the receiver's current position. An earlier
+// implementation advanced only the tag ratchet, silently returning the wrong key
+// for out-of-order messages (and then rejecting the skipped ones).
+func TestSessionOutOfOrderDelivery(t *testing.T) {
+	var ss, ourPriv, theirPub [32]byte
+	for i := range ss {
+		ss[i] = byte(i + 1)
+		ourPriv[i] = byte(i + 7)
+		theirPub[i] = byte(i + 13)
+	}
+
+	sender, err := NewSessionFromECIES(ss, ourPriv, theirPub)
+	if err != nil {
+		t.Fatalf("sender: %v", err)
+	}
+
+	const n = 5
+	type msg struct {
+		tag   [SessionTagSize]byte
+		key   [MessageKeySize]byte
+		nonce [NonceSize]byte
+	}
+	sent := make([]msg, n)
+	for i := 0; i < n; i++ {
+		k, tag, nonce, err := sender.EncryptMessage([]byte("payload"))
+		if err != nil {
+			t.Fatalf("EncryptMessage %d: %v", i, err)
+		}
+		sent[i] = msg{tag: tag, key: k, nonce: nonce}
+	}
+
+	receiver, err := NewSessionFromECIES(ss, theirPub, ourPriv)
+	if err != nil {
+		t.Fatalf("receiver: %v", err)
+	}
+
+	// Deliver in an order that forces out-of-order handling: newest first, then
+	// the skipped earlier messages.
+	order := []int{4, 2, 0, 1, 3}
+	got := make(map[int]bool)
+	for _, i := range order {
+		key, nonce, err := receiver.DecryptMessage(sent[i].tag)
+		if err != nil {
+			t.Fatalf("DecryptMessage(tag[%d]): %v", i, err)
+		}
+		if key != sent[i].key {
+			t.Errorf("message %d: wrong key\n got  %x\n want %x", i, key, sent[i].key)
+		}
+		// The nonce must be the message's own number, so the caller can actually
+		// open an out-of-order ciphertext.
+		if nonce != sent[i].nonce {
+			t.Errorf("message %d: wrong nonce got %x want %x", i, nonce, sent[i].nonce)
+		}
+		got[i] = true
+	}
+	if len(got) != n {
+		t.Errorf("expected %d distinct messages, got %d", n, len(got))
+	}
+
+	// Replaying an already-consumed tag must be rejected.
+	if _, _, err := receiver.DecryptMessage(sent[0].tag); err == nil {
+		t.Error("replayed tag should be rejected")
+	}
+
+	// A tag outside the window must be rejected.
+	if _, _, err := receiver.DecryptMessage([SessionTagSize]byte{1, 2, 3, 4, 5, 6, 7, 8}); err == nil {
+		t.Error("unknown tag should be rejected")
 	}
 }

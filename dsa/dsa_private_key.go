@@ -100,8 +100,18 @@ func (k DSAPrivateKey) Public() (types.SigningPublicKey, error) {
 		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Public"}).Error("Invalid DSA private key format")
 		return nil, types.ErrInvalidKeyFormat
 	} else {
-		// Extract public key value Y and store in I2P format (128 bytes)
-		copy(pk[:], p.Y.Bytes())
+		// Extract public key value Y and store in I2P format: the 1024-bit
+		// big-endian value, right-aligned (zero-padded on the left) in 128
+		// bytes. big.Int.Bytes() returns the minimal encoding with leading
+		// zeros stripped, so it must be copied to the END of the array; a
+		// left-aligned copy would shift the value and corrupt ~1% of keys
+		// (any Y whose top byte(s) are zero), breaking verification.
+		yBytes := p.Y.Bytes()
+		if len(yBytes) > len(pk) {
+			log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Public"}).Error("DSA public key value Y is larger than 128 bytes")
+			return nil, types.ErrInvalidKeyFormat
+		}
+		copy(pk[len(pk)-len(yBytes):], yBytes)
 		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Public"}).Debug("DSA public key derived successfully")
 	}
 	return pk, nil
@@ -125,9 +135,16 @@ func (k DSAPrivateKey) Generate() (types.SigningPrivateKey, error) {
 	dk := new(dsa.PrivateKey)
 	err := generateDSA(dk, rand.Reader)
 	if err == nil {
-		// Convert generated key to I2P format (20-byte private exponent)
+		// Convert generated key to I2P format: the 160-bit private exponent X,
+		// right-aligned (zero-padded on the left) in 20 bytes, matching the
+		// big-endian fixed-width encoding NewDSAPrivateKey/SetBytes expect.
 		var newKey DSAPrivateKey
-		copy(newKey[:], dk.X.Bytes())
+		xBytes := dk.X.Bytes()
+		if len(xBytes) > len(newKey) {
+			log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Generate"}).Error("Generated DSA private key X is larger than 20 bytes")
+			return nil, types.ErrInvalidKeyFormat
+		}
+		copy(newKey[len(newKey)-len(xBytes):], xBytes)
 		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.Generate"}).Debug("New DSA private key generated successfully")
 		return newKey, nil
 	} else {

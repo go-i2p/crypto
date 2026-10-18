@@ -10,6 +10,7 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
+	"encoding/hex"
 	"testing"
 
 	"github.com/go-i2p/crypto/types"
@@ -84,5 +85,53 @@ func assertRoundTrip(t *testing.T, priv types.SigningPrivateKey, data []byte) {
 	}
 	if err := verifier.Verify(data, sig); err != nil {
 		t.Fatalf("Verify: %v", err)
+	}
+}
+
+// TestECP256PublicKeyRightAligned is a deterministic regression test for the
+// big-endian alignment of P-256 public key coordinates. For this private scalar,
+// the X coordinate has a leading zero byte, so x.Bytes() is only 31 bytes. A
+// left-aligned copy shifts the coordinate and produces a point that is not on
+// the curve, so NewVerifier() rejects the derived public key.
+func TestECP256PublicKeyRightAligned(t *testing.T) {
+	dHex := "257c97d1a0ac2e25ecf34daee6b011208a1b7edf6c3412faba4d24eecda2e13a"
+	wantX := "003f6acd7cf08fa0564ef9fbd318c7ef328dcffafcb2583617dea130c937c43a"
+	wantY := "fbe1ca793a4ddf7e664b70ea78caf8b39522bf3fec6ef59c4d786c751cb458fa"
+
+	db, err := hex.DecodeString(dHex)
+	if err != nil {
+		t.Fatalf("bad test vector: %v", err)
+	}
+	pk, err := NewECP256PrivateKey(db)
+	if err != nil {
+		t.Fatalf("NewECP256PrivateKey: %v", err)
+	}
+	pub, err := pk.Public()
+	if err != nil {
+		t.Fatalf("Public(): %v", err)
+	}
+
+	b := pub.Bytes()
+	if len(b) != 64 {
+		t.Fatalf("public key length = %d, want 64", len(b))
+	}
+	if got := hex.EncodeToString(b[:32]); got != wantX {
+		t.Errorf("X coordinate not right-aligned:\n got %s\nwant %s", got, wantX)
+	}
+	if got := hex.EncodeToString(b[32:]); got != wantY {
+		t.Errorf("Y coordinate not right-aligned:\n got %s\nwant %s", got, wantY)
+	}
+
+	ver, err := pub.NewVerifier()
+	if err != nil {
+		t.Fatalf("NewVerifier() failed for a valid key: %v", err)
+	}
+	msg := []byte("i2p ecdsa p256 alignment regression")
+	sig, err := pk.Sign(msg)
+	if err != nil {
+		t.Fatalf("Sign: %v", err)
+	}
+	if err := ver.Verify(msg, sig); err != nil {
+		t.Errorf("self-round-trip verify failed: %v", err)
 	}
 }

@@ -21,6 +21,14 @@
 //     chacha20poly1305 package, which provides authenticated encryption.
 //   - Never reuse an IV with the same key.
 //
-// See the I2P ElGamal/AES specification for the legacy tunnel encryption
-// scheme: https://i2p.net/en/docs/specs/elgamal-aes/
+// # Relationship to the I2P specifications
+//
+// This package is a general-purpose AES-CBC helper. It is NOT an
+// implementation of I2P's ElGamal/AES+SessionTags wire format
+// (https://i2p.net/en/docs/specs/elgamal-aes/), and it is not the tunnel-layer
+// cipher either (see the tunnel package for that). In particular the padding
+// differs: this package uses standard PKCS#7 padding, whereas the I2P
+// ElGamal/AES scheme pads with pseudorandom bytes and carries the real payload
+// length in a separate field of the AES block. Do not use this package to
+// interoperate with Java I2P's end-to-end encryption.
 package aes

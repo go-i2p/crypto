@@ -103,6 +103,15 @@ func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
 	}
 
 	// MixHash with the flags ciphertext.
+	//
+	// Spec section 1f labels this MixHash under the "s" message pattern and the
+	// no-static-key path says only "ad = h from Flags/Static key section", which
+	// can read as if the mix should be skipped. It is not skipped: the flags
+	// section is a complete Noise transport message (encrypted with k at n = 0),
+	// and the Noise framework this spec is built on mixes every transport
+	// message's ciphertext into h. The spec's own use of n = 1 for the payload -
+	// the counter advance for a second transport message - confirms the payload
+	// is that second message, so h must already include the flags ciphertext.
 	h = sha256.Sum256(append(h[:], flagsCt...))
 
 	// Encrypt the payload with nonce 1.

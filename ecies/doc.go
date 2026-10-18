@@ -69,5 +69,6 @@
 //   - Public and private keys: 32 bytes (X25519)
 //   - Nonce: 12 bytes (ChaCha20-Poly1305)
 //   - Authentication tag: 16 bytes (Poly1305)
-//   - Maximum plaintext: 1024 bytes
+//   - Maximum plaintext: 65519 bytes (spec section 5: a 65535-byte ChaChaPoly
+//     frame minus the 16-byte Poly1305 tag)
 package ecies

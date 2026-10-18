@@ -38,7 +38,11 @@ func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (enc
 	}
 
 	// Prepare and hash the message block
-	mbytes := prepareMessageBlock(data)
+	mbytes, err := prepareMessageBlock(data)
+	if err != nil {
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "ElgamalEncryption.EncryptPadding"}).WithError(err).Error("Failed to generate ElGamal marker byte")
+		return nil, err
+	}
 
 	// Encrypt using the library's Encrypt method
 	ciphertext, err := elg.pub.Encrypt(rand.Reader, mbytes)
@@ -54,18 +58,34 @@ func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (enc
 	return encrypted, err
 }
 
-// prepareMessageBlock creates an I2P-formatted message block with SHA-256 integrity hash.
-// Structure: [0xFF][32-byte SHA-256 hash][222-byte payload]
-func prepareMessageBlock(data []byte) []byte {
-	mbytes := make([]byte, 255)
-	mbytes[0] = 0xFF        // I2P message type indicator
-	copy(mbytes[33:], data) // Copy payload starting at byte 33
+// prepareMessageBlock creates an I2P-formatted cleartext block with a SHA-256
+// integrity hash: [random nonzero marker][32-byte SHA-256 of data][data].
+//
+// The marker must be nonzero: it becomes the most significant byte of the value
+// encrypted as a big integer, so a zero marker would be lost and the payload
+// length would be unrecoverable on decrypt. Java's ElGamalEngine uses a random
+// nonzero byte (since 0.9.28) and hashes exactly the caller's data rather than
+// zero-padding to 222, so we do the same; higher layers that want the spec's
+// recommended random padding to 222 bytes should pad before calling Encrypt.
+func prepareMessageBlock(data []byte) ([]byte, error) {
+	mbytes := make([]byte, 1+sha256.Size+len(data))
 
-	// Compute SHA-256 integrity hash of the payload data (full 222 bytes)
-	d := sha256.Sum256(mbytes[33:255])
-	copy(mbytes[1:], d[:]) // Insert hash at bytes 1-32
+	// Random nonzero marker byte.
+	if _, err := rand.Read(mbytes[:1]); err != nil {
+		return nil, err
+	}
+	for mbytes[0] == 0x00 {
+		if _, err := rand.Read(mbytes[:1]); err != nil {
+			return nil, err
+		}
+	}
 
-	return mbytes
+	// SHA-256 integrity hash over exactly the caller's data.
+	d := sha256.Sum256(data)
+	copy(mbytes[1:], d[:])
+	copy(mbytes[1+sha256.Size:], data)
+
+	return mbytes, nil
 }
 
 // formatCiphertext formats the ElGamal ciphertext according to I2P protocol requirements.

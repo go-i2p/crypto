@@ -20,6 +20,10 @@ const (
 	PublicKeySize = 32
 	// PrivateKeySize is the size of X25519 private keys in bytes
 	PrivateKeySize = 32
+	// NonceSize is the size of the ChaCha20-Poly1305 AEAD nonce in bytes. Per
+	// the I2P ECIES spec section 3 the first four bytes are always zero and the
+	// last eight are the little-endian message number.
+	NonceSize = 12
 
 	// MaxMessagesPerTagset is the maximum number of messages that may be
 	// encrypted under a single tag set before the DH ratchet must advance.
