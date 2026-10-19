@@ -3,7 +3,7 @@ package chacha20
 import (
 	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
-	xchacha20 "golang.org/x/crypto/chacha20"
+	chacha20rfc "golang.org/x/crypto/chacha20"
 )
 
 // This file provides the unauthenticated ChaCha20 stream cipher, distinct from
@@ -23,11 +23,29 @@ import (
 // because ChaCha20 uses a 12-byte IV with a little-endian nonce at bytes 4-11."
 // Because it is unauthenticated, callers must not rely on it for integrity - it
 // is an obfuscation layer only; the hop's own record uses the AEAD instead.
+//
+// The block counter starts at 1, not 0. tunnel-creation-ecies.md defines STREAM
+// "as in EncryptedLeaseSet and RFC-7539", and the Encrypted Lease Set spec
+// (https://i2p.net/en/docs/specs/encryptedleaseset/, "Definitions") fixes it:
+//
+//	STREAM : The ChaCha20 stream cipher as specified in [RFC-7539-S2.4],
+//	         with the initial counter set to 1. S_KEY_LEN = 32 and S_IV_LEN = 12.
+//
+// Starting at 0 shifts the keystream by one 64-byte block, so a Go peer would
+// emit record bytes a Java peer cannot unmask. See [StreamInitialCounter].
+
+// StreamInitialCounter is the ChaCha20 block counter the I2P "STREAM" primitive
+// starts at. The Encrypted Lease Set spec (https://i2p.net/en/docs/specs/
+// encryptedleaseset/, "Definitions") requires "the initial counter set to 1",
+// which is what tunnel-creation-ecies.md's STREAM reference inherits. It is not
+// RFC 7539's default of 0, so it has to be set explicitly.
+const StreamInitialCounter = 1
 
 // StreamEncrypt encrypts plaintext with the unauthenticated ChaCha20 stream
-// cipher (RFC 7539 section 2.4), using a 32-byte key and a 12-byte IV/nonce.
-// The output is exactly len(plaintext) bytes; ChaCha20 is a stream cipher, so
-// there is no padding and no authentication tag.
+// cipher (RFC 7539 section 2.4), using a 32-byte key and a 12-byte IV/nonce,
+// starting at block counter [StreamInitialCounter] as the I2P STREAM definition
+// requires. The output is exactly len(plaintext) bytes; ChaCha20 is a stream
+// cipher, so there is no padding and no authentication tag.
 //
 // Encryption and decryption are the same operation (XOR with the keystream), so
 // StreamDecrypt is an alias for this function. The caller is responsible for the
@@ -47,13 +65,17 @@ func StreamEncrypt(key, iv, plaintext []byte) ([]byte, error) {
 		return nil, oops.Wrapf(ErrInvalidNonceSize, "iv must be %d bytes, got %d", NonceSize, len(iv))
 	}
 
-	cipher, err := xchacha20.NewUnauthenticatedCipher(key, iv)
+	// NewUnauthenticatedCipher with a 12-byte nonce is RFC 7539 section 2.4
+	// ChaCha20 (a 24-byte nonce would select XChaCha20, which I2P does not use).
+	stream, err := chacha20rfc.NewUnauthenticatedCipher(key, iv)
 	if err != nil {
 		return nil, oops.Wrapf(ErrEncryptFailed, "failed to create ChaCha20 stream cipher: %w", err)
 	}
+	// RFC 7539 starts at counter 0; the I2P STREAM definition mandates 1.
+	stream.SetCounter(StreamInitialCounter)
 
 	out := make([]byte, len(plaintext))
-	cipher.XORKeyStream(out, plaintext)
+	stream.XORKeyStream(out, plaintext)
 	return out, nil
 }
 

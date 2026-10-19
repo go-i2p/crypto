@@ -3,7 +3,10 @@
 //
 // This package implements the IETF ChaCha20-Poly1305 AEAD construction as defined in RFC 8439,
 // combining the ChaCha20 stream cipher with the Poly1305 MAC for authenticated encryption.
-// This is the modern encryption standard for I2P tunnel and garlic message encryption.
+// This is the modern encryption standard for I2P end-to-end (ECIES) and transport
+// (NTCP2/SSU2) encryption. It is NOT the I2P tunnel layer encryption: per
+// Tunnel-Creation-ECIES "Layer Encryption", "The only layer encryption currently
+// supported is type 0, which is AES" - see the tunnel package.
 //
 // # Key Features
 //
@@ -40,10 +43,12 @@
 //
 // # ChaCha20-Poly1305 in I2P
 //
-// I2P uses ChaCha20-Poly1305 for garlic message encryption (ECIES-X25519-AEAD-Ratchet),
-// tunnel layer encryption, and session-based messaging with forward secrecy. Those
-// code paths in this repository (the ecies, tunnel, curve25519, and ratchet packages)
-// call golang.org/x/crypto/chacha20poly1305 directly. This package is a standalone
+// I2P uses ChaCha20-Poly1305 for garlic message encryption (ECIES-X25519-AEAD-Ratchet)
+// and transport encryption (NTCP2/SSU2), including session-based messaging with
+// forward secrecy. It is not used for tunnel *layer* encryption, which the spec
+// fixes as AES-256-CBC type 0. Those authenticated end-to-end code paths in this
+// repository (the ecies and ratchet packages) call
+// golang.org/x/crypto/chacha20poly1305 directly. This package is a standalone
 // wrapper around the same RFC 8439 construction that provides a separate Encrypt/Decrypt
 // (ciphertext + detached tag) API; it is not currently wired into those protocol paths.
 package chacha20poly1305
