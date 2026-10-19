@@ -47,10 +47,19 @@ const (
 	// ShortBuildReplySize is the unencrypted short BuildReplyRecord length
 	// (spec: "Unencrypted size: 202 bytes").
 	ShortBuildReplySize = 202
-	// ShortBuildRecordCiphertextSize is the encrypted short record length shared
-	// by request and reply (spec: "Encrypted request and reply records will be
-	// 218 bytes"). It is 154+16 for a request and 202+16 for a reply.
-	ShortBuildRecordCiphertextSize = 218
+	// ShortBuildRecordSize is the complete on-wire short record, identical for
+	// request and reply (spec: "Encrypted request and reply records will be 218
+	// bytes"). A request is 16+32+154+16; a reply is 202+16.
+	ShortBuildRecordSize = 218
+
+	// ShortBuildRequestEncryptedSize is the AEAD output for a short request
+	// record: the 154-byte plaintext plus the 16-byte tag, i.e. bytes 48-217 of
+	// the wire record. The 16-byte identity hash and 32-byte ephemeral key that
+	// precede it are cleartext framing written by the caller.
+	ShortBuildRequestEncryptedSize = ShortBuildRequestSize + BuildTagSize // 170
+	// ShortBuildReplyEncryptedSize is the AEAD output for a short reply record,
+	// which has no cleartext prefix and so fills the whole 218-byte record.
+	ShortBuildReplyEncryptedSize = ShortBuildReplySize + BuildTagSize // 218
 
 	// LongBuildRequestSize is the deprecated long BuildRequestRecord plaintext
 	// length (spec: "Unencrypted size: 464 bytes").
@@ -58,9 +67,14 @@ const (
 	// LongBuildReplySize is the deprecated long BuildReplyRecord plaintext length
 	// (spec: "Unencrypted size: 512 bytes").
 	LongBuildReplySize = 512
-	// LongBuildRecordCiphertextSize is the encrypted long record length
-	// (spec: "Encrypted BuildRequestRecords are 528 bytes").
-	LongBuildRecordCiphertextSize = 528
+	// LongBuildRecordSize is the complete on-wire long record (spec: "Encrypted
+	// BuildRequestRecords are 528 bytes for both ElGamal and ECIES").
+	LongBuildRecordSize = 528
+	// LongBuildRequestEncryptedSize is the AEAD output for a long request record
+	// (464 + 16), i.e. bytes 48-527 of the wire record.
+	LongBuildRequestEncryptedSize = LongBuildRequestSize + BuildTagSize // 480
+	// LongBuildReplyEncryptedSize is the AEAD output for a long reply record.
+	LongBuildReplyEncryptedSize = LongBuildReplySize + BuildTagSize // 528
 
 	// BuildNonceSize is the ChaCha20-Poly1305 nonce length used for build
 	// records: "12 byte nonce, with the first 4 bytes set to zero."
@@ -89,10 +103,10 @@ const buildProtocolName = "Noise_N_25519_ChaChaPoly_SHA256"
 
 // Errors for Tunnel-Creation-ECIES build record operations.
 var (
-	ErrBuildRecordSize   = oops.Errorf("build record has unexpected size")
-	ErrBuildKeySize      = oops.Errorf("build record key has unexpected size")
+	ErrBuildRecordSize    = oops.Errorf("build record has unexpected size")
+	ErrBuildKeySize       = oops.Errorf("build record key has unexpected size")
 	ErrBuildKeyDerivation = oops.Errorf("build record key derivation failed")
-	ErrBuildAEAD         = oops.Errorf("build record AEAD failed")
+	ErrBuildAEAD          = oops.Errorf("build record AEAD failed")
 )
 
 // BuildNoiseState is the Noise_N symmetric state (chaining key ck and handshake
@@ -191,7 +205,7 @@ func EncryptBuildRequest(
 	if len(senderPub) != EphemeralPublicKeySize || len(senderPriv) != EphemeralPublicKeySize {
 		return nil, oops.Wrapf(ErrBuildKeySize, "sender ephemeral key pair must be %d bytes each", EphemeralPublicKeySize)
 	}
-	if err := checkBuildPlaintextSize(plaintext); err != nil {
+	if err := checkBuildRequestPlaintextSize(plaintext); err != nil {
 		return nil, err
 	}
 
@@ -237,7 +251,7 @@ func DecryptBuildRequest(
 	if len(senderPub) != EphemeralPublicKeySize {
 		return nil, oops.Wrapf(ErrBuildKeySize, "sender ephemeral public key must be %d bytes, got %d", EphemeralPublicKeySize, len(senderPub))
 	}
-	if err := checkBuildCiphertextSize(ciphertext); err != nil {
+	if err := checkBuildRequestCiphertextSize(ciphertext); err != nil {
 		return nil, err
 	}
 
@@ -364,7 +378,7 @@ func DeriveBuildReplyKeys(state *BuildNoiseState, isOBEP bool) (BuildReplyKeys, 
 // message (0-7), not always 0 as in the deprecated long-record form, and 'ad' is
 // the handshake hash h left over from the build request.
 func EncryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, plaintext []byte) ([]byte, error) {
-	if err := checkBuildPlaintextSize(plaintext); err != nil {
+	if err := checkBuildReplyPlaintextSize(plaintext); err != nil {
 		return nil, err
 	}
 	return sealBuildRecord(replyKey, ad, plaintext, uint64(recordNumber))
@@ -372,7 +386,7 @@ func EncryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, plaintext []
 
 // DecryptOwnBuildReply decrypts a hop's own reply record.
 func DecryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, ciphertext []byte) ([]byte, error) {
-	if err := checkBuildCiphertextSize(ciphertext); err != nil {
+	if err := checkBuildReplyCiphertextSize(ciphertext); err != nil {
 		return nil, err
 	}
 	return openBuildRecord(replyKey, ad, ciphertext, uint64(recordNumber))
@@ -386,8 +400,8 @@ func DecryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, ciphertext [
 // Encryption and decryption are the same XOR operation, so a hop that received a
 // record obfuscated with its reply key simply calls this again to undo it.
 func ObfuscateOtherBuildRecord(replyKey [32]byte, recordNumber byte, record []byte) ([]byte, error) {
-	if len(record) != ShortBuildRecordCiphertextSize {
-		return nil, oops.Wrapf(ErrBuildRecordSize, "build record must be %d bytes, got %d", ShortBuildRecordCiphertextSize, len(record))
+	if err := checkBuildRecordSize(record); err != nil {
+		return nil, err
 	}
 	iv, err := buildRecordIV(recordNumber)
 	if err != nil {
@@ -447,26 +461,69 @@ func buildRecordIV(recordNumber byte) ([]byte, error) {
 	return iv, nil
 }
 
-// checkBuildPlaintextSize accepts exactly the two spec-defined record sizes.
-func checkBuildPlaintextSize(plaintext []byte) error {
+// checkBuildRequestPlaintextSize accepts exactly the spec-defined BuildRequestRecord
+// plaintext sizes: 154 (short) or 464 (long).
+func checkBuildRequestPlaintextSize(plaintext []byte) error {
 	switch len(plaintext) {
-	case ShortBuildRequestSize, ShortBuildReplySize, LongBuildRequestSize, LongBuildReplySize:
+	case ShortBuildRequestSize, LongBuildRequestSize:
 		return nil
 	default:
 		return oops.Wrapf(ErrBuildRecordSize,
-			"build record plaintext must be %d/%d (short) or %d/%d (long) bytes, got %d",
-			ShortBuildRequestSize, ShortBuildReplySize, LongBuildRequestSize, LongBuildReplySize, len(plaintext))
+			"build request plaintext must be %d (short) or %d (long) bytes, got %d",
+			ShortBuildRequestSize, LongBuildRequestSize, len(plaintext))
 	}
 }
 
-// checkBuildCiphertextSize accepts exactly the two spec-defined encrypted sizes.
-func checkBuildCiphertextSize(ciphertext []byte) error {
-	switch len(ciphertext) {
-	case ShortBuildRecordCiphertextSize, LongBuildRecordCiphertextSize:
+// checkBuildReplyPlaintextSize accepts exactly the spec-defined BuildReplyRecord
+// plaintext sizes: 202 (short) or 512 (long).
+func checkBuildReplyPlaintextSize(plaintext []byte) error {
+	switch len(plaintext) {
+	case ShortBuildReplySize, LongBuildReplySize:
 		return nil
 	default:
 		return oops.Wrapf(ErrBuildRecordSize,
-			"build record ciphertext must be %d (short) or %d (long) bytes, got %d",
-			ShortBuildRecordCiphertextSize, LongBuildRecordCiphertextSize, len(ciphertext))
+			"build reply plaintext must be %d (short) or %d (long) bytes, got %d",
+			ShortBuildReplySize, LongBuildReplySize, len(plaintext))
+	}
+}
+
+// checkBuildRequestCiphertextSize accepts the AEAD output for a request record:
+// plaintext plus the 16-byte Poly1305 tag (170 short, 480 long). The 48-byte
+// cleartext prefix is not part of this value.
+func checkBuildRequestCiphertextSize(ciphertext []byte) error {
+	switch len(ciphertext) {
+	case ShortBuildRequestEncryptedSize, LongBuildRequestEncryptedSize:
+		return nil
+	default:
+		return oops.Wrapf(ErrBuildRecordSize,
+			"build request ciphertext must be %d (short) or %d (long) bytes, got %d",
+			ShortBuildRequestEncryptedSize, LongBuildRequestEncryptedSize, len(ciphertext))
+	}
+}
+
+// checkBuildReplyCiphertextSize accepts the AEAD output for a reply record
+// (218 short, 528 long). A reply has no cleartext prefix, so the short reply
+// ciphertext is the whole 218-byte wire record.
+func checkBuildReplyCiphertextSize(ciphertext []byte) error {
+	switch len(ciphertext) {
+	case ShortBuildReplyEncryptedSize, LongBuildReplyEncryptedSize:
+		return nil
+	default:
+		return oops.Wrapf(ErrBuildRecordSize,
+			"build reply ciphertext must be %d (short) or %d (long) bytes, got %d",
+			ShortBuildReplyEncryptedSize, LongBuildReplyEncryptedSize, len(ciphertext))
+	}
+}
+
+// checkBuildRecordSize accepts a complete encrypted record of either length, for
+// the raw-ChaCha20 obfuscation applied to records belonging to other hops.
+func checkBuildRecordSize(record []byte) error {
+	switch len(record) {
+	case ShortBuildRecordSize, LongBuildRecordSize:
+		return nil
+	default:
+		return oops.Wrapf(ErrBuildRecordSize,
+			"build record must be %d (short) or %d (long) bytes, got %d",
+			ShortBuildRecordSize, LongBuildRecordSize, len(record))
 	}
 }

@@ -46,13 +46,15 @@ func TestNewBuildNoiseState(t *testing.T) {
 	s := NewBuildNoiseState()
 
 	// ck = protocol_name || 0 (padded, NOT hashed).
+	ck := s.ChainKey()
 	wantCK := "4e6f6973655f4e5f32353531395f436861436861506f6c795f53484132353600"
-	if got := hex.EncodeToString(s.ChainKey()[:]); got != wantCK {
+	if got := hex.EncodeToString(ck[:]); got != wantCK {
 		t.Errorf("initial ck = %s, want %s", got, wantCK)
 	}
 	// h = SHA256(padded) after MixHash(null prologue).
+	h := s.Hash()
 	wantH := "694d52445a27d9adfad29c7632395dc1e4354c69b4f92eac8a1ee46a9ed21554"
-	if got := hex.EncodeToString(s.Hash()[:]); got != wantH {
+	if got := hex.EncodeToString(h[:]); got != wantH {
 		t.Errorf("initial h = %s, want %s", got, wantH)
 	}
 }
@@ -75,8 +77,9 @@ func TestBuildMixKey(t *testing.T) {
 	if got := hex.EncodeToString(k[:]); got != wantK {
 		t.Errorf("MixKey k = %s, want %s", got, wantK)
 	}
+	ck := s.ChainKey()
 	wantCK := "0f9be960522b1bfeb7473a75a46496c5704f05c075dd97062a8e137d724fbfda"
-	if got := hex.EncodeToString(s.ChainKey()[:]); got != wantCK {
+	if got := hex.EncodeToString(ck[:]); got != wantCK {
 		t.Errorf("MixKey ck = %s, want %s", got, wantCK)
 	}
 }
@@ -95,8 +98,9 @@ func TestBuildMixHashOrder(t *testing.T) {
 	s.MixHash(hepk)
 	s.MixHash(sepk)
 
+	h := s.Hash()
 	want := "770e21dfafaefc7d26613ddb8e8cf3ce793e444608a0631746ccbb888492c2ac"
-	if got := hex.EncodeToString(s.Hash()[:]); got != want {
+	if got := hex.EncodeToString(h[:]); got != want {
 		t.Errorf("h after MixHash(hepk||sepk) = %s, want %s", got, want)
 	}
 }
@@ -138,21 +142,34 @@ func TestDeriveBuildReplyKeysOBEP(t *testing.T) {
 // TestBuildRecordSizes pins the sizes the spec fixes for build records.
 func TestBuildRecordSizes(t *testing.T) {
 	// Short (current, 0.9.51+).
-	if ShortBuildRequestSize != 154 || ShortBuildReplySize != 202 || ShortBuildRecordCiphertextSize != 218 {
+	// The complete on-wire short record is 218 bytes for BOTH request and reply,
+	// but they reach it differently: a request carries a 16-byte identity hash
+	// and a 32-byte ephemeral key before the 154-byte ciphertext, while a reply
+	// has no cleartext prefix.
+	if ShortBuildRequestSize != 154 || ShortBuildReplySize != 202 || ShortBuildRecordSize != 218 {
 		t.Errorf("short record sizes = %d/%d/%d, want 154/202/218",
-			ShortBuildRequestSize, ShortBuildReplySize, ShortBuildRecordCiphertextSize)
+			ShortBuildRequestSize, ShortBuildReplySize, ShortBuildRecordSize)
 	}
-	// Ciphertext is plaintext + 16-byte Poly1305 tag for both.
-	if ShortBuildRequestSize+BuildTagSize != ShortBuildRecordCiphertextSize {
-		t.Error("short request + tag must equal the 218-byte encrypted record")
+	if ShortBuildRequestEncryptedSize != 170 {
+		t.Errorf("short request AEAD output = %d, want 170 (154+16)", ShortBuildRequestEncryptedSize)
 	}
-	if ShortBuildReplySize+BuildTagSize != ShortBuildRecordCiphertextSize {
-		t.Error("short reply + tag must equal the 218-byte encrypted record")
+	if ShortBuildReplyEncryptedSize != 218 {
+		t.Errorf("short reply AEAD output = %d, want 218 (202+16)", ShortBuildReplyEncryptedSize)
 	}
-	// Long (deprecated, 0.9.48).
-	if LongBuildRequestSize != 464 || LongBuildReplySize != 512 || LongBuildRecordCiphertextSize != 528 {
+	// Wire-record arithmetic from the spec's byte tables.
+	if TruncatedIdentityHashSize+EphemeralPublicKeySize+ShortBuildRequestEncryptedSize != ShortBuildRecordSize {
+		t.Error("16 + 32 + request ciphertext must equal the 218-byte wire record")
+	}
+	if ShortBuildReplyEncryptedSize != ShortBuildRecordSize {
+		t.Error("short reply ciphertext is the whole 218-byte record (no cleartext prefix)")
+	}
+	// Long (deprecated, 0.9.48): 16 + 32 + 480 = 528, reply 512 + 16 = 528.
+	if LongBuildRequestSize != 464 || LongBuildReplySize != 512 || LongBuildRecordSize != 528 {
 		t.Errorf("long record sizes = %d/%d/%d, want 464/512/528",
-			LongBuildRequestSize, LongBuildReplySize, LongBuildRecordCiphertextSize)
+			LongBuildRequestSize, LongBuildReplySize, LongBuildRecordSize)
+	}
+	if TruncatedIdentityHashSize+EphemeralPublicKeySize+LongBuildRequestEncryptedSize != LongBuildRecordSize {
+		t.Error("16 + 32 + long request ciphertext must equal the 528-byte wire record")
 	}
 	if MaxBuildRecords != 8 {
 		t.Errorf("MaxBuildRecords = %d, want 8 (record number 0-7)", MaxBuildRecords)
@@ -228,8 +245,9 @@ func TestOwnBuildReplyKnownAnswer(t *testing.T) {
 		t.Fatalf("DeriveBuildReplyKeys: %v", err)
 	}
 
-	ad := mustHex(t, "770e21dfafaefc7d26613ddb8e8cf3ce793e444608a0631746ccbb888492c2ac")
-	pt := make([]byte, ShortBuildRequestSize)
+	ad := [32]byte{}
+	copy(ad[:], mustHex(t, "770e21dfafaefc7d26613ddb8e8cf3ce793e444608a0631746ccbb888492c2ac"))
+	pt := make([]byte, ShortBuildReplySize)
 	for i := range pt {
 		pt[i] = byte(i)
 	}
@@ -238,15 +256,30 @@ func TestOwnBuildReplyKnownAnswer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("EncryptOwnBuildReply: %v", err)
 	}
+	// A short reply has no cleartext prefix, so its AEAD output is the entire
+	// 218-byte wire record.
+	if len(ct) != ShortBuildRecordSize {
+		t.Fatalf("reply ciphertext = %d bytes, want %d", len(ct), ShortBuildRecordSize)
+	}
 
 	want := mustHex(t, "9211e978a1c8a10f204bb2d472c3981ceab2b4c1635a9d03c3b91dc01bf48812"+
 		"e70d4e26a8e2e1de412605344c9846f424828b6442b34cd0ff8f7d8f650f7b8f"+
 		"bb8721aea991c346a4ee3ce8340a629c81c49535a3392098a1b68707f19339f2"+
 		"a6e748a453fda1b44d8e47154aa9e2c05f16b2c06763276e8816c6e17aba7d28"+
-		"9c910a6ebb80689d45a2e968014ccc1bb6e3263e170bfbce0d5bc8f97486d9a0"+
-		"8d232edd2b5d279aee45")
+		"9c910a6ebb80689d45a2e968014ccc1bb6e3263e170bfbce0d5b60ce8b96e3cf"+
+		"ead8b6136e6f9e29b093fa2d3b3e70b25771c3907cea9eee572ce14dbf069f49"+
+		"2c863f413ee574853ca8b6277886137a51fd2ae8fbce555c4dff")
 	if !bytes.Equal(ct, want) {
 		t.Errorf("own reply ciphertext mismatch:\n got  %x\n want  %x", ct, want)
+	}
+
+	// Round-trip through the decrypt path.
+	back, err := DecryptOwnBuildReply(keys.ReplyKey, ad, 3, ct)
+	if err != nil {
+		t.Fatalf("DecryptOwnBuildReply: %v", err)
+	}
+	if !bytes.Equal(back, pt) {
+		t.Error("reply round trip mismatch")
 	}
 
 	// A different record number must produce a different ciphertext.
@@ -268,7 +301,7 @@ func TestObfuscateOtherBuildRecordKnownAnswer(t *testing.T) {
 		t.Fatalf("DeriveBuildReplyKeys: %v", err)
 	}
 
-	record := make([]byte, ShortBuildRecordCiphertextSize)
+	record := make([]byte, ShortBuildRecordSize)
 	for i := range record {
 		record[i] = byte(i)
 	}
@@ -304,17 +337,13 @@ func TestObfuscateOtherBuildRecordKnownAnswer(t *testing.T) {
 // TestBuildRequestRoundTrip runs a full sender/hop exchange with real X25519
 // keys, including the MixHash(ciphertext) that feeds the reply KDF.
 func TestBuildRequestRoundTrip(t *testing.T) {
-	hopPub, hopPriv, err := curve25519.X25519(
-		fixedScalar(1), curve25519.Basepoint,
-	)
+	hopPriv := fixedScalar(1)
+	hopPub, err := curve25519.X25519(hopPriv, curve25519.Basepoint)
 	if err != nil {
 		t.Fatalf("hop key derivation: %v", err)
 	}
-	senderPub, senderPriv, err := func() ([]byte, []byte, error) {
-		s := fixedScalar(2)
-		p, err := curve25519.X25519(s, curve25519.Basepoint)
-		return p, s, err
-	}()
+	senderPriv := fixedScalar(2)
+	senderPub, err := curve25519.X25519(senderPriv, curve25519.Basepoint)
 	if err != nil {
 		t.Fatalf("sender key derivation: %v", err)
 	}
@@ -329,8 +358,9 @@ func TestBuildRequestRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatalf("EncryptBuildRequest: %v", err)
 	}
-	if len(ct) != ShortBuildRecordCiphertextSize {
-		t.Fatalf("ciphertext = %d bytes, want %d", len(ct), ShortBuildRecordCiphertextSize)
+	if len(ct) != ShortBuildRequestEncryptedSize {
+		t.Fatalf("ciphertext = %d bytes, want %d (154+16; the 48-byte cleartext prefix is the caller's)",
+			len(ct), ShortBuildRequestEncryptedSize)
 	}
 
 	hopState := NewBuildNoiseState()
@@ -364,7 +394,8 @@ func TestBuildRequestRoundTrip(t *testing.T) {
 		t.Error("reply/layer keys diverged between creator and hop")
 	}
 
-	// The hop encrypts its own reply; the creator decrypts it.
+	// The hop encrypts its own reply with ad = h from the build request; the
+	// creator decrypts with the same h, which both sides reached above.
 	reply := make([]byte, ShortBuildReplySize)
 	for i := range reply {
 		reply[i] = byte(i)
@@ -374,10 +405,12 @@ func TestBuildRequestRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatalf("EncryptOwnBuildReply: %v", err)
 	}
-	back, err := DecryptOwnBuildReply(senderKeys.ReplyKey, senderKeys.ChainKey() /*placeholder*/, 0, rct)
-	if err == nil {
-		_ = back
-		t.Fatal("DecryptOwnBuildReply accepted a wrong associated-data type")
+	back, err := DecryptOwnBuildReply(senderKeys.ReplyKey, sendState.Hash(), 0, rct)
+	if err != nil {
+		t.Fatalf("DecryptOwnBuildReply: %v", err)
+	}
+	if !bytes.Equal(back, reply) {
+		t.Fatal("reply round trip mismatch")
 	}
 }
 
