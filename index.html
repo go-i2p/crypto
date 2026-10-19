@@ -13,7 +13,7 @@
         <a href="index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 229 commits
+        📝 235 commits
          • 📜 MIT License
       </div>
     </div>
@@ -44,12 +44,12 @@
       <div class="repo-stats">
         
         <div class="repo-stat">
-          <span>📝</span> <span>229 commits</span>
+          <span>📝</span> <span>235 commits</span>
         </div>
         
         
         <div class="repo-stat">
-          <span>📅</span> <span>Last updated: October 16, 2026</span>
+          <span>📅</span> <span>Last updated: October 19, 2026</span>
         </div>
         
         
@@ -222,12 +222,13 @@ func main() {
     }
     defer session.Zero()
 
-    // Derive the message key and session tag (advances the ratchets).
-    // EncryptMessage does not encrypt the payload itself.
-    messageKey, sessionTag, _ := session.EncryptMessage(plaintext)
+    // Derive the message key, session tag, and spec counter nonce (advances the
+    // ratchets). EncryptMessage does not encrypt the payload itself.
+    messageKey, sessionTag, nonce, _ := session.EncryptMessage(plaintext)
 
-    // Use the message key with a ChaCha20-Poly1305 AEAD to encrypt the payload.
-    nonce, _ := chacha20poly1305.GenerateNonce()
+    // Use the message key and the returned nonce with a ChaCha20-Poly1305 AEAD.
+    // Per the ECIES spec the session tag is the associated data and the nonce is
+    // the message number - do not generate a random nonce here.
     aead, _ := chacha20poly1305.NewAEAD(messageKey)
     ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce[:])
     _, _ = ciphertext, authTag
@@ -251,7 +252,10 @@ func main() {
     tunnelKey, _ := kd.DeriveForPurpose(kdf.PurposeTunnelEncryption)
     garlicKey, _ := kd.DeriveForPurpose(kdf.PurposeGarlicEncryption)
     
-    // Or derive session keys in one call
+    // Or derive session keys in one call.
+    // NOTE: DeriveSessionKeys is Deprecated (non-spec KDF); for
+    // ECIES-X25519-AEAD-Ratchet sessions use ratchet.NewSessionFromECIES,
+    // which applies the spec's data-phase KDFs.
     rootKey, symKey, tagKey, _ := kd.DeriveSessionKeys()
 }
 </code></pre>
@@ -272,11 +276,10 @@ func main() {
     rand.Read(key)
     rand.Read(iv)
     
-    // Create symmetric key
-    symmetricKey := &amp;aes.AESSymmetricKey{
-        Key: key,
-        IV:  iv,
-    }
+    // Create symmetric key (always use the validating constructor; direct
+    // struct literals and zero values are rejected by the aes package docs)
+    symmetricKey, _ := aes.NewAES256Key(key, iv)
+    defer symmetricKey.Zero()
     
     // Create encrypter and decrypter
     encrypter, _ := symmetricKey.NewEncrypter()
@@ -377,20 +380,20 @@ func main() {
 <pre><code class="language-go">package main
 
 import (
-    &quot;github.com/go-i2p/crypto/rand&quot;
     &quot;github.com/go-i2p/crypto/hmac&quot;
 )
 
 func main() {
-    // Generate HMAC key
-    var key hmac.HMACKey
-    rand.Read(key[:])
+    // Generate HMAC key (always use the constructors; a zero-value HMACKey is
+    // cryptographically invalid and rejected by the hmac package docs)
+    key, _ := hmac.GenerateHMACKey()
+    defer key.Zero()
 
     // Data to authenticate
     data := []byte(&quot;Authenticate this message&quot;)
 
     // Compute HMAC-SHA256 digest
-    digest := hmac.I2PHMAC(data, key)
+    digest := hmac.I2PHMAC(data, *key)
 
     // Use digest for authentication or verification
 }
@@ -525,7 +528,7 @@ func main() {
 <pre><code class="language-bash">go test ./...
 </code></pre>
 
-<p>The test suite includes table-driven tests for all cryptographic operations, testing edge cases like empty data, exact block sizes, and large datasets.</p>
+<p>The test suite includes table-driven tests for the cryptographic operations in most packages, testing edge cases like empty data, exact block sizes, and large datasets. The <code>argon2</code>, <code>common</code>, <code>siphash</code>, and <code>types</code> packages currently have no test files.</p>
 
 <hr>
 
@@ -554,7 +557,7 @@ func main() {
                 eyedeekay
               </div>
               <div class="contributor-commits">
-                229 commits
+                235 commits
               </div>
             </div>
           </div>
@@ -566,7 +569,7 @@ func main() {
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2026-10-19 00:49:24 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2026-10-19 04:18:54 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>
