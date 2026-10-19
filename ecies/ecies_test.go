@@ -16,6 +16,7 @@ package ecies
 import (
 	"bytes"
 	"crypto/rand"
+	"strings"
 	"testing"
 
 	"github.com/go-i2p/crypto/ratchet"
@@ -685,5 +686,32 @@ func TestDeriveMessageKeyWalksChain(t *testing.T) {
 			t.Errorf("message keys %d and %d are identical", prev, n)
 		}
 		seen[got] = n
+	}
+}
+
+// TestDecryptECIESX25519RejectsOversized verifies the receive-side size bound
+// from ecies.md §"Unencrypted data": "Encrypted data is 65535 bytes max … Maximum
+// ChaChaPoly frame is 65535 bytes." A ciphertext larger than the one-time
+// overhead plus MaxPlaintextSize must be rejected before any AEAD work, rather
+// than allocated and processed.
+func TestDecryptECIESX25519RejectsOversized(t *testing.T) {
+	_, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("GenerateKeyPair: %v", err)
+	}
+
+	maxCiphertext := oneTimeCiphertextOverhead + MaxPlaintextSize
+	oversized := make([]byte, maxCiphertext+1)
+	if _, err := DecryptECIESX25519(priv, oversized); err == nil {
+		t.Errorf("ciphertext of %d bytes accepted; maximum is %d", len(oversized), maxCiphertext)
+	}
+
+	// The exact maximum must NOT be rejected by the size gate (it will still fail
+	// AEAD because it is not a real frame, but with an authentication error, not a
+	// "too long" error). This distinguishes the bound from an off-by-one.
+	atMax := make([]byte, maxCiphertext)
+	_, err = DecryptECIESX25519(priv, atMax)
+	if err != nil && strings.Contains(err.Error(), "too long") {
+		t.Errorf("ciphertext of exactly %d bytes rejected as too long", maxCiphertext)
 	}
 }

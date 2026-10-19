@@ -153,6 +153,17 @@ func DecryptECIESX25519(recipientPrivKey, ciphertext []byte) ([]byte, error) {
 	if len(ciphertext) < oneTimeCiphertextOverhead {
 		return nil, oops.Wrapf(ErrInvalidCiphertext, "ciphertext too short: %d bytes, minimum %d", len(ciphertext), oneTimeCiphertextOverhead)
 	}
+	// Reject frames larger than the spec's maximum. ecies.md §"Unencrypted data":
+	// "Encrypted data is 65535 bytes max, including a 16-byte authentication
+	// header, so the max unencrypted data is 65519 bytes. Maximum ChaChaPoly
+	// frame is 65535 bytes." The payload frame is at most MaxPlaintextSize+TagSize
+	// = 65535; adding the 96-byte one-time overhead (elligator key + flags
+	// section + payload tag) gives a receive-side ceiling of 65615. Without this
+	// bound, arbitrarily large input is allocated and fed to the AEAD, a DoS
+	// surface, and oversized frames the spec says must not exist are accepted.
+	if maxCiphertext := oneTimeCiphertextOverhead + MaxPlaintextSize; len(ciphertext) > maxCiphertext {
+		return nil, oops.Wrapf(ErrInvalidCiphertext, "ciphertext too long: %d bytes, maximum %d", len(ciphertext), maxCiphertext)
+	}
 
 	// Split the ciphertext into its components.
 	encodedAepk := ciphertext[:PublicKeySize]
