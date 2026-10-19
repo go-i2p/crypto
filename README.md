@@ -184,9 +184,9 @@ func main() {
     garlicKey, _ := kd.DeriveForPurpose(kdf.PurposeGarlicEncryption)
     
     // Or derive session keys in one call.
-    // NOTE: DeriveSessionKeys is Deprecated (legacy, non-spec KDF); for
-    // ECIES-X25519-AEAD-Ratchet sessions use ecies.DeriveSessionKeys or
-    // ratchet.NewSessionFromECIES instead.
+    // NOTE: DeriveSessionKeys is Deprecated (non-spec KDF); for
+    // ECIES-X25519-AEAD-Ratchet sessions use ratchet.NewSessionFromECIES,
+    // which applies the spec's data-phase KDFs.
     rootKey, symKey, tagKey, _ := kd.DeriveSessionKeys()
 }
 ```

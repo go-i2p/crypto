@@ -129,27 +129,6 @@ Returns:
     - plaintext: The decrypted data
     - error: Any error during decryption
 
-#### func  DeriveChaCha20Key
-
-```go
-func DeriveChaCha20Key(messageKey [32]byte) ([32]byte, error)
-```
-DeriveChaCha20Key derives a ChaCha20 encryption key from a message key. Some
-implementations may need this extra derivation step.
-
-#### func  DeriveChaCha20Nonce
-
-```go
-func DeriveChaCha20Nonce(messageKey [32]byte, messageNum uint32) ([12]byte, error)
-```
-DeriveChaCha20Nonce derives a ChaCha20 nonce from a message key and message
-number. Returns a 12-byte nonce suitable for ChaCha20-Poly1305.
-
-Deprecated: This derives the nonce from the message key via HKDF, which does not
-match the spec's ChaCha20-Poly1305 nonce layout (first 4 bytes zero, last 8
-bytes the little-endian message number). The spec-compliant [ratchet.Session]
-does not use this function.
-
 #### func  DeriveMessageKey
 
 ```go
@@ -171,49 +150,23 @@ return k_0 for every n, handing different messages the same key.
 chainKey: The current chain key (32 bytes) messageNumber: The message sequence
 number for this key Returns (messageKey, error)
 
-#### func  DeriveNoiseKeys
-
-```go
-func DeriveNoiseKeys(sharedSecret, info []byte) ([32]byte, [32]byte, [32]byte, error)
-```
-DeriveNoiseKeys derives keys using the Noise protocol pattern. This is
-specifically for ECIES session establishment following Noise_X pattern.
-sharedSecret: Output from X25519 DH info: Context string for domain separation
-Returns (sendKey, recvKey, chainKey, error)
-
-Deprecated: This is a legacy, non-spec-compliant KDF and its name is misleading
-(it does not implement the Noise protocol). Use [ratchet.Session], which derives
-keys with the spec-mandated KDFs. Note that [SessionState] is itself deprecated
-for the same reason.
-
-#### func  DeriveSessionKeys
-
-```go
-func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error)
-```
-DeriveSessionKeys derives the initial session keys from a shared secret. This is
-used during session establishment to derive: - Sending chain key (32 bytes) -
-Receiving chain key (32 bytes) Returns (sendKey, recvKey, error)
-
-NOTE: These functions (DeriveSessionKeys, DeriveNoiseKeys, DeriveChaCha20Key,
-DeriveChaCha20Nonce) implement the legacy ECIES-X25519-AEAD-Ratchet protocol's
-KDFs. They are NOT the spec-compliant I2P Noise data-phase KDFs. The
-spec-compliant Noise path (Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256) is
-implemented in go-noise/ratchet and uses kdf.StandardHKDF directly with the
-spec-mandated salt/ikm/info values. Do not mix the two protocols.
-
-Deprecated: This is a legacy, non-spec-compliant KDF. Use [ratchet.Session],
-which derives keys with the spec-mandated KDFs. Note that [SessionState] is
-itself deprecated for the same reason.
-
 #### func  DeriveSessionTag
 
 ```go
 func DeriveSessionTag(chainKey []byte, tagNumber uint32) ([8]byte, error)
 ```
-DeriveSessionTag derives a session tag from a chain key. This is used by the
-session tag ratchet. chainKey: The current chain key (32 bytes) tagNumber: The
-tag sequence number Returns (tag, error) where tag is 8 bytes
+DeriveSessionTag derives the session tag at position tagNumber of a tag set.
+
+chainKey is the session tag chain key seed (sessTag_ck) — the value the DH
+ratchet outputs before the tag set is initialized. It is NOT an already advanced
+live chain key: this function runs the spec's STInitialization KDF on it (via
+[ratchet.NewTagRatchet]) to obtain the first chain key, then steps the ratchet
+to tagNumber. Passing a chain key that has already been through STInitialization
+would initialize the ratchet a second time and yield tags that do not match the
+session's.
+
+tagNumber: The tag sequence number (0 produces tag_0) Returns (tag, error) where
+tag is 8 bytes
 
 #### func  EncryptECIESX25519
 

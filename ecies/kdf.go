@@ -4,48 +4,10 @@ import (
 	"crypto/subtle"
 	"time"
 
-	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/crypto/ratchet"
-	"github.com/go-i2p/logger"
 	"github.com/samber/oops"
 	"go.step.sm/crypto/x25519"
 )
-
-// DeriveSessionKeys derives the initial session keys from a shared secret.
-// This is used during session establishment to derive:
-// - Sending chain key (32 bytes)
-// - Receiving chain key (32 bytes)
-// Returns (sendKey, recvKey, error)
-//
-// NOTE: These functions (DeriveSessionKeys, DeriveNoiseKeys, DeriveChaCha20Key,
-// DeriveChaCha20Nonce) implement the legacy ECIES-X25519-AEAD-Ratchet protocol's
-// KDFs. They are NOT the spec-compliant I2P Noise data-phase KDFs. The
-// spec-compliant Noise path (Noise_IKelg2+hs2_25519_ChaChaPoly_SHA256) is
-// implemented in go-noise/ratchet and uses kdf.StandardHKDF directly with the
-// spec-mandated salt/ikm/info values. Do not mix the two protocols.
-//
-// Deprecated: This is a legacy, non-spec-compliant KDF. Use
-// [ratchet.Session], which derives keys with the spec-mandated KDFs. Note that
-// [SessionState] is itself deprecated for the same reason.
-func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
-	if len(sharedSecret) == 0 {
-		return [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")
-	}
-
-	// Use kdf package for consistent key derivation
-	var sharedSecretArray [32]byte
-	copy(sharedSecretArray[:], sharedSecret)
-	kd := kdf.NewKeyDerivation(sharedSecretArray)
-
-	// Derive 64 bytes: sendKey (32) + recvKey (32)
-	keys, err := kd.DeriveKeys(info, 2)
-	if err != nil {
-		return [32]byte{}, [32]byte{}, err
-	}
-
-	log.WithFields(logger.Fields{"pkg": "ecies", "func": "DeriveSessionKeys"}).Debug("Session keys derived successfully")
-	return keys[0], keys[1], nil
-}
 
 // DeriveMessageKey derives the message encryption key at position
 // messageNumber of the symmetric key ratchet chain that starts at chainKey.
@@ -88,10 +50,17 @@ func DeriveMessageKey(chainKey []byte, messageNumber uint32) ([32]byte, error) {
 	return messageKey, nil
 }
 
-// DeriveSessionTag derives a session tag from a chain key.
-// This is used by the session tag ratchet.
-// chainKey: The current chain key (32 bytes)
-// tagNumber: The tag sequence number
+// DeriveSessionTag derives the session tag at position tagNumber of a tag set.
+//
+// chainKey is the session tag chain key seed (sessTag_ck) — the value the DH
+// ratchet outputs before the tag set is initialized. It is NOT an already
+// advanced live chain key: this function runs the spec's STInitialization KDF
+// on it (via [ratchet.NewTagRatchet]) to obtain the first chain key, then steps
+// the ratchet to tagNumber. Passing a chain key that has already been through
+// STInitialization would initialize the ratchet a second time and yield tags
+// that do not match the session's.
+//
+// tagNumber: The tag sequence number (0 produces tag_0)
 // Returns (tag, error) where tag is 8 bytes
 func DeriveSessionTag(chainKey []byte, tagNumber uint32) ([8]byte, error) {
 	if len(chainKey) != 32 {
@@ -154,67 +123,4 @@ func constantTimeEqual(a, b []byte) bool {
 // This is used for session creation timestamps.
 func currentTimestamp() int64 {
 	return time.Now().Unix()
-}
-
-// DeriveNoiseKeys derives keys using the Noise protocol pattern.
-// This is specifically for ECIES session establishment following Noise_X pattern.
-// sharedSecret: Output from X25519 DH
-// info: Context string for domain separation
-// Returns (sendKey, recvKey, chainKey, error)
-//
-// Deprecated: This is a legacy, non-spec-compliant KDF and its name is
-// misleading (it does not implement the Noise protocol). Use
-// [ratchet.Session], which derives keys with the spec-mandated KDFs. Note that
-// [SessionState] is itself deprecated for the same reason.
-func DeriveNoiseKeys(sharedSecret, info []byte) ([32]byte, [32]byte, [32]byte, error) {
-	if len(sharedSecret) == 0 {
-		return [32]byte{}, [32]byte{}, [32]byte{}, oops.Errorf("shared secret cannot be empty")
-	}
-
-	// Use kdf package for consistent key derivation
-	var sharedSecretArray [32]byte
-	copy(sharedSecretArray[:], sharedSecret)
-	kd := kdf.NewKeyDerivation(sharedSecretArray)
-
-	// Derive 96 bytes: sendKey (32) + recvKey (32) + chainKey (32)
-	keys, err := kd.DeriveKeys(info, 3)
-	if err != nil {
-		return [32]byte{}, [32]byte{}, [32]byte{}, err
-	}
-
-	log.WithFields(logger.Fields{"pkg": "ecies", "func": "DeriveNoiseKeys"}).Debug("Noise keys derived successfully")
-	return keys[0], keys[1], keys[2], nil
-}
-
-// DeriveChaCha20Key derives a ChaCha20 encryption key from a message key.
-// Some implementations may need this extra derivation step.
-func DeriveChaCha20Key(messageKey [32]byte) ([32]byte, error) {
-	// For now, use the message key directly as ChaCha20 uses 256-bit keys
-	// In some variants, you might want to derive it:
-	// keys, err := deriveKeys(messageKey[:], []byte("ChaCha20-Key"), 32)
-	return messageKey, nil
-}
-
-// DeriveChaCha20Nonce derives a ChaCha20 nonce from a message key and message number.
-// Returns a 12-byte nonce suitable for ChaCha20-Poly1305.
-//
-// Deprecated: This derives the nonce from the message key via HKDF, which does
-// not match the spec's ChaCha20-Poly1305 nonce layout (first 4 bytes zero,
-// last 8 bytes the little-endian message number). The spec-compliant
-// [ratchet.Session] does not use this function.
-func DeriveChaCha20Nonce(messageKey [32]byte, messageNum uint32) ([12]byte, error) {
-	// Use kdf package for consistent derivation
-	kd := kdf.NewKeyDerivation(messageKey)
-
-	// For nonce derivation, we only need 12 bytes (not a full 32-byte key)
-	// DeriveKeys returns [][32]byte, so we get one key and take first 12 bytes
-	keys, err := kd.DeriveKeys([]byte("ChaCha20-Nonce"), 1)
-	if err != nil {
-		return [12]byte{}, err
-	}
-
-	// Take first 12 bytes for the nonce
-	var nonce [12]byte
-	copy(nonce[:], keys[0][:12])
-	return nonce, nil
 }
