@@ -343,8 +343,7 @@ data-phase KDF (which uses HKDF with the spec's exact salt/ikm/info values). Do
 not use this for the Noise_IKelg2+hs2 path; use StandardHKDF there instead.
 
 Deprecated: This is a legacy, non-spec-compliant KDF. Use [ratchet.Session],
-which derives keys with the spec-mandated KDFs. Note that [ecies.SessionState]
-is itself deprecated for the same reason.
+which derives keys with the spec-mandated KDFs.
 
 Returns:
 

@@ -649,44 +649,6 @@ func TestGenerateECIESKeyPair(t *testing.T) {
 	}
 }
 
-// TestNewSessionRegression verifies that NewSession returns a usable
-// session instead of panicking. This guards against a regression where
-// deriveSessionChainKeys indexed a nil slice (index out of range panic).
-func TestNewSessionRegression(t *testing.T) {
-	_, alicePriv, err := GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("GenerateKeyPair(alice) failed: %v", err)
-	}
-	bobPub, _, err := GenerateKeyPair()
-	if err != nil {
-		t.Fatalf("GenerateKeyPair(bob) failed: %v", err)
-	}
-
-	session, err := NewSession(alicePriv, bobPub, true)
-	if err != nil {
-		t.Fatalf("NewSession failed: %v", err)
-	}
-	if session == nil {
-		t.Fatal("NewSession returned nil session")
-	}
-
-	key, err := session.DeriveNextSendingKey()
-	if err != nil {
-		t.Fatalf("DeriveNextSendingKey failed: %v", err)
-	}
-	if len(key) != 32 {
-		t.Errorf("sending key has wrong length: got %d, want 32", len(key))
-	}
-
-	tag, err := session.GetNextSendingTag()
-	if err != nil {
-		t.Fatalf("GetNextSendingTag failed: %v", err)
-	}
-	if len(tag) != 8 {
-		t.Errorf("session tag has wrong length: got %d, want 8", len(tag))
-	}
-}
-
 // TestDeriveMessageKeyWalksChain guards against the regression where
 // DeriveMessageKey rebuilt a fresh ratchet from chainKey and returned k_0 for
 // every message number, handing different messages the same key.

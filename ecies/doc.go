@@ -59,10 +59,10 @@
 // For long-lived sessions that need forward secrecy, see [ratchet.Session],
 // which layers the three ratchets (session tag, symmetric key, and DH ratchet)
 // on top of the same primitives and implements the spec's data-phase KDFs
-// exactly. The [SessionState] type in this package is a convenience API that is
-// now Deprecated: it is not a spec-mandated wire format and its static-static
-// initial key derivation uses non-spec KDF parameters. Prefer [ratchet.Session]
-// for new code.
+// exactly. This package previously exposed a SessionState convenience type
+// whose static-static initial key derivation used non-spec KDF parameters; it
+// was not a spec-mandated wire format and has been removed. Use
+// [ratchet.Session] for ratcheted sessions.
 //
 // # Key sizes
 //

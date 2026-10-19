@@ -1,12 +1,8 @@
 package ecies
 
 import (
-	"crypto/subtle"
-	"time"
-
 	"github.com/go-i2p/crypto/ratchet"
 	"github.com/samber/oops"
-	"go.step.sm/crypto/x25519"
 )
 
 // DeriveMessageKey derives the message encryption key at position
@@ -86,41 +82,4 @@ func DeriveSessionTag(chainKey []byte, tagNumber uint32) ([8]byte, error) {
 	}
 
 	return tag, nil
-}
-
-// performDH performs X25519 Diffie-Hellman key agreement.
-// privateKey: Our X25519 private key (32 bytes)
-// publicKey: Their X25519 public key (32 bytes)
-// Returns: Shared secret (32 bytes)
-func performDH(privateKey, publicKey []byte) ([]byte, error) {
-	if len(privateKey) != PrivateKeySize {
-		return nil, oops.Errorf("invalid private key size: expected %d, got %d", PrivateKeySize, len(privateKey))
-	}
-	if len(publicKey) != PublicKeySize {
-		return nil, oops.Errorf("invalid public key size: expected %d, got %d", PublicKeySize, len(publicKey))
-	}
-
-	// Convert to X25519 key types
-	privKey := x25519.PrivateKey(privateKey)
-	pubKey := x25519.PublicKey(publicKey)
-
-	// Perform X25519 DH
-	sharedSecret, err := privKey.SharedKey(pubKey)
-	if err != nil {
-		return nil, oops.Errorf("X25519 key agreement failed: %w", err)
-	}
-
-	return sharedSecret, nil
-}
-
-// constantTimeEqual performs constant-time comparison of two byte slices.
-// This prevents timing attacks when comparing secrets like session tags or MACs.
-func constantTimeEqual(a, b []byte) bool {
-	return subtle.ConstantTimeCompare(a, b) == 1
-}
-
-// currentTimestamp returns the current Unix timestamp in seconds.
-// This is used for session creation timestamps.
-func currentTimestamp() int64 {
-	return time.Now().Unix()
 }

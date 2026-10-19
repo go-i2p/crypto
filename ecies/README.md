@@ -62,10 +62,10 @@ single HKDF call.
 
 For long-lived sessions that need forward secrecy, see [ratchet.Session], which
 layers the three ratchets (session tag, symmetric key, and DH ratchet) on top of
-the same primitives and implements the spec's data-phase KDFs exactly. The
-[SessionState] type in this package is a convenience API that is now Deprecated:
-it is not a spec-mandated wire format and its static-static initial key
-derivation uses non-spec KDF parameters. Prefer [ratchet.Session] for new code.
+the same primitives and implements the spec's data-phase KDFs exactly. This
+package previously exposed a SessionState convenience type whose static-static
+initial key derivation used non-spec KDF parameters; it was not a spec-mandated
+wire format and has been removed. Use [ratchet.Session] for ratcheted sessions.
 
 # Key sizes
 
@@ -334,132 +334,6 @@ Len returns the length of the public key in bytes
 func (k ECIESPublicKey) NewEncrypter() (types.Encrypter, error)
 ```
 NewEncrypter creates a new encrypter using this public key
-
-#### type SessionState
-
-```go
-type SessionState struct {
-
-	// Session identification
-	SessionID [32]byte
-
-	// Static keys
-	LocalPrivKey       [32]byte // Our static private key
-	RemoteStaticPubKey [32]byte // Remote peer's static public key
-
-	// Ratchet state - Sending chain
-	SendingChainKey   [32]byte // Current sending chain key
-	SendingMessageNum uint32   // Next message number to send
-
-	// Ratchet state - Receiving chain
-	ReceivingChainKey   [32]byte // Current receiving chain key
-	ReceivingMessageNum uint32   // Next expected message number
-
-	// DH Ratchet state
-	DHRatchetPrivKey [32]byte // Our current DH ratchet private key
-	DHRatchetPubKey  [32]byte // Our current DH ratchet public key
-	RemoteDHPubKey   [32]byte // Remote peer's current DH ratchet public key
-
-	// Session tag ratchets
-	SendingTagRatchet   *ratchet.TagRatchet // Derives outgoing session tags
-	ReceivingTagRatchet *ratchet.TagRatchet // Derives incoming session tags
-
-	// Previous chain length for message ordering
-	PreviousChainLength uint32
-
-	// Session creation timestamp
-	CreatedAt int64
-
-	// DH Ratchet root keys (per spec §4, each direction tracks its own root key)
-	SendingRootKey   [32]byte // Root key for the sending direction's tag set
-	ReceivingRootKey [32]byte // Root key for the receiving direction's tag set
-}
-```
-
-SessionState tracks the state of an ECIES session with forward secrecy. It
-implements the three-level ratcheting mechanism from I2P Proposal 144: 1.
-Session Tag Ratchet - Derives unique session tags for message routing 2.
-Symmetric Key Ratchet - Derives message encryption keys 3. DH Ratchet - Provides
-forward secrecy through ephemeral key exchanges
-
-Deprecated: SessionState is a convenience API that does not fully conform to the
-I2P ECIES-X25519-AEAD-Ratchet specification
-(https://i2p.net/en/docs/specs/ecies/). The static-static key initialization and
-DH ratchet key derivation use non-spec KDF parameters. For spec-compliant
-ratcheted sessions, use ratchet.Session instead.
-
-#### func  NewSession
-
-```go
-func NewSession(localPrivKey, remoteStaticPubKey []byte, isInitiator bool) (*SessionState, error)
-```
-NewSession creates a new ECIES session state. localPrivKey: Our static X25519
-private key (32 bytes) remoteStaticPubKey: Remote peer's static X25519 public
-key (32 bytes) isInitiator: True if we are initiating the session, false if
-responding
-
-#### func (*SessionState) DeriveNextReceivingKey
-
-```go
-func (s *SessionState) DeriveNextReceivingKey() ([32]byte, error)
-```
-DeriveNextReceivingKey derives the next message decryption key from the
-receiving chain. This implements the symmetric key ratchet for receiving.
-
-#### func (*SessionState) DeriveNextSendingKey
-
-```go
-func (s *SessionState) DeriveNextSendingKey() ([32]byte, error)
-```
-DeriveNextSendingKey derives the next message encryption key from the sending
-chain. This implements the symmetric key ratchet for sending.
-
-#### func (*SessionState) GetDHRatchetPublicKey
-
-```go
-func (s *SessionState) GetDHRatchetPublicKey() [32]byte
-```
-GetDHRatchetPublicKey returns our current DH ratchet public key.
-
-#### func (*SessionState) GetNextSendingTag
-
-```go
-func (s *SessionState) GetNextSendingTag() ([8]byte, error)
-```
-GetNextSendingTag derives the next session tag for sending an existing session
-message.
-
-#### func (*SessionState) GetSessionID
-
-```go
-func (s *SessionState) GetSessionID() [32]byte
-```
-GetSessionID returns the session identifier.
-
-#### func (*SessionState) PerformDHRatchet
-
-```go
-func (s *SessionState) PerformDHRatchet(remoteDHPubKey []byte) error
-```
-PerformDHRatchet performs a DH ratchet step, providing forward secrecy. This
-should be called when we receive a new DH public key from the remote peer.
-
-#### func (*SessionState) ValidateReceivingTag
-
-```go
-func (s *SessionState) ValidateReceivingTag(tag [8]byte) (bool, error)
-```
-ValidateReceivingTag checks if a received tag matches any tag in the receiving
-lookahead window (spec §4: the receiver may be up to N tags ahead, N ≤ 128, 32
-recommended). On a match the receiving tag ratchet is advanced to the matched
-position and the window is rebuilt.
-
-#### func (*SessionState) Zero
-
-```go
-func (s *SessionState) Zero()
-```
-Zero securely clears sensitive session data from memory.
 
 
 
