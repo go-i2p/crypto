@@ -481,3 +481,77 @@ func BenchmarkIsRepresentable(b *testing.B) {
 		_ = IsRepresentable(pubKey)
 	}
 }
+
+// TestGenerateEncodedKeyPair checks that the encoded output returned by
+// GenerateEncodedKeyPair is the same value Encode() would produce, decodes back
+// to the public key, and satisfies the spec's section 2a requirement that the
+// generator not recompute ENCODE_ELG2 after testing suitability.
+func TestGenerateEncodedKeyPair(t *testing.T) {
+	pub, priv, encoded, err := GenerateEncodedKeyPair()
+	if err != nil {
+		t.Fatalf("GenerateEncodedKeyPair failed: %v", err)
+	}
+	if len(pub) != PublicKeySize || len(priv) != PrivateKeySize || len(encoded) != RepresentativeSize {
+		t.Fatalf("unexpected sizes: pub=%d priv=%d encoded=%d", len(pub), len(priv), len(encoded))
+	}
+
+	// encoded must be a valid encoding of pub: DECODE_ELG2(encoded) == pub.
+	decoded, err := Decode(encoded)
+	if err != nil {
+		t.Fatalf("Decode(encoded) failed: %v", err)
+	}
+	if hex.EncodeToString(decoded) != hex.EncodeToString(pub) {
+		t.Errorf("encoded key decodes to %x, want public key %x", decoded, pub)
+	}
+
+	// The encoding must be representable, i.e. pub passes IsRepresentable.
+	if !IsRepresentable(pub) {
+		t.Error("GenerateEncodedKeyPair returned a non-representable public key")
+	}
+
+	// Two calls must not produce the same encoding (random MSBs + fresh keys).
+	_, _, encoded2, err := GenerateEncodedKeyPair()
+	if err != nil {
+		t.Fatalf("second GenerateEncodedKeyPair failed: %v", err)
+	}
+	if hex.EncodeToString(encoded) == hex.EncodeToString(encoded2) {
+		t.Error("two GenerateEncodedKeyPair calls produced identical encodings")
+	}
+}
+
+// TestEncodeRandomizesTopBits pins the spec's ENCODE_ELG2 bit manipulation
+// (section 2a): "encodedKey[31] |= (randomByte & 0xc0)". The top two bits of the
+// last byte carry fresh randomness, so the same key must encode to different
+// representatives across calls while every one of them still decodes back to the
+// original key.
+func TestEncodeRandomizesTopBits(t *testing.T) {
+	pub, _, first, err := GenerateEncodedKeyPair()
+	if err != nil {
+		t.Fatalf("GenerateEncodedKeyPair failed: %v", err)
+	}
+
+	seen := map[byte]bool{first[31] & 0xC0: true}
+	for i := 0; i < 64; i++ {
+		enc, err := Encode(pub)
+		if err != nil {
+			t.Fatalf("Encode failed: %v", err)
+		}
+		seen[enc[31]&0xC0] = true
+
+		// DECODE_ELG2 masks those bits back off ("encodedKey[31] &= 0x3f"), so
+		// the random bits must not change the decoded key.
+		dec, err := Decode(enc)
+		if err != nil {
+			t.Fatalf("Decode failed: %v", err)
+		}
+		if hex.EncodeToString(dec) != hex.EncodeToString(pub) {
+			t.Fatalf("encoding %d decodes to %x, want %x", i, dec, pub)
+		}
+	}
+
+	// With 64 draws the chance of seeing only one of the four top-bit patterns
+	// is 4^-64, so a single value here means the randomization is broken.
+	if len(seen) < 2 {
+		t.Errorf("ENCODE_ELG2 produced only top-bit pattern %v across 65 encodings; randomness not applied", seen)
+	}
+}

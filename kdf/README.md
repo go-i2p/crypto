@@ -19,10 +19,14 @@ info, n) with a 32-byte salt, so callers pass the arguments in that order:
 
     keydata, err := kdf.StandardHKDF(salt, ikm, []byte("SymmetricRatchet"), 64)
 
-The spec-mandated info strings ("KDFDHRatchetStep", "TagAndKeyGenKeys",
-"STInitialization", "SessionTagKeyGen", "SymmetricRatchet", "XDHRatchetTagSet",
-"SessionReplyTags", "AttachPayloadKDF", ...) are supplied by the callers that
-implement those protocols; see crypto/ratchet and go-noise.
+The ECIES spec mandates exactly these info strings: "KDFDHRatchetStep",
+"TagAndKeyGenKeys", "STInitialization", "SessionTagKeyGen", "SymmetricRatchet",
+"XDHRatchetTagSet" and "SessionReplyTags" (the last one for the New Session
+Reply, which crypto/ratchet does not implement yet). Tunnel-Creation-ECIES adds
+"SMTunnelLayerKey", "SMTunnelReplyKey", "TunnelLayerIVKey" and
+"RGarlicKeyAndTag". Callers that implement those protocols supply them; see
+crypto/ratchet and go-noise. Use the spec's exact strings - there is no
+"AttachPayloadKDF" in any I2P specification.
 
 Destination blinding has its own conformant KDF, [DeriveBlindingFactorI2P], in
 blinding.go.

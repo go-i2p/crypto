@@ -3,6 +3,7 @@ package ratchet
 import (
 	"github.com/go-i2p/crypto/hkdf"
 	"github.com/go-i2p/crypto/kdf"
+	"github.com/samber/oops"
 )
 
 // DH_INITIALIZE implements the spec's DH ratchet initialization step.
@@ -38,6 +39,40 @@ func DH_INITIALIZEFull(rootKey [ChainKeySize]byte, k [32]byte) (nextRootKey [32]
 	copy(nextRootKey[:], keydata[0:32])
 	copy(ck[:], keydata[32:64])
 	return nextRootKey, ck, nil
+}
+
+// Split implements the Noise Split() function that the I2P ECIES spec requires
+// after the final handshake KDF (section 4a, DH Ratchet):
+//
+//	"After the final handshake KDF on bound sessions, Bob and Alice must run
+//	the Noise Split() function on the resulting CipherState to create
+//	independent symmetric and tag chain keys for inbound and outbound
+//	sessions."
+//
+// Noise (protocol.pdf section 5.2.3) defines Split on the SymmetricState
+// chaining key:
+//
+//	temp_hk = HKDF(ck, zerolen, "", 64)
+//	temp_k1 = temp_hk[0:32]
+//	temp_k2 = temp_hk[32:64]
+//
+// The two outputs seed the two directions, so that inbound and outbound
+// messages never share a key chain, a tag chain, or a nonce counter. The
+// initiator uses temp_k1 to send and temp_k2 to receive; the responder uses
+// them the other way round (see Role).
+//
+// The input chain key is treated as spent: Noise zeroes ck after Split, and
+// callers must not derive anything else from it.
+func Split(chainKey [ChainKeySize]byte) (k1, k2 [ChainKeySize]byte, err error) {
+	keydata, err := kdf.StandardHKDF(chainKey[:], nil, nil, 64)
+	if err != nil {
+		return k1, k2, oops.Wrapf(ErrKeyDerivationFailed, "Noise Split failed: %w", err)
+	}
+	copy(k1[:], keydata[0:32])
+	copy(k2[:], keydata[32:64])
+	// Zero the expanded key material; the caller no longer needs ck.
+	clear(keydata)
+	return k1, k2, nil
 }
 
 // RatchetSymmetricKey derives the next message key and new chain key for

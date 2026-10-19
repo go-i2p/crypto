@@ -1,6 +1,5 @@
 RELEASE_TAG=0.0.1
 RELEASE_VERSION=${RELEASE_TAG}
-RELEASE_DESCRIPTION=`cat PASTA.md`
 REPO := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 CGO_ENABLED=0
 export DEBUG_I2P=debug
@@ -11,49 +10,41 @@ endif
 
 GO ?= $(shell which go)
 
-ifeq ($(GOOS),windows)
-	EXE := $(REPO)/go-i2p.exe
-else
-	EXE := $(REPO)/go-i2p
-endif
-
 #check for gofumpt
 check_gofumpt:
 	@which gofumpt > /dev/null 2>&1 || (echo "gofumpt is required but not installed. Please install it from https://github.com/mvdan/gofumpt."; exit 1)
 
-build: clean $(EXE)
+# This module is a library: there is no main package, so "build" compiles all
+# packages rather than linking a binary.
+build:
+	$(GO) build ./...
 
-$(EXE):
-	$(GO) build --tags netgo,osusergo -v -o $(EXE)
+test:
+	$(GO) test ./...
 
-# Include test definitions
--include doc/tests/*.mk
+test-race:
+	$(GO) test -race -coverprofile=coverage.out ./...
 
-test: 		   test-string-all \
-               test-mapping-all \
-               test-crypto-aes-all \
-               test-crypto-dsa-all \
-               test-crypto-ed25519-all \
-               test-crypto-elg-all \
-               test-crypto-hmac-all \
-               test-i2np-header-all \
-               test-key-cert-all \
-               test-keys-cert-all \
-               test-lease-set-all \
-               test-noise-transport-all \
-               test-router-address-all \
-               test-router-info-all \
-               test-su3-all \
-               test-tunnel-all \
-               test-base32-encode-decode-not-mangled \
-               test-base64-encode-decode-not-mangled \
-               test-lease-all \
-               test-date-time-from-milliseconds
+cover: test-race
+	$(GO) tool cover -func=coverage.out
+
+vet:
+	$(GO) vet ./...
+
+lint: check_gofumpt
+	@if [ -n "$$(gofumpt -l .)" ]; then \
+		echo "Code is not formatted with gofumpt:"; \
+		gofumpt -l .; \
+		exit 1; \
+	fi
+
+.PHONY: build test test-race cover vet lint fmt clean info release godoc check_gofumpt
 
 clean:
-	$(GO) clean -v
+	$(GO) clean
+	rm -f coverage.out
 
-fmt:
+fmt: check_gofumpt
 	find . -name '*.go' -exec gofumpt -w {} \;
 
 info:
@@ -62,7 +53,7 @@ info:
 	echo "REPO: ${REPO}"
 
 release:
-	github-release release -u go-i2p -r go-i2p -n "${RELEASE_VERSION}" -t "${RELEASE_TAG}" -d "${RELEASE_DESCRIPTION}" -p
+	github-release release -u go-i2p -r crypto -n "${RELEASE_VERSION}" -t "${RELEASE_TAG}" -p
 
 godoc:
 	./callgraph.sh

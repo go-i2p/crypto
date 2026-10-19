@@ -42,8 +42,11 @@ from the simplest idea to the full scheme:
    messages flow, so compromising one key does not expose past messages.
 
 5. **The full scheme.** The `ecies` package ties these together into
-   ECIES-X25519-AEAD-Ratchet, the current I2P encryption standard. The
-   `tunnel` package applies it to I2P tunnel messages.
+   ECIES-X25519-AEAD-Ratchet, the current I2P *end-to-end* (destination-to-
+   destination) encryption standard. Note that this is not tunnel encryption:
+   I2P tunnel layer encryption is AES only, per the Tunnel-Creation-ECIES
+   specification, and the `tunnel` package's ECIES option is experimental and
+   not interoperable.
 
 Start with the package docs on [pkg.go.dev](https://pkg.go.dev/github.com/go-i2p/crypto)
 for details on each piece.
@@ -213,8 +216,10 @@ func main() {
     rand.Read(key)
     rand.Read(iv)
     
-    // Create symmetric key (always use the validating constructor; direct
-    // struct literals and zero values are rejected by the aes package docs)
+    // Create symmetric key (always use the validating constructor; it rejects
+    // wrong-length keys and IVs and copies the input. Note it validates sizes
+    // only - an all-zero key passed via a struct literal is still accepted, so
+    // do not construct AESSymmetricKey that way)
     symmetricKey, _ := aes.NewAES256Key(key, iv)
     defer symmetricKey.Zero()
     
@@ -381,6 +386,11 @@ func main() {
 
 - **Asymmetric Encryption**
   - ECIES-X25519-AEAD-Ratchet with a unified Session API — the modern standard
+    for end-to-end encryption. Coverage is partial: the one-time (§1d) format
+    and the data-phase KDFs are implemented, the New Session Reply (§1g),
+    payload block format (§5) and full bound-session handshake are not, so a
+    session created here will not interoperate with a Java router. See the
+    `ecies` and `ratchet` package docs.
   - Curve25519 (X25519) key agreement
   - ElGamal — legacy, kept for compatibility with older routers
 

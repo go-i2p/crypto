@@ -8,20 +8,33 @@ import (
 
 // AESSymmetricKey represents a symmetric key for AES encryption/decryption.
 //
-// CRITICAL: Never create AESSymmetricKey using zero-value construction or direct struct literals.
-// Zero-value construction results in nil slices which:
-//   - Cause NewEncrypter() or NewDecrypter() to return an error (invalid key/IV size)
-//   - Violate AES security requirements
-//   - Cannot be detected until runtime
+// CRITICAL: Always create it with [NewAESKey] or one of the size-specific
+// variants, never with a struct literal or zero value.
 //
-// ALWAYS use NewAESKey() or variant constructors for safe construction.
+// What the constructors actually enforce, and what they do not:
 //
-// WRONG - Returns an error (no validation):
+//   - Enforced: Key must be 16, 24 or 32 bytes and IV must be exactly 16
+//     bytes. A zero-value AESSymmetricKey has nil slices, so it fails this
+//     check and NewEncrypter()/NewDecrypter() return ErrInvalidKeySize or
+//     ErrInvalidIVSize.
+//   - NOT enforced: key entropy. The constructors validate lengths only, so an
+//     all-zero (or otherwise weak) key of the correct length is accepted and
+//     encrypts successfully. Do not rely on the type to catch weak key
+//     material - generate it with crypto/rand and pass it to the constructor.
+//     (Contrast [NewAESKey] with the hmac package, whose NewHMACKey does reject
+//     an all-zero key.)
 //
-//	var key AESSymmetricKey              // nil slices - NewEncrypter/NewDecrypter error!
-//	key := AESSymmetricKey{...}          // no validation
+// The constructors also copy their inputs, so later changes to the caller's
+// slices cannot silently alter a key already handed out. A struct literal skips
+// that copy, leaving the key aliased to whatever buffer the caller built it
+// from, which is the main reason to avoid it.
 //
-// CORRECT - Use constructor:
+// WRONG:
+//
+//	var key AESSymmetricKey              // nil slices - NewEncrypter/NewDecrypter error
+//	key := &AESSymmetricKey{Key: k, IV: iv} // no length check, no defensive copy
+//
+// CORRECT:
 //
 //	key, err := aes.NewAESKey(keyBytes, ivBytes)
 //	if err != nil {

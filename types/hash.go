@@ -19,6 +19,15 @@ type KeyDeriver interface {
 	//   input.
 	// - keyLen: Desired length of the derived key in bytes
 	// Returns the derived key bytes or an error if derivation fails.
+	//
+	// Parameter order is RFC 5869's (ikm first). The I2P ECIES spec writes its
+	// HKDF as HKDF(salt, ikm, info, n) - salt first - and kdf.StandardHKDF
+	// follows the spec. The two therefore take the first two arguments in
+	// OPPOSITE order, and swapping them silently produces valid-looking but
+	// wrong key material. When porting a spec KDF, either use
+	// kdf.StandardHKDF, or pass chainKey as the SECOND argument here, e.g.
+	// Derive(nil, chainKey[:], info, 64) for the spec's
+	// HKDF(salt=chainKey, ikm=ZEROLEN, info, 64).
 	Derive(ikm, salt, info []byte, keyLen int) ([]byte, error)
 
 	// DeriveDefault derives a key using default parameters for common use

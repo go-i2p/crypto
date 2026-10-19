@@ -8,27 +8,49 @@ Package tunnel implements I2P-specific tunnel cryptography for secure data
 transmission.
 
 This package provides cryptographic primitives for I2P tunnel layer encryption
-and decryption, supporting both modern ECIES-X25519 encryption and legacy
-AES-256-CBC encryption schemes. The interface-based design enables seamless
-switching between encryption types based on router capabilities and network
-compatibility requirements.
+and decryption. AES-256-CBC is the scheme defined by the I2P specifications and
+the one that interoperates with real routers. An ECIES-X25519 option is
+included for experimentation, but it is not part of any tunnel specification
+and will not interoperate; see "Encryption Types" below.
 
 # Encryption Types
 
-Modern ECIES-X25519 (Type 1) - RECOMMENDED:
-
-    - X25519 elliptic curve Diffie-Hellman key agreement
-    - ChaCha20-Poly1305 authenticated encryption with associated data (AEAD)
-    - 218-byte tunnel records (78% smaller than AES)
-    - Significant bandwidth savings and improved security
-    - Default for new tunnel builds with I2P router version 0.9.51+
-
-Legacy AES-256-CBC (Type 0) - COMPATIBILITY ONLY:
+Legacy AES-256-CBC (Type 0) - THE ONLY SPEC-DEFINED SCHEME:
 
     - Dual-layer AES-256 encryption with separate layer and IV keys
     - 1028-byte fixed-size tunnel messages (16-byte IV + 1008-byte payload)
     - CBC mode encryption with IV-based randomization
-    - Required for backward compatibility with older I2P routers
+    - Required for backward compatibility with older I2P routers, and required
+      for compatibility with all current ones
+
+Experimental ECIES-X25519 (Type 1) - NOT INTEROPERABLE:
+
+    - X25519 elliptic curve Diffie-Hellman key agreement
+    - ChaCha20-Poly1305 authenticated encryption with associated data (AEAD)
+    - Variable-length records: 96 bytes of overhead plus the plaintext
+    - Wraps the ecies package's end-to-end one-time format
+
+    Do not use this for real tunnels. Tunnel-Creation-ECIES states that "the
+    only layer encryption currently supported is type 0, which is AES", and
+    that adding types such as ChaCha20 "is a topic for additional research, and
+    is not currently a part of this specification". Its layer-encryption-type
+    table lists "1 for future (ChaCha?)" as an open question, not a format. The
+    ECIES-X25519-AEAD-Ratchet spec (Proposal 144) is an end-to-end,
+    destination-to-destination protocol and does not define tunnel layer
+    encryption at all.
+
+    Two claims previously made here were wrong and are corrected:
+
+      - "218-byte tunnel records (78% smaller than AES)". 218 bytes is the
+        encrypted size of a *short tunnel build request record* in
+        Tunnel-Creation-ECIES (154-byte plaintext, Noise_N_25519_ChaChaPoly_SHA256) -
+        a different construct from layer encryption, and the 0.9.51 version
+        requirement belongs to those build records too. Actual output of this
+        encryptor: 1-byte payload -> 97 bytes, 222 -> 318, 1008 -> 1104 bytes.
+        A full tunnel payload therefore produces a record *larger* than AES,
+        not 78% smaller.
+      - Variable-length records also defeat the fixed-size tunnel layout, whose
+        purpose is to stop intermediate hops from observing payload sizes.
 
 Package tunnel provides I2P tunnel encryption implementations. This file
 implements ECIES-X25519 tunnel encryption as a wrapper around the ecies package.
@@ -212,9 +234,15 @@ type ECIESEncryptor struct {
 ```
 
 ECIESEncryptor implements TunnelEncryptor using ECIES-X25519 encryption. This is
-a thin wrapper around the existing ecies package functionality. It provides
-tunnel-level encryption for I2P's modern encryption scheme that replaces legacy
-AES-256-CBC encryption.
+a thin wrapper around the existing ecies package functionality.
+
+EXPERIMENTAL - NOT INTEROPERABLE. No I2P specification defines this as a tunnel
+layer encryption scheme. The ecies package's one-time format is an end-to-end
+(destination-to-destination) construct; Tunnel-Creation-ECIES, which does govern
+tunnel layer encryption, supports only AES (type 0) and explicitly leaves any
+ChaCha20-based type out of scope. Records produced here are variable length,
+which also conflicts with the fixed-size tunnel record layout. Use AESEncryptor
+for real tunnels.
 
 #### func  NewECIESEncryptor
 
@@ -249,11 +277,14 @@ Encrypt encrypts the plaintext using ECIES-X25519 scheme. This method wraps
 ecies.EncryptECIESX25519() and delegates all cryptographic operations to the
 existing ecies package.
 
-The encryption follows I2P Proposal 144 specification: - Generates ephemeral
-X25519 key pair - Performs X25519 key agreement with recipient's public key -
-Derives encryption key using HKDF-SHA256 - Encrypts using ChaCha20-Poly1305 AEAD
+The encryption uses the ecies package's one-time (end-to-end) format: - Generates
+ephemeral X25519 key pair - Performs X25519 key agreement with recipient's public
+key - Derives encryption key with the Noise-based key schedule (see ecies) -
+Encrypts using ChaCha20-Poly1305 AEAD
 
-Returns ciphertext in format: [ephemeral_pubkey][nonce][aead_ciphertext]
+Returns ciphertext in the one-time format: [Elligator2-encoded ephemeral public
+key 32][flags section 48][payload section N+16] - 96 bytes of overhead plus the
+plaintext, so the output is variable length and is not a 1028-byte tunnel record.
 
 #### func (*ECIESEncryptor) Type
 
@@ -283,21 +314,21 @@ type TunnelEncryptionType uint8
 ```
 
 TunnelEncryptionType distinguishes between different tunnel encryption schemes.
-I2P supports multiple encryption types for backward compatibility and gradual
-migration. New tunnels should use ECIES-X25519 (type 1) by default, with
-AES-256-CBC (type 0) available for legacy router interoperability during the
-transition period.
+I2P's specifications define only AES (type 0) for tunnel layer encryption. Use
+TunnelEncryptionAES for anything that has to talk to a real router;
+TunnelEncryptionECIES is experimental and not interoperable.
 
 ```go
 const (
-	// TunnelEncryptionAES represents the legacy AES-256-CBC encryption scheme.
-	// This uses dual-layer AES encryption with separate layer and IV keys.
+	// TunnelEncryptionAES is the AES-256-CBC tunnel layer encryption scheme,
+	// and the only layer encryption type defined by the I2P specifications.
 	// Tunnel records are 1028 bytes with 16-byte IV and 1008-byte encrypted payload.
 	TunnelEncryptionAES TunnelEncryptionType = 0
 
-	// TunnelEncryptionECIES represents the modern ECIES-X25519 encryption scheme.
-	// This uses X25519 key agreement with ChaCha20-Poly1305 AEAD encryption.
-	// Tunnel records are 218 bytes (78% smaller than AES), providing significant bandwidth savings.
+	// TunnelEncryptionECIES is EXPERIMENTAL and NOT interoperable. No I2P
+	// specification defines an ECIES/ChaCha20 tunnel layer encryption type.
+	// Records are variable length: 96 bytes of overhead plus the plaintext
+	// (e.g. a 1008-byte payload produces a 1104-byte record, larger than AES).
 	TunnelEncryptionECIES TunnelEncryptionType = 1
 )
 ```
@@ -333,11 +364,10 @@ type TunnelEncryptor interface {
 ```
 
 TunnelEncryptor defines the interface for tunnel-level encryption operations.
-This abstraction supports multiple encryption schemes (AES-256-CBC and
-ECIES-X25519) allowing I2P routers to handle both legacy and modern tunnel
-encryption formats. Implementations must provide secure encryption/decryption
-with proper error handling and follow I2P protocol specifications for network
-compatibility.
+The abstraction has two implementations: AES-256-CBC, the scheme the I2P
+specifications define for tunnel layer encryption, and ECIES-X25519, which is
+experimental and not interoperable (see TunnelEncryptionECIES). Only the AES
+implementation follows an I2P protocol specification.
 
 #### func  NewTunnelEncryptor
 

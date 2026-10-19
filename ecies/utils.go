@@ -77,17 +77,14 @@ func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
 	}
 
 	// Generate an ephemeral X25519 key pair whose public key is
-	// Elligator2-representable (spec section 2). GenerateKeyPair returns
-	// (publicKey, privateKey, error).
-	aepk, aesk, err := elligator2.GenerateKeyPair()
+	// Elligator2-representable (spec section 2), and get the wire encoding in
+	// the same pass. Spec section 2a Notes: "The generator does the ENCODE_ELG2()
+	// function to determine suitability. Therefore, the generator should store the
+	// result of ENCODE_ELG2() so it does not have to be calculated again."
+	// GenerateEncodedKeyPair returns (publicKey, privateKey, encoded, error).
+	aepk, aesk, encodedAepk, err := elligator2.GenerateEncodedKeyPair()
 	if err != nil {
 		return nil, oops.Wrapf(ErrKeyGenerationFailed, "failed to generate Elligator2-representable ephemeral key: %w", err)
-	}
-
-	// Elligator2-encode the ephemeral public key for the wire.
-	encodedAepk, err := elligator2.Encode(aepk)
-	if err != nil {
-		return nil, oops.Wrapf(ErrNotElligator2Representable, "ephemeral public key not Elligator2-representable: %w", err)
 	}
 
 	// Run the Noise IK + es key schedule.
@@ -104,14 +101,24 @@ func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
 
 	// MixHash with the flags ciphertext.
 	//
-	// Spec section 1f labels this MixHash under the "s" message pattern and the
-	// no-static-key path says only "ad = h from Flags/Static key section", which
-	// can read as if the mix should be skipped. It is not skipped: the flags
-	// section is a complete Noise transport message (encrypted with k at n = 0),
-	// and the Noise framework this spec is built on mixes every transport
-	// message's ciphertext into h. The spec's own use of n = 1 for the payload -
-	// the counter advance for a second transport message - confirms the payload
-	// is that second message, so h must already include the flags ciphertext.
+	// Spec section 1f labels this MixHash under the "s" message pattern, and the
+	// no-static-key path says only "ad = h from Flags/Static key section", so the
+	// text is ambiguous about whether the mix happens when there is no static key
+	// to send. It is done here because the flags section is a complete Noise
+	// transport message (encrypted with k at n = 0) and Noise mixes every
+	// transport message's ciphertext into h. The spec's own use of n = 1 for the
+	// payload - the counter advance for a second transport message - is the
+	// strongest available evidence that the payload is that second message, so h
+	// must already include the flags ciphertext.
+	//
+	// Note that the "+hs2" in the protocol name does NOT settle this: section 1f
+	// says it indicates "that MixHash() is called before the second message to
+	// mix in the tag value", and the tag mix is the MixHash(tag) step in the New
+	// Session Reply path, not this one.
+	//
+	// TODO(spec): confirm against a reference implementation (Java ECIESOneTime /
+	// i2pd) and add a known-answer vector for the one-time format. If the mix is
+	// wrong, every one-time message fails to interoperate.
 	h = sha256.Sum256(append(h[:], flagsCt...))
 
 	// Encrypt the payload with nonce 1.

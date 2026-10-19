@@ -2,7 +2,9 @@ package kdf
 
 // DEPRECATED: This file previously contained hardcoded test vectors for
 // "SessionReplyTags" and "AttachPayloadKDF" that were based on incorrect
-// reference implementations.
+// reference implementations. "SessionReplyTags" is a real ECIES spec info
+// string (see kdf.go); "AttachPayloadKDF" is not, and appears in no I2P
+// specification - it was invented here and must not be used.
 //
 // REPLACED BY: i2p_vectors_test.go
 //

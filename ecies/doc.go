@@ -27,10 +27,31 @@
 // different ECIES variant.)
 //
 // The one-shot EncryptECIESX25519/DecryptECIESX25519 functions implement the
-// spec's one-time (IK) pattern exactly: the ephemeral key is
+// spec's one-time (IK) pattern: the ephemeral key is
 // Elligator2-encoded for the wire, the key is derived with the spec's
 // Noise-based chain, and the ciphertext uses the spec's two-section layout.
 // See the "The two main operations" section below for the wire format.
+//
+// One thing to know before using them on real traffic: these functions encrypt
+// and decrypt opaque byte buffers. Section 1d requires the one-time *payload*
+// to contain a DateTime block and usually Garlic Clove blocks, and section 5
+// defines that block format (1-byte type, 2-byte big-endian length) and its
+// ordering rules. This package does not build, parse or validate payload
+// blocks, so a caller composing an I2P message must format the payload itself.
+//
+// # Specification coverage
+//
+// Implemented: the one-time format and its key schedule (sections 1d and the
+// no-static-key path of 1f), the Elligator2 encoding of section 2a, and the
+// AEAD rules of section 3.
+//
+// Not implemented: the New Session message with a static key (sections 1a and
+// 1b), the New Session Reply (section 1g) and its SessionReplyTags KDF, the
+// Existing Session message framing of section 1h (the ratchet package supplies
+// the session tag, per-message key and nonce that 1h requires, but no message
+// framing), and the payload block format of section 5. The scheme is therefore
+// not a complete replacement for ElGamal/AES+SessionTags on its own; see the
+// ratchet package docs for the data-phase gaps.
 //
 // See the official specification for the full protocol:
 // https://i2p.net/en/docs/specs/ecies/
@@ -59,7 +80,10 @@
 // For long-lived sessions that need forward secrecy, see [ratchet.Session],
 // which layers the three ratchets (session tag, symmetric key, and DH ratchet)
 // on top of the same primitives and implements the spec's data-phase KDFs
-// exactly. This package previously exposed a SessionState convenience type
+// exactly, including the mandatory Noise Split() that keeps the inbound and
+// outbound chains independent. Note that a Session created here is still not a
+// complete data phase: the New Session Reply handshake that seeds it, and the
+// payload block format, are not implemented. This package previously exposed a SessionState convenience type
 // whose static-static initial key derivation used non-spec KDF parameters; it
 // was not a spec-mandated wire format and has been removed. Use
 // [ratchet.Session] for ratcheted sessions.

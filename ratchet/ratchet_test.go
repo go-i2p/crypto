@@ -10,6 +10,7 @@ package ratchet
 
 import (
 	"bytes"
+	"encoding/hex"
 	"testing"
 
 	"github.com/go-i2p/crypto/kdf"
@@ -523,19 +524,26 @@ func TestSessionTagsetLimit(t *testing.T) {
 	}
 }
 
-// TestSessionTagAndKeyGenKeys verifies that NewSessionFromECIES splits the DH
-// INITIALIZATION chain key via the spec's TagAndKeyGenKeys KDF into the
-// session tag chain key and the symmetric key chain key, and that the
-// resulting ratchets match an independent derivation.
+// TestSessionTagAndKeyGenKeys verifies that NewSessionFromECIES runs the
+// spec's mandatory Noise Split() on the DH INITIALIZATION chain key and then
+// splits each direction's key via the TagAndKeyGenKeys KDF into the session tag
+// chain key and the symmetric key chain key, and that the resulting ratchets
+// match an independent derivation.
 func TestSessionTagAndKeyGenKeys(t *testing.T) {
 	var sharedSecret, ourPriv, theirPub [32]byte
 	rand.Read(sharedSecret[:])
 	rand.Read(ourPriv[:])
 	rand.Read(theirPub[:])
 
-	// Independent derivation of the expected chain keys.
-	var zeroRoot [ChainKeySize]byte
-	nextRootKey, ck, err := DH_INITIALIZEFull(zeroRoot, sharedSecret)
+	// Independent derivation of the expected chain keys: the spec's mandatory
+	// Noise Split() on the handshake chaining key, then DH_INITIALIZE for the
+	// initiator's outbound direction, then TagAndKeyGenKeys.
+	rootKey := sharedSecret
+	k1, _, err := Split(rootKey)
+	if err != nil {
+		t.Fatalf("Split failed: %v", err)
+	}
+	nextRootKey, ck, err := DH_INITIALIZEFull(rootKey, k1)
 	if err != nil {
 		t.Fatalf("DH_INITIALIZEFull failed: %v", err)
 	}
@@ -592,6 +600,77 @@ func TestSessionTagAndKeyGenKeys(t *testing.T) {
 	}
 }
 
+// TestSessionDirectionsIndependent is a regression test for the spec's
+// mandatory Noise Split() (section 4a: "Bob and Alice must run the Noise
+// Split() function on the resulting CipherState to create independent symmetric
+// and tag chain keys for inbound and outbound sessions").
+//
+// An earlier implementation assigned the same chain key to both directions, so
+// outbound and inbound messages drew tags, message keys and nonces from a single
+// shared chain. Two effects of that bug were observable: a session's first
+// outbound tag equalled the first tag it expected to receive (so the two
+// directions could not be told apart), and two peers created from the same key
+// material with the same role produced identical streams.
+func TestSessionDirectionsIndependent(t *testing.T) {
+	var sharedSecret, ourPriv, theirPub [32]byte
+	rand.Read(sharedSecret[:])
+	rand.Read(ourPriv[:])
+	rand.Read(theirPub[:])
+
+	session, err := NewSessionFromECIES(sharedSecret, ourPriv, theirPub)
+	if err != nil {
+		t.Fatalf("failed to create session: %v", err)
+	}
+	defer session.Zero()
+
+	outTag, err := session.GetNextTag()
+	if err != nil {
+		t.Fatalf("GetNextTag failed: %v", err)
+	}
+	inTag, err := session.GetReceivingNextTag()
+	if err != nil {
+		t.Fatalf("GetReceivingNextTag failed: %v", err)
+	}
+	if outTag == inTag {
+		t.Errorf("outbound and inbound tag chains are identical (%x) - Split() missing", outTag)
+	}
+
+	// The two directions must also derive different message keys. Each
+	// direction has its own counter starting at zero, so the nonces coincide by
+	// design - what matters is that the keys differ, which is what makes the
+	// shared-counter bug harmless to fix rather than a wire-format change.
+	outKey, _, _, err := session.EncryptMessage([]byte("m"))
+	if err != nil {
+		t.Fatalf("EncryptMessage failed: %v", err)
+	}
+	inKey, _, err := session.DecryptMessage(inTag)
+	if err != nil {
+		t.Fatalf("DecryptMessage failed: %v", err)
+	}
+	if outKey == inKey {
+		t.Error("outbound and inbound derived the same message key - chains are not independent")
+	}
+
+	// A peer created with the opposite role must send on this session's inbound
+	// chain and receive on its outbound chain, so the two can talk.
+	peer, err := NewSessionFromECIESWithRole(sharedSecret, theirPub, ourPriv, RoleResponder)
+	if err != nil {
+		t.Fatalf("failed to create peer session: %v", err)
+	}
+	defer peer.Zero()
+
+	peerFirstTag, err := peer.GetNextTag()
+	if err != nil {
+		t.Fatalf("peer GetNextTag failed: %v", err)
+	}
+	if peerFirstTag != inTag {
+		t.Errorf("peer outbound tag %x does not match our inbound tag %x", peerFirstTag, inTag)
+	}
+	if peerFirstTag == outTag {
+		t.Error("peer outbound tag collides with our outbound tag - roles not separated")
+	}
+}
+
 // TestSessionOutOfOrderDelivery is a regression test for the receiver's
 // look-ahead window. The tag and symmetric key ratchets are synchronized, so a
 // tag matched at offset i must yield the message key derived at that same
@@ -626,7 +705,10 @@ func TestSessionOutOfOrderDelivery(t *testing.T) {
 		sent[i] = msg{tag: tag, key: k, nonce: nonce}
 	}
 
-	receiver, err := NewSessionFromECIES(ss, theirPub, ourPriv)
+	// The receiver is the responder: with the mandatory Noise Split() the two
+	// directions use different halves of the split output, so a peer only sees
+	// the sender's outbound chain if it is given the opposite role.
+	receiver, err := NewSessionFromECIESWithRole(ss, theirPub, ourPriv, RoleResponder)
 	if err != nil {
 		t.Fatalf("receiver: %v", err)
 	}
@@ -662,5 +744,39 @@ func TestSessionOutOfOrderDelivery(t *testing.T) {
 	// A tag outside the window must be rejected.
 	if _, _, err := receiver.DecryptMessage([SessionTagSize]byte{1, 2, 3, 4, 5, 6, 7, 8}); err == nil {
 		t.Error("unknown tag should be rejected")
+	}
+}
+
+// TestSplitKnownAnswer checks the Noise Split() implementation against vectors
+// computed independently from the Noise specification's definition:
+//
+//	temp_hk = HKDF(ck, zerolen, "", 64)
+//	temp_k1 = temp_hk[0:32]
+//	temp_k2 = temp_hk[32:64]
+//
+// with ck = 0x01..0x20. The I2P ECIES spec imports this function by name
+// (section 4a: "must run the Noise Split() function"), so the derivation must
+// match Noise exactly rather than merely be self-consistent.
+func TestSplitKnownAnswer(t *testing.T) {
+	var ck [ChainKeySize]byte
+	for i := range ck {
+		ck[i] = byte(i + 1)
+	}
+
+	k1, k2, err := Split(ck)
+	if err != nil {
+		t.Fatalf("Split failed: %v", err)
+	}
+
+	wantK1 := "fc5eccc8a17f5575645b191c4123bcec6defa32c721a6c5009f4c251bc39c309"
+	wantK2 := "46685175eb3b43cc7858098eaed45a5c9b6c967cca8c26dbf23f98bbeab77538"
+	if got := hex.EncodeToString(k1[:]); got != wantK1 {
+		t.Errorf("Split k1 mismatch:\n got  %s\n want %s", got, wantK1)
+	}
+	if got := hex.EncodeToString(k2[:]); got != wantK2 {
+		t.Errorf("Split k2 mismatch:\n got  %s\n want %s", got, wantK2)
+	}
+	if k1 == k2 {
+		t.Error("Split returned identical keys for the two directions")
 	}
 }

@@ -62,11 +62,37 @@ The Session type ties the three ratchets together and enforces the spec's
 data-phase rules: message numbers 0..65535 inclusive per tag set (after which a
 DH ratchet step is required, see ErrTagsetExhausted) and a receiver lookahead
 window (default 32, maximum 128) for out-of-order session tags.
-NewSessionFromECIES creates a Session from raw ECIES key material (three
-[32]byte values). It applies the spec's DH_INITIALIZE and TagAndKeyGenKeys KDFs,
-but its initial seed is not handshake-derived, so the result will not
-interoperate with a Java I2P router; see the function's own documentation for
-the details and scope boundary.
+
+Each direction of traffic keeps its own symmetric ratchet, tag ratchet, message
+counter and lookahead window. That separation is mandated by spec section 4a:
+"After the final handshake KDF on bound sessions, Bob and Alice must run the
+Noise Split() function on the resulting CipherState to create independent
+symmetric and tag chain keys for inbound and outbound sessions." Split()
+implements it, and NewSessionFromECIESWithRole applies it.
+
+Because both peers run the same split over the same key, the two endpoints of a
+session must be given opposite roles: the initiator sends on the first Split key
+and receives on the second, the responder does the reverse. When a single program
+creates both sides (tests, in-process tunnels), construct one with RoleInitiator
+and the other with RoleResponder; two sessions created with the same role are the
+same session and their outbound chains collide. NewSessionFromECIES is the
+initiator-side convenience wrapper.
+
+A session created from raw ECIES key material applies the spec's Split,
+DH_INITIALIZE and TagAndKeyGenKeys KDFs, but its initial seed is not
+handshake-derived, so the result will not interoperate with a Java I2P router;
+see the function's own documentation for the details and scope boundary.
+
+# What is not implemented
+
+The full bound-session protocol is out of scope for this package: the New Session
+Reply handshake (spec section 1g) and its SessionReplyTags KDF, the payload block
+format and ordering rules (section 5), the NextKey/ACK blocks, and the key /
+tag-set ID progression of section 4a (tag set ID = 1 + Alice's key ID + Bob's key
+ID, maximum key ID 32767) are all absent. PerformDHRatchet advances only the
+outbound direction; the inbound half of a NextKey exchange is
+Session.PerformReceivingDHRatchet, but nothing here parses or emits the NextKey
+block that drives it.
 
 ## Usage
 
@@ -150,6 +176,32 @@ DH_INITIALIZEFull implements the full spec DH INITIALIZATION KDF, returning both
 the next root key (keydata[0:32]) and the chain key (keydata[32:64]).
 
     keydata = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)
+
+#### func  Split
+
+```go
+func Split(chainKey [ChainKeySize]byte) (k1, k2 [ChainKeySize]byte, err error)
+```
+Split implements the Noise Split() function that the I2P ECIES spec requires
+after the final handshake KDF (section 4a, DH Ratchet):
+
+    "After the final handshake KDF on bound sessions, Bob and Alice must run
+    the Noise Split() function on the resulting CipherState to create
+    independent symmetric and tag chain keys for inbound and outbound
+    sessions."
+
+Noise (protocol.pdf section 5.2.3) defines Split on the SymmetricState chaining
+key:
+
+    temp_hk = HKDF(ck, zerolen, "", 64)
+    temp_k1 = temp_hk[0:32]
+    temp_k2 = temp_hk[32:64]
+
+The two outputs seed the two directions, so that inbound and outbound messages
+never share a key chain, a tag chain, or a nonce counter. The initiator uses
+temp_k1 to send and temp_k2 to receive; the responder uses them the other way
+round (see Role). The input chain key is treated as spent: Noise zeroes ck after
+Split, and callers must not derive anything else from it.
 
 #### func  DataNonce
 
@@ -279,6 +331,22 @@ type HandshakeResult struct {
 
 HandshakeResult contains the output of an ECIES key exchange handshake
 
+#### type Role
+
+```go
+type Role uint8
+```
+
+Role identifies which side of a session a local endpoint is, so that the two
+directions get the correct halves of the Noise Split() output.
+
+The spec assigns the two Split() keys by handshake role (section 4a: the split
+creates "independent symmetric and tag chain keys for inbound and outbound
+sessions"; Noise orders them so the handshake initiator uses the first key for
+sending and the responder uses the second). Because the two peers must disagree
+on the role, both endpoints cannot use the zero value: construct the responder
+with RoleResponder.
+
 #### type Session
 
 ```go
@@ -296,13 +364,14 @@ The Session handles:
     - Symmetric ratchet for deriving message encryption keys
     - Tag ratchet for session tag generation
 
-All ratchets are initialized from the same root key derived from ECIES shared
-secret.
-
-Per the I2P ECIES spec (section 4), the DH ratchet is bidirectional: each
-direction maintains its own root key, and after each DH ratchet step the
-resulting chain key is split via the TagAndKeyGenKeys KDF into a session tag
-chain key and a symmetric message key chain key.
+Per the I2P ECIES spec (section 4), the ratchets are bidirectional and each
+direction is independent: after the handshake chain key is obtained, the
+mandatory Noise Split() produces two separate CipherState keys, and each
+direction keeps its own symmetric ratchet, tag ratchet, message counter and
+look-ahead window. A ratchet "is for a single direction, and generates a New
+Session tag / message key ratchet chain for that direction. To generate keys for
+both directions, you have to ratchet twice", so each direction also keeps its own
+root key for the next DH ratchet step.
 
 #### func  NewSessionFromECIES
 
@@ -310,18 +379,21 @@ chain key and a symmetric message key chain key.
 func NewSessionFromECIES(sharedSecret, ourPrivKey, theirPubKey [32]byte) (*Session, error)
 ```
 NewSessionFromECIES creates a new session initialized from an ECIES shared
-secret.
+secret, with the local endpoint as the handshake initiator. It is equivalent to
+NewSessionFromECIESWithRole with RoleInitiator; use the latter when both
+endpoints of a session are created in the same process, since the two peers must
+be given opposite roles.
 
-The shared secret plays the role of "k" in the spec's DH INITIALIZATION KDF
-(section 4), with a zero initial root key:
+The shared secret stands in for the handshake chaining key. The spec's mandatory
+Noise Split() produces one key per direction, and each direction is then
+initialized independently through the DH INITIALIZATION KDF (section 4):
 
-    keydata = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)
+    [k1, k2] = Split(rootKey)                    // section 4a, Noise split
+    k        = k1 outbound, k2 inbound (swapped for the responder)
+    keydata  = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)
     nextRootKey = keydata[0:32]
     ck          = keydata[32:64]
-
-The chain key is then split via the TagAndKeyGenKeys KDF:
-
-    keydata = HKDF(salt=ck, ikm=ZEROLEN, info="TagAndKeyGenKeys", 64)
+    keydata  = HKDF(salt=ck, ikm=ZEROLEN, info="TagAndKeyGenKeys", 64)
     sessTag_ck = keydata[0:32]
     symmKey_ck = keydata[32:64]
 
@@ -329,21 +401,21 @@ This is the recommended way to create a session after ECIES key exchange.
 
 # Limitation: the initial keys are not derived per the specification
 
-The spec obtains the initial ratchet inputs from the New Session Reply
-handshake: DH_INITIALIZE takes rootKey = "chainKey from Payload Section" and k =
-"from the New Session KDF or split()", and the two directions get separate tag
-sets ("The chainKey and k from Bob's NSR Payload Section are used as inputs for
-the initial ES DH Ratchets (both directions...)").
+The spec obtains the ratchet inputs from the New Session Reply handshake:
+DH_INITIALIZE takes rootKey = "chainKey from Payload Section" and k = "from the
+New Session KDF or split()", and the two directions get separate tag sets ("The
+chainKey and k from Bob's NSR Payload Section are used as inputs for the initial
+ES DH Ratchets (both directions...)").
 
-This constructor has no handshake state to draw on, so it substitutes a zero
-root key with the caller's shared secret as k, and seeds both directions from
-the same result. The KDFs it then applies (KDFDHRatchetStep, TagAndKeyGenKeys,
-STInitialization, SessionTagKeyGen, SymmetricRatchet) are exactly the spec's,
-but the initial seed is not, so a session created here will not interoperate
-with a Java I2P router. Use it for local ratcheting and tests; for on-network
-sessions the keys must come from a spec-compliant New Session / New Session
-Reply handshake, which this package does not implement (see the ecies package
-docs for the scope boundary).
+This constructor has no handshake payload section to draw on, so it uses the
+caller's shared secret as the payload chain key. The KDFs it applies (Split,
+KDFDHRatchetStep, TagAndKeyGenKeys, STInitialization, SessionTagKeyGen,
+SymmetricRatchet) are exactly the spec's, and the directions are independent as
+section 4a requires, but the initial seed is not handshake-derived, so a session
+created here will not interoperate with a Java I2P router. Use it for local
+ratcheting and tests; for on-network sessions the keys must come from a
+spec-compliant New Session / New Session Reply handshake, which this package does
+not implement (see the ecies package docs for the scope boundary).
 
 Parameters:
 
@@ -369,6 +441,27 @@ Example:
     // and the spec's counter nonce; the caller does the ChaCha20-Poly1305
     // encryption with them.
     messageKey, tag, nonce, _ := session.EncryptMessage(plaintext)
+
+#### func  NewSessionFromECIESWithRole
+
+```go
+func NewSessionFromECIESWithRole(sharedSecret, ourPrivKey, theirPubKey [32]byte, role Role) (*Session, error)
+```
+NewSessionFromECIESWithRole creates a session from an ECIES shared secret and
+assigns the local endpoint a handshake role, which determines which half of the
+Noise Split() output each direction uses.
+
+Spec section 4a makes the split mandatory: "After the final handshake KDF on
+bound sessions, Bob and Alice must run the Noise Split() function on the
+resulting CipherState to create independent symmetric and tag chain keys for
+inbound and outbound sessions." Both peers run the same split on the same chain
+key, so the role is what keeps the two directions from colliding: the initiator
+sends on k1 and receives on k2, the responder sends on k2 and receives on k1.
+
+When a single program creates both endpoints (tests, in-process tunnels), give
+them opposite roles; if both are created with RoleInitiator they are the same
+session and their outbound chains collide. NewSessionFromECIES is the
+initiator-side convenience wrapper.
 
 #### func  NewSessionFromHandshake
 
@@ -471,24 +564,49 @@ Example:
     aead, _ := chacha20poly1305.NewAEAD(messageKey)
     ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce[:])
 
+#### func (*Session) GenerateNewDHKeyPair
+
+```go
+func (s *Session) GenerateNewDHKeyPair() ([32]byte, error)
+```
+GenerateNewDHKeyPair generates a fresh ephemeral key pair for this endpoint's DH
+ratchet and returns the public key to send to the peer in a NextKey block.
+
 #### func (*Session) GetMessageNumber
 
 ```go
 func (s *Session) GetMessageNumber() uint32
 ```
-GetMessageNumber returns the current message number.
+GetMessageNumber returns the current sending-direction message number.
 
 #### func (*Session) GetNextTag
 
 ```go
 func (s *Session) GetNextTag() ([8]byte, error)
 ```
-GetNextTag returns the next expected session tag without advancing the ratchet.
-This is useful for tag validation and session lookup.
+GetNextTag returns the next session tag this endpoint would send, without
+advancing the sending ratchet. This is useful for tag validation and session
+lookup. To inspect the inbound direction, use GetReceivingNextTag.
 
 Returns:
 
     - [8]byte: The next expected session tag
+
+#### func (*Session) GetReceivingMessageNumber
+
+```go
+func (s *Session) GetReceivingMessageNumber() uint32
+```
+GetReceivingMessageNumber returns the current receiving-direction message
+number, i.e. the number of inbound messages consumed in the current tag set.
+
+#### func (*Session) GetReceivingNextTag
+
+```go
+func (s *Session) GetReceivingNextTag() ([8]byte, error)
+```
+GetReceivingNextTag returns the next session tag expected from the peer without
+advancing the receiving ratchet.
 
 #### func (*Session) PerformDHRatchet
 
@@ -506,8 +624,10 @@ output of DH_INITIALIZE is split via the TagAndKeyGenKeys KDF:
     sessTag_ck = keydata[0:32]
     symmKey_ck = keydata[32:64]
 
-The session's symmetric and tag ratchets are reinitialized from the split, and
-the sending-direction root key is advanced.
+The sending direction's symmetric and tag ratchets are reinitialized from the
+split, and the sending-direction root key is advanced. The receiving direction is
+untouched: section 4a says "a ratchet is for a single direction", so the inbound
+half of a NextKey exchange is the separate Session.PerformReceivingDHRatchet call.
 
 Returns:
 
@@ -522,6 +642,31 @@ Example:
     if err != nil {
         return err
     }
+
+#### func (*Session) PerformReceivingDHRatchet
+
+```go
+func (s *Session) PerformReceivingDHRatchet() (chainKey, nextRootKey [32]byte, err error)
+```
+PerformReceivingDHRatchet performs the DH ratchet step for the inbound direction
+after the peer has sent a new key, completing the key exchange. The spec requires
+a ratchet in each direction whenever new keys are exchanged, so a NextKey
+exchange involves two calls: PerformDHRatchet for the outbound direction and this
+one for the inbound direction.
+
+Returns:
+
+    - chainKey: The DH chain key (ck) output of DH_INITIALIZE for the inbound direction
+    - nextRootKey: The new root key for the receiving direction
+    - error: Any error during ratchet operation
+
+#### func (*Session) Role
+
+```go
+func (s *Session) Role() Role
+```
+Role returns the handshake role this endpoint was created with, which determines
+which half of the Noise Split() output it sends on.
 
 #### func (*Session) UpdateRemotePublicKey
 

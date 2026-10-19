@@ -117,29 +117,71 @@ func IsRepresentable(publicKey []byte) bool {
 // can be encoded. On average, this requires 2 attempts.
 //
 // Returns (publicKey, privateKey, error).
+//
+// Prefer [GenerateEncodedKeyPair] when the key is going onto the wire: it returns
+// the encoding in the same pass, so the caller does not run the Elligator2 map a
+// second time. The spec's section 2a Notes ask for exactly that: "The generator
+// does the ENCODE_ELG2() function to determine suitability. Therefore, the
+// generator should store the result of ENCODE_ELG2() so it does not have to be
+// calculated again."
 func GenerateKeyPair() ([]byte, []byte, error) {
-	const maxAttempts = 100
+	pub, priv, _, err := GenerateEncodedKeyPair()
+	if err != nil {
+		return nil, nil, err
+	}
+	return pub, priv, nil
+}
 
-	for attempt := 0; attempt < maxAttempts; attempt++ {
+// GenerateEncodedKeyPair generates an Elligator2-representable Curve25519 key
+// pair and returns the key pair together with its wire encoding.
+//
+// Returns (publicKey, privateKey, encoded, error), where encoded is the
+// 32-byte ENCODE_ELG2(publicKey) value that is safe to put on the wire
+// (indistinguishable from random, with the two MSBs randomized). Decoding
+// encoded yields a public key equivalent to publicKey.
+//
+// Retry bound: section 2a Notes state that key generation time "is unbounded
+// with an exponential distribution, as the generator must keep retrying until a
+// suitable key pair is found". This implementation deliberately deviates and
+// gives up after maxGenerateAttempts tries instead of running indefinitely, so
+// a caller cannot be stalled by pathological randomness. Half of all public keys
+// are representable, so the chance of hitting the bound is about 2^-100; the
+// spec's own recommendation for managing the cost is a pre-generated key pool,
+// which callers can build on top of this function.
+func GenerateEncodedKeyPair() (publicKey, privateKey, encoded []byte, err error) {
+	const maxGenerateAttempts = 100
+
+	for attempt := 0; attempt < maxGenerateAttempts; attempt++ {
 		// Generate a random private key
-		privateKey := make([]byte, PrivateKeySize)
-		if _, err := io.ReadFull(rand.Reader, privateKey); err != nil {
-			return nil, nil, oops.Wrapf(err, "failed to generate private key")
+		priv := make([]byte, PrivateKeySize)
+		if _, err := io.ReadFull(rand.Reader, priv); err != nil {
+			return nil, nil, nil, oops.Wrapf(err, "failed to generate private key")
 		}
 
 		// Compute public key
-		publicKey, err := curve25519.X25519(privateKey, curve25519.Basepoint)
+		pub, err := curve25519.X25519(priv, curve25519.Basepoint)
 		if err != nil {
-			return nil, nil, oops.Wrapf(err, "failed to compute public key")
+			return nil, nil, nil, oops.Wrapf(err, "failed to compute public key")
 		}
 
-		// Check if representable
-		if IsRepresentable(publicKey) {
-			return publicKey, privateKey, nil
+		// Try the encoding once; success also proves representability, so the
+		// map is not run twice per key as IsRepresentable()+Encode() would do.
+		repr, ok := publicKeyToRepresentative(pub)
+		if !ok {
+			continue
 		}
+
+		// Add 2 random bits to the MSB, matching Encode().
+		randomBits := make([]byte, 1)
+		if _, err := io.ReadFull(rand.Reader, randomBits); err != nil {
+			return nil, nil, nil, oops.Wrapf(err, "failed to generate random bits")
+		}
+		repr[31] |= (randomBits[0] & 0xC0)
+
+		return pub, priv, repr, nil
 	}
 
-	return nil, nil, oops.Errorf("failed to generate representable key pair after %d attempts", maxAttempts)
+	return nil, nil, nil, oops.Errorf("failed to generate representable key pair after %d attempts", maxGenerateAttempts)
 }
 
 // publicKeyToRepresentative attempts to find an Elligator2 representative for a public key.

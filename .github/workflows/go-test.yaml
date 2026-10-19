@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                go-version: ['1.24.2', '1.23.x', '1.22.x']
+                go-version: ['1.26.x']
         
         steps:
         - name: Checkout code
@@ -69,7 +69,7 @@ jobs:
         - name: Set up Go
           uses: actions/setup-go@v4
           with:
-            go-version: '1.24.2'
+            go-version: '1.26.x'
 
         - name: Run gofumpt
           run: |

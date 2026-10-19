@@ -8,8 +8,15 @@ import (
 
 // ECIESEncryptor implements TunnelEncryptor using ECIES-X25519 encryption.
 // This is a thin wrapper around the existing ecies package functionality.
-// It provides tunnel-level encryption for I2P's modern encryption scheme that
-// replaces legacy AES-256-CBC encryption.
+//
+// EXPERIMENTAL - NOT INTEROPERABLE. No I2P specification defines this as a
+// tunnel layer encryption scheme. The ecies package's one-time format is an
+// end-to-end (destination-to-destination) construct; Tunnel-Creation-ECIES,
+// which does govern tunnel layer encryption, supports only AES (type 0) and
+// explicitly leaves any ChaCha20-based type out of scope. Records produced
+// here are variable length, which also conflicts with the fixed-size tunnel
+// record layout. Use [AESEncryptor] for real tunnels; see the package docs for
+// the details.
 type ECIESEncryptor struct {
 	recipientPubKey [32]byte // X25519 public key for encryption
 }
@@ -40,9 +47,11 @@ func NewECIESEncryptor(recipientPubKey [32]byte) *ECIESEncryptor {
 // - The spec's Noise-based key derivation (see the ecies package)
 // - ChaCha20-Poly1305 AEAD encryption
 //
-// Returns ciphertext in the spec's one-time format:
+// Returns ciphertext in the ecies package's one-time format:
 // [Elligator2-encoded ephemeral public key 32][flags section 48][payload
-// section N+16]. See the ecies package for the full wire format.
+// section N+16] - 96 bytes of overhead plus the plaintext, so the result is
+// variable length and is not a 1028-byte tunnel record. See the ecies package
+// for the full wire format.
 func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	if plaintext == nil {
 		log.WithFields(logger.Fields{
