@@ -38,12 +38,14 @@
 //   - Use unique keys for different encryption contexts
 //   - Verify the authentication tag before processing decrypted data
 //
-// # I2P Protocol Integration
+// # ChaCha20-Poly1305 in I2P
 //
-// This package is used for:
-//   - Garlic message encryption (ECIES-X25519-AEAD-Ratchet)
-//   - Tunnel layer encryption
-//   - Session-based messaging with forward secrecy
+// I2P uses ChaCha20-Poly1305 for garlic message encryption (ECIES-X25519-AEAD-Ratchet),
+// tunnel layer encryption, and session-based messaging with forward secrecy. Those
+// code paths in this repository (the ecies, tunnel, curve25519, and ratchet packages)
+// call golang.org/x/crypto/chacha20poly1305 directly. This package is a standalone
+// wrapper around the same RFC 8439 construction that provides a separate Encrypt/Decrypt
+// (ciphertext + detached tag) API; it is not currently wired into those protocol paths.
 package chacha20poly1305
 
 import (

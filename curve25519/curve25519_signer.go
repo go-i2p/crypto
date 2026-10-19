@@ -42,7 +42,7 @@ func (s *Curve25519Signer) SignHash(h []byte) ([]byte, error) {
 
 	sig, err := x25519.Sign(rand.Reader, s.k, h)
 	if err != nil {
-		log.WithError(err).Error("Failed to sign hash")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519Signer.SignHash"}).WithError(err).Error("Failed to sign hash")
 		return nil, oops.Errorf("failed to sign: %w", err)
 	}
 

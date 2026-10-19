@@ -56,7 +56,10 @@
 // data-phase rules: a maximum of 65535 messages per tag set (after which a
 // DH ratchet step is required, see ErrTagsetExhausted) and a receiver
 // lookahead window (default 32, maximum 128) for out-of-order session tags.
-// NewSessionFromECIES bridges an ecies.SessionState into a spec-compliant
-// Session by deriving the root and chain keys with the spec's
-// DH_INITIALIZE and TagAndKeyGenKeys KDFs.
+// NewSessionFromECIES creates a Session from raw ECIES key material (three
+// [32]byte values, not an ecies.SessionState). It applies the spec's
+// DH_INITIALIZE and TagAndKeyGenKeys KDFs, but its initial seed is not
+// handshake-derived, so the result will not interoperate with a Java I2P
+// router; see the function's own documentation for the details and scope
+// boundary.
 package ratchet

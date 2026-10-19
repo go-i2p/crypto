@@ -10,6 +10,9 @@
 // key (for verifying signatures) and a private key (for creating them). This
 // package supports 2048-bit, 3072-bit, and 4096-bit keys.
 //
+// Approximate symmetric-equivalent security strengths (NIST SP 800-57):
+// RSA-2048 ≈ 112 bits, RSA-3072 ≈ 128 bits, RSA-4096 ≈ 140-152 bits.
+//
 // # How it works
 //
 //   - The signer hashes the data with a key-size-appropriate hash: SHA-256

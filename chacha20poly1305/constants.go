@@ -19,7 +19,9 @@ const (
 
 // Common errors for ChaCha20-Poly1305 AEAD operations
 var (
-	// ErrInvalidKeySize indicates the key is not 32 bytes
+	// ErrInvalidKeySize indicates the key is not 32 bytes.
+	// It is reserved and is not currently returned by this package: NewAEAD takes
+	// a fixed [32]byte array, so an invalid key size cannot be expressed at the API.
 	ErrInvalidKeySize = oops.Errorf("invalid ChaCha20-Poly1305 key size: must be 32 bytes")
 
 	// ErrInvalidNonceSize indicates the nonce is not 12 bytes

@@ -19,11 +19,15 @@ var (
 	ErrDataTooBig = oops.Errorf("data too big for Curve25519 encryption")
 
 	// ErrInvalidPublicKey indicates that a Curve25519 public key has invalid format or size.
-	// Valid X25519 public keys must be exactly 32 bytes in length and contain valid curve points.
+	// The implementations in this package return this error when a public key is not
+	// exactly 32 bytes; they do not validate curve-point membership (X25519 accepts any
+	// 32-byte value as a public input).
 	ErrInvalidPublicKey = oops.Errorf("invalid public key for Curve25519")
 
 	// ErrInvalidPrivateKey indicates that a Curve25519 private key has invalid format or size.
-	// Valid X25519 private keys must be exactly 32 bytes and within the valid scalar range.
+	// The implementations in this package return this error when a private key is not
+	// exactly 32 bytes; they do not check the scalar range (X25519 clamps the scalar
+	// internally, so any 32-byte value is usable).
 	ErrInvalidPrivateKey = oops.Errorf("invalid private key for Curve25519")
 
 	// ErrInvalidSignature indicates that a Curve25519 signature verification failed.

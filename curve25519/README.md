@@ -4,7 +4,37 @@
 
 ![curve25519.svg](curve25519.svg)
 
+Package curve25519 provides X25519 elliptic-curve encryption for I2P.
 
+X25519 is a key-exchange algorithm built on the Curve25519 elliptic curve. Two
+parties each generate a key pair, exchange their public keys, and independently
+compute the same shared secret. That shared secret is then used to encrypt data
+with ChaCha20-Poly1305.
+
+# How it works
+
+    - The sender generates a short-lived (ephemeral) key pair.
+    - The sender combines its ephemeral private key with the recipient's
+      public key to derive a shared secret.
+    - The shared secret is stretched with HKDF into an encryption key.
+    - Data is encrypted with ChaCha20-Poly1305.
+
+The encrypted output is laid out as:
+
+    [zero padding][ephemeral public key][nonce][ciphertext + tag]
+
+# Relationship to the I2P ECIES specification
+
+This package is a generic X25519 + ChaCha20-Poly1305 helper. Its wire format is
+NOT the I2P ECIES-X25519-AEAD-Ratchet format described at
+https://i2p.net/en/docs/specs/ecies/ : the spec's New Session / one-time message
+uses an Elligator2-encoded ephemeral key, a Noise IK/"es" key schedule, a
+separate authenticated flags/static section, and a counter nonce whose
+associated data is the running mix-hash. Here the ephemeral key is sent raw, the
+key is derived with a single plain HKDF call, the nonce is random, and there is
+no associated data.
+
+Use the ecies package for anything that must interoperate with I2P routers.
 
 ## Usage
 
@@ -15,11 +45,15 @@ var (
 	ErrDataTooBig = oops.Errorf("data too big for Curve25519 encryption")
 
 	// ErrInvalidPublicKey indicates that a Curve25519 public key has invalid format or size.
-	// Valid X25519 public keys must be exactly 32 bytes in length and contain valid curve points.
+	// The implementations in this package return this error when a public key is not
+	// exactly 32 bytes; they do not validate curve-point membership (X25519 accepts any
+	// 32-byte value as a public input).
 	ErrInvalidPublicKey = oops.Errorf("invalid public key for Curve25519")
 
 	// ErrInvalidPrivateKey indicates that a Curve25519 private key has invalid format or size.
-	// Valid X25519 private keys must be exactly 32 bytes and within the valid scalar range.
+	// The implementations in this package return this error when a private key is not
+	// exactly 32 bytes; they do not check the scalar range (X25519 clamps the scalar
+	// internally, so any 32-byte value is usable).
 	ErrInvalidPrivateKey = oops.Errorf("invalid private key for Curve25519")
 
 	// ErrInvalidSignature indicates that a Curve25519 signature verification failed.
@@ -46,6 +80,9 @@ public key. The data must be exactly 32 bytes to match the X25519 public key
 size specification. Returns nil if the input data length is invalid, otherwise
 returns a pointer to the created key.
 
+Deprecated: Use NewCurve25519PublicKey instead. This function will be removed in
+v2.0.
+
 #### func  GenerateKeyPair
 
 ```go
@@ -54,6 +91,56 @@ func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, e
 GenerateKeyPair generates a new Curve25519 key pair for encryption/decryption
 operations. Returns the public key, private key, and any error that occurred
 during generation. Moved from: curve25519.go
+
+#### func  GenerateX25519KeyPair
+
+```go
+func GenerateX25519KeyPair() (*Curve25519PublicKey, *Curve25519PrivateKey, error)
+```
+GenerateX25519KeyPair generates a new Curve25519 (X25519) key pair for
+encryption. This is the recommended API for generating X25519 keys, returning
+concrete types directly without interface conversions.
+
+Returns:
+
+    - *Curve25519PublicKey: The public key for encryption
+    - *Curve25519PrivateKey: The private key for decryption (must be zeroed after use)
+    - error: Any error that occurred during key generation
+
+Example:
+
+    pubKey, privKey, err := curve25519.GenerateX25519KeyPair()
+    if err != nil {
+        return err
+    }
+    defer privKey.Zero()  // Securely clear private key when done
+
+    // Use keys directly without type assertions
+    encrypter, _ := pubKey.NewEncrypter()
+    ciphertext, _ := encrypter.Encrypt(plaintext)
+
+#### func  SharedKey
+
+```go
+func SharedKey(privateKey, peerPublicKey []byte) ([]byte, error)
+```
+SharedKey computes a Curve25519 Diffie-Hellman shared secret. privateKey is 32
+bytes (scalar), peerPublicKey is 32 bytes (point). Returns the 32-byte shared
+secret or an error if inputs are invalid.
+
+This is a convenience wrapper around x25519.PrivateKey.SharedKey and is intended
+as a drop-in replacement for go.step.sm/crypto/x25519 SharedKey usage in
+go-noise and similar callers:
+
+    sharedKey, err := curve25519.SharedKey(localPrivate, remotePublic)
+
+#### func  SharedKeyFromTyped
+
+```go
+func SharedKeyFromTyped(privateKey *Curve25519PrivateKey, peerPublicKey *Curve25519PublicKey) ([]byte, error)
+```
+SharedKeyFromTyped computes a Curve25519 Diffie-Hellman shared secret using the
+package's typed key representations.
 
 #### type Curve25519Decrypter
 
@@ -73,12 +160,12 @@ network protocols.
 func (c *Curve25519Decrypter) Decrypt(data []byte) ([]byte, error)
 ```
 Decrypt decrypts data that was encrypted using Curve25519 and ChaCha20-Poly1305
-AEAD. The encrypted data format is:
-[ephemeral_public_key][nonce][aead_ciphertext] This method performs X25519 key
-exchange with the ephemeral public key, derives the decryption key using
-HKDF-SHA256, and then decrypts the data using ChaCha20-Poly1305 authenticated
-encryption. The minimum data size is 60 bytes (32-byte public key + 12-byte
-nonce + 16-byte tag).
+AEAD. The encrypted data format is: [zero
+padding][ephemeral_public_key][nonce][aead_ciphertext] This method performs
+X25519 key exchange with the ephemeral public key, derives the decryption key
+using HKDF-SHA256, and then decrypts the data using ChaCha20-Poly1305
+authenticated encryption. The minimum data size is 61 bytes (1 zero-padding byte
++ 32-byte public key + 12-byte nonce + 16-byte tag).
 
 #### type Curve25519Encryption
 
@@ -139,6 +226,50 @@ signing operations. This type implements the types.PrivateEncryptionKey
 interface and provides X25519 elliptic curve cryptographic operations including
 key derivation, decryption, and digital signature creation.
 
+CRITICAL: Always use NewCurve25519PrivateKey() to create instances.
+
+WRONG - Unsafe:
+
+    var key Curve25519PrivateKey  // Zero value - cryptographically invalid
+
+CORRECT - Use constructor:
+
+    privKey, err := curve25519.NewCurve25519PrivateKey(privBytes)
+    if err != nil {
+        return err
+    }
+    defer privKey.Zero() // Always zero private keys
+
+Security:
+
+    - Private keys contain sensitive material
+    - Always call Zero() when done to clear memory
+    - Never log or transmit private keys
+    - Reject all-zero keys (cryptographically invalid)
+
+#### func  NewCurve25519PrivateKey
+
+```go
+func NewCurve25519PrivateKey(data []byte) (*Curve25519PrivateKey, error)
+```
+NewCurve25519PrivateKey creates a validated Curve25519 private key from bytes.
+This is the REQUIRED constructor - do not use var declarations or direct
+construction.
+
+Parameters:
+
+    - data: Must be exactly 32 bytes (x25519.PrivateKeySize)
+
+Returns error if data length is invalid or key is all zeros.
+
+Example usage:
+
+    privKey, err := curve25519.NewCurve25519PrivateKey(privBytes)
+    if err != nil {
+        return err
+    }
+    defer privKey.Zero() // Always zero private keys when done
+
 #### func (Curve25519PrivateKey) Bytes
 
 ```go
@@ -146,8 +277,8 @@ func (k Curve25519PrivateKey) Bytes() []byte
 ```
 Bytes returns the raw byte representation of the Curve25519 private key. The
 returned slice contains the 32-byte X25519 private key material in little-endian
-format. This implements the types.PrivateKey interface for key serialization and
-storage operations.
+format. This is the Bytes() method of the types.PrivateEncryptionKey interface
+for key serialization and storage operations.
 
 #### func (Curve25519PrivateKey) NewDecrypter
 
@@ -189,10 +320,10 @@ key size is invalid (must be 32 bytes).
 func (k Curve25519PrivateKey) Zero()
 ```
 Zero securely clears the private key material from memory. This method
-implements the types.PrivateKey interface and overwrites all bytes of the
-private key with zeros to prevent sensitive cryptographic material from
-remaining in memory after use. This is essential for maintaining security in
-cryptographic applications.
+implements the Zero() method of the types.PrivateEncryptionKey interface and
+overwrites all bytes of the private key with zeros to prevent sensitive
+cryptographic material from remaining in memory after use. This is essential for
+maintaining security in cryptographic applications.
 
 #### type Curve25519PublicKey
 
@@ -204,6 +335,48 @@ Curve25519PublicKey represents a Curve25519 public key for encryption and
 signature verification. This type implements the types.PublicEncryptionKey
 interface and provides X25519 elliptic curve cryptographic operations for I2P
 network encryption and ECDH key exchange protocols.
+
+CRITICAL: Always use NewCurve25519PublicKey() to create instances. Direct
+construction produces an unvalidated (often nil/empty) key whose operations
+return errors rather than working correctly.
+
+WRONG - No validation:
+
+    var key Curve25519PublicKey  // nil slice - NewEncrypter()/NewVerifier() return an error
+    copy(key[:], data)           // no-op: copies 0 bytes into a zero-length slice (does not grow it)
+
+CORRECT - Use constructor:
+
+    key, err := curve25519.NewCurve25519PublicKey(data)
+    if err != nil {
+        return err
+    }
+
+Deprecated patterns (avoid in new code):
+
+    x25519Key := CreateCurve25519PublicKey(data)  // Use NewCurve25519PublicKey instead
+
+#### func  NewCurve25519PublicKey
+
+```go
+func NewCurve25519PublicKey(data []byte) (*Curve25519PublicKey, error)
+```
+NewCurve25519PublicKey creates a validated Curve25519 public key from bytes.
+This is the REQUIRED constructor - do not use var declarations or direct
+construction.
+
+Parameters:
+
+    - data: Must be exactly 32 bytes (x25519.PublicKeySize)
+
+Returns error if data length is invalid.
+
+Example usage:
+
+    pubKey, err := curve25519.NewCurve25519PublicKey(pubBytes)
+    if err != nil {
+        return err
+    }
 
 #### func (Curve25519PublicKey) Bytes
 
@@ -219,10 +392,11 @@ format suitable for cryptographic operations and network transmission.
 ```go
 func (k Curve25519PublicKey) Len() int
 ```
-Len returns the length of the Curve25519 public key in bytes. For X25519 public
-keys, this will always return 32 bytes as defined by the curve specification.
-This method is used for key validation and buffer allocation in cryptographic
-operations.
+Len returns the length of the Curve25519 public key in bytes. A valid X25519
+public key is always 32 bytes as defined by the curve specification; a nil or
+zero-value key (constructed without a constructor) returns its actual length,
+which may be 0. This method is used for key validation and buffer allocation in
+cryptographic operations.
 
 #### func (Curve25519PublicKey) NewEncrypter
 

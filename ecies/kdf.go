@@ -54,7 +54,7 @@ func DeriveSessionKeys(sharedSecret, info []byte) ([32]byte, [32]byte, error) {
 // messageNumber times before deriving:
 //
 //	keydata_n = HKDF(symmKey_chainKey_(n-1), SYMMKEY_CONSTANT, "SymmetricRatchet", 64)
-//	k_n       = keydata_n[32:63]
+//	k_n       = keydata_n[32:64]
 //
 // The message number is therefore *not* mixed into the KDF itself; it selects
 // how far along the one-way chain the caller walks. Deriving without advancing

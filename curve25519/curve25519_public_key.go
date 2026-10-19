@@ -54,7 +54,9 @@ func (k Curve25519PublicKey) NewVerifier() (types.Verifier, error) {
 }
 
 // Len returns the length of the Curve25519 public key in bytes.
-// For X25519 public keys, this will always return 32 bytes as defined by the curve specification.
+// A valid X25519 public key is always 32 bytes as defined by the curve
+// specification; a nil or zero-value key (constructed without a constructor)
+// returns its actual length, which may be 0.
 // This method is used for key validation and buffer allocation in cryptographic operations.
 func (k Curve25519PublicKey) Len() int {
 	length := len(k)
@@ -80,7 +82,7 @@ func (k Curve25519PublicKey) NewEncrypter() (types.Encrypter, error) {
 
 	enc, err := NewCurve25519Encryption(&pubKey, rand.Reader)
 	if err != nil {
-		log.WithError(err).Error("Failed to create Curve25519 Encrypter")
+		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewEncrypter"}).WithError(err).Error("Failed to create Curve25519 Encrypter")
 		return nil, err
 	}
 

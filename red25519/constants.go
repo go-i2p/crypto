@@ -20,7 +20,8 @@ const (
 	SeedSize = upstream.SeedSize
 
 	// BlindedPrivateKeySize is the size in bytes of a blinded Red25519 private key
-	// (seed + pubkey + blinding factor = 96 bytes).
+	// in the upstream extended format (blinded scalar + derived prefix + public
+	// key = 32+32+32 = 96 bytes).
 	BlindedPrivateKeySize = 96
 )
 

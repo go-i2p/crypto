@@ -117,7 +117,7 @@ func GenerateRSA3072KeyPair() (*RSA3072PublicKey, *RSA3072PrivateKey, error) {
 
 // GenerateRSA4096KeyPair generates a new RSA-4096 key pair for maximum I2P security.
 // Returns a public key for verification and a private key for signing operations.
-// RSA-4096 provides 192-bit equivalent security, the highest security level in the RSA family.
+// RSA-4096 provides roughly 140-152-bit equivalent symmetric security (NIST SP 800-57), the highest security level in the RSA family.
 // The generated keys follow I2P's standard byte array format for network interoperability.
 // Example usage: pubKey, privKey, err := GenerateRSA4096KeyPair()
 func GenerateRSA4096KeyPair() (*RSA4096PublicKey, *RSA4096PrivateKey, error) {

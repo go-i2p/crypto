@@ -9,12 +9,13 @@
 //
 // # How it works
 //
-// HKDF has three steps:
+// HKDF follows RFC 5869 and has two steps:
 //
 //  1. Extract: distill the input key material into a pseudorandom key.
 //  2. Expand: stretch that key to the desired length.
-//  3. Context: an "info" string binds the derived key to a specific purpose,
-//     so keys for different jobs never collide.
+//
+// Both steps take an "info" context string that binds the derived key to a
+// specific purpose, so keys for different jobs never collide.
 //
 // See RFC 5869 for the HKDF specification:
 // https://datatracker.ietf.org/doc/html/rfc5869

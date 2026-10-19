@@ -52,7 +52,7 @@ func applyPublicKeyTransform(keyBytes, alpha [32]byte, startMsg, endMsg string, 
 //
 // Parameters:
 //   - publicKey: 32-byte Ed25519 public key to blind
-//   - alpha: 32-byte blinding factor (typically from kdf.DeriveBlindingFactor)
+//   - alpha: 32-byte blinding factor (typically from kdf.DeriveBlindingFactorI2P)
 //
 // Returns:
 //   - Blinded 32-byte public key
@@ -60,8 +60,11 @@ func applyPublicKeyTransform(keyBytes, alpha [32]byte, startMsg, endMsg string, 
 //
 // Example:
 //
-//	// Derive blinding factor for today
-//	alpha, _ := kdf.DeriveBlindingFactor(secret, "2025-11-24")
+//	// Derive the spec-conformant blinding factor for today
+//	alpha, err := kdf.DeriveBlindingFactorI2P(pubKey[:], "", kdf.SigTypeEdDSASha512Ed25519, time.Now())
+//	if err != nil {
+//	    return err
+//	}
 //
 //	// Blind the public key
 //	blindedPubKey, err := ed25519.BlindPublicKey(pubKey, alpha)
@@ -154,8 +157,8 @@ func computeBlindedPoint(P *edwards25519.Point, alphaScalar *edwards25519.Scalar
 //
 // Example:
 //
-//	// Blind both private and public keys with same alpha
-//	alpha, _ := kdf.DeriveBlindingFactor(secret, "2025-11-24")
+//	// Blind both private and public keys with the same spec-conformant alpha
+//	alpha, _ := kdf.DeriveBlindingFactorI2P(pubKey[:], "", kdf.SigTypeEdDSASha512Ed25519, time.Now())
 //	blindedPriv, _ := ed25519.BlindPrivateKey(privKey, alpha)
 //	blindedPub, _ := ed25519.BlindPublicKey(pubKey, alpha)
 //
@@ -252,7 +255,7 @@ func constructBlindedPrivateKey(blindedScalar *edwards25519.Scalar) [64]byte {
 // Example:
 //
 //	// Verify blinding/unblinding round-trip
-//	alpha, _ := kdf.DeriveBlindingFactor(secret, "2025-11-24")
+//	alpha, _ := kdf.DeriveBlindingFactorI2P(original[:], "", kdf.SigTypeEdDSASha512Ed25519, time.Now())
 //	blinded, _ := ed25519.BlindPublicKey(original, alpha)
 //	recovered, _ := ed25519.UnblindPublicKey(blinded, alpha)
 //	// recovered should equal original

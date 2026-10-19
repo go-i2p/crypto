@@ -41,6 +41,14 @@ func (s *Ed25519Signer) Sign(data []byte) (sig []byte, err error) {
 // alias with identical behavior) for normal message signing.
 func (s *Ed25519Signer) SignHash(h []byte) (sig []byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Signer.SignHash", "hash_length": len(h)}).Debug("Signing hash with Ed25519")
+
+	// Validate private key size before attempting signature generation,
+	// matching Sign: crypto/ed25519.Sign panics on a wrong-size key.
+	if len(s.k) != ed25519.PrivateKeySize {
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Signer.SignHash"}).Error("Invalid Ed25519 private key size")
+		err = oops.Errorf("failed to sign: invalid ed25519 private key size")
+		return sig, err
+	}
 	// Generate Ed25519 signature using the standard library implementation
 	sig = ed25519.Sign(s.k, h)
 	log.WithFields(logger.Fields{"pkg": "ed25519", "func": "Ed25519Signer.SignHash", "signature_length": len(sig)}).Debug("Ed25519 signature created successfully")

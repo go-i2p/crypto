@@ -24,6 +24,8 @@ const (
 	// Maximum retry attempts for entropy validation
 	MaxEntropyRetries = 10
 
-	// Sample size for entropy testing
+	// EntropySampleSize is the sample size (in bytes) used when validating the
+	// entropy of random reads. It is currently unused: entropy validation
+	// operates on the caller's buffer directly. Reserved for future use.
 	EntropySampleSize = 1024
 )

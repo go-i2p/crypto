@@ -7,6 +7,13 @@
 Package elg implements ElGamal encryption and decryption for the I2P anonymous
 networking protocol.
 
+# Deprecated: legacy algorithm
+
+ElGamal is the original I2P encryption scheme. It is kept for compatibility with
+older routers and for decrypting legacy data, but new code should use the ecies
+package (ECIES-X25519-AEAD-Ratchet), which is faster and more secure. See the
+I2P ECIES specification: https://i2p.net/en/docs/specs/ecies/
+
 This package provides I2P-compatible ElGamal asymmetric encryption using
 2048-bit security parameters. ElGamal encryption enables secure message
 transmission in the I2P network where the sender encrypts data using the
@@ -21,7 +28,7 @@ encryption session
 
 Security Considerations: - Maximum plaintext size limited to 222 bytes for
 cryptographic security - Private keys must be securely generated and stored in
-range [1, p-1] - Ephemeral keys are generated fresh for each encryption to
+range [1, p-2] - Ephemeral keys are generated fresh for each encryption to
 ensure IND-CPA security - All operations use cryptographically secure random
 number generation
 
@@ -47,10 +54,16 @@ Example Usage:
     // Clean up private key when done
     privKey.Zero()
 
-I2P Compatibility: This implementation follows I2P's ElGamal specifications
-including fixed domain parameters, message formatting with SHA-256 integrity
-checks, and support for the network's encryption message types used in tunnel
-building and end-to-end encrypted communications.
+I2P Compatibility: This implementation follows I2P's ElGamal low-level
+specification: the fixed RFC-3526 2048-bit domain parameters, and the cleartext
+block layout [random nonzero marker][SHA-256 of the data][data] encrypted into
+the 514-byte two-part block. On decrypt the marker is only required to be
+nonzero (as the spec states) and the payload length is recovered from the block
+structure rather than by trimming trailing zeros, so it interoperates with Java
+I2P.
+
+See the I2P low-level cryptography specification for the ElGamal block format:
+https://i2p.net/en/docs/specs/cryptography/
 
 ## Usage
 
@@ -73,12 +86,12 @@ Error constants for ElGamal operations Moved from: elg.go
 func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error)
 ```
 ElgamalGenerate creates a new ElGamal key pair using I2P's standard parameters.
-Generates cryptographically secure private keys in the range [1, p-1] using the
+Generates cryptographically secure private keys in the range [1, p-2] using the
 secure random package. The io.Reader parameter is ignored as we use our own
 secure random source for enhanced security. This function implements the
 complete ElGamal key generation process: 1. Initialize with fixed I2P domain
 parameters (p, g) for network compatibility 2. Generate random private exponent
-X in valid range [1, p-1] 3. Compute public key Y = g^X mod p using modular
+X in valid range [1, p-2] 3. Compute public key Y = g^X mod p using modular
 exponentiation 4. Validate all parameters for cryptographic correctness generate
 an elgamal key pair
 
@@ -100,8 +113,64 @@ type ElgPrivateKey [256]byte
 
 ElgPrivateKey represents a 256-byte ElGamal private key used for decryption
 operations. It stores the private exponent in I2P's standard ElGamal format for
-anonymous networking. Example usage: privKey := ElgPrivateKey{}; dec, err :=
-privKey.NewDecrypter()
+anonymous networking.
+
+CRITICAL: Never create ElgPrivateKey using zero-value construction (e.g. var key
+ElgPrivateKey). Zero-value construction results in an all-zero key which:
+
+    - Is cryptographically invalid (outside valid range [1, p-2])
+    - Will fail when calling NewDecrypter()
+    - Violates ElGamal security requirements
+
+ALWAYS use NewElgPrivateKey() for safe construction.
+
+WRONG - Will fail:
+
+    var privKey ElgPrivateKey              // all zeros - invalid!
+    dec, _ := privKey.NewDecrypter()       // will return error
+
+CORRECT - Use constructor:
+
+    privKey, err := elg.NewElgPrivateKey(keyBytes)
+    if err != nil {
+        return err
+    }
+    defer privKey.Zero()
+
+#### func  NewElgPrivateKey
+
+```go
+func NewElgPrivateKey(data []byte) (*ElgPrivateKey, error)
+```
+NewElgPrivateKey creates a validated ElGamal private key from bytes.
+
+This constructor provides mandatory validation to prevent common security
+issues:
+
+    - Rejects inputs that are not exactly 256 bytes
+    - Rejects keys outside the valid range [1, p-2] where p is the ElGamal prime
+    - Returns defensive copy to prevent external mutation
+
+The valid range check ensures that the private key can be used for secure
+ElGamal operations. Keys outside this range would produce invalid cryptographic
+operations or be trivially breakable.
+
+Parameters:
+
+    - data: Must be exactly 256 bytes and represent a value in range [1, p-2]
+
+Returns an error if:
+
+    - Input is not exactly 256 bytes
+    - Input represents a value outside the valid range [1, p-2]
+
+Example usage:
+
+    privKey, err := elg.NewElgPrivateKey(keyBytes)
+    if err != nil {
+        return err
+    }
+    defer privKey.Zero()
 
 #### func (ElgPrivateKey) Bytes
 
@@ -119,7 +188,7 @@ is required by the types.PrivateEncryptionKey interface.
 func (elg ElgPrivateKey) Generate() (types.PrivateEncryptionKey, error)
 ```
 Generate creates a new random ElGamal private key. This method generates a
-cryptographically secure private key in the valid range [1, p-1] using I2P's
+cryptographically secure private key in the valid range [1, p-2] using I2P's
 standard ElGamal parameters. Returns the generated private key or an error if
 key generation fails due to insufficient entropy or parameter validation.
 
@@ -139,7 +208,7 @@ func (elg ElgPrivateKey) NewDecrypter() (dec types.Decrypter, err error)
 NewDecrypter creates a new ElGamal decrypter using this private key. Returns a
 types.Decrypter interface that can decrypt data encrypted with the corresponding
 public key. Returns error if the private key data is invalid or not in the valid
-range [1, p-1].
+range [1, p-2].
 
 #### func (ElgPrivateKey) Public
 
@@ -151,14 +220,18 @@ derives the public key (Y = g^X mod p) from the private key without exposing
 sensitive private key material. Returns the public key as ElgPublicKey or an
 error if key derivation fails.
 
-#### func (ElgPrivateKey) Zero
+#### func (*ElgPrivateKey) Zero
 
 ```go
-func (elg ElgPrivateKey) Zero()
+func (elg *ElgPrivateKey) Zero()
 ```
 Zero securely clears all sensitive private key data from memory. This method
 should be called when the private key is no longer needed to prevent memory
 disclosure attacks. After calling Zero, the key becomes unusable.
+
+The receiver is a pointer so the caller's key material is actually cleared:
+ElgPrivateKey is a fixed-size array, and a value receiver would only zero a
+copy, leaving the original key in memory.
 
 #### type ElgPublicKey
 
@@ -168,8 +241,62 @@ type ElgPublicKey [256]byte
 
 ElgPublicKey represents a 256-byte ElGamal public key used for encryption
 operations. It stores the public key component in I2P's standard ElGamal format
-for secure communications. Example usage: pubKey := ElgPublicKey{}; enc, err :=
-pubKey.NewEncrypter()
+for secure communications.
+
+CRITICAL: Never create ElgPublicKey using zero-value construction (e.g. var key
+ElgPublicKey). Zero-value construction results in an all-zero key which:
+
+    - Is cryptographically invalid (Y=0 is not a valid public key)
+    - Will fail or produce weak encryption
+    - Violates ElGamal security requirements
+
+ALWAYS use NewElgPublicKey() for safe construction.
+
+WRONG - Will fail:
+
+    var pubKey ElgPublicKey              // all zeros - invalid!
+    enc, _ := pubKey.NewEncrypter()      // will fail or be insecure
+
+CORRECT - Use constructor:
+
+    pubKey, err := elg.NewElgPublicKey(keyBytes)
+    if err != nil {
+        return err
+    }
+
+#### func  NewElgPublicKey
+
+```go
+func NewElgPublicKey(data []byte) (*ElgPublicKey, error)
+```
+NewElgPublicKey creates a validated ElGamal public key from bytes.
+
+This constructor provides mandatory validation to prevent common security
+issues:
+
+    - Rejects inputs that are not exactly 256 bytes
+    - Rejects keys with Y=0 or Y=1 (cryptographically weak)
+    - Rejects keys outside the valid range [2, p-2] where p is the ElGamal prime
+    - Returns defensive copy to prevent external mutation
+
+The range validation ensures the public key represents a valid group element
+that can be used for secure encryption operations.
+
+Parameters:
+
+    - data: Must be exactly 256 bytes and represent a value in range [2, p-2]
+
+Returns an error if:
+
+    - Input is not exactly 256 bytes
+    - Input represents a value outside the valid range [2, p-2]
+
+Example usage:
+
+    pubKey, err := elg.NewElgPublicKey(keyBytes)
+    if err != nil {
+        return err
+    }
 
 #### func (ElgPublicKey) Bytes
 
@@ -238,11 +365,8 @@ func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (enc
 EncryptPadding encrypts data using ElGamal with configurable padding options.
 The zeroPadding parameter controls whether to apply zero-padding for data
 shorter than block size. Maximum supported data size is 222 bytes due to ElGamal
-security requirements. This method implements the complete I2P ElGamal
-encryption process including: 1. Data size validation (max 222 bytes for
-security) 2. Message formatting with 0xFF prefix and SHA-256 integrity hash 3.
-ElGamal encryption using the go-i2p/elgamal library 4. Output formatting
-according to I2P protocol specifications
+security requirements. This method coordinates the I2P ElGamal encryption
+process.
 
 #### type PrivateKey
 

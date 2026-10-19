@@ -4,7 +4,38 @@
 
 ![rsa.svg](rsa.svg)
 
+Package rsa provides RSA (Rivest-Shamir-Adleman) signing for I2P.
 
+# Deprecated: legacy algorithm
+
+RSA is a legacy signature scheme in I2P. It is kept for compatibility with older
+routers and for verifying legacy data, but new code should use the ed25519 or
+red25519 packages, which are faster and more secure.
+
+RSA is a widely used public-key algorithm. A key pair consists of a public key
+(for verifying signatures) and a private key (for creating them). This package
+supports 2048-bit, 3072-bit, and 4096-bit keys.
+
+Approximate symmetric-equivalent security strengths (NIST SP 800-57): RSA-2048 ≈
+112 bits, RSA-3072 ≈ 128 bits, RSA-4096 ≈ 140-152 bits.
+
+# How it works
+
+    - The signer hashes the data with a key-size-appropriate hash: SHA-256
+      for RSA-2048, SHA-384 for RSA-3072, and SHA-512 for RSA-4096. These
+      match the I2P signature types RSA_SHA256_2048 (4), RSA_SHA384_3072 (5)
+      and RSA_SHA512_4096 (6).
+    - The signer creates a signature using its private key.
+    - A verifier checks the signature against the signer's public key.
+
+# Key construction
+
+Always use the provided constructors (for example NewRSA2048PrivateKey) to
+create keys. Constructing a key type directly with a zero value produces an
+invalid key.
+
+See RFC 3447 for the RSA specification:
+https://datatracker.ietf.org/doc/html/rfc3447
 
 ## Usage
 
@@ -60,10 +91,10 @@ func GenerateRSA4096KeyPair() (*RSA4096PublicKey, *RSA4096PrivateKey, error)
 ```
 GenerateRSA4096KeyPair generates a new RSA-4096 key pair for maximum I2P
 security. Returns a public key for verification and a private key for signing
-operations. RSA-4096 provides 192-bit equivalent security, the highest security
-level in the RSA family. The generated keys follow I2P's standard byte array
-format for network interoperability. Example usage: pubKey, privKey, err :=
-GenerateRSA4096KeyPair()
+operations. RSA-4096 provides roughly 140-152-bit equivalent symmetric security
+(NIST SP 800-57), the highest security level in the RSA family. The generated
+keys follow I2P's standard byte array format for network interoperability.
+Example usage: pubKey, privKey, err := GenerateRSA4096KeyPair()
 
 #### type RSA2048PrivateKey
 
@@ -76,8 +107,39 @@ type RSA2048PrivateKey struct {
 RSA2048PrivateKey represents a 2048-bit RSA private key in I2P format. The key
 data is stored as a 512-byte array containing both the modulus (256 bytes) and
 private exponent (256 bytes) as specified by I2P cryptographic standards. This
-type implements types.Signer for creating digital signatures. Example usage:
-privKey := RSA2048PrivateKey{}; sig, err := privKey.Sign(data)
+type implements types.Signer for creating digital signatures.
+
+⚠️ CRITICAL SECURITY WARNING ⚠️ Always use NewRSA2048PrivateKey() to create
+instances. Do NOT construct directly with &RSA2048PrivateKey{} or
+RSA2048PrivateKey{}.
+
+Example usage:
+
+    // WRONG - Creates invalid zero-value key
+    var key RSA2048PrivateKey
+
+    // CORRECT - Validates key data
+    key, err := NewRSA2048PrivateKey(keyBytes)
+
+#### func  NewRSA2048PrivateKey
+
+```go
+func NewRSA2048PrivateKey(data []byte) (*RSA2048PrivateKey, error)
+```
+NewRSA2048PrivateKey creates a validated RSA-2048 private key from bytes.
+
+The input data must be exactly 512 bytes in I2P format:
+
+    - First 256 bytes: modulus (N) in big-endian
+    - Next 256 bytes: private exponent (D) in big-endian
+
+Returns an error if:
+
+    - data length is not exactly 512 bytes
+    - data is all zeros (cryptographically invalid)
+
+The returned key is a defensive copy - modifications to the input slice will not
+affect the key.
 
 #### func (RSA2048PrivateKey) Bytes
 
@@ -143,8 +205,37 @@ type RSA2048PublicKey [256]byte
 
 RSA2048PublicKey represents a 2048-bit RSA public key in I2P format. The key is
 stored as a 256-byte array containing the public key modulus. This type
-implements types.Verifier for signature verification operations. Example usage:
-pubKey := RSA2048PublicKey{}; err := pubKey.Verify(data, signature)
+implements types.Verifier for signature verification operations.
+
+⚠️ CRITICAL SECURITY WARNING ⚠️ Always use NewRSA2048PublicKey() to create
+instances. Do NOT construct directly with &RSA2048PublicKey{} or
+RSA2048PublicKey{}.
+
+Example usage:
+
+    // WRONG - Creates invalid zero-value key
+    var key RSA2048PublicKey
+
+    // CORRECT - Validates key data
+    key, err := NewRSA2048PublicKey(keyBytes)
+
+#### func  NewRSA2048PublicKey
+
+```go
+func NewRSA2048PublicKey(data []byte) (*RSA2048PublicKey, error)
+```
+NewRSA2048PublicKey creates a validated RSA-2048 public key from bytes.
+
+The input data must be exactly 256 bytes containing the modulus (N) in
+big-endian format as per I2P specifications.
+
+Returns an error if:
+
+    - data length is not exactly 256 bytes
+    - data is all zeros (cryptographically invalid)
+
+The returned key is a defensive copy - modifications to the input slice will not
+affect the key.
 
 #### func (RSA2048PublicKey) Bytes
 
@@ -171,7 +262,7 @@ be used to verify signatures
 #### func (RSA2048PublicKey) Verify
 
 ```go
-func (r RSA2048PublicKey) Verify(data []byte, sig []byte) error
+func (r RSA2048PublicKey) Verify(data, sig []byte) error
 ```
 Verify implements types.Verifier. This method hashes the data with SHA-256 and
 verifies the signature
@@ -179,7 +270,7 @@ verifies the signature
 #### func (RSA2048PublicKey) VerifyHash
 
 ```go
-func (r RSA2048PublicKey) VerifyHash(h []byte, sig []byte) error
+func (r RSA2048PublicKey) VerifyHash(h, sig []byte) error
 ```
 VerifyHash implements types.Verifier. This method verifies a pre-computed hash
 against the signature
@@ -197,6 +288,30 @@ data is stored as a 768-byte array containing the modulus (384 bytes) and
 private exponent (384 bytes) following I2P cryptographic specifications. This
 type implements types.Signer and provides enhanced security over RSA-2048.
 RSA-3072 offers equivalent security to 128-bit symmetric encryption.
+
+⚠️ CRITICAL SECURITY WARNING ⚠️ Always use NewRSA3072PrivateKey() to create
+instances. Do NOT construct directly with &RSA3072PrivateKey{} or
+RSA3072PrivateKey{}.
+
+#### func  NewRSA3072PrivateKey
+
+```go
+func NewRSA3072PrivateKey(data []byte) (*RSA3072PrivateKey, error)
+```
+NewRSA3072PrivateKey creates a validated RSA-3072 private key from bytes.
+
+The input data must be exactly 768 bytes in I2P format:
+
+    - First 384 bytes: modulus (N) in big-endian
+    - Next 384 bytes: private exponent (D) in big-endian
+
+Returns an error if:
+
+    - data length is not exactly 768 bytes
+    - data is all zeros (cryptographically invalid)
+
+The returned key is a defensive copy - modifications to the input slice will not
+affect the key.
 
 #### func (RSA3072PrivateKey) Bytes
 
@@ -238,14 +353,14 @@ Public implements types.PrivateKey - derives public key from private key
 ```go
 func (r RSA3072PrivateKey) Sign(data []byte) (sig []byte, err error)
 ```
-Sign implements types.Signer - signs data with SHA512 hash
+Sign implements types.Signer - signs data with SHA-384 hash
 
 #### func (RSA3072PrivateKey) SignHash
 
 ```go
 func (r RSA3072PrivateKey) SignHash(h []byte) (sig []byte, err error)
 ```
-SignHash implements types.Signer - signs a pre-computed hash
+SignHash implements types.Signer - signs a pre-computed SHA-384 hash
 
 #### func (*RSA3072PrivateKey) Zero
 
@@ -264,6 +379,28 @@ RSA3072PublicKey represents a 3072-bit RSA public key in I2P format. The key is
 stored as a 384-byte array containing the public key modulus. This type
 implements types.Verifier for signature verification with enhanced security.
 RSA-3072 provides equivalent security to 128-bit symmetric encryption.
+
+⚠️ CRITICAL SECURITY WARNING ⚠️ Always use NewRSA3072PublicKey() to create
+instances. Do NOT construct directly with &RSA3072PublicKey{} or
+RSA3072PublicKey{}.
+
+#### func  NewRSA3072PublicKey
+
+```go
+func NewRSA3072PublicKey(data []byte) (*RSA3072PublicKey, error)
+```
+NewRSA3072PublicKey creates a validated RSA-3072 public key from bytes.
+
+The input data must be exactly 384 bytes containing the modulus (N) in
+big-endian format as per I2P specifications.
+
+Returns an error if:
+
+    - data length is not exactly 384 bytes
+    - data is all zeros (cryptographically invalid)
+
+The returned key is a defensive copy - modifications to the input slice will not
+affect the key.
 
 #### func (RSA3072PublicKey) Bytes
 
@@ -289,14 +426,14 @@ NewVerifier implements SigningPublicKey.
 #### func (RSA3072PublicKey) Verify
 
 ```go
-func (r RSA3072PublicKey) Verify(data []byte, sig []byte) error
+func (r RSA3072PublicKey) Verify(data, sig []byte) error
 ```
 Verify implements types.Verifier.
 
 #### func (RSA3072PublicKey) VerifyHash
 
 ```go
-func (r RSA3072PublicKey) VerifyHash(h []byte, sig []byte) error
+func (r RSA3072PublicKey) VerifyHash(h, sig []byte) error
 ```
 VerifyHash implements types.Verifier.
 
@@ -312,7 +449,32 @@ RSA4096PrivateKey represents a 4096-bit RSA private key in I2P format. The key
 data is stored as a 1024-byte array containing the modulus (512 bytes) and
 private exponent (512 bytes) following I2P cryptographic specifications. This
 type implements types.Signer and provides maximum security in the RSA family.
-RSA-4096 offers equivalent security to 192-bit symmetric encryption.
+RSA-4096 offers roughly 140-152-bit equivalent symmetric security (NIST SP
+800-57).
+
+⚠️ CRITICAL SECURITY WARNING ⚠️ Always use NewRSA4096PrivateKey() to create
+instances. Do NOT construct directly with &RSA4096PrivateKey{} or
+RSA4096PrivateKey{}.
+
+#### func  NewRSA4096PrivateKey
+
+```go
+func NewRSA4096PrivateKey(data []byte) (*RSA4096PrivateKey, error)
+```
+NewRSA4096PrivateKey creates a validated RSA-4096 private key from bytes.
+
+The input data must be exactly 1024 bytes in I2P format:
+
+    - First 512 bytes: modulus (N) in big-endian
+    - Next 512 bytes: private exponent (D) in big-endian
+
+Returns an error if:
+
+    - data length is not exactly 1024 bytes
+    - data is all zeros (cryptographically invalid)
+
+The returned key is a defensive copy - modifications to the input slice will not
+affect the key.
 
 #### func (RSA4096PrivateKey) Bytes
 
@@ -379,7 +541,30 @@ type RSA4096PublicKey [512]byte
 RSA4096PublicKey represents a 4096-bit RSA public key in I2P format. The key is
 stored as a 512-byte array containing the public key modulus. This type
 implements types.Verifier for signature verification with maximum security.
-RSA-4096 provides equivalent security to 192-bit symmetric encryption.
+RSA-4096 provides roughly 140-152-bit equivalent symmetric security (NIST SP
+800-57).
+
+⚠️ CRITICAL SECURITY WARNING ⚠️ Always use NewRSA4096PublicKey() to create
+instances. Do NOT construct directly with &RSA4096PublicKey{} or
+RSA4096PublicKey{}.
+
+#### func  NewRSA4096PublicKey
+
+```go
+func NewRSA4096PublicKey(data []byte) (*RSA4096PublicKey, error)
+```
+NewRSA4096PublicKey creates a validated RSA-4096 public key from bytes.
+
+The input data must be exactly 512 bytes containing the modulus (N) in
+big-endian format as per I2P specifications.
+
+Returns an error if:
+
+    - data length is not exactly 512 bytes
+    - data is all zeros (cryptographically invalid)
+
+The returned key is a defensive copy - modifications to the input slice will not
+affect the key.
 
 #### func (RSA4096PublicKey) Bytes
 
@@ -406,7 +591,7 @@ this public key
 #### func (RSA4096PublicKey) Verify
 
 ```go
-func (r RSA4096PublicKey) Verify(data []byte, sig []byte) error
+func (r RSA4096PublicKey) Verify(data, sig []byte) error
 ```
 Verify implements types.Verifier. This method hashes the data with SHA-512 and
 verifies the signature
@@ -414,7 +599,7 @@ verifies the signature
 #### func (RSA4096PublicKey) VerifyHash
 
 ```go
-func (r RSA4096PublicKey) VerifyHash(h []byte, sig []byte) error
+func (r RSA4096PublicKey) VerifyHash(h, sig []byte) error
 ```
 VerifyHash implements types.Verifier. This method verifies a pre-computed hash
 against the signature

@@ -7,8 +7,10 @@ import (
 
 // elgDecrypter implements the types.Decrypter interface for ElGamal decryption.
 // It wraps an ElGamal private key and provides secure decryption operations.
-// This structure maintains the ElGamal private key parameters (P, G, X, Y) internally
-// and implements constant-time decryption to prevent timing attacks during the process.
+// This structure maintains the ElGamal private key parameters (P, G, X, Y) internally.
+// The message-integrity check uses a constant-time comparison (crypto/subtle), but
+// the underlying ElGamal modular exponentiation in go-i2p/elgamal is not constant-time,
+// so decryption as a whole is not protected against timing attacks.
 type elgDecrypter struct {
 	// k stores the complete ElGamal private key with all domain parameters
 	// including the prime modulus P, generator G, private exponent X, and public key Y
@@ -19,7 +21,8 @@ type elgDecrypter struct {
 // Applies I2P's ElGamal decryption format with zero padding enabled.
 // Returns decrypted data or error if decryption fails or data is corrupted.
 // The decryption process validates message integrity using SHA-256 checksums
-// and implements constant-time operations to prevent side-channel attacks.
+// with a constant-time comparison; the ElGamal decryption itself is not
+// constant-time.
 func (elg *elgDecrypter) Decrypt(data []byte) (dec []byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "elgDecrypter.Decrypt", "data_length": len(data)}).Debug("Decrypting ElGamal data")
 	// Use zero padding format for I2P compatibility with standard message structure

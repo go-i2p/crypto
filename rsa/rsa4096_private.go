@@ -16,7 +16,7 @@ import (
 // The key data is stored as a 1024-byte array containing the modulus (512 bytes)
 // and private exponent (512 bytes) following I2P cryptographic specifications.
 // This type implements types.Signer and provides maximum security in the RSA family.
-// RSA-4096 offers equivalent security to 192-bit symmetric encryption.
+// RSA-4096 offers roughly 140-152-bit equivalent symmetric security (NIST SP 800-57).
 //
 // ⚠️ CRITICAL SECURITY WARNING ⚠️
 // Always use NewRSA4096PrivateKey() to create instances.

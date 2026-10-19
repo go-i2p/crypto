@@ -81,9 +81,16 @@ func NewDSAPrivateKey(data []byte) (DSAPrivateKey, error) {
 // Example usage: signer, err := privateKey.NewSigner()
 func (k DSAPrivateKey) NewSigner() (s types.Signer, err error) {
 	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.NewSigner"}).Debug("Creating new DSA signer")
+	// Validate the private exponent X is in the DSA range [1, q-1] before
+	// creating the signer; a zero or out-of-range key is an invalid format.
+	x := new(big.Int).SetBytes(k[:])
+	if x.Sign() == 0 || x.Cmp(dsaq) >= 0 {
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPrivateKey.NewSigner"}).Error("Invalid DSA private key format")
+		return nil, types.ErrInvalidKeyFormat
+	}
 	// Create signer with validated private key parameters
 	s = &DSASigner{
-		k: createDSAPrivkey(new(big.Int).SetBytes(k[:])),
+		k: createDSAPrivkey(x),
 	}
 	return s, err
 }

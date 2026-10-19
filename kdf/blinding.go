@@ -26,45 +26,6 @@ var (
 // Regular expression for YYYY-MM-DD date format validation
 var dateFormatRegex = regexp.MustCompile(`^\d{4}-\d{2}-\d{2}$`)
 
-// DeriveBlindingFactor derives a blinding factor (alpha) from a secret and date.
-// This creates a unique per-day blinding factor for EncryptedLeaseSet rotation.
-//
-// Derivation uses HKDF-SHA256:
-//   - IKM (input key material): secret (32+ bytes, typically from destination keypair)
-//   - Salt: date in YYYY-MM-DD format as bytes
-//   - Info: "i2p-blinding-factor"
-//   - Output: 64 bytes (reduced to canonical Ed25519 scalar)
-//
-// The output is a canonical Ed25519 scalar (reduced modulo L), ensuring compatibility
-// with edwards25519.Scalar.SetCanonicalBytes. The derivation process:
-//  1. HKDF derives 64 bytes from secret + date
-//  2. SetUniformBytes reduces to canonical scalar (< L)
-//  3. Returns 32-byte canonical scalar encoding
-//
-// The same secret + date always produces the same alpha, enabling:
-//   - Service to create blinded destination for publication
-//   - Clients to derive the same alpha and verify blinded signatures
-//
-// Parameters:
-//   - secret: Secret key material (must be at least 32 bytes, typically from private key)
-//   - date: Date in "YYYY-MM-DD" format (e.g., "2025-11-24")
-//
-// Returns:
-//   - alpha: 32-byte canonical Ed25519 scalar suitable for point blinding
-//   - error: ErrInvalidSecret if secret is too short, ErrInvalidDateFormat or ErrInvalidDate if date is invalid
-//
-// Example:
-//
-//	// Derive blinding factor for today
-//	secret := privateKey.Seed() // 32-byte secret from Ed25519 private key
-//	alpha, err := kdf.DeriveBlindingFactor(secret, "2025-11-24")
-//	if err != nil {
-//	    return err
-//	}
-//
-//	// Use alpha to blind public key
-//	blindedPubKey, err := ed25519.BlindPublicKey(pubKey, alpha)
-//
 // SigType codes used by the I2P blinding KDF salt (see net.i2p.crypto.SigType).
 const (
 	// SigTypeEdDSASha512Ed25519 is the standard Ed25519 signing type (code 7).
@@ -148,7 +109,22 @@ func appendBE16(b []byte, v uint16) []byte {
 	return append(b, byte(v>>8), byte(v))
 }
 
-// Spec: I2P Proposal 123 Section 4.2
+// DeriveBlindingFactor derives a blinding factor (alpha) from a secret and date
+// using a non-standard HKDF construction:
+//   - IKM (input key material): secret (32+ bytes)
+//   - Salt: date in YYYY-MM-DD format as bytes
+//   - Info: "i2p-blinding-factor"
+//   - Output: 64 bytes, reduced to a canonical Ed25519 scalar (< L)
+//
+// The same secret + date always produces the same alpha.
+//
+// Parameters:
+//   - secret: Secret key material (must be at least 32 bytes, typically from private key)
+//   - date: Date in "YYYY-MM-DD" format (e.g., "2025-11-24")
+//
+// Returns:
+//   - alpha: 32-byte canonical Ed25519 scalar suitable for point blinding
+//   - error: ErrInvalidSecret if secret is too short, ErrInvalidDateFormat or ErrInvalidDate if date is invalid
 //
 // Deprecated: this is NOT the I2P destination-blinding KDF. It omits the
 // destination signing public key and the sig-type codes from the salt, uses the
@@ -250,6 +226,10 @@ func deriveAlphaUsingHKDF(secret []byte, date string) ([32]byte, error) {
 //   - alpha: 32-byte blinding factor
 //   - error: Same errors as DeriveBlindingFactor
 //
+// Deprecated: like [DeriveBlindingFactor], the result interoperates with no
+// I2P implementation. Use [DeriveBlindingFactorI2P], which takes a time.Time
+// directly and derives the spec-conformant alpha.
+//
 // Example:
 //
 //	// Derive blinding factor for current time
@@ -284,6 +264,10 @@ func validateDate(date string) error {
 // FormatDateForBlinding formats a time.Time as YYYY-MM-DD for blinding factor derivation.
 // This is a convenience function for consistent date formatting.
 //
+// Deprecated: the YYYY-MM-DD date format is only used by the non-interoperable
+// [DeriveBlindingFactor]. Use [DeriveBlindingFactorI2P], which takes a time.Time
+// directly.
+//
 // Example:
 //
 //	date := kdf.FormatDateForBlinding(time.Now())
@@ -294,6 +278,10 @@ func FormatDateForBlinding(t time.Time) string {
 
 // GetCurrentBlindingDate returns today's date in UTC formatted for blinding.
 // This is equivalent to FormatDateForBlinding(time.Now().UTC()).
+//
+// Deprecated: the YYYY-MM-DD date format is only used by the non-interoperable
+// [DeriveBlindingFactor]. Use [DeriveBlindingFactorI2P], which takes a time.Time
+// directly.
 //
 // Example:
 //

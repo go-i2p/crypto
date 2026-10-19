@@ -14,7 +14,7 @@ type (
 	// RSA4096PublicKey represents a 4096-bit RSA public key in I2P format.
 	// The key is stored as a 512-byte array containing the public key modulus.
 	// This type implements types.Verifier for signature verification with maximum security.
-	// RSA-4096 provides equivalent security to 192-bit symmetric encryption.
+	// RSA-4096 provides roughly 140-152-bit equivalent symmetric security (NIST SP 800-57).
 	//
 	// ⚠️ CRITICAL SECURITY WARNING ⚠️
 	// Always use NewRSA4096PublicKey() to create instances.

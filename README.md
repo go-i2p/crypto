@@ -183,7 +183,10 @@ func main() {
     tunnelKey, _ := kd.DeriveForPurpose(kdf.PurposeTunnelEncryption)
     garlicKey, _ := kd.DeriveForPurpose(kdf.PurposeGarlicEncryption)
     
-    // Or derive session keys in one call
+    // Or derive session keys in one call.
+    // NOTE: DeriveSessionKeys is Deprecated (legacy, non-spec KDF); for
+    // ECIES-X25519-AEAD-Ratchet sessions use ecies.DeriveSessionKeys or
+    // ratchet.NewSessionFromECIES instead.
     rootKey, symKey, tagKey, _ := kd.DeriveSessionKeys()
 }
 ```
@@ -205,11 +208,10 @@ func main() {
     rand.Read(key)
     rand.Read(iv)
     
-    // Create symmetric key
-    symmetricKey := &aes.AESSymmetricKey{
-        Key: key,
-        IV:  iv,
-    }
+    // Create symmetric key (always use the validating constructor; direct
+    // struct literals and zero values are rejected by the aes package docs)
+    symmetricKey, _ := aes.NewAES256Key(key, iv)
+    defer symmetricKey.Zero()
     
     // Create encrypter and decrypter
     encrypter, _ := symmetricKey.NewEncrypter()
@@ -314,20 +316,20 @@ func main() {
 package main
 
 import (
-    "github.com/go-i2p/crypto/rand"
     "github.com/go-i2p/crypto/hmac"
 )
 
 func main() {
-    // Generate HMAC key
-    var key hmac.HMACKey
-    rand.Read(key[:])
+    // Generate HMAC key (always use the constructors; a zero-value HMACKey is
+    // cryptographically invalid and rejected by the hmac package docs)
+    key, _ := hmac.GenerateHMACKey()
+    defer key.Zero()
 
     // Data to authenticate
     data := []byte("Authenticate this message")
 
     // Compute HMAC-SHA256 digest
-    digest := hmac.I2PHMAC(data, key)
+    digest := hmac.I2PHMAC(data, *key)
 
     // Use digest for authentication or verification
 }
@@ -448,7 +450,7 @@ Run the test suite:
 go test ./...
 ```
 
-The test suite includes table-driven tests for all cryptographic operations, testing edge cases like empty data, exact block sizes, and large datasets.
+The test suite includes table-driven tests for the cryptographic operations in most packages, testing edge cases like empty data, exact block sizes, and large datasets. The `argon2`, `common`, `siphash`, and `types` packages currently have no test files.
 
 ---
 

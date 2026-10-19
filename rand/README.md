@@ -4,7 +4,21 @@
 
 ![rand.svg](rand.svg)
 
+Package rand provides cryptographically secure random number generation for I2P.
 
+This package offers an API similar to the standard library math/rand, but every
+value it produces comes from crypto/rand, the operating system's secure random
+source. This makes it safe for generating keys, nonces, and other secrets.
+
+# How it differs from math/rand
+
+    - math/rand is fast but predictable. An attacker who sees a few outputs
+      can guess the rest.
+
+    - This package is slower but unpredictable. Use it for anything
+      security-sensitive.
+
+    - Seeding is a no-op here. Secure randomness does not use a seed.
 
 ## Usage
 
@@ -17,7 +31,9 @@ const (
 	// Maximum retry attempts for entropy validation
 	MaxEntropyRetries = 10
 
-	// Sample size for entropy testing
+	// EntropySampleSize is the sample size (in bytes) used when validating the
+	// entropy of random reads. It is currently unused: entropy validation
+	// operates on the caller's buffer directly. Reserved for future use.
 	EntropySampleSize = 1024
 )
 ```
@@ -48,8 +64,9 @@ number generator Compatible with crypto/rand.Reader
 ```go
 func CryptoInt(reader io.Reader, max *big.Int) (*big.Int, error)
 ```
-CryptoInt returns a uniform random value in [0, max). It panics if max <= 0.
-Compatible with crypto/rand.Int function
+CryptoInt returns a uniform random value in [0, max). Unlike crypto/rand.Int
+(which panics), this returns an error if max <= 0. Compatible with
+crypto/rand.Int function
 
 #### func  ExpFloat64
 
@@ -143,7 +160,8 @@ probability. Compatible with crypto/rand.Prime function
 ```go
 func Read(p []byte) (n int, err error)
 ```
-Read fills the provided byte slice with cryptographically secure random data
+Read fills the provided byte slice with cryptographically secure random data.
+See [SecureReader.Read] for the entropy-validation retry behavior.
 
 #### func  ReadBigInt
 
@@ -346,8 +364,10 @@ NewSecureReader creates a new SecureReader using crypto/rand as the source
 ```go
 func (sr *SecureReader) Read(p []byte) (n int, err error)
 ```
-Read fills the provided byte slice with cryptographically secure random data and
-validates entropy before returning
+Read fills the provided byte slice with cryptographically secure random data.
+Reads of 32 bytes or more are additionally checked by a heuristic entropy
+validation pass and retried up to MaxEntropyRetries times if the check fails;
+shorter reads are returned as-is without validation.
 
 #### func (*SecureReader) ReadBigInt
 
@@ -381,9 +401,10 @@ math/rand.Source interface
 ```go
 func NewSource(seed int64) Source
 ```
-NewSource returns a new pseudo-random Source seeded with the given value. Note:
-Since we use crypto/rand, the seed is used for compatibility but doesn't affect
-randomness Compatible with math/rand.NewSource
+NewSource returns a new Source backed by crypto/rand. The seed parameter is
+accepted for compatibility with math/rand.NewSource but is ignored: the returned
+Source draws from the cryptographic random reader, so output is not reproducible
+for a given seed. Compatible with math/rand.NewSource
 
 #### type Source64
 

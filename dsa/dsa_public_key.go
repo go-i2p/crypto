@@ -93,9 +93,16 @@ func (k DSAPublicKey) Bytes() []byte {
 // Example usage: verifier, err := publicKey.NewVerifier()
 func (k DSAPublicKey) NewVerifier() (v types.Verifier, err error) {
 	log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPublicKey.NewVerifier"}).Debug("Creating new DSA verifier")
+	// Validate the public value Y is in the range [2, p-1] before creating
+	// the verifier; a zero, one, or out-of-range key is an invalid format.
+	y := new(big.Int).SetBytes(k[:])
+	if y.Sign() == 0 || y.Cmp(big.NewInt(1)) == 0 || y.Cmp(dsap) >= 0 {
+		log.WithFields(logger.Fields{"pkg": "dsa", "func": "DSAPublicKey.NewVerifier"}).Error("Invalid DSA public key format")
+		return nil, types.ErrInvalidKeyFormat
+	}
 	// Create verifier with validated public key parameters
 	v = &DSAVerifier{
-		k: createDSAPublicKey(new(big.Int).SetBytes(k[:])),
+		k: createDSAPublicKey(y),
 	}
 	return v, err
 }

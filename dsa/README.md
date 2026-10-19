@@ -4,7 +4,26 @@
 
 ![dsa.svg](dsa.svg)
 
+Package dsa provides DSA (Digital Signature Algorithm) signing for I2P.
 
+DSA is a digital signature algorithm. A signature proves that a message came
+from the holder of a private key and has not been altered. DSA signs a SHA-1
+hash of the message and produces a 40-byte signature (20 bytes for the r value,
+20 bytes for the s value).
+
+# How it works
+
+    - The signer hashes the data with SHA-1.
+    - The signer creates an (r, s) signature pair using its private key.
+    - A verifier checks the signature against the signer's public key.
+
+# Security notes
+
+    - DSA with SHA-1 is a legacy algorithm. New I2P code should prefer the
+      ed25519 or red25519 packages, which are faster and more secure.
+
+See the I2P cryptography overview for the role of DSA in I2P:
+https://i2p.net/en/docs/specs/cryptography/
 
 ## Usage
 
@@ -19,6 +38,41 @@ type implements the I2P standard DSA private key representation where the
 private key value (X) is stored as a 160-bit (20-byte) big-endian integer.
 DSAPrivateKey satisfies the types.SigningPrivateKey interface for digital
 signatures.
+
+⚠️ CRITICAL SECURITY WARNING: Do NOT use zero-value construction (var key
+DSAPrivateKey) as it creates an invalid all-zero key. Always use
+NewDSAPrivateKey() to ensure proper validation.
+
+#### func  NewDSAPrivateKey
+
+```go
+func NewDSAPrivateKey(data []byte) (DSAPrivateKey, error)
+```
+NewDSAPrivateKey creates a validated DSA private key from bytes.
+
+This constructor validates that the provided data:
+
+    - Is exactly 20 bytes (160 bits) as required by I2P DSA specification
+    - Is non-zero (all-zero keys are cryptographically invalid)
+    - Is less than the DSA subgroup order q
+
+Parameters:
+
+    - data: Must be exactly 20 bytes representing the private exponent X
+
+Returns:
+
+    - DSAPrivateKey: A validated private key with defensive copy of the input
+    - error: If data is invalid (wrong size, all-zero, or >= q)
+
+Example:
+
+    keyBytes := make([]byte, 20)
+    _, _ = rand.Read(keyBytes)
+    key, err := NewDSAPrivateKey(keyBytes)
+    if err != nil {
+        // Handle error - key is invalid
+    }
 
 #### func (DSAPrivateKey) Bytes
 
@@ -95,6 +149,40 @@ type implements the I2P standard DSA public key representation where the public
 key value (Y = g^X mod p) is stored as a 1024-bit (128-byte) big-endian integer.
 DSAPublicKey satisfies the types.SigningPublicKey interface for signature
 verification.
+
+⚠️ CRITICAL SECURITY WARNING: Do NOT use zero-value construction (var key
+DSAPublicKey) as it creates an invalid all-zero key. Always use
+NewDSAPublicKey() to ensure proper validation.
+
+#### func  NewDSAPublicKey
+
+```go
+func NewDSAPublicKey(data []byte) (DSAPublicKey, error)
+```
+NewDSAPublicKey creates a validated DSA public key from bytes.
+
+This constructor validates that the provided data:
+
+    - Is exactly 128 bytes (1024 bits) as required by I2P DSA specification
+    - Is non-zero (all-zero keys are cryptographically invalid)
+    - Is in valid range [2, p-1] where p is the DSA prime modulus
+
+Parameters:
+
+    - data: Must be exactly 128 bytes representing the public value Y
+
+Returns:
+
+    - DSAPublicKey: A validated public key with defensive copy of the input
+    - error: If data is invalid (wrong size, zero/one, or >= p)
+
+Example:
+
+    privKey, _ := NewDSAPrivateKey(privBytes)
+    pubKey, err := privKey.Public()
+    if err != nil {
+        // Handle error
+    }
 
 #### func (DSAPublicKey) Bytes
 
