@@ -29,4 +29,16 @@
 // and there is no associated data.
 //
 // Use the ecies package for anything that must interoperate with I2P routers.
+//
+// # X25519 is not a signing key
+//
+// This package provides encryption keys only. There is no I2P signature type
+// based on X25519: cryptography.md §Signatures enumerates DSA-SHA1, the three
+// ECDSA curves, EdDSA-SHA512-Ed25519, RedDSA-SHA512-Ed25519 and the offline-only
+// RSA and Ed25519ph variants, and §New Signature Algorithms states "Signature
+// type is encoded in the Destination and Router Identity". X25519 appears in the
+// spec strictly for key agreement (ecies.md §2: "DH Function: X25519 ... as
+// specified in RFC-7748"). Accordingly [Curve25519PrivateKey] and
+// [Curve25519PublicKey] expose NewDecrypter/NewEncrypter but no NewSigner or
+// NewVerifier. Use ed25519, ed25519ph, red25519, dsa, ecdsa or rsa for signing.
 package curve25519

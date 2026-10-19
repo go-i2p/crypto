@@ -13,6 +13,8 @@ import (
 	"testing"
 
 	curve25519 "go.step.sm/crypto/x25519"
+
+	"github.com/go-i2p/crypto/types"
 )
 
 func TestCurve25519EncryptionDataSize(t *testing.T) {
@@ -369,25 +371,34 @@ func TestNewCurve25519PrivateKey(t *testing.T) {
 		}
 	})
 
-	t.Run("NewSigner works", func(t *testing.T) {
-		// Generate a valid key
+	// X25519 has no I2P signature type (cryptography.md §Signatures). The
+	// Curve25519Signer/Curve25519Verifier types were removed because they
+	// produced signatures no router could verify; assert they are gone so the
+	// removal cannot silently regress.
+	t.Run("no signing path", func(t *testing.T) {
 		_, priv, err := curve25519.GenerateKey(rand.Reader)
 		if err != nil {
 			t.Fatalf("Failed to generate key: %v", err)
 		}
-
 		key, err := NewCurve25519PrivateKey(priv[:])
 		if err != nil {
 			t.Fatalf("NewCurve25519PrivateKey failed: %v", err)
 		}
-
-		signer, err := key.NewSigner()
-		if err != nil {
-			t.Fatalf("NewSigner() failed: %v", err)
+		// Curve25519 keys satisfy the encryption interfaces only.
+		var _ types.PrivateEncryptionKey = key
+		// A signing-private-key assertion would not compile; guard against the
+		// signer types reappearing by asserting the interface is not satisfied.
+		var pk any = key
+		if _, ok := pk.(types.SigningPrivateKey); ok {
+			t.Error("Curve25519PrivateKey satisfies types.SigningPrivateKey; X25519 is not an I2P signature scheme")
 		}
-
-		if signer == nil {
-			t.Error("NewSigner() returned nil signer")
+		pub, err := NewCurve25519PublicKey(priv.Public().(curve25519.PublicKey)[:])
+		if err != nil {
+			t.Fatalf("NewCurve25519PublicKey failed: %v", err)
+		}
+		var pk2 any = pub
+		if _, ok := pk2.(types.SigningPublicKey); ok {
+			t.Error("Curve25519PublicKey satisfies types.SigningPublicKey; X25519 is not an I2P signature scheme")
 		}
 	})
 }

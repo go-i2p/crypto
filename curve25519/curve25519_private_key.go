@@ -95,18 +95,13 @@ func (k Curve25519PrivateKey) NewDecrypter() (types.Decrypter, error) {
 	}, nil
 }
 
-// NewSigner creates a new Curve25519 signer for creating digital signatures with this private key.
-// The signer uses X25519 elliptic curve digital signature algorithms to create cryptographically
-// secure signatures that can be verified using the corresponding Curve25519 public key.
-// Returns ErrInvalidPrivateKey if the private key size is invalid (must be 32 bytes).
-func (k Curve25519PrivateKey) NewSigner() (types.Signer, error) {
-	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PrivateKey.NewSigner"}).Debug("Creating new Curve25519 Signer")
-	if len(k) != x25519.PrivateKeySize {
-		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PrivateKey.NewSigner"}).Error("Invalid Curve25519 private key size")
-		return nil, ErrInvalidPrivateKey
-	}
-	return &Curve25519Signer{k: k}, nil
-}
+// Curve25519PrivateKey deliberately has no NewSigner method. X25519 is a
+// key-agreement primitive: I2P defines no signature type that signs with it
+// (cryptography.md §Signatures lists DSA/ECDSA/EdDSA/RedDSA only, and §New
+// Signature Algorithms states "Signature type is encoded in the Destination and
+// Router Identity"). The signing types that previously lived here produced
+// signatures no router could verify, so they were removed. Use the ed25519,
+// ed25519ph, red25519, dsa, ecdsa or rsa packages for I2P signing keys.
 
 // NewCurve25519PrivateKey creates a validated Curve25519 private key from bytes.
 // This is the REQUIRED constructor - do not use var declarations or direct construction.

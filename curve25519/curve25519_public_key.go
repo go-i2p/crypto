@@ -40,18 +40,9 @@ func (k Curve25519PublicKey) Bytes() []byte {
 	return k
 }
 
-// NewVerifier creates a Curve25519 verifier for signature verification operations.
-// This method validates the public key size and returns a verifier instance capable of verifying
-// signatures created with the corresponding Curve25519 private key using X25519 signature algorithms.
-// Returns ErrInvalidPublicKey if the key size is invalid (must be 32 bytes).
-func (k Curve25519PublicKey) NewVerifier() (types.Verifier, error) {
-	log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewVerifier"}).Debug("Creating Curve25519 verifier")
-	if len(k) != x25519.PublicKeySize {
-		log.WithFields(logger.Fields{"pkg": "curve25519", "func": "Curve25519PublicKey.NewVerifier"}).Error("Invalid public key size")
-		return nil, ErrInvalidPublicKey
-	}
-	return &Curve25519Verifier{k: k}, nil
-}
+// Curve25519PublicKey deliberately has no NewVerifier method, for the same
+// reason Curve25519PrivateKey has no NewSigner: there is no I2P signature type
+// based on X25519. See the note in curve25519_private_key.go.
 
 // Len returns the length of the Curve25519 public key in bytes.
 // A valid X25519 public key is always 32 bytes as defined by the curve
