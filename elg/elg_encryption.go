@@ -109,7 +109,7 @@ func createElgamalEncryption(pub *elgamal.PublicKey) (enc *ElgamalEncryption, er
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalEncryption"}).Debug("Creating ElGamal encryption session")
 	if pub == nil {
 		log.WithFields(logger.Fields{"pkg": "elg", "func": "createElgamalEncryption"}).Error("Cannot create encrypter with nil public key")
-		return nil, ElgEncryptTooBig // TODO: create proper error
+		return nil, ElgNilPublicKey
 	}
 	enc = &ElgamalEncryption{
 		pub: pub,

@@ -70,7 +70,7 @@ var (
 
 	// ErrUnsupportedEncryptionType indicates an unsupported tunnel encryption scheme was requested.
 	// TunnelEncryptionAES (0) is the only layer encryption type defined by the I2P
-	// specifications, so it is the only accepted value; anything else, including
-	// the deprecated TunnelEncryptionECIES tombstone, returns this error.
+	// specifications (Tunnel-Creation-ECIES: "The only layer encryption currently
+	// supported is type 0, which is AES"), so it is the only accepted value.
 	ErrUnsupportedEncryptionType = oops.Errorf("unsupported tunnel encryption type")
 )

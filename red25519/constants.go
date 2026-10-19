@@ -38,12 +38,6 @@ const (
 	// RedDSA_SHA512_Ed25519 as 64 bytes.
 	SignatureSize = PublicKeySize + ScalarSize
 
-	// SeedSize is the length of the 32-byte value GENERATE_PRIVATE draws from.
-	// Retained for API compatibility; Red25519 key generation consumes 64 random
-	// bytes and reduces them mod L, so a caller-supplied 32-byte "seed" is not a
-	// spec concept the way it is for Ed25519.
-	SeedSize = 32
-
 	// Ed25519ExpandedPrivateKeySize is Go's crypto/ed25519 private key length
 	// (seed || public). Accepted only by [ConvertEd25519PrivateKey], which is
 	// defined in terms of the 32-byte seed.

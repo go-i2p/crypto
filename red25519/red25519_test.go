@@ -365,41 +365,6 @@ func TestBlindingFactorsRejectZero(t *testing.T) {
 	}
 }
 
-// TestComposeBlindingFactorsAdditive checks sequential blinding composes by
-// addition, matching the additive group law.
-func TestComposeBlindingFactorsAdditive(t *testing.T) {
-	pub, _ := newTestKeyPair(t)
-	a1, err := GenerateBlindingFactor(rand.Reader)
-	if err != nil {
-		t.Fatal(err)
-	}
-	a2, err := GenerateBlindingFactor(rand.Reader)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	once, err := ComposeBlindingFactors(a1, a2)
-	if err != nil {
-		t.Fatal(err)
-	}
-	direct, err := BlindPublicKey(pub, once)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	step1, err := BlindPublicKey(pub, a1)
-	if err != nil {
-		t.Fatal(err)
-	}
-	step2, err := BlindPublicKey(step1, a2)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !bytes.Equal(direct.Bytes(), step2.Bytes()) {
-		t.Error("sequential additive blinding != blinding with the composed factor")
-	}
-}
-
 // TestRed25519VerifierFromPrivateKey checks the convenience path.
 func TestRed25519VerifierFromPrivateKey(t *testing.T) {
 	_, priv := newTestKeyPair(t)

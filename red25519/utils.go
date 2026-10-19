@@ -91,28 +91,6 @@ func GenerateBlindingFactor(r io.Reader) (BlindingFactor, error) {
 	return bf, nil
 }
 
-// ComposeBlindingFactors adds two blinding factors mod L: result = (bf1 + bf2)
-// mod L.
-//
-// Because re-randomization is additive, blinding successively with bf1 then bf2 is
-// equivalent to blinding once with their sum. (This is the additive analogue of
-// the multiplicative "product" the previous implementation computed; sequential
-// additive blinding composes by addition.)
-func ComposeBlindingFactors(bf1, bf2 BlindingFactor) (BlindingFactor, error) {
-	a, err := decodeBlindingFactor(bf1)
-	if err != nil {
-		return BlindingFactor{}, err
-	}
-	b, err := decodeBlindingFactor(bf2)
-	if err != nil {
-		return BlindingFactor{}, err
-	}
-	sum := edwards25519.NewScalar().Add(a, b)
-	var out BlindingFactor
-	copy(out[:], encodeScalarLE(sum))
-	return out, nil
-}
-
 // decodeBlindingFactor decodes a BlindingFactor, rejecting the zero scalar.
 //
 // alpha = 0 is a no-op that leaves the key unchanged and thus leaks the original
@@ -158,27 +136,4 @@ func ConvertEd25519PublicKey(ed25519PubKey []byte) (Red25519PublicKey, error) {
 	out := make(Red25519PublicKey, PublicKeySize)
 	copy(out, ed25519PubKey)
 	return out, nil
-}
-
-// NewKeyFromSeed is retained for compatibility but now performs Red25519
-// GENERATE_PRIVATE-style derivation from a 32-byte seed rather than Ed25519
-// clamped expansion.
-//
-// Deprecated: Red25519 private keys are not defined by a 32-byte seed; the spec's
-// GENERATE_PRIVATE consumes 64 random bytes and reduces mod L. Use
-// [GenerateRed25519Key] for new keys or [ConvertEd25519PrivateKey] to derive a
-// Red25519 key from an Ed25519 one. This helper treats the seed as the low half of
-// a 64-byte GENERATE_PRIVATE input (seed || 0) and reduces mod L, which is
-// deterministic but not a spec-defined key derivation.
-func NewKeyFromSeed(seed []byte) Red25519PrivateKey {
-	if len(seed) != SeedSize {
-		return nil
-	}
-	var in [64]byte
-	copy(in[:SeedSize], seed)
-	s := edwards25519.NewScalar()
-	if _, err := s.SetUniformBytes(in[:]); err != nil {
-		return nil
-	}
-	return Red25519PrivateKey(encodeScalarLE(s))
 }

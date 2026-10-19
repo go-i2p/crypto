@@ -118,12 +118,6 @@ func GenerateKeyPair() (types.PublicEncryptionKey, types.PrivateEncryptionKey, e
 	return pubKey, &privKey, nil
 }
 
-// PrivateKey wraps the standard ElGamal private key with I2P-specific functionality.
-// Provides compatibility layer between I2P's ElGamal implementation and the underlying cryptographic library.
-type PrivateKey struct {
-	elgamal.PrivateKey
-}
-
 // ElgamalGenerate creates a new ElGamal key pair using I2P's standard parameters.
 // Generates cryptographically secure private keys in the range [1, p-2] using the secure random package.
 // The io.Reader parameter is ignored as we use our own secure random source for enhanced security.

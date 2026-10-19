@@ -1,23 +1,3 @@
-// Package elligator2 implements Elligator2 encoding for Curve25519 public keys.
-//
-// Elligator2 encoding makes Curve25519 ephemeral public keys indistinguishable from
-// random data, preventing traffic analysis attacks. This is used in protocols like
-// I2P's ECIES-X25519-AEAD-Ratchet for New Session messages.
-//
-// Specification: https://elligator.cr.yp.to/elligator-20130828.pdf
-// Used in I2P's ECIES-X25519-AEAD spec:
-// https://i2p.net/en/docs/specs/ecies/
-//
-// Key properties:
-//   - Encodes Curve25519 public keys as 32 random-looking bytes
-//   - Approximately 50% of Curve25519 private keys produce suitable public keys
-//   - Constant-time operations to prevent timing attacks
-//   - The representative-to-public-key map is deliberately many-to-one: the
-//     top 2 bits of the 32-byte representative are random padding masked off on
-//     decode, so 4 representatives map to each curve point.
-//
-// This implementation is based on the reference implementation by Adam Langley
-// and the Tor Project's implementation.
 package elligator2
 
 import (
@@ -140,9 +120,10 @@ func GenerateKeyPair() ([]byte, []byte, error) {
 // (indistinguishable from random, with the two MSBs randomized). Decoding
 // encoded yields a public key equivalent to publicKey.
 //
-// Retry bound: section 2a Notes state that key generation time "is unbounded
-// with an exponential distribution, as the generator must keep retrying until a
-// suitable key pair is found". This implementation deliberately deviates and
+// Retry bound: ECIES-X25519-AEAD-Ratchet §2a "Notes"
+// (https://i2p.net/en/docs/specs/ecies/) state that key generation time "is
+// unbounded with an exponential distribution, as the generator must keep
+// retrying until a suitable key pair is found". This implementation deliberately deviates and
 // gives up after maxGenerateAttempts tries instead of running indefinitely, so
 // a caller cannot be stalled by pathological randomness. Half of all public keys
 // are representable, so the chance of hitting the bound is about 2^-100; the

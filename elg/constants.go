@@ -28,6 +28,11 @@ var (
 	// ElgEncryptTooBig indicates that the input data exceeds the maximum size for ElGamal encryption.
 	// ElGamal can only encrypt data smaller than the modulus size (222 bytes for I2P).
 	ElgEncryptTooBig = oops.Errorf("failed to encrypt data, too big for elgamal")
+
+	// ElgNilPublicKey indicates an encryption session was requested without a
+	// public key. Previously this path returned ElgEncryptTooBig, which
+	// misdescribed the failure.
+	ElgNilPublicKey = oops.Errorf("cannot encrypt with a nil elgamal public key")
 )
 
 // ElGamal cryptographic parameters for I2P

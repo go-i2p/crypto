@@ -112,12 +112,6 @@ const (
 	// RedDSA_SHA512_Ed25519 as 64 bytes.
 	SignatureSize = PublicKeySize + ScalarSize
 
-	// SeedSize is the length of the 32-byte value GENERATE_PRIVATE draws from.
-	// Retained for API compatibility; Red25519 key generation consumes 64 random
-	// bytes and reduces them mod L, so a caller-supplied 32-byte "seed" is not a
-	// spec concept the way it is for Ed25519.
-	SeedSize = 32
-
 	// Ed25519ExpandedPrivateKeySize is Go's crypto/ed25519 private key length
 	// (seed || public). Accepted only by [ConvertEd25519PrivateKey], which is
 	// defined in terms of the 32-byte seed.
@@ -212,19 +206,6 @@ type BlindingFactor [ScalarSize]byte
 BlindingFactor is the secret scalar alpha used to re-randomize a key pair. It is
 a 32-byte little-endian scalar mod L, the same encoding as a private key.
 
-#### func  ComposeBlindingFactors
-
-```go
-func ComposeBlindingFactors(bf1, bf2 BlindingFactor) (BlindingFactor, error)
-```
-ComposeBlindingFactors adds two blinding factors mod L: result = (bf1 + bf2) mod
-L.
-
-Because re-randomization is additive, blinding successively with bf1 then bf2 is
-equivalent to blinding once with their sum. (This is the additive analogue of
-the multiplicative "product" the previous implementation computed; sequential
-additive blinding composes by addition.)
-
 #### func  GenerateBlindingFactor
 
 ```go
@@ -287,22 +268,6 @@ Destination can be re-randomized.
 privkey may be a 32-byte Ed25519 seed or Go's 64-byte expanded key. The result
 is the clamped scalar, which is >= L; [NewRed25519PrivateKey] accepts it and
 reduces mod L for arithmetic. See red25519.md §Conversion functions.
-
-#### func  NewKeyFromSeed
-
-```go
-func NewKeyFromSeed(seed []byte) Red25519PrivateKey
-```
-NewKeyFromSeed is retained for compatibility but now performs Red25519
-GENERATE_PRIVATE-style derivation from a 32-byte seed rather than Ed25519
-clamped expansion.
-
-Deprecated: Red25519 private keys are not defined by a 32-byte seed; the spec's
-GENERATE_PRIVATE consumes 64 random bytes and reduces mod L. Use
-[GenerateRed25519Key] for new keys or [ConvertEd25519PrivateKey] to derive a
-Red25519 key from an Ed25519 one. This helper treats the seed as the low half of
-a 64-byte GENERATE_PRIVATE input (seed || 0) and reduces mod L, which is
-deterministic but not a spec-defined key derivation.
 
 #### func  NewRed25519PrivateKey
 

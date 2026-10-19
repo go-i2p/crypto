@@ -75,16 +75,20 @@
 //	Adding new layer encryption types, for example ChaCha20, is a topic for
 //	additional research, and is not currently a part of this specification."
 //
-// [TunnelEncryptionECIES] (value 1) is an experimental local value that wraps the
-// ecies package's *end-to-end* one-time format. It is not the spec's layer type
-// 1, it is not a build record, and no deployed router accepts it as either. It
-// also produces variable-length output, which defeats the fixed-size tunnel
-// layout whose purpose is to stop intermediate hops from observing payload
-// sizes. Do not advertise it to a router.
+// So type 1 is reserved-but-undefined, implemented by no router, and this
+// package offers no constant for it: [NewTunnelEncryptor] accepts only
+// [TunnelEncryptionAES] and returns [ErrUnsupportedEncryptionType] for anything
+// else. (This package previously exported an ECIES layer encryptor under the
+// value 1. It wrapped the ecies package's *end-to-end* one-time format, which is
+// destination-to-destination rather than a tunnel layer scheme, and produced
+// variable-length output - defeating the fixed-size tunnel layout whose purpose
+// is to stop intermediate hops from observing payload sizes. It has been
+// removed.)
 //
-// Note that the local values 0 and 1 are an internal choice of this package.
-// They are not the same as the "crypto type" field in the I2P LeaseSet2 (LS2)
-// records, where ECIES-X25519 is identified by crypto type 4.
+// Note also that the layer-encryption-type field is not the "crypto type" field
+// of the I2P LeaseSet2 (LS2) records, where ECIES-X25519 is identified by crypto
+// type 4. ECIES-X25519 IS the deployed standard for tunnel *building* (see
+// [EncryptBuildRequest]); that is a different layer from record encryption.
 //
 // See the official specifications:
 //   - Tunnel-Creation-ECIES (build records, layer keys - the current tunnel
