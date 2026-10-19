@@ -35,7 +35,6 @@ import (
 	"math/big"
 
 	"filippo.io/edwards25519"
-	"filippo.io/edwards25519/field"
 	"github.com/samber/oops"
 )
 
@@ -127,13 +126,19 @@ func reduceScalarModL(b []byte) (*edwards25519.Scalar, error) {
 
 // scalarFromBig converts a value already reduced mod L into a Scalar.
 func scalarFromBig(v *big.Int) (*edwards25519.Scalar, error) {
-	var buf [ScalarSize]byte
-	b := v.Bytes() // big-endian
-	for i := range b {
-		buf[ScalarSize-1-i] = b[i]
+	b := v.Bytes() // big-endian, no leading zeros
+	if len(b) > ScalarSize {
+		return nil, oops.Errorf("scalar %d bytes exceeds %d", len(b), ScalarSize)
 	}
+	// Left-pad to 32 big-endian bytes, then reverse to the spec's little-endian
+	// scalar encoding. Placing the reversed bytes at the low end (rather than the
+	// high end) is what keeps a value shorter than 32 bytes correct.
+	var be [ScalarSize]byte
+	copy(be[ScalarSize-len(b):], b)
+	le := swapEndianness(be[:])
+
 	s := edwards25519.NewScalar()
-	if _, err := s.SetCanonicalBytes(buf[:]); err != nil {
+	if _, err := s.SetCanonicalBytes(le); err != nil {
 		return nil, oops.Wrapf(err, "scalar is not canonical mod L")
 	}
 	return s, nil
@@ -366,11 +371,26 @@ func verify(vk *edwards25519.Point, m, sig []byte) (bool, error) {
 	return isIdentity(new(edwards25519.Point).MultByCofactor(sum)), nil
 }
 
-// decodeChallengeScalar is exposed for tests that need HStar directly.
-func decodeFieldElement(b []byte) (*field.Element, error) {
-	e := new(field.Element)
-	if _, err := e.SetBytes(b); err != nil {
-		return nil, oops.Wrapf(err, "invalid field element")
+// isInPrimeOrderSubgroup reports whether P lies in the order-L prime-order
+// subgroup, i.e. [L]P is the identity. The full Edwards group has order 8L, so a
+// point with a cofactor (order dividing 8) component fails.
+//
+// Used by BlindPublicKey to enforce encryptedleaseset.md §Goals ("Blinded public
+// keys must be on the Ed25519 curve and prime-order subgroup"). Note this is
+// deliberately NOT part of VERIFY: §RedDSA functions VERIFY multiplies the check
+// equation by the cofactor precisely so that a small-order component in R is
+// tolerated. The distinction is: a signing *key* must be in the subgroup, but a
+// signature's R point is verified cofactor-tolerantly.
+func isInPrimeOrderSubgroup(P *edwards25519.Point) bool {
+	// edwards25519.Scalar is reduced mod L, so [L] cannot be a Scalar; multiply by
+	// the integer L via double-and-add.
+	acc := edwards25519.NewIdentityPoint()
+	cur := new(edwards25519.Point).Set(P)
+	for i := 0; i < orderL.BitLen(); i++ {
+		if orderL.Bit(i) == 1 {
+			acc.Add(acc, cur)
+		}
+		cur.Double(cur)
 	}
-	return e, nil
+	return acc.Equal(edwards25519.NewIdentityPoint()) == 1
 }

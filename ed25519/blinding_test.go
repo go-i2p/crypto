@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"crypto/ed25519"
 	"crypto/rand"
+	"errors"
 	"testing"
 
 	"filippo.io/edwards25519"
@@ -405,4 +406,44 @@ func BenchmarkUnblindPublicKey(b *testing.B) {
 // Note: This benchmark is disabled because blinded keys cannot be used with crypto/ed25519.Sign
 func BenchmarkBlindedSignature(b *testing.B) {
 	b.Skip("Blinded private keys cannot be used directly with crypto/ed25519.Sign")
+}
+
+// TestBlindPublicKeyRejectsSmallOrder pins the F-10 remediation's second half:
+// encryptedleaseset.md §Goals requires "Blinded public keys must be on the
+// Ed25519 curve and prime-order subgroup". Point.SetBytes accepts torsion points
+// (they are on the curve), and [alpha]B is always in the prime-order subgroup, so
+// a small-order input A produces A' = A + [alpha]B of order 8L - off the subgroup.
+// computeBlindedPoint must reject it rather than emit an unusable blinded key.
+func TestBlindPublicKeyRejectsSmallOrder(t *testing.T) {
+	// The order-2 point (0, -1): y = p - 1 with a positive-x sign bit of 0.
+	// It is a valid curve point but not in the prime-order subgroup.
+	var torsion [32]byte
+	// p - 1 little-endian = ff repeated 31 times then 7f
+	for i := 0; i < 31; i++ {
+		torsion[i] = 0xff
+	}
+	torsion[31] = 0x7f
+
+	var alpha [32]byte
+	// A canonical non-zero alpha.
+	alpha[0] = 1
+
+	_, err := BlindPublicKey(torsion, alpha)
+	if err == nil {
+		t.Fatal("BlindPublicKey accepted a small-order input point; §Goals requires the prime-order subgroup")
+	}
+	if !errors.Is(err, ErrSmallOrderPoint) {
+		t.Errorf("got %v, want ErrSmallOrderPoint", err)
+	}
+
+	// A normal public key must still blind fine.
+	_, priv, err := ed25519.GenerateKey(rand.Reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var valid [32]byte
+	copy(valid[:], priv.Public().(ed25519.PublicKey))
+	if _, err := BlindPublicKey(valid, alpha); err != nil {
+		t.Errorf("BlindPublicKey rejected a valid key: %v", err)
+	}
 }

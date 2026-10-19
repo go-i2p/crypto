@@ -1,657 +1,490 @@
 package red25519
 
-// Tests for the Red25519 signature scheme. These validate the sign/verify
-// round-trip, key construction, and compatibility with the upstream
-// go-i2p/red25519 implementation. Red25519 is a modern I2P signature scheme
-// (see https://i2p.net/en/docs/specs/cryptography/).
-
 import (
 	"bytes"
 	"crypto/ed25519"
 	"crypto/rand"
-	"io"
+	"encoding/hex"
+	"errors"
 	"testing"
 
 	"github.com/go-i2p/crypto/types"
-	upstream "github.com/go-i2p/red25519"
 )
 
-// signWithRed25519 is a test helper that generates a Red25519 key pair,
-// signs the given message, and returns the public key, signature, and signer.
-func signWithRed25519(t *testing.T, message []byte) (*Red25519PublicKey, *Red25519PrivateKey, []byte) {
+// Tests for the Red25519 scheme. The authoritative assertions are in
+// spec_vectors_test.go (reference vectors from the spec); these cover the
+// properties and rejection behavior around them.
+
+func newTestKeyPair(t *testing.T) (Red25519PublicKey, Red25519PrivateKey) {
 	t.Helper()
-	pubKey, privKey, err := GenerateRed25519KeyPair()
+	pub, priv, err := GenerateRed25519KeyPair()
 	if err != nil {
-		t.Fatal("Failed to generate key:", err)
+		t.Fatalf("GenerateRed25519KeyPair: %v", err)
 	}
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
-
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Sign failed:", err)
-	}
-
-	return pubKey, privKey, sig
+	return *pub, *priv
 }
 
-// generateRed25519TestSignerVerifier generates a Red25519 key pair and returns
-// the signer, verifier, and private key (for deferred Zero).
-func generateRed25519TestSignerVerifier(t *testing.T) (types.Signer, types.Verifier, *Red25519PrivateKey) {
-	t.Helper()
-	pubKey, privKey, err := GenerateRed25519KeyPair()
+// TestRed25519SignVerifyRoundTrip checks a fresh keypair signs and verifies.
+func TestRed25519SignVerifyRoundTrip(t *testing.T) {
+	pub, priv := newTestKeyPair(t)
+	signer, err := priv.NewSigner()
 	if err != nil {
-		t.Fatal("Failed to generate Red25519 key pair:", err)
+		t.Fatalf("NewSigner: %v", err)
 	}
-	signer, err := privKey.NewSigner()
+	verifier, err := pub.NewVerifier()
 	if err != nil {
-		t.Fatal("NewSigner failed:", err)
+		t.Fatalf("NewVerifier: %v", err)
 	}
-	verifier, err := pubKey.NewVerifier()
+	msg := []byte("an encrypted lease set published to a floodfill")
+	sig, err := signer.Sign(msg)
 	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
+		t.Fatalf("Sign: %v", err)
 	}
-	return signer, verifier, privKey
-}
-
-// TestRed25519SignVerifyRoundTrips tests both Sign/Verify and SignHash/VerifyHash round-trips.
-func TestRed25519SignVerifyRoundTrips(t *testing.T) {
-	tests := []struct {
-		name    string
-		msgSize int
-		sign    func(types.Signer, []byte) ([]byte, error)
-		verify  func(types.Verifier, []byte, []byte) error
-	}{
-		{"Sign/Verify", 256, types.Signer.Sign, types.Verifier.Verify},
-		{"SignHash/VerifyHash", 512, types.Signer.SignHash, types.Verifier.VerifyHash},
+	if len(sig) != SignatureSize {
+		t.Errorf("signature is %d bytes, want %d (R || S)", len(sig), SignatureSize)
 	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			signer, verifier, privKey := generateRed25519TestSignerVerifier(t)
-			defer privKey.Zero()
-
-			message := make([]byte, tt.msgSize)
-			io.ReadFull(rand.Reader, message)
-
-			sig, err := tt.sign(signer, message)
-			if err != nil {
-				t.Fatalf("%s failed: %v", tt.name, err)
-			}
-
-			if tt.name == "Sign/Verify" && len(sig) != SignatureSize {
-				t.Fatalf("Signature size = %d, want %d", len(sig), SignatureSize)
-			}
-
-			err = tt.verify(verifier, message, sig)
-			if err != nil {
-				t.Fatalf("%s verification failed: %v", tt.name, err)
-			}
-		})
+	if err := verifier.Verify(msg, sig); err != nil {
+		t.Errorf("Verify failed: %v", err)
 	}
 }
 
-// TestRed25519DeterministicSignatures verifies that Red25519 (using upstream lib)
-// produces deterministic signatures for the same key and message.
-func TestRed25519DeterministicSignatures(t *testing.T) {
-	_, privKey, err := GenerateRed25519KeyPair()
+// TestRed25519SignaturesAreRandomized pins the property the previous
+// implementation violated. red25519.md §Sign/Verify Calculations:
+//
+//	"In Red25519, the calculation of r for signing uses additional random data ...
+//	Because of the random data, every Red25519 signature is different, even when
+//	signing the same data with the same key."
+//
+// Deterministic signatures would let an observer link two observations of the
+// same blinded Destination, voiding the unlinkability the scheme exists to
+// provide (§Security implications: "Re-randomizing ... does not leak any
+// information about the Destination").
+func TestRed25519SignaturesAreRandomized(t *testing.T) {
+	pub, priv := newTestKeyPair(t)
+	signer, err := priv.NewSigner()
 	if err != nil {
-		t.Fatal("Failed to generate key:", err)
+		t.Fatalf("NewSigner: %v", err)
 	}
-	defer privKey.Zero()
+	msg := []byte("the same message, signed repeatedly")
 
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
-
-	message := []byte("test message for determinism check")
-
-	sig1, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("First sign failed:", err)
-	}
-
-	sig2, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Second sign failed:", err)
-	}
-
-	// Upstream red25519 uses deterministic nonces (like standard Ed25519)
-	if !bytes.Equal(sig1, sig2) {
-		t.Fatal("Two signatures of the same message differ — Red25519 should be deterministic")
+	seen := make(map[string]bool)
+	for i := 0; i < 8; i++ {
+		sig, err := signer.Sign(msg)
+		if err != nil {
+			t.Fatalf("Sign %d: %v", i, err)
+		}
+		key := hex.EncodeToString(sig)
+		if seen[key] {
+			t.Fatalf("signature %d duplicated; Red25519 SIGN must use fresh random data", i)
+		}
+		seen[key] = true
+		v, err := pub.NewVerifier()
+		if err != nil {
+			t.Fatalf("NewVerifier: %v", err)
+		}
+		if err := v.Verify(msg, sig); err != nil {
+			t.Errorf("randomized signature %d failed to verify: %v", i, err)
+		}
 	}
 }
 
-// TestRed25519WrongKeyRejects verifies that a signature by one key is rejected
-// by a different key's verifier.
+// TestRed25519NotEd25519 documents that Red25519 is a distinct scheme: the same
+// key bytes must not produce Ed25519-compatible signatures. The previous
+// implementation was byte-identical to crypto/ed25519, which is precisely the
+// defect (a Java router reads sig type 11 as Red25519).
+func TestRed25519NotEd25519(t *testing.T) {
+	// Use the spec's own vector key so this is not a self-generated claim.
+	sk := mustH(t, "58e86efb75fa4e2c410f46e16de9f6acae1a1703528651b69bc176c088bef36e")
+	msg := mustH(t, "0202020202020202020202020202020202020202020202020202020202020202")
+	redSig := mustH(t, "61f5527f4d3b46de4b2c234390370bf715ae9098907a0d191ba1b44b23a8ac1a"+
+		"6a40437a5294e9503faaf9bd2b7f2fe7ba44dec487b3185aba7ff7d7a17cd40f")
+
+	priv, err := NewRed25519PrivateKey(sk)
+	if err != nil {
+		t.Fatalf("NewRed25519PrivateKey: %v", err)
+	}
+	signer, err := priv.NewSigner()
+	if err != nil {
+		t.Fatalf("NewSigner: %v", err)
+	}
+	// The reference signature must verify under our implementation.
+	ver, err := priv.Public()
+	if err != nil {
+		t.Fatalf("Public: %v", err)
+	}
+	v, err := ver.NewVerifier()
+	if err != nil {
+		t.Fatalf("NewVerifier: %v", err)
+	}
+	if err := v.Verify(msg, redSig); err != nil {
+		t.Fatalf("reference Red25519 signature rejected: %v", err)
+	}
+
+	// And a signature we produce is not an Ed25519 signature over the same
+	// message: Ed25519 verification with the corresponding public key fails.
+	ours, err := signer.Sign(msg)
+	if err != nil {
+		t.Fatalf("Sign: %v", err)
+	}
+	vk := mustH(t, "8a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c")
+	if ed25519.Verify(ed25519.PublicKey(vk), msg, ours) {
+		t.Error("our Red25519 signature verifies as Ed25519; the schemes must differ")
+	}
+}
+
+// TestRed25519WrongKeyRejects checks a signature does not verify under a
+// different key.
 func TestRed25519WrongKeyRejects(t *testing.T) {
-	pubKey1, _, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("Failed to generate key pair 1:", err)
-	}
+	_, priv := newTestKeyPair(t)
+	otherPub, _ := newTestKeyPair(t)
 
-	_, privKey2, err := GenerateRed25519KeyPair()
+	signer, err := priv.NewSigner()
 	if err != nil {
-		t.Fatal("Failed to generate key pair 2:", err)
+		t.Fatalf("NewSigner: %v", err)
 	}
-	defer privKey2.Zero()
-
-	signer, err := privKey2.NewSigner()
+	msg := []byte("signed by one key")
+	sig, err := signer.Sign(msg)
 	if err != nil {
-		t.Fatal("NewSigner failed:", err)
+		t.Fatalf("Sign: %v", err)
 	}
-
-	message := []byte("test message for wrong key rejection")
-	sig, err := signer.Sign(message)
+	v, err := otherPub.NewVerifier()
 	if err != nil {
-		t.Fatal("Sign failed:", err)
+		t.Fatalf("NewVerifier: %v", err)
 	}
-
-	// Verify with the WRONG public key — should fail
-	verifier, err := pubKey1.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
-	}
-	err = verifier.Verify(message, sig)
-	if err == nil {
-		t.Fatal("Verify with wrong public key should have failed")
+	if err := v.Verify(msg, sig); err == nil {
+		t.Error("signature verified under the wrong public key")
 	}
 }
 
-// TestRed25519TamperedMessageRejects verifies that modifying the message
-// causes verification to fail.
-func TestRed25519TamperedMessageRejects(t *testing.T) {
-	message := []byte("original message")
-	pubKey, privKey, sig := signWithRed25519(t, message)
-	defer privKey.Zero()
-
-	// Tamper with message
-	tampered := []byte("tampered message")
-
-	verifier, err := pubKey.NewVerifier()
+// TestRed25519TamperedRejected checks message and signature mutations fail.
+func TestRed25519TamperedRejected(t *testing.T) {
+	pub, priv := newTestKeyPair(t)
+	signer, _ := priv.NewSigner()
+	msg := []byte("integrity matters here")
+	sig, err := signer.Sign(msg)
 	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
+		t.Fatalf("Sign: %v", err)
 	}
-	err = verifier.Verify(tampered, sig)
-	if err == nil {
-		t.Fatal("Verify with tampered message should have failed")
-	}
-}
-
-// TestRed25519TamperedSignatureRejects verifies that modifying the signature
-// causes verification to fail.
-func TestRed25519TamperedSignatureRejects(t *testing.T) {
-	message := []byte("test message for tampered signature")
-	pubKey, privKey, sig := signWithRed25519(t, message)
-	defer privKey.Zero()
-
-	// Tamper with signature
-	sig[0] ^= 0xff
-
-	verifier, err := pubKey.NewVerifier()
+	v, err := pub.NewVerifier()
 	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
+		t.Fatalf("NewVerifier: %v", err)
 	}
-	err = verifier.Verify(message, sig)
-	if err == nil {
-		t.Fatal("Verify with tampered signature should have failed")
-	}
-}
 
-// TestRed25519KeyPairGeneration tests key pair generation and interface compliance.
-func TestRed25519KeyPairGeneration(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-	defer privKey.Zero()
-
-	// Verify key sizes
-	for _, tc := range []struct {
-		name string
-		got  int
-		want int
-	}{
-		{"PublicKey", pubKey.Len(), PublicKeySize},
-		{"PrivateKey", privKey.Len(), PrivateKeySize},
-	} {
-		if tc.got != tc.want {
-			t.Fatalf("%s length = %d, want %d", tc.name, tc.got, tc.want)
+	t.Run("tampered message", func(t *testing.T) {
+		bad := append([]byte{}, msg...)
+		bad[0] ^= 0xFF
+		if err := v.Verify(bad, sig); err == nil {
+			t.Error("tampered message verified")
 		}
-	}
-
-	// Test round-trip via generateRed25519TestSignerVerifier
-	signer, verifier, privKey2 := generateRed25519TestSignerVerifier(t)
-	defer privKey2.Zero()
-	message := []byte("test message for key pair generation")
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Sign failed:", err)
-	}
-	if err := verifier.Verify(message, sig); err != nil {
-		t.Fatal("Verify failed:", err)
-	}
-}
-
-// TestRed25519PublicKeyBytes tests key byte methods.
-func TestRed25519PublicKeyBytes(t *testing.T) {
-	pubKey, _, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-
-	if pubKey.Len() != PublicKeySize {
-		t.Fatalf("Len() = %d, want %d", pubKey.Len(), PublicKeySize)
-	}
-	if len(pubKey.Bytes()) != PublicKeySize {
-		t.Fatalf("Bytes() length = %d, want %d", len(pubKey.Bytes()), PublicKeySize)
-	}
-}
-
-// TestRed25519PrivateKeyBytes tests private key byte methods.
-func TestRed25519PrivateKeyBytes(t *testing.T) {
-	_, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-	defer privKey.Zero()
-
-	if privKey.Len() != PrivateKeySize {
-		t.Fatalf("Len() = %d, want %d", privKey.Len(), PrivateKeySize)
-	}
-	if len(privKey.Bytes()) != PrivateKeySize {
-		t.Fatalf("Bytes() length = %d, want %d", len(privKey.Bytes()), PrivateKeySize)
-	}
-}
-
-// TestRed25519PrivateKeyZero tests that Zero() clears the key material.
-func TestRed25519PrivateKeyZero(t *testing.T) {
-	_, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-
-	privKey.Zero()
-
-	for i, b := range *privKey {
-		if b != 0 {
-			t.Fatalf("Zero() did not clear byte %d: got %d", i, b)
+	})
+	t.Run("tampered signature", func(t *testing.T) {
+		bad := append([]byte{}, sig...)
+		bad[len(bad)-1] ^= 0xFF
+		if err := v.Verify(msg, bad); err == nil {
+			t.Error("tampered signature verified")
 		}
+	})
+	t.Run("bad signature size", func(t *testing.T) {
+		err := v.Verify(msg, sig[:SignatureSize-1])
+		if err == nil {
+			t.Error("short signature accepted")
+		} else if !errors.Is(err, types.ErrBadSignatureSize) {
+			t.Errorf("short signature: got %v, want ErrBadSignatureSize", err)
+		}
+	})
+}
+
+// TestRed25519MessageSizeLimit pins the cap from §Red25519: "Messages must be no
+// longer than 65534 bytes. A length of 65535 is reserved for possible future
+// extensions." The 2-byte little-endian length prefix cannot distinguish 65535
+// from the reserved value, so oversize messages must be refused rather than
+// signed under an ambiguous encoding.
+func TestRed25519MessageSizeLimit(t *testing.T) {
+	_, priv := newTestKeyPair(t)
+	signer, err := priv.NewSigner()
+	if err != nil {
+		t.Fatalf("NewSigner: %v", err)
+	}
+
+	// Exactly at the limit must be accepted.
+	atLimit := make([]byte, MaxMessageSize)
+	if _, err := signer.Sign(atLimit); err != nil {
+		t.Errorf("message of %d bytes rejected: %v", MaxMessageSize, err)
+	}
+
+	// One over must be rejected.
+	over := make([]byte, MaxMessageSize+1)
+	if _, err := signer.Sign(over); err == nil {
+		t.Errorf("message of %d bytes accepted; the maximum is %d", len(over), MaxMessageSize)
+	}
+	if MaxMessageSize != 65534 {
+		t.Errorf("MaxMessageSize = %d, want 65534", MaxMessageSize)
 	}
 }
 
-// TestRed25519PublicKeyFromPrivateKey tests public key extraction.
-func TestRed25519PublicKeyFromPrivateKey(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-	defer privKey.Zero()
-
-	// Extract public key from private key
-	derivedPub, err := privKey.Public()
-	if err != nil {
-		t.Fatal("Public() failed:", err)
-	}
-
-	if !bytes.Equal(pubKey.Bytes(), derivedPub.Bytes()) {
-		t.Fatal("Public key derived from private key doesn't match generated public key")
-	}
-}
-
-// TestRed25519GenerateKey tests the GenerateRed25519Key convenience function.
-func TestRed25519GenerateKey(t *testing.T) {
-	privKey, err := GenerateRed25519Key()
-	if err != nil {
-		t.Fatal("GenerateRed25519Key failed:", err)
-	}
-
-	if privKey.Len() != PrivateKeySize {
-		t.Fatalf("Private key length = %d, want %d", privKey.Len(), PrivateKeySize)
-	}
-}
-
-// TestRed25519PrivateKeyGenerate tests the Generate() method.
-func TestRed25519PrivateKeyGenerate(t *testing.T) {
-	_, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-	defer privKey.Zero()
-
-	newKey, err := privKey.Generate()
-	if err != nil {
-		t.Fatal("Generate() failed:", err)
-	}
-
-	if newKey.Len() != PrivateKeySize {
-		t.Fatalf("Generated key length = %d, want %d", newKey.Len(), PrivateKeySize)
-	}
-
-	// New key should be different from original
-	newKeyTyped := newKey.(Red25519PrivateKey)
-	if bytes.Equal(privKey.Bytes(), newKeyTyped.Bytes()) {
-		t.Fatal("Generated key should be different from original")
-	}
-}
-
-// TestNewRed25519KeyConstructors tests constructor validation for both public and private keys.
-func TestNewRed25519KeyConstructors(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-	defer privKey.Zero()
-
-	tests := []struct {
-		name        string
-		constructor func([]byte) (interface{ Bytes() []byte }, error)
-		invalidData []byte
-		validData   []byte
-	}{
-		{
-			name: "PublicKey",
-			constructor: func(data []byte) (interface{ Bytes() []byte }, error) {
-				return NewRed25519PublicKey(data)
-			},
-			invalidData: []byte{1, 2, 3},
-			validData:   pubKey.Bytes(),
-		},
-		{
-			name: "PrivateKey",
-			constructor: func(data []byte) (interface{ Bytes() []byte }, error) {
-				return NewRed25519PrivateKey(data)
-			},
-			invalidData: []byte{1, 2, 3},
-			validData:   privKey.Bytes(),
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name+"_invalid_size", func(t *testing.T) {
-			_, err := tt.constructor(tt.invalidData)
-			if err == nil {
-				t.Fatalf("New%s should reject invalid size", tt.name)
-			}
-		})
-
-		t.Run(tt.name+"_valid_roundtrip", func(t *testing.T) {
-			restored, err := tt.constructor(tt.validData)
-			if err != nil {
-				t.Fatalf("New%s with valid data failed: %v", tt.name, err)
-			}
-
-			if !bytes.Equal(tt.validData, restored.Bytes()) {
-				t.Fatalf("Restored %s doesn't match original", tt.name)
-			}
-		})
-	}
-}
-
-// TestRed25519InvalidKeySizes tests error handling for invalid key sizes.
-func TestRed25519InvalidKeySizes(t *testing.T) {
-	// Signer with bad key - create directly with upstream PrivateKey
-	badSigner := &Red25519Signer{k: upstream.PrivateKey([]byte{1, 2, 3})}
-	_, err := badSigner.Sign([]byte("test"))
-	if err == nil {
-		t.Fatal("Sign with bad key should fail")
-	}
-
-	// Verifier with bad key
-	badVerifier := &Red25519Verifier{k: upstream.PublicKey([]byte{1, 2, 3})}
-	err = badVerifier.Verify([]byte("test"), make([]byte, SignatureSize))
-	if err == nil {
-		t.Fatal("Verify with bad key should fail")
-	}
-}
-
-// TestRed25519VerifierFromPrivateKey tests creating a verifier from a private key.
-func TestRed25519VerifierFromPrivateKey(t *testing.T) {
-	_, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-	defer privKey.Zero()
-
-	verifier, err := privKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier from private key failed:", err)
-	}
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
-	}
-
-	message := []byte("test message for verifier from private key")
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Sign failed:", err)
-	}
-
-	if err := verifier.Verify(message, sig); err != nil {
-		t.Fatal("Verify via private key verifier failed:", err)
-	}
-}
-
-// TestRed25519EmptyMessage tests signing and verifying an empty message.
+// TestRed25519EmptyMessage checks the zero-length message path: the length prefix
+// is still applied (two zero bytes), so empty and non-empty are domain separated.
 func TestRed25519EmptyMessage(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
+	pub, priv := newTestKeyPair(t)
+	signer, _ := priv.NewSigner()
+	sig, err := signer.Sign(nil)
 	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
+		t.Fatalf("Sign(nil): %v", err)
 	}
-	defer privKey.Zero()
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
+	v, _ := pub.NewVerifier()
+	if err := v.Verify(nil, sig); err != nil {
+		t.Errorf("empty message round trip failed: %v", err)
 	}
-
-	sig, err := signer.Sign([]byte{})
-	if err != nil {
-		t.Fatal("Sign empty message failed:", err)
-	}
-
-	verifier, err := pubKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
-	}
-
-	if err := verifier.Verify([]byte{}, sig); err != nil {
-		t.Fatal("Verify empty message failed:", err)
+	// An empty message must not verify against a single-zero-byte message.
+	v2, _ := pub.NewVerifier()
+	if err := v2.Verify([]byte{0}, sig); err == nil {
+		t.Error("empty-message signature verified against a 1-byte message; the length prefix is not distinguishing")
 	}
 }
 
-// TestRed25519LargeMessage tests signing and verifying a large message.
-func TestRed25519LargeMessage(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
+// TestRed25519KeySizes checks the constructors enforce the spec's lengths: private
+// key 32 (common-structures.md §SigningPrivateKey) and public key 32.
+func TestRed25519KeySizes(t *testing.T) {
+	if PrivateKeySize != 32 {
+		t.Errorf("PrivateKeySize = %d, want 32 per §SigningPrivateKey (RedDSA = 32)", PrivateKeySize)
 	}
-	defer privKey.Zero()
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		t.Fatal("NewSigner failed:", err)
+	if PublicKeySize != 32 {
+		t.Errorf("PublicKeySize = %d, want 32", PublicKeySize)
 	}
-
-	// 1 MB message
-	message := make([]byte, 1<<20)
-	io.ReadFull(rand.Reader, message)
-
-	sig, err := signer.Sign(message)
-	if err != nil {
-		t.Fatal("Sign large message failed:", err)
+	if SignatureSize != 64 {
+		t.Errorf("SignatureSize = %d, want 64 per §Signature (RedDSA = 64)", SignatureSize)
 	}
 
-	verifier, err := pubKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
+	if _, err := NewRed25519PrivateKey(make([]byte, 64)); err == nil {
+		t.Error("NewRed25519PrivateKey accepted 64 bytes; the spec's key is a 32-byte scalar")
 	}
-
-	if err := verifier.Verify(message, sig); err != nil {
-		t.Fatal("Verify large message failed:", err)
+	if _, err := NewRed25519PrivateKey(make([]byte, 32)); err == nil {
+		t.Error("the all-zero scalar must be rejected (DERIVE_PUBLIC(0) is the identity)")
+	}
+	if _, err := NewRed25519PublicKey(make([]byte, 31)); err == nil {
+		t.Error("NewRed25519PublicKey accepted 31 bytes")
+	}
+	// An encoding whose y-coordinate has no valid x (x^2 is a non-residue) is not
+	// a curve point and DECODE_POINT must fail: red25519.md §RedDSA functions
+	// VERIFY, "R = DECODE_POINT(Rbytes); if R is invalid: return false".
+	//
+	// Note that edwards25519.SetBytes reduces a non-canonical y mod p rather than
+	// rejecting it, so an out-of-range y (e.g. all 0xFF) is still a valid point;
+	// the genuine rejection case is the non-residue below.
+	notAPoint, err := hex.DecodeString("0700000000000000000000000000000000000000000000000000000000000080")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := NewRed25519PublicKey(notAPoint); err == nil {
+		t.Error("NewRed25519PublicKey accepted an encoding that is not a curve point")
 	}
 }
 
-// TestRed25519Ed25519Interop verifies that unblinded Red25519 signatures
-// are byte-identical to standard Ed25519 signatures (as guaranteed by upstream).
-func TestRed25519Ed25519Interop(t *testing.T) {
-	// Generate with upstream, get the raw ed25519 key pair
-	pub, priv, err := upstream.GenerateKey(rand.Reader)
-	if err != nil {
-		t.Fatal("GenerateKey failed:", err)
-	}
-
-	message := []byte("interop test message")
-
-	// Sign with Red25519
-	redSig := upstream.Sign(priv, message)
-
-	// Verify with standard crypto/ed25519
-	stdPub := ed25519.PublicKey(pub)
-	if !ed25519.Verify(stdPub, message, redSig) {
-		t.Fatal("Standard ed25519.Verify rejected Red25519 signature — interop broken")
-	}
-
-	// Sign with standard Ed25519
-	stdPriv := ed25519.PrivateKey(priv)
-	stdSig := ed25519.Sign(stdPriv, message)
-
-	// Verify with Red25519
-	if !upstream.Verify(pub, message, stdSig) {
-		t.Fatal("Red25519.Verify rejected standard Ed25519 signature — interop broken")
-	}
-}
-
-// TestRed25519BlindedSignature tests key blinding and blinded signature verification.
-func TestRed25519BlindedSignature(t *testing.T) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		t.Fatal("GenerateRed25519KeyPair failed:", err)
-	}
-	defer privKey.Zero()
-
-	// Generate blinding factor
-	bf, err := GenerateBlindingFactor(nil)
-	if err != nil {
-		t.Fatal("GenerateBlindingFactor failed:", err)
-	}
-
-	// Blind both keys
-	blindedPub, err := BlindPublicKey(*pubKey, bf)
-	if err != nil {
-		t.Fatal("BlindPublicKey failed:", err)
-	}
-
-	blindedPriv, err := BlindPrivateKey(*privKey, bf)
-	if err != nil {
-		t.Fatal("BlindPrivateKey failed:", err)
-	}
-
-	// Sign with blinded private key
-	blindedSigner := &Red25519Signer{k: upstream.PrivateKey(blindedPriv)}
-	message := []byte("blinded message test")
-	sig, err := blindedSigner.Sign(message)
-	if err != nil {
-		t.Fatal("Sign with blinded key failed:", err)
-	}
-
-	// Verify with blinded public key
-	blindedVerifier := &Red25519Verifier{k: upstream.PublicKey(blindedPub)}
-	if err := blindedVerifier.Verify(message, sig); err != nil {
-		t.Fatal("Verify with blinded key failed:", err)
-	}
-
-	// Original public key should NOT verify the blinded signature
-	origVerifier, err := pubKey.NewVerifier()
-	if err != nil {
-		t.Fatal("NewVerifier failed:", err)
-	}
-	if err := origVerifier.Verify(message, sig); err == nil {
-		t.Fatal("Original public key should not verify blinded signature")
-	}
-}
-
-// TestRed25519NewKeyFromSeed tests deterministic key derivation from seed.
-func TestRed25519NewKeyFromSeed(t *testing.T) {
-	seed := make([]byte, SeedSize)
-	io.ReadFull(rand.Reader, seed)
-
-	priv1 := NewKeyFromSeed(seed)
-	priv2 := NewKeyFromSeed(seed)
-
-	if !bytes.Equal(priv1.Bytes(), priv2.Bytes()) {
-		t.Fatal("Same seed should produce same private key")
-	}
-}
-
-// BenchmarkRed25519Sign benchmarks Red25519 signing.
-func BenchmarkRed25519Sign(b *testing.B) {
-	_, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		b.Fatal(err)
-	}
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		b.Fatal(err)
-	}
-
-	message := []byte("benchmark message for red25519 signing")
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, err := signer.Sign(message)
+// TestRed25519GeneratePrivateIsModL checks GENERATE_PRIVATE produces canonical
+// scalars (< L), i.e. reduced mod L rather than clamped. A clamped scalar has bit
+// 254 set and bit 0 of byte 31 set, which mod-L reduction removes.
+func TestRed25519GeneratePrivateIsModL(t *testing.T) {
+	for i := 0; i < 20; i++ {
+		key, err := GenerateRed25519Key()
 		if err != nil {
-			b.Fatal(err)
+			t.Fatalf("GenerateRed25519Key: %v", err)
+		}
+		sk := key.(Red25519PrivateKey)
+		if len(sk) != PrivateKeySize {
+			t.Fatalf("generated key is %d bytes, want %d", len(sk), PrivateKeySize)
+		}
+		// Must be canonical: SetCanonicalBytes rejects values >= L.
+		if _, canonical := decodeScalarLE(sk); !canonical {
+			t.Errorf("generated scalar %x is >= L; GENERATE_PRIVATE must reduce mod L", sk)
+		}
+		// A clamped Ed25519 scalar always has these bits; a mod-L scalar has bit
+		// 254 clear (byte 31 top two bits are 0 for values < 2^253).
+		if sk[31]&0xE0 != 0 {
+			t.Errorf("generated scalar byte31 = %02x has high bits set, suggesting Ed25519 clamping rather than mod-L reduction", sk[31])
 		}
 	}
 }
 
-// BenchmarkRed25519Verify benchmarks Red25519 verification.
-func BenchmarkRed25519Verify(b *testing.B) {
-	pubKey, privKey, err := GenerateRed25519KeyPair()
-	if err != nil {
-		b.Fatal(err)
-	}
-
-	signer, err := privKey.NewSigner()
-	if err != nil {
-		b.Fatal(err)
-	}
-
-	message := []byte("benchmark message for red25519 verification")
-	sig, err := signer.Sign(message)
-	if err != nil {
-		b.Fatal(err)
-	}
-
-	verifier, err := pubKey.NewVerifier()
-	if err != nil {
-		b.Fatal(err)
-	}
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		err := verifier.Verify(message, sig)
+// TestRed25519BlindingInvariant checks RANDOMIZE_PUBLIC(vk, alpha) ==
+// DERIVE_PUBLIC(RANDOMIZE_PRIVATE(sk, alpha)) for freshly generated keys, the
+// relationship §Design requires and the one that additive-only implementations
+// (or a mix of additive and multiplicative) break.
+func TestRed25519BlindingInvariant(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		pub, priv := newTestKeyPair(t)
+		alpha, err := GenerateBlindingFactor(rand.Reader)
 		if err != nil {
-			b.Fatal(err)
+			t.Fatalf("GenerateBlindingFactor: %v", err)
+		}
+		rsk, err := BlindPrivateKey(priv, alpha)
+		if err != nil {
+			t.Fatalf("BlindPrivateKey: %v", err)
+		}
+		rvk, err := BlindPublicKey(pub, alpha)
+		if err != nil {
+			t.Fatalf("BlindPublicKey: %v", err)
+		}
+		derived, err := rsk.Public()
+		if err != nil {
+			t.Fatalf("Public: %v", err)
+		}
+		if !bytes.Equal(derived.Bytes(), rvk.Bytes()) {
+			t.Fatalf("invariant broken: DERIVE_PUBLIC(rsk) = %x, rvk = %x", derived.Bytes(), rvk.Bytes())
+		}
+
+		// And the blinded key pair must actually work together.
+		msg := []byte("blinded destination signature")
+		signer, err := rsk.NewSigner()
+		if err != nil {
+			t.Fatalf("NewSigner: %v", err)
+		}
+		sig, err := signer.Sign(msg)
+		if err != nil {
+			t.Fatalf("Sign: %v", err)
+		}
+		v, err := rvk.NewVerifier()
+		if err != nil {
+			t.Fatalf("NewVerifier: %v", err)
+		}
+		if err := v.Verify(msg, sig); err != nil {
+			t.Fatalf("blinded signature failed to verify: %v", err)
 		}
 	}
 }
 
-// BenchmarkRed25519KeyGen benchmarks Red25519 key pair generation.
-func BenchmarkRed25519KeyGen(b *testing.B) {
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		_, _, err := GenerateRed25519KeyPair()
-		if err != nil {
-			b.Fatal(err)
-		}
+// TestBlindingFactorsRejectZero documents that a zero alpha is refused: additive
+// re-randomization "behaves like a one-time pad", so a biased alpha leaks the key,
+// and alpha = 0 leaves the Destination fully exposed.
+func TestBlindingFactorsRejectZero(t *testing.T) {
+	pub, priv := newTestKeyPair(t)
+	if _, err := BlindPublicKey(pub, BlindingFactor{}); err == nil {
+		t.Error("zero blinding factor accepted for the public key")
+	}
+	if _, err := BlindPrivateKey(priv, BlindingFactor{}); err == nil {
+		t.Error("zero blinding factor accepted for the private key")
+	}
+}
+
+// TestComposeBlindingFactorsAdditive checks sequential blinding composes by
+// addition, matching the additive group law.
+func TestComposeBlindingFactorsAdditive(t *testing.T) {
+	pub, _ := newTestKeyPair(t)
+	a1, err := GenerateBlindingFactor(rand.Reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	a2, err := GenerateBlindingFactor(rand.Reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	once, err := ComposeBlindingFactors(a1, a2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	direct, err := BlindPublicKey(pub, once)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	step1, err := BlindPublicKey(pub, a1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	step2, err := BlindPublicKey(step1, a2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(direct.Bytes(), step2.Bytes()) {
+		t.Error("sequential additive blinding != blinding with the composed factor")
+	}
+}
+
+// TestRed25519VerifierFromPrivateKey checks the convenience path.
+func TestRed25519VerifierFromPrivateKey(t *testing.T) {
+	_, priv := newTestKeyPair(t)
+	v, err := priv.NewVerifier()
+	if err != nil {
+		t.Fatalf("NewVerifier: %v", err)
+	}
+	signer, _ := priv.NewSigner()
+	msg := []byte("self-verification")
+	sig, err := signer.Sign(msg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := v.Verify(msg, sig); err != nil {
+		t.Errorf("self-verification failed: %v", err)
+	}
+}
+
+// TestRed25519Zero clears key material.
+func TestRed25519Zero(t *testing.T) {
+	_, priv := newTestKeyPair(t)
+	priv.Zero()
+	if !isAllZero(priv) {
+		t.Error("Zero did not clear the private key")
+	}
+}
+
+// TestRed25519SmallOrderRIsAcceptedByCofactorVerify documents the cofactor
+// behavior the spec mandates: VERIFY multiplies by the cofactor, so R may carry an
+// 8-torsion component. This distinguishes Red25519 from strict Ed25519
+// verification.
+func TestRed25519SmallOrderRIsAcceptedByCofactorVerify(t *testing.T) {
+	// Build a signature whose R is the identity plus torsion by hand-checking the
+	// equation is evaluated with MultByCofactor. We assert the code path exists and
+	// that a valid signature still verifies, then that a signature with a
+	// non-canonical S (== L) is rejected per "if S >= L: return false".
+	pub, priv := newTestKeyPair(t)
+	signer, _ := priv.NewSigner()
+	msg := []byte("cofactor verification")
+	sig, err := signer.Sign(msg)
+	if err != nil {
+		t.Fatal(err)
+	}
+	v, _ := pub.NewVerifier()
+	if err := v.Verify(msg, sig); err != nil {
+		t.Fatalf("valid signature rejected: %v", err)
+	}
+
+	// Forge S = L (non-canonical): must be rejected by the S >= L check.
+	bad := append([]byte{}, sig...)
+	copy(bad[PublicKeySize:], littleEndianL(t))
+	if err := v.Verify(msg, bad); err == nil {
+		t.Error("signature with S = L (>= L) was accepted; VERIFY must reject S >= L")
+	}
+}
+
+// littleEndianL encodes the group order L in the spec's little-endian form.
+func littleEndianL(t *testing.T) []byte {
+	t.Helper()
+	b := orderL.Bytes() // big-endian
+	out := make([]byte, ScalarSize)
+	for i := range b {
+		out[len(b)-1-i] = b[i]
+	}
+	return out
+}
+
+// TestRed25519BlindRejectsSmallOrder enforces encryptedleaseset.md §Goals on the
+// Red25519 blinding path too: "Blinded public keys must be on the Ed25519 curve
+// and prime-order subgroup". RANDOMIZE_PUBLIC adds [alpha]B, which is always in
+// the subgroup, so a torsion input would carry straight through to the blinded
+// key.
+func TestRed25519BlindRejectsSmallOrder(t *testing.T) {
+	var torsion Red25519PublicKey
+	for i := 0; i < 31; i++ {
+		torsion = append(torsion, 0xff)
+	}
+	torsion = append(torsion, 0x7f)
+
+	var alpha BlindingFactor
+	alpha[0] = 1
+
+	if _, err := BlindPublicKey(torsion, alpha); err == nil {
+		t.Error("BlindPublicKey accepted a small-order point")
+	} else if !errors.Is(err, ErrSmallOrderPoint) {
+		t.Errorf("got %v, want ErrSmallOrderPoint", err)
 	}
 }

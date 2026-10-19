@@ -3,6 +3,7 @@ package ed25519
 import (
 	"crypto/ed25519"
 	"crypto/sha512"
+	"math/big"
 
 	"filippo.io/edwards25519"
 	"github.com/go-i2p/logger"
@@ -21,6 +22,12 @@ var (
 
 	// ErrInvalidPrivateKey indicates the private key is not valid
 	ErrInvalidPrivateKey = oops.Errorf("invalid Ed25519 private key")
+
+	// ErrSmallOrderPoint indicates a point that is not in the Ed25519 prime-order
+	// subgroup, i.e. it carries a cofactor (order dividing 8) component.
+	// encryptedleaseset.md §Goals requires "Blinded public keys must be on the
+	// Ed25519 curve and prime-order subgroup".
+	ErrSmallOrderPoint = oops.Errorf("point is not in the prime-order subgroup")
 )
 
 // applyPublicKeyTransform applies a transformation to a public key using a blinding
@@ -115,6 +122,17 @@ func parseAlphaScalar(alpha [32]byte) (*edwards25519.Scalar, error) {
 
 // computeBlindedPoint computes P' = P + [alpha]B and validates the result.
 func computeBlindedPoint(P *edwards25519.Point, alphaScalar *edwards25519.Scalar) (*edwards25519.Point, error) {
+	// Reject a small-order input point. encryptedleaseset.md §Goals requires
+	// "Blinded public keys must be on the Ed25519 curve and prime-order subgroup".
+	// [alpha]B is always in the prime-order subgroup, so P' inherits any torsion
+	// component of P: if P has order dividing 8 (a nontrivial small-order point),
+	// P' has order 8L and is off the subgroup. Point.SetBytes accepts such points
+	// (they are on the curve), so parsing alone does not catch them.
+	if !isInPrimeOrderSubgroup(P) {
+		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "computeBlindedPoint"}).Error("Input public key is not in the prime-order subgroup")
+		return nil, ErrSmallOrderPoint
+	}
+
 	alphaB := (&edwards25519.Point{}).ScalarBaseMult(alphaScalar)
 	blindedPoint := (&edwards25519.Point{}).Add(P, alphaB)
 
@@ -122,6 +140,12 @@ func computeBlindedPoint(P *edwards25519.Point, alphaScalar *edwards25519.Scalar
 	if blindedPoint.Equal(identityPoint) == 1 {
 		log.WithFields(logger.Fields{"pkg": "ed25519", "func": "computeBlindedPoint"}).Error("Blinded public key is identity point")
 		return nil, ErrIdentityPoint
+	}
+
+	// The result is in the subgroup iff P was, but re-checking is cheap insurance
+	// against a future change to the transform.
+	if !isInPrimeOrderSubgroup(blindedPoint) {
+		return nil, ErrSmallOrderPoint
 	}
 
 	return blindedPoint, nil
@@ -311,4 +335,43 @@ func subtractAndValidate(Pblinded, alphaB *edwards25519.Point) (*edwards25519.Po
 	}
 
 	return original, nil
+}
+
+// orderL is the Ed25519 group order L = 2^252 + 27742317777372353535851937790883648493
+// (red25519.md §Definitions), as a big.Int so it can be used as a plain integer
+// multiplier. edwards25519.Scalar is reduced mod L, so [L] cannot be expressed as
+// a Scalar; [L]P must be computed by double-and-add over the integer.
+var orderL = func() *big.Int {
+	l := new(big.Int).Lsh(big.NewInt(1), 252)
+	add, ok := new(big.Int).SetString("27742317777372353535851937790883648493", 10)
+	if !ok {
+		panic("ed25519: invalid order constant")
+	}
+	return l.Add(l, add)
+}()
+
+// mulByOrderL computes [L]P by double-and-add over the integer L.
+func mulByOrderL(P *edwards25519.Point) *edwards25519.Point {
+	acc := edwards25519.NewIdentityPoint()
+	cur := new(edwards25519.Point).Set(P)
+	for i := 0; i < orderL.BitLen(); i++ {
+		if orderL.Bit(i) == 1 {
+			acc.Add(acc, cur)
+		}
+		cur.Double(cur)
+	}
+	return acc
+}
+
+// isInPrimeOrderSubgroup reports whether P lies in the order-L prime-order
+// subgroup, i.e. [L]P is the identity. The full group has order 8L, so a point
+// with a small-order (cofactor) component fails this test.
+//
+// This enforces encryptedleaseset.md §Goals: "Blinded public keys must be on the
+// Ed25519 curve and prime-order subgroup". Point.SetBytes accepts torsion points
+// (they are on the curve), so parsing alone is not enough: a small-order input A
+// yields A' = A + [alpha]B of order 8L, off the subgroup, and because L is odd
+// the torsion component survives the [L] test ([L]A' = [L]A != identity).
+func isInPrimeOrderSubgroup(P *edwards25519.Point) bool {
+	return mulByOrderL(P).Equal(edwards25519.NewIdentityPoint()) == 1
 }

@@ -7,7 +7,6 @@ require (
 	github.com/dchest/siphash v1.2.3
 	github.com/go-i2p/elgamal v0.1.70001
 	github.com/go-i2p/logger v0.1.70001
-	github.com/go-i2p/red25519 v0.0.0-20260908204607-9444de34c638
 	github.com/samber/oops v1.23.1
 	go.step.sm/crypto v0.90.0
 	golang.org/x/crypto v0.57.0

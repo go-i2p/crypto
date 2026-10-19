@@ -42,6 +42,14 @@ func BlindPublicKey(pub Red25519PublicKey, blind BlindingFactor) (Red25519Public
 	if vk == nil {
 		return nil, oops.Wrapf(ErrInvalidPublicKeySize, "public key is not a valid encoded Edwards point")
 	}
+	// encryptedleaseset.md §Goals requires "Blinded public keys must be on the
+	// Ed25519 curve and prime-order subgroup". [alpha]B is always in the
+	// prime-order subgroup, so a small-order input point would yield a blinded key
+	// carrying the same torsion component. Point.SetBytes accepts torsion points,
+	// so this must be checked explicitly.
+	if !isInPrimeOrderSubgroup(vk) {
+		return nil, ErrSmallOrderPoint
+	}
 	alpha, err := decodeBlindingFactor(blind)
 	if err != nil {
 		return nil, err
