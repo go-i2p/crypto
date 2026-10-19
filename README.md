@@ -175,19 +175,24 @@ import (
 )
 
 func main() {
-    // Derive keys from root secret
-    kd := kdf.NewKeyDerivation(rootSecret)
-    defer kd.Zero()
-    
-    // Derive purpose-specific keys
-    tunnelKey, _ := kd.DeriveForPurpose(kdf.PurposeTunnelEncryption)
-    garlicKey, _ := kd.DeriveForPurpose(kdf.PurposeGarlicEncryption)
-    
-    // Or derive session keys in one call.
-    // NOTE: DeriveSessionKeys is Deprecated (non-spec KDF); for
-    // ECIES-X25519-AEAD-Ratchet sessions use ratchet.NewSessionFromECIES,
-    // which applies the spec's data-phase KDFs.
-    rootKey, symKey, tagKey, _ := kd.DeriveSessionKeys()
+    // StandardHKDF is the canonical RFC 5869 HKDF-SHA256 wrapper. The I2P ECIES
+    // spec defines HKDF(salt, ikm, info, n) with a 32-byte salt, so pass the
+    // chain key as salt and use the spec's own info string.
+    salt := make([]byte, 32)   // e.g. a chain key or shared secret
+    ikm := make([]byte, 32)    // zero-length is allowed (the spec's ZEROLEN)
+
+    keydata, err := kdf.StandardHKDF(salt, ikm, []byte("SymmetricRatchet"), 64)
+    if err != nil {
+        panic(err)
+    }
+
+    nextChainKey := keydata[0:32]
+    messageKey := keydata[32:64]
+    _, _ = nextChainKey, messageKey
+
+    // For ratcheted ECIES sessions, prefer the spec KDFs already wired up in
+    // crypto/ratchet rather than calling HKDF by hand:
+    //   ratchet.NewSymmetricRatchet / NewTagRatchet / DH_INITIALIZEFull
 }
 ```
 
