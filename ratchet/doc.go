@@ -53,8 +53,8 @@
 // # Session
 //
 // The Session type ties the three ratchets together and enforces the spec's
-// data-phase rules: a maximum of 65535 messages per tag set (after which a
-// DH ratchet step is required, see ErrTagsetExhausted) and a receiver
+// data-phase rules: message numbers 0..65535 inclusive per tag set (after
+// which a DH ratchet step is required, see ErrTagsetExhausted) and a receiver
 // lookahead window (default 32, maximum 128) for out-of-order session tags.
 // NewSessionFromECIES creates a Session from raw ECIES key material (three
 // [32]byte values, not an ecies.SessionState). It applies the spec's

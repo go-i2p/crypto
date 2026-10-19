@@ -245,9 +245,10 @@ func NewSessionFromHandshake(handshake HandshakeResult) (*Session, error) {
 func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]byte, nonce [NonceSize]byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.EncryptMessage", "plaintext_len": len(plaintext), "message_num": s.messageNum}).Debug("Encrypting message")
 
-	// The spec caps each tag set at 65535 messages; beyond that the DH ratchet
-	// must be performed to obtain a fresh tag set.
-	if s.messageNum >= MaxMessagesPerTagset {
+	// Spec §3: 65535 is the maximum valid message number, so a tag set carries
+	// numbers 0..65535 (65536 messages); only beyond that is a DH ratchet step
+	// required. Matches go-noise's MaxMessageNumber enforcement.
+	if s.messageNum > MaxMessagesPerTagset {
 		return messageKey, tag, nonce, ErrTagsetExhausted
 	}
 

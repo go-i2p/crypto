@@ -481,9 +481,10 @@ func TestZeroValueFootguns(t *testing.T) {
 	})
 }
 
-// TestSessionTagsetLimit verifies that a Session enforces the spec's
-// 65535-message-per-tag-set cap: the first 65535 messages succeed and the
-// next one returns ErrTagsetExhausted, forcing a DH ratchet step.
+// TestSessionTagsetLimit verifies that a Session enforces the spec's tag-set
+// message-number cap: since 65535 is a valid message number, the first 65536
+// messages (numbers 0..65535) succeed and the next one returns
+// ErrTagsetExhausted, forcing a DH ratchet step.
 func TestSessionTagsetLimit(t *testing.T) {
 	var sharedSecret, ourPriv, theirPub [32]byte
 	rand.Read(sharedSecret[:])
@@ -495,17 +496,18 @@ func TestSessionTagsetLimit(t *testing.T) {
 		t.Fatalf("failed to create session: %v", err)
 	}
 
-	// Encrypt exactly MaxMessagesPerTagset messages; all must succeed.
-	for i := 0; i < MaxMessagesPerTagset; i++ {
+	// Spec §3 makes 65535 a valid message number, so numbers 0..65535
+	// (MaxMessagesPerTagset+1 messages) must all succeed.
+	for i := 0; i <= MaxMessagesPerTagset; i++ {
 		if _, _, _, err := session.EncryptMessage([]byte("m")); err != nil {
 			t.Fatalf("message %d failed unexpectedly: %v", i, err)
 		}
 	}
 
-	// The next message must fail with ErrTagsetExhausted.
+	// The next message (number 65536) must fail with ErrTagsetExhausted.
 	// oops.OopsError is not comparable, so compare by message.
 	if _, _, _, err := session.EncryptMessage([]byte("m")); err == nil || err.Error() != ErrTagsetExhausted.Error() {
-		t.Fatalf("expected ErrTagsetExhausted after %d messages, got: %v", MaxMessagesPerTagset, err)
+		t.Fatalf("expected ErrTagsetExhausted after %d messages, got: %v", MaxMessagesPerTagset+1, err)
 	}
 
 	// A DH ratchet step must reset the message counter and allow encryption

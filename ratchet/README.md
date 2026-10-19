@@ -59,8 +59,8 @@ that its internal state is initialized correctly.
 # Session
 
 The Session type ties the three ratchets together and enforces the spec's
-data-phase rules: a maximum of 65535 messages per tag set (after which a DH
-ratchet step is required, see ErrTagsetExhausted) and a receiver lookahead
+data-phase rules: message numbers 0..65535 inclusive per tag set (after which a
+DH ratchet step is required, see ErrTagsetExhausted) and a receiver lookahead
 window (default 32, maximum 128) for out-of-order session tags.
 NewSessionFromECIES creates a Session from raw ECIES key material (three
 [32]byte values, not an ecies.SessionState). It applies the spec's DH_INITIALIZE
@@ -87,10 +87,12 @@ const (
 	// last eight are the little-endian message number.
 	NonceSize = 12
 
-	// MaxMessagesPerTagset is the maximum number of messages that may be
-	// encrypted under a single tag set before the DH ratchet must advance.
-	// Per the I2P ECIES spec (section 4): "The maximum number of messages
-	// before the DH must ratchet is 65535."
+	// MaxMessagesPerTagset is the maximum valid AEAD message number for a
+	// single tag set, inclusive. Per the I2P ECIES spec (section 3): "Maximum
+	// value is 65535. Higher values must never be used." Because 65535 is a
+	// valid number, a tag set carries numbers 0..65535, i.e. up to 65536
+	// messages, matching the spec's "A Tag Set can be up to 65536 tags."
+	// The DH ratchet must advance only once the counter exceeds this value.
 	MaxMessagesPerTagset = 65535
 
 	// DefaultLookaheadWindow is the default receiver look-ahead window size
@@ -114,8 +116,8 @@ var (
 	ErrKeyDerivationFailed   = oops.Errorf("key derivation failed")
 	ErrDHFailed              = oops.Errorf("Diffie-Hellman exchange failed")
 
-	// ErrTagsetExhausted indicates the current tag set has reached the
-	// maximum number of messages (MaxMessagesPerTagset) and the DH ratchet
+	// ErrTagsetExhausted indicates the current tag set has used every valid
+	// message number (0..MaxMessagesPerTagset inclusive) and the DH ratchet
 	// must advance before further messages can be sent.
 	ErrTagsetExhausted = oops.Errorf("tag set exhausted: DH ratchet required")
 )

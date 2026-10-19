@@ -220,8 +220,9 @@ func (s *SessionState) DeriveNextSendingKey() ([32]byte, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	// Spec §4: the maximum number of messages before the DH must ratchet is 65535.
-	if s.SendingMessageNum >= ratchet.MaxMessagesPerTagset {
+	// Spec §3: 65535 is the maximum valid message number (inclusive), so
+	// numbers 0..65535 are permitted before a DH ratchet is required.
+	if s.SendingMessageNum > ratchet.MaxMessagesPerTagset {
 		return [32]byte{}, ratchet.ErrTagsetExhausted
 	}
 
@@ -244,8 +245,9 @@ func (s *SessionState) DeriveNextReceivingKey() ([32]byte, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	// Spec §4: the maximum number of messages before the DH must ratchet is 65535.
-	if s.ReceivingMessageNum >= ratchet.MaxMessagesPerTagset {
+	// Spec §3: 65535 is the maximum valid message number (inclusive), so
+	// numbers 0..65535 are permitted before a DH ratchet is required.
+	if s.ReceivingMessageNum > ratchet.MaxMessagesPerTagset {
 		return [32]byte{}, ratchet.ErrTagsetExhausted
 	}
 
