@@ -6,14 +6,14 @@
 // cryptography. Conflating them is the single most common mistake when reading
 // tunnel crypto, so this package keeps them explicitly separate:
 //
-//  1. Tunnel BUILDING - the TunnelBuild / Short Tunnel Build messages that
+//   - Tunnel BUILDING - the TunnelBuild / Short Tunnel Build messages that
 //     establish a tunnel hop by hop. This is ECIES-X25519 with ChaCha20-Poly1305,
 //     and it is deployed: the Low-level Cryptography spec states plainly that
 //     "X25519 tunnel creation has replaced ElGamal tunnel creation", and
 //     Tunnel-Creation-ECIES is "accurate for 0.9.66", with the short-record form
 //     implemented since release 0.9.51. See [BuildNoiseState] and
 //     [EncryptBuildRequest].
-//  2. Tunnel LAYER encryption - the symmetric encryption of every 1028-byte
+//   - Tunnel LAYER encryption - the symmetric encryption of every 1028-byte
 //     tunnel message as it flows through the established tunnel. The only layer
 //     encryption type defined by the specification is type 0, which is
 //     AES-256-CBC. See [AESEncryptor].
