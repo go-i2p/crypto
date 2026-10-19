@@ -6,11 +6,15 @@ import (
 )
 
 // TunnelEncryptor defines the interface for tunnel-level encryption operations.
-// The abstraction has two implementations: AES-256-CBC, the scheme the I2P
-// specifications define for tunnel layer encryption, and ECIES-X25519, which is
-// experimental and not interoperable (see [TunnelEncryptionECIES]). Only the
-// AES implementation follows an I2P protocol specification, so only it produces
-// records a deployed router will accept.
+// The abstraction has two implementations: AES-256-CBC, the only scheme the I2P
+// specifications define for tunnel *layer* encryption, and ECIES-X25519, an
+// experimental wrapper around the end-to-end ecies package that is not a tunnel
+// scheme at all (see [TunnelEncryptionECIES]).
+//
+// Note that tunnel *building* is a separate concern from tunnel layer
+// encryption and is ECIES-based in current I2P; that crypto lives in this
+// package's build-record functions ([EncryptBuildRequest] and friends), not in
+// this interface.
 // Implementations must provide secure encryption/decryption with proper error handling.
 type TunnelEncryptor interface {
 	// Encrypt encrypts plaintext data and returns the ciphertext.
@@ -36,10 +40,12 @@ type TunnelEncryptor interface {
 	Type() TunnelEncryptionType
 }
 
-// TunnelEncryptionType distinguishes between different tunnel encryption schemes.
-// I2P's specifications define only AES (type 0) for tunnel layer encryption.
-// Use [TunnelEncryptionAES] for anything that has to talk to a real router;
-// [TunnelEncryptionECIES] is experimental and not interoperable.
+// TunnelEncryptionType distinguishes between tunnel *layer* encryption schemes -
+// the symmetric encryption of each 1028-byte tunnel message, which is a
+// different concern from tunnel *building* (which is ECIES-based; see
+// [EncryptBuildRequest]). I2P's specifications define only AES (type 0) for
+// layer encryption. Use [TunnelEncryptionAES] for anything that has to talk to a
+// real router; [TunnelEncryptionECIES] is experimental and not interoperable.
 type TunnelEncryptionType uint8
 
 const (
@@ -53,12 +59,15 @@ const (
 	// bytes are carried through unchanged).
 	TunnelEncryptionAES TunnelEncryptionType = 0
 
-	// TunnelEncryptionECIES is EXPERIMENTAL and NOT interoperable. No I2P
-	// specification defines an ECIES/ChaCha20 tunnel layer encryption type:
-	// Tunnel-Creation-ECIES lists type 1 only as "for future (ChaCha?)" and
-	// says adding such types "is a topic for additional research, and is not
-	// currently a part of this specification". The ECIES-X25519-AEAD-Ratchet
-	// spec it is often assumed to implement is end-to-end (destination to
+	// TunnelEncryptionECIES is EXPERIMENTAL and NOT interoperable as a tunnel
+	// LAYER encryption scheme. No I2P specification defines an ECIES/ChaCha20
+	// tunnel layer encryption type: Tunnel-Creation-ECIES lists type 1 only as
+	// "for future (ChaCha?)" and says adding such types "is a topic for
+	// additional research, and is not currently a part of this specification".
+	// (ECIES-X25519 IS the deployed standard for tunnel BUILDING - see
+	// [EncryptBuildRequest] - but that is a different layer, and this value
+	// implements neither of those formats.) The ECIES-X25519-AEAD-Ratchet spec
+	// this is often assumed to implement is end-to-end (destination to
 	// destination) and does not define tunnel layer encryption at all.
 	//
 	// This value wraps the ecies package's one-time format, so records are

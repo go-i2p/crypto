@@ -9,8 +9,10 @@ import (
 // ECIESEncryptor implements TunnelEncryptor using ECIES-X25519 encryption.
 // This is a thin wrapper around the existing ecies package functionality.
 //
-// EXPERIMENTAL - NOT INTEROPERABLE. No I2P specification defines this as a
-// tunnel layer encryption scheme. The ecies package's one-time format is an
+// EXPERIMENTAL - NOT INTEROPERABLE as a tunnel scheme, and unrelated to the
+// deployed ECIES tunnel BUILDING crypto in this package ([EncryptBuildRequest]).
+// No I2P specification defines this as a tunnel layer encryption
+// scheme. The ecies package's one-time format is an
 // end-to-end (destination-to-destination) construct; Tunnel-Creation-ECIES,
 // which does govern tunnel layer encryption, supports only AES (type 0) and
 // explicitly leaves any ChaCha20-based type out of scope. Records produced

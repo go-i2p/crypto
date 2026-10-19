@@ -7,48 +7,60 @@
 Package tunnel implements I2P-specific tunnel cryptography for secure data
 transmission.
 
-This package provides cryptographic primitives for I2P tunnel layer encryption
-and decryption. AES-256-CBC is the scheme defined by the I2P specifications and
-the one that interoperates with real routers. An ECIES-X25519 option is
-included for experimentation, but it is not part of any tunnel specification
-and will not interoperate; see "Encryption Types" below.
+Tunnels are protected in two places, and it is important not to conflate them:
+
+  - Tunnel BUILDING (TunnelBuild / Short Tunnel Build messages) is ECIES-X25519
+    with ChaCha20-Poly1305 and IS the deployed standard. The Low-level
+    Cryptography spec states that "X25519 tunnel creation has replaced ElGamal
+    tunnel creation", and Tunnel-Creation-ECIES (accurate for 0.9.66) specifies
+    short build records implemented since release 0.9.51. See
+    [BuildNoiseState] / [EncryptBuildRequest] for the key schedule, AEAD and
+    reply/layer KDF primitives (record framing itself lives in go-i2p/common and
+    the Noise packages, not here).
+  - Tunnel LAYER encryption (the symmetric encryption of each 1028-byte tunnel
+    message) is AES-256-CBC, and type 0 AES is the only layer scheme defined by
+    any specification. See the "Encryption Types" section below.
 
 # Encryption Types
 
-Legacy AES-256-CBC (Type 0) - THE ONLY SPEC-DEFINED SCHEME:
+AES-256-CBC (Type 0) - THE ONLY SPEC-DEFINED LAYER ENCRYPTION SCHEME:
 
     - Dual-layer AES-256 encryption with separate layer and IV keys
     - 1028-byte fixed-size tunnel messages (16-byte IV + 1008-byte payload)
     - CBC mode encryption with IV-based randomization
-    - Required for backward compatibility with older I2P routers, and required
-      for compatibility with all current ones
+    - Required for compatibility with all current routers; the layer keys
+      themselves are derived by the Tunnel-Creation-ECIES build KDF
+      ([DeriveBuildReplyKeys]) rather than transmitted in the build record
 
-Experimental ECIES-X25519 (Type 1) - NOT INTEROPERABLE:
+Experimental ECIES-X25519 (Type 1) - NOT AN INTEROPERABLE LAYER SCHEME:
 
     - X25519 elliptic curve Diffie-Hellman key agreement
     - ChaCha20-Poly1305 authenticated encryption with associated data (AEAD)
     - Variable-length records: 96 bytes of overhead plus the plaintext
     - Wraps the ecies package's end-to-end one-time format
 
-    Do not use this for real tunnels. Tunnel-Creation-ECIES states that "the
-    only layer encryption currently supported is type 0, which is AES", and
-    that adding types such as ChaCha20 "is a topic for additional research, and
-    is not currently a part of this specification". Its layer-encryption-type
-    table lists "1 for future (ChaCha?)" as an open question, not a format. The
+    Do not use this for real tunnels. This is not the ECIES of tunnel building
+    either - it wraps the end-to-end one-time format, which no tunnel spec
+    defines at any layer. Tunnel-Creation-ECIES states that "the only layer
+    encryption currently supported is type 0, which is AES", and that adding
+    types such as ChaCha20 "is a topic for additional research, and is not
+    currently a part of this specification". Its layer-encryption-type table
+    lists "1 for future (ChaCha?)" as an open question, not a format. The
     ECIES-X25519-AEAD-Ratchet spec (Proposal 144) is an end-to-end,
     destination-to-destination protocol and does not define tunnel layer
     encryption at all.
 
     Two claims previously made here were wrong and are corrected:
 
-      - "218-byte tunnel records (78% smaller than AES)". 218 bytes is the
-        encrypted size of a *short tunnel build request record* in
-        Tunnel-Creation-ECIES (154-byte plaintext, Noise_N_25519_ChaChaPoly_SHA256) -
-        a different construct from layer encryption, and the 0.9.51 version
-        requirement belongs to those build records too. Actual output of this
-        encryptor: 1-byte payload -> 97 bytes, 222 -> 318, 1008 -> 1104 bytes.
-        A full tunnel payload therefore produces a record *larger* than AES,
-        not 78% smaller.
+      - "218-byte tunnel records (78% smaller than AES)". The 218-byte figure is
+        real, but it belongs to a different construct: it is the encrypted size
+        of a *short tunnel build record* in Tunnel-Creation-ECIES (154-byte
+        request plaintext, Noise_N_25519_ChaChaPoly_SHA256), not of layer
+        encryption, and the 0.9.51 version requirement belongs to those build
+        records too. Those build records are implemented in this package by
+        [EncryptBuildRequest]. Actual output of this layer encryptor: 1-byte
+        payload -> 97 bytes, 222 -> 318, 1008 -> 1104 bytes. A full tunnel
+        payload therefore produces a record *larger* than AES, not 78% smaller.
       - Variable-length records also defeat the fixed-size tunnel layout, whose
         purpose is to stop intermediate hops from observing payload sizes.
 

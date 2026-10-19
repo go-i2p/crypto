@@ -1,79 +1,105 @@
-// Package tunnel implements the cryptography used to protect I2P tunnel
-// messages, the small packets that carry data between routers.
+// Package tunnel implements the cryptography used to protect I2P tunnels.
 //
 // # What this package does
 //
-// When I2P routers send data to each other, the data travels inside tunnel
-// messages. This package encrypts and decrypts those messages. It supports
-// two schemes, selected by a local encryption-type value:
+// I2P protects a tunnel in two different places, and the two use different
+// cryptography. Conflating them is the single most common mistake when reading
+// tunnel crypto, so this package keeps them explicitly separate:
 //
-//   - AES-256-CBC (TunnelEncryptionAES, value 0): the scheme I2P actually uses
-//     for tunnel layer encryption. It uses two separate AES-256 keys (one for
-//     the payload, one for the IV) in CBC mode, with a fixed 1028-byte message
-//     layout. This is the only interoperable option.
-//   - ECIES-X25519 (TunnelEncryptionECIES, value 1): EXPERIMENTAL, NOT part of
-//     any I2P specification, and NOT interoperable with any I2P router. It
-//     wraps the ecies package's end-to-end one-time format. See "What the
-//     specifications actually say" below before using it.
+//  1. Tunnel BUILDING - the TunnelBuild / Short Tunnel Build messages that
+//     establish a tunnel hop by hop. This is ECIES-X25519 with ChaCha20-Poly1305,
+//     and it is deployed: the Low-level Cryptography spec states plainly that
+//     "X25519 tunnel creation has replaced ElGamal tunnel creation", and
+//     Tunnel-Creation-ECIES is "accurate for 0.9.66", with the short-record form
+//     implemented since release 0.9.51. See [BuildNoiseState] and
+//     [EncryptBuildRequest].
+//  2. Tunnel LAYER encryption - the symmetric encryption of every 1028-byte
+//     tunnel message as it flows through the established tunnel. The only layer
+//     encryption type defined by the specification is type 0, which is
+//     AES-256-CBC. See [AESEncryptor].
 //
-// Note that these local values (0 and 1) are an internal choice of this
-// package. They are not the same as the "crypto type" field in the I2P
-// LeaseSet2 (LS2) records, where ECIES-X25519 is identified by crypto type 4.
+// So ECIES is the standard for *building* tunnels, and AES is the standard for
+// *encrypting the traffic inside* them. Both are current; neither replaces the
+// other, because they operate at different layers.
 //
-// # How it fits the I2P specification
+// # Scope: primitives, not protocol
 //
-// The legacy AES-256-CBC scheme follows the ElGamal/AES+SessionTags
-// specification and the Tunnel-Creation-ECIES layer-key derivation.
+// This package holds cryptographic primitives only. The build-record functions
+// ([EncryptBuildRequest], [DecryptBuildRequest], [DeriveBuildReplyKeys],
+// [EncryptOwnBuildReply], [ObfuscateOtherBuildRecord]) implement the key
+// schedule, the AEAD over an already-serialized record, and the reply/layer KDF
+// chain. The record byte layouts themselves - tunnel ID, next-router identity
+// hash, flags, request time, the build-options Mapping, padding, record
+// randomization, "fake" records, and VariableTunnelBuild message assembly - are
+// common data structures and protocol, and belong in github.com/go-i2p/common
+// and the Noise packages, not here. Callers pass in the serialized plaintext
+// record and receive the wire ciphertext.
 //
-// The ECIES-X25519 scheme does not follow any tunnel specification. It is
-// provided for experimentation only and must not be offered to a real router
-// as a tunnel encryption type.
+// # Tunnel building (ECIES-X25519)
 //
-// # What the specifications actually say
+// Tunnel-Creation-ECIES builds on the Noise protocol
+// Noise_N_25519_ChaChaPoly_SHA256, a one-way "N" pattern: the creator (Alice)
+// does an ephemeral-static X25519 DH to each hop (Bob) and seals the build
+// request record with ChaCha20-Poly1305. The chaining key left over after that
+// request derives the reply key, the AES layer key, the AES IV key and, at the
+// outbound endpoint, the garlic reply key and tag.
 //
-// The I2P ECIES-X25519-AEAD-Ratchet specification (Proposal 144) is an
-// end-to-end, destination-to-destination protocol. It is explicit that
-// "intermediate hops cannot distinguish new from old crypto", and it does not
-// define tunnel layer encryption at all. Wrapping its one-time message format
-// in a tunnel encryptor does not make it a tunnel scheme.
+// Two record sizes are specified:
 //
-// Tunnel layer encryption is defined by Tunnel-Creation-ECIES, which says:
+//   - Short records (current, 0.9.51+): 154-byte request plaintext and 202-byte
+//     reply plaintext, both producing 218-byte encrypted records. The 218-byte
+//     figure is the whole wire record: for a request it is 16 (hop identity hash)
+//     + 32 (sender ephemeral key) + 154 (ciphertext) + 16 (Poly1305 tag); for a
+//     reply there is no cleartext prefix, so it is 202 + 16.
+//   - Long records (deprecated, 0.9.48): 464-byte request and 512-byte reply
+//     plaintext, both producing 528-byte encrypted records, kept that size for
+//     ElGamal compatibility. The spec marks this form "Deprecated, obsolete. Use
+//     the Short Record format".
 //
-//	"The only layer encryption currently supported is type 0, which is AES.
-//	This is unchanged from previous specifications... Adding new layer
-//	encryption types, for example ChaCha20, is a topic for additional
-//	research, and is not currently a part of this specification."
+// Ephemeral keys must be unique per ECIES hop and per build record; the spec
+// warns that reusing them "opens an attack vector for colluding hops to confirm
+// they are in the same tunnel".
 //
-// Its layer-encryption-type field table likewise lists "0 for AES (as in
-// current tunnels); 1 for future (ChaCha?)" - an open question, not a defined
-// format. So the local value 1 here is not the spec's type 1, and records
-// produced by it are not understood by any deployed router.
+// # Tunnel layer encryption (AES-256-CBC)
 //
-// Fixed record sizes also matter for tunnel privacy: the spec keeps layer
-// records a constant size so hops cannot observe payload sizes. The ECIES
-// scheme here produces variable-length output (96 bytes of overhead plus the
-// plaintext), which defeats that property. See [TunnelEncryptionECIES] for the
-// measured sizes.
+// [TunnelEncryptionAES] (value 0) is the scheme I2P uses for tunnel layer
+// encryption: two separate AES-256 keys (one for the payload, one for the IV) in
+// CBC mode, over a fixed 1028-byte message. This is the only interoperable layer
+// option, and Tunnel-Creation-ECIES derives its keys with the KDF above rather
+// than transmitting them in the build record.
+//
+// The layer-encryption-type field in a build request record reads "0 for AES (as
+// in current tunnels); 1 for future (ChaCha?)". The spec is explicit:
+//
+//	"The only layer encryption currently supported is type 0, which is AES...
+//	Adding new layer encryption types, for example ChaCha20, is a topic for
+//	additional research, and is not currently a part of this specification."
+//
+// [TunnelEncryptionECIES] (value 1) is an experimental local value that wraps the
+// ecies package's *end-to-end* one-time format. It is not the spec's layer type
+// 1, it is not a build record, and no deployed router accepts it as either. It
+// also produces variable-length output, which defeats the fixed-size tunnel
+// layout whose purpose is to stop intermediate hops from observing payload
+// sizes. Do not advertise it to a router.
+//
+// Note that the local values 0 and 1 are an internal choice of this package.
+// They are not the same as the "crypto type" field in the I2P LeaseSet2 (LS2)
+// records, where ECIES-X25519 is identified by crypto type 4.
 //
 // See the official specifications:
-//   - ElGamal/AES+SessionTags: https://i2p.net/en/docs/specs/elgamal-aes/
-//   - Tunnel-Creation-ECIES (layer keys, build records):
-//     https://i2p.net/en/docs/specs/tunnel-creation-ecies/
-//   - ECIES-X25519-AEAD-Ratchet (end-to-end only, NOT tunnel encryption):
+//   - Tunnel-Creation-ECIES (build records, layer keys - the current tunnel
+//     building standard): https://i2p.net/en/docs/specs/tunnel-creation-ecies/
+//   - Low-level Cryptography (AES layer encryption, ElGamal legacy):
+//     https://i2p.net/en/docs/specs/cryptography/
+//   - ElGamal/AES+SessionTags (legacy end-to-end):
+//     https://i2p.net/en/docs/specs/elgamal-aes/
+//   - ECIES-X25519-AEAD-Ratchet (end-to-end, destination to destination):
 //     https://i2p.net/en/docs/specs/ecies/
 //
 // # Message layout
 //
-// A tunnel message is a fixed 1028-byte block. In the legacy AES scheme the
-// first 16 bytes are the initialization vector (IV) and the following 1008
-// bytes (offsets 16..1024) are the encrypted payload; the final 4 bytes of the
-// block are not processed and are carried through unchanged.
-//
-// The experimental ECIES scheme does not produce a 1028-byte block at all. It
-// produces a variable-length one-time ciphertext of [Elligator2-encoded
-// ephemeral public key 32][flags section 48][payload section N+16], as
-// described in the ecies package: 96 bytes of overhead plus the plaintext. For
-// a 1-byte payload that is 97 bytes, for 1008 bytes of payload it is 1104
-// bytes - larger than the AES record, not smaller. A caller that needs to
-// place its output in a tunnel-sized buffer must pad and frame it itself.
+// A tunnel message is a fixed 1028-byte block. In the AES layer scheme the first
+// 16 bytes are the initialization vector (IV) and the following 1008 bytes
+// (offsets 16..1024) are the encrypted payload; the final 4 bytes of the block
+// are not processed and are carried through unchanged.
 package tunnel
