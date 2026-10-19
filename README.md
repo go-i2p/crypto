@@ -43,10 +43,19 @@ from the simplest idea to the full scheme:
 
 5. **The full scheme.** The `ecies` package ties these together into
    ECIES-X25519-AEAD-Ratchet, the current I2P *end-to-end* (destination-to-
-   destination) encryption standard. Note that this is not tunnel encryption:
-   I2P tunnel layer encryption is AES only, per the Tunnel-Creation-ECIES
-   specification, and the `tunnel` package's ECIES option is experimental and
-   not interoperable.
+   destination) encryption standard.
+
+   Keep two different things called "tunnel encryption" separate. ECIES-X25519
+   **is** the deployed standard for *building* tunnels — per the Low-level
+   Cryptography spec, "X25519 tunnel creation has replaced ElGamal tunnel
+   creation" — and the `tunnel` package implements that spec's build-record
+   key schedule and reply/layer KDFs ([tunnel.BuildNoiseState](tunnel/buildkeys.go),
+   [tunnel.EncryptBuildRequest](tunnel/buildkeys.go)). Separately, the
+   *layer* encryption of each 1028-byte tunnel message is AES-256-CBC, which is
+   the only layer encryption type any specification defines. The `tunnel`
+   package's `TunnelEncryptionECIES` value is neither of those: it is an
+   experimental wrapper around the end-to-end one-time format and does not
+   interoperate.
 
 Start with the package docs on [pkg.go.dev](https://pkg.go.dev/github.com/go-i2p/crypto)
 for details on each piece.
