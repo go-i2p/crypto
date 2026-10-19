@@ -19,13 +19,6 @@ func TestTunnelEncryptionType_String(t *testing.T) {
 			expected: "AES-256-CBC",
 		},
 		{
-			// The deprecated ECIES tombstone names itself as not-a-tunnel-scheme
-			// so log output cannot be mistaken for a working layer encryption.
-			name:     "ECIES encryption type (deprecated tombstone)",
-			encType:  TunnelEncryptionECIES,
-			expected: "ECIES-X25519 (not a tunnel scheme; deprecated)",
-		},
-		{
 			name:     "unknown encryption type",
 			encType:  TunnelEncryptionType(99),
 			expected: "Unknown",
@@ -97,36 +90,21 @@ func TestNewTunnelEncryptor_AES(t *testing.T) {
 	}
 }
 
-// TestNewTunnelEncryptor_ECIES verifies that the deprecated ECIES layer type is
-// rejected. No I2P specification defines an ECIES/ChaCha20 tunnel layer
-// encryption type (Tunnel-Creation-ECIES, "Layer Encryption": "The only layer
-// encryption currently supported is type 0, which is AES"), so the factory must
-// refuse to hand one out rather than produce records no router accepts.
-func TestNewTunnelEncryptor_ECIES(t *testing.T) {
-	var layerKey TunnelKey
-	for i := range layerKey {
-		layerKey[i] = byte(i + 1)
-	}
-
-	encryptor, err := NewTunnelEncryptor(TunnelEncryptionECIES, layerKey, TunnelKey{})
-	if err == nil {
-		t.Error("expected TunnelEncryptionECIES to be rejected, got no error")
-	}
-	if encryptor != nil {
-		t.Error("encryptor must be nil for the rejected ECIES type")
-	}
-}
-
 // TestNewTunnelEncryptor_InvalidType validates factory function with invalid encryption type
 func TestNewTunnelEncryptor_InvalidType(t *testing.T) {
-	invalidType := TunnelEncryptionType(99)
-	encryptor, err := NewTunnelEncryptor(invalidType, TunnelKey{}, TunnelKey{})
-
-	if err == nil {
-		t.Error("expected error for invalid encryption type")
-	}
-	if encryptor != nil {
-		t.Error("encryptor should be nil for invalid encryption type")
+	// The I2P specifications define only layer encryption type 0 (AES). Every
+	// other value must be refused, including 1 - the value this package used to
+	// export as TunnelEncryptionECIES, which the build-request field table
+	// reserves as "1 for future (ChaCha?)" and which Tunnel-Creation-ECIES states
+	// "is not currently a part of this specification".
+	for _, invalidType := range []TunnelEncryptionType{1, 2, 99} {
+		encryptor, err := NewTunnelEncryptor(invalidType, TunnelKey{}, TunnelKey{})
+		if err == nil {
+			t.Errorf("expected error for encryption type %d", invalidType)
+		}
+		if encryptor != nil {
+			t.Errorf("encryptor should be nil for encryption type %d", invalidType)
+		}
 	}
 }
 

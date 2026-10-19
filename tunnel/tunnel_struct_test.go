@@ -141,25 +141,6 @@ func TestNewAESEncryptor(t *testing.T) {
 	}
 }
 
-// TestNewTunnelCrypto_BackwardCompatibility ensures the deprecated function still works
-func TestNewTunnelCrypto_BackwardCompatibility(t *testing.T) {
-	layerKey := generateTestKey(t)
-	ivKey := generateTestKey(t)
-
-	encryptor, err := NewTunnelCrypto(layerKey, ivKey)
-	if err != nil {
-		t.Fatalf("NewTunnelCrypto failed: %v", err)
-	}
-	if encryptor == nil {
-		t.Fatal("encryptor should not be nil")
-	}
-
-	// Verify it returns the correct type
-	if encryptor.Type() != TunnelEncryptionAES {
-		t.Errorf("expected type %v, got %v", TunnelEncryptionAES, encryptor.Type())
-	}
-}
-
 // TestAESEncryptor_Encrypt validates encryption with various data patterns
 func TestAESEncryptor_Encrypt(t *testing.T) {
 	layerKey := generateTestKey(t)

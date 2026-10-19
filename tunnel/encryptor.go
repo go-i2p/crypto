@@ -55,34 +55,6 @@ const (
 	// Tunnel records are 1028 bytes: a 4-byte cleartext tunnel ID, a 16-byte IV
 	// at bytes 4..19, and the encrypted payload region at bytes 20..1027.
 	TunnelEncryptionAES TunnelEncryptionType = 0
-
-	// TunnelEncryptionECIES is a deprecated tombstone, NOT a usable tunnel
-	// layer encryption scheme. No I2P specification defines an ECIES/ChaCha20
-	// tunnel layer encryption type: Tunnel-Creation-ECIES, "Layer Encryption",
-	// states "The only layer encryption currently supported is type 0, which is
-	// AES" and "Adding new layer encryption types, for example ChaCha20, is a
-	// topic for additional research, and is not currently a part of this
-	// specification". The build-request record's layer-encryption-type field
-	// lists "0 for AES (as in current tunnels); 1 for future (ChaCha?)", so
-	// type 1 is reserved-but-undefined and implemented by no router.
-	//
-	// This package previously exposed ECIESEncryptor/ECIESDecryptor wrapping
-	// the ecies package's *end-to-end* one-time format under this value. That
-	// was never a tunnel scheme: it is destination-to-destination, and it
-	// produces variable-length records (a full 1008-byte tunnel payload came
-	// out at 1104 bytes), which defeats the fixed-size tunnel layout whose
-	// purpose is to stop intermediate hops from observing payload sizes. Those
-	// types have been removed; NewTunnelEncryptor now rejects this value.
-	//
-	// The numeric value 1 is retained only so that code which already stores
-	// it keeps compiling and fails loudly at construction time rather than
-	// silently. It is distinct from the LS2 crypto type 4 used for
-	// ECIES-X25519 in LeaseSet2 records. Never advertise it to a router.
-	//
-	// Deprecated: there is no interoperable implementation. Use
-	// TunnelEncryptionAES. ECIES-X25519 IS the deployed standard for tunnel
-	// *building* (see EncryptBuildRequest), which is a different layer.
-	TunnelEncryptionECIES TunnelEncryptionType = 1
 )
 
 // String returns the human-readable name of the encryption type for logging and debugging.
@@ -90,8 +62,6 @@ func (t TunnelEncryptionType) String() string {
 	switch t {
 	case TunnelEncryptionAES:
 		return "AES-256-CBC"
-	case TunnelEncryptionECIES:
-		return "ECIES-X25519 (not a tunnel scheme; deprecated)"
 	default:
 		return "Unknown"
 	}
@@ -104,9 +74,10 @@ func (t TunnelEncryptionType) String() string {
 //   - layerKey: 32-byte AES-256 key for data layer encryption
 //   - ivKey: 32-byte AES-256 key for IV encryption
 //
-// Returns a configured TunnelEncryptor, or an error for any type other than
-// [TunnelEncryptionAES] - including the deprecated [TunnelEncryptionECIES]
-// tombstone, which has no interoperable implementation.
+// Returns a configured TunnelEncryptor, or [ErrUnsupportedEncryptionType] for
+// any other value. In particular the numeric value 1, which this package once
+// exposed as TunnelEncryptionECIES, is now rejected outright: no I2P
+// specification defines an ECIES tunnel layer encryption type.
 func NewTunnelEncryptor(encType TunnelEncryptionType, layerKey, ivKey TunnelKey) (TunnelEncryptor, error) {
 	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewTunnelEncryptor", "encryption_type": encType.String()}).Debug("Creating tunnel encryptor")
 
@@ -118,13 +89,6 @@ func NewTunnelEncryptor(encType TunnelEncryptionType, layerKey, ivKey TunnelKey)
 			return nil, oops.Wrapf(err, "failed to create AES encryptor")
 		}
 		return aes, nil
-
-	case TunnelEncryptionECIES:
-		// Rejected: no I2P specification defines an ECIES tunnel layer
-		// encryption type. See the TunnelEncryptionECIES doc comment.
-		return nil, oops.Wrapf(ErrUnsupportedEncryptionType,
-			"tunnel layer encryption type %d is not defined by any I2P specification; only %d (AES-256-CBC) interoperates",
-			TunnelEncryptionECIES, TunnelEncryptionAES)
 
 	default:
 		return nil, ErrUnsupportedEncryptionType

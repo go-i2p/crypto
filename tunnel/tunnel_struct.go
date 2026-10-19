@@ -63,13 +63,6 @@ func NewAESEncryptor(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
 	return encryptor, nil
 }
 
-// NewTunnelCrypto is deprecated. Use NewAESEncryptor instead.
-// This function is kept for backward compatibility and will be removed in a future version.
-func NewTunnelCrypto(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
-	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "NewTunnelCrypto"}).Warn("NewTunnelCrypto is deprecated, use NewAESEncryptor instead")
-	return NewAESEncryptor(layerKey, ivKey)
-}
-
 // Encrypt encrypts plaintext data using AES-256-CBC dual-layer encryption.
 // For AES tunnel encryption, the input should be exactly 1008 bytes of payload
 // data (a random 16-byte IV is then written at bytes 4..19); a full 1028-byte
