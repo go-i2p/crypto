@@ -3,14 +3,17 @@ package tunnel
 import "github.com/go-i2p/logger"
 
 // TunnelData represents the standardized data structure for I2P tunnel messages (1028 bytes total).
-// The structure follows I2P's tunnel message format where the first 16 bytes serve as the initialization
-// vector (IV) and the following 1008 bytes (offsets 16..1024) contain the encrypted payload data; the
-// final 4 bytes of the block are not processed by the AES layer. This fixed-size format
-// ensures network compatibility and provides consistent message boundaries for tunnel encryption operations.
-// The 1028-byte size aligns with I2P's network protocol requirements for efficient data transmission.
+// The layout follows the Tunnel Message specification
+// (https://i2p.net/en/docs/specs/tunnel-message/, "Tunnel Message (Encrypted)"):
+// bytes 0..3 hold the cleartext 4-byte Tunnel ID, bytes 4..19 hold the 16-byte
+// IV, and bytes 20..1027 hold the 1008-byte encrypted payload. The whole
+// 1008-byte payload region is processed by the AES layer; there is no
+// unencrypted tail. The fixed size exists to stop intermediate hops from
+// tagging or correlating messages by observing their length.
+// See TunnelIDSize, TunnelIVOffset, TunnelIVSize and TunnelPayloadOffset.
 // TunnelData represents the data structure for tunnel messages (1028 bytes).
 // Moved from: tunnel.go
-type TunnelData [1028]byte
+type TunnelData [TunnelMessageSize]byte
 
 // TunnelKey represents a symmetric AES-256 key for encrypting tunnel messages (32 bytes).
 // Each tunnel operation requires two separate TunnelKey instances: one for layer encryption
@@ -71,9 +74,12 @@ func NewTunnelKey(data []byte) (*TunnelKey, error) {
 
 // TunnelIV represents the initialization vector for tunnel message encryption operations.
 // The IV provides randomization for CBC mode encryption and should be unique for each tunnel message
-// to prevent cryptographic attacks. In I2P tunnel messages, the IV occupies the first 16 bytes
-// of the TunnelData structure and serves as the randomization source for CBC encryption.
+// to prevent cryptographic attacks. In I2P tunnel messages the IV occupies bytes 4..19 of the
+// TunnelData structure - immediately after the 4-byte cleartext Tunnel ID - and serves as the
+// randomization source for CBC encryption. It is also the value transformed with the IV key before
+// and after the payload is processed.
 // IVs must be unpredictable but do not need to be secret, following standard cryptographic practices.
+// See TunnelIVOffset and TunnelIVSize.
 // TunnelIV represents the initialization vector for a tunnel message.
 // Moved from: tunnel.go
 type TunnelIV []byte

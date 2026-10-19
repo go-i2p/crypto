@@ -72,9 +72,19 @@ func NewTunnelCrypto(layerKey, ivKey TunnelKey) (*AESEncryptor, error) {
 
 // Encrypt encrypts plaintext data using AES-256-CBC dual-layer encryption.
 // For AES tunnel encryption, the input should be exactly 1008 bytes of payload
-// data (a random 16-byte IV is then prepended); a full 1028-byte record is also
-// accepted and used as-is.
-// The method creates a 1028-byte tunnel structure with a 16-byte IV prefix.
+// data (a random 16-byte IV is then written at bytes 4..19); a full 1028-byte
+// record is also accepted and used as-is.
+//
+// The record layout follows the Tunnel Message specification
+// (https://i2p.net/en/docs/specs/tunnel-message/, "Tunnel Message
+// (Encrypted)"): Tunnel ID bytes 0..3 (4 bytes, cleartext, nonzero), IV bytes
+// 4..19 (16 bytes), Encrypted Data bytes 20..1027 (1008 bytes). Total size 1028
+// bytes.
+//
+// When the 1008-byte payload-only form is used, bytes 0..3 are left zero: the
+// tunnel ID is caller-supplied framing, not a cryptographic value, so set it
+// before putting the record on the wire.
+//
 // Returns the complete tunnel data (1028 bytes) or error if encryption fails.
 // This implements the TunnelEncryptor interface for AES-256-CBC encryption.
 func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
@@ -83,15 +93,17 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	// For AES, we expect either 1008 bytes (payload only) or 1028 bytes (full tunnel data)
 	var td TunnelData
 
-	if len(plaintext) == 1008 {
-		// Payload only - generate random IV and copy payload
-		if _, err := rand.Read(td[:16]); err != nil {
+	if len(plaintext) == TunnelPayloadSize {
+		// Payload only - generate the random IV into bytes 4..19 and copy the
+		// payload into bytes 20..1027, per the spec's field offsets.
+		if _, err := rand.Read(td[TunnelIVOffset : TunnelIVOffset+TunnelIVSize]); err != nil {
 			log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Encrypt"}).WithError(err).Error("Failed to generate IV for AES encryption")
 			return nil, ErrEncryptionFailed
 		}
-		copy(td[16:], plaintext)
-	} else if len(plaintext) == 1028 {
-		// Full tunnel data provided
+		copy(td[TunnelPayloadOffset:], plaintext)
+	} else if len(plaintext) == TunnelMessageSize {
+		// Full tunnel data provided: bytes 0..3 are the caller's cleartext
+		// tunnel ID and are carried through untouched.
 		copy(td[:], plaintext)
 	} else {
 		log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Encrypt", "length": len(plaintext)}).Error("Invalid plaintext length for AES tunnel encryption")
@@ -104,7 +116,7 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 	}
 
 	// Return the encrypted tunnel data as byte slice
-	result := make([]byte, 1028)
+	result := make([]byte, TunnelMessageSize)
 	copy(result, td[:])
 	return result, nil
 }
@@ -113,17 +125,26 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error) {
 // encryption and decryption, using the provided IV operation and CBC block mode
 // constructor to determine the direction of processing.
 func (a *AESEncryptor) processTunnelData(td *TunnelData, ivOp func(dst, src []byte), newBlockMode func(cipher.Block, []byte) cipher.BlockMode, msg string) error {
-	// F079/F080/F081 complete fix: pointer-based (not value copy), correct IV offset,
-	// single-block IV transform, 1008-byte payload CBC (bytes 16..1024), 1028-byte output.
-	// Step 1: AES-ECB single-block transform on 16-byte IV using ivKey.
-	ivOp(td[:16], td[:16])
-	// Step 2: CBC encrypt/decrypt the payload region (bytes 16..1024 = 1008
-	// bytes) using layerKey with IV=td[:16]. Note: the final 4 bytes (1024..1028)
-	// are not part of this region and are carried through unchanged.
-	layerBlock := newBlockMode(a.layerKey, td[:16])
-	layerBlock.CryptBlocks(td[16:1024], td[16:1024])
-	// Step 3: AES-ECB single-block transform on 16-byte IV (post-payload).
-	ivOp(td[:16], td[:16])
+	// Field offsets per the Tunnel Message specification:
+	//   bytes 0..3   Tunnel ID   (cleartext, never touched here)
+	//   bytes 4..19  IV          (16 bytes)
+	//   bytes 20..1027 Encrypted Data (1008 bytes)
+	//
+	// Step 1: AES-256-ECB single-block transform on the IV (bytes 4..19) using
+	// ivKey. Tunnel-Creation / Tunnel-Implementation §Participant Processing:
+	// "encrypts the received IV with AES256/ECB using their IV key to determine
+	// the current IV".
+	ivOp(td[TunnelIVOffset:TunnelIVOffset+TunnelIVSize], td[TunnelIVOffset:TunnelIVOffset+TunnelIVSize])
+	// Step 2: CBC encrypt/decrypt the payload region (bytes 20..1027 = 1008
+	// bytes) using layerKey with the transformed IV. The whole 1008-byte region
+	// is processed; there is no unencrypted tail.
+	layerBlock := newBlockMode(a.layerKey, td[TunnelIVOffset:TunnelIVOffset+TunnelIVSize])
+	layerBlock.CryptBlocks(td[TunnelPayloadOffset:], td[TunnelPayloadOffset:])
+	// Step 3: AES-256-ECB single-block transform on the IV again (post-payload),
+	// producing nextIV for forwarding. "encrypts the current IV with AES256/ECB
+	// using their IV key again" - the double encryption of the IV (both before
+	// and after use) helps address a class of confirmation attacks.
+	ivOp(td[TunnelIVOffset:TunnelIVOffset+TunnelIVSize], td[TunnelIVOffset:TunnelIVOffset+TunnelIVSize])
 	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.processTunnelData"}).Debug(msg)
 	return nil
 }
@@ -136,14 +157,14 @@ func (a *AESEncryptor) encryptTunnelData(td *TunnelData) error {
 
 // Decrypt decrypts ciphertext data using AES-256-CBC dual-layer decryption.
 // For AES tunnel decryption, the input should be exactly 1028 bytes of tunnel data.
-// Returns the 1008-byte payload from bytes 16..1024 (excluding the 16-byte IV)
-// or error if decryption fails.
+// Returns the 1008-byte payload from bytes 20..1027 (excluding the 4-byte
+// tunnel ID and the 16-byte IV) or error if decryption fails.
 // This implements the TunnelEncryptor interface for AES-256-CBC decryption.
 func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Decrypt"}).Debug("Decrypting data with AES-256-CBC tunnel decryption")
 
 	// AES tunnel decryption expects exactly 1028 bytes
-	if len(ciphertext) != 1028 {
+	if len(ciphertext) != TunnelMessageSize {
 		log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Decrypt", "length": len(ciphertext)}).Error("Invalid ciphertext length for AES tunnel decryption")
 		return nil, ErrDecryptionFailed
 	}
@@ -157,9 +178,9 @@ func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	// Return the decrypted payload (excluding IV)
-	result := make([]byte, 1008)
-	copy(result, td[16:1024])
+	// Return the decrypted payload (excluding the tunnel ID and the IV)
+	result := make([]byte, TunnelPayloadSize)
+	copy(result, td[TunnelPayloadOffset:])
 	return result, nil
 }
 

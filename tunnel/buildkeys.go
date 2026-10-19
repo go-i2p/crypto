@@ -374,34 +374,69 @@ func DeriveBuildReplyKeys(state *BuildNoiseState, isOBEP bool) (BuildReplyKeys, 
 }
 
 // EncryptOwnBuildReply encrypts this hop's own BuildReplyRecord with
-// ChaCha20-Poly1305. Per the spec, 'n' is the record's position in the build
-// message (0-7), not always 0 as in the deprecated long-record form, and 'ad' is
-// the handshake hash h left over from the build request.
+// ChaCha20-Poly1305. 'ad' is the handshake hash h left over from the build
+// request.
+//
+// The AEAD nonce 'n' depends on the record size and is derived here rather than
+// taken from recordNumber blindly, because the two formats differ:
+//
+//   - Short (202-byte plaintext): §Record Encryption - "'n' is the record number
+//     0-7". recordNumber is used.
+//   - Long (512-byte plaintext, deprecated): §Reply Record Encryption - "n = 0".
+//     The record number is ignored and the nonce is always zero.
+//
+// Passing a non-zero recordNumber with a long record would produce bytes a
+// 0.9.48-era router cannot open, so the size, not the caller, decides.
 func EncryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, plaintext []byte) ([]byte, error) {
 	if err := checkBuildReplyPlaintextSize(plaintext); err != nil {
 		return nil, err
 	}
-	return sealBuildRecord(replyKey, ad, plaintext, uint64(recordNumber))
+	return sealBuildRecord(replyKey, ad, plaintext, uint64(replyNonce(recordNumber, len(plaintext))))
 }
 
-// DecryptOwnBuildReply decrypts a hop's own reply record.
+// DecryptOwnBuildReply decrypts a hop's own reply record, applying the same
+// size-derived nonce rule as [EncryptOwnBuildReply].
 func DecryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, ciphertext []byte) ([]byte, error) {
 	if err := checkBuildReplyCiphertextSize(ciphertext); err != nil {
 		return nil, err
 	}
-	return openBuildRecord(replyKey, ad, ciphertext, uint64(recordNumber))
+	// The AEAD output is plaintext+BuildTagSize; recover the plaintext length so
+	// the long/short nonce rule keys off the same value encryption used.
+	return openBuildRecord(replyKey, ad, ciphertext, uint64(replyNonce(recordNumber, len(ciphertext)-BuildTagSize)))
+}
+
+// replyNonce returns the ChaCha20-Poly1305 build reply nonce for a record of the
+// given plaintext length: always 0 for the deprecated 512-byte long record, the
+// record number for the 202-byte short record. See [EncryptOwnBuildReply].
+func replyNonce(recordNumber byte, plaintextSize int) byte {
+	if plaintextSize == LongBuildReplySize {
+		return 0
+	}
+	return recordNumber
 }
 
 // ObfuscateOtherBuildRecord applies the raw ChaCha20 stream to another hop's
-// already-encrypted 218-byte record, as each hop does iteratively on the reply
-// path. This is deliberately unauthenticated ("ChaCha20 (NOT
+// already-encrypted 218-byte short record, as each hop does iteratively on the
+// reply path. This is deliberately unauthenticated ("ChaCha20 (NOT
 // ChaCha20/Poly1305)"), and the record number goes in IV byte 4.
 //
 // Encryption and decryption are the same XOR operation, so a hop that received a
 // record obfuscated with its reply key simply calls this again to undo it.
+//
+// Only short (218-byte) records are accepted. The deprecated long-record format
+// obfuscates the other records with AES and does not use the record number
+// (tunnel-creation-ecies.md §Record Encryption: "This is different from the long
+// record specification above, which uses AES and does not use the record
+// number"). That is a different scheme, not implemented here, so a 528-byte
+// record is rejected rather than silently ChaCha20-obfuscated into bytes a legacy
+// router cannot unmask.
 func ObfuscateOtherBuildRecord(replyKey [32]byte, recordNumber byte, record []byte) ([]byte, error) {
 	if err := checkBuildRecordSize(record); err != nil {
 		return nil, err
+	}
+	if len(record) == LongBuildRecordSize {
+		return nil, oops.Wrapf(ErrBuildRecordSize,
+			"long (528-byte) records use AES obfuscation without a record number, not ChaCha20; this function only handles short 218-byte records")
 	}
 	iv, err := buildRecordIV(recordNumber)
 	if err != nil {

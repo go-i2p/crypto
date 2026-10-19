@@ -49,7 +49,7 @@
 //   - Short records (current, 0.9.51+): 154-byte request plaintext and 202-byte
 //     reply plaintext, both producing 218-byte encrypted records. The 218-byte
 //     figure is the whole wire record: for a request it is 16 (hop identity hash)
-//     + 32 (sender ephemeral key) + 154 (ciphertext) + 16 (Poly1305 tag); for a
+//   - 32 (sender ephemeral key) + 154 (ciphertext) + 16 (Poly1305 tag); for a
 //     reply there is no cleartext prefix, so it is 202 + 16.
 //   - Long records (deprecated, 0.9.48): 464-byte request and 512-byte reply
 //     plaintext, both producing 528-byte encrypted records, kept that size for
@@ -98,8 +98,18 @@
 //
 // # Message layout
 //
-// A tunnel message is a fixed 1028-byte block. In the AES layer scheme the first
-// 16 bytes are the initialization vector (IV) and the following 1008 bytes
-// (offsets 16..1024) are the encrypted payload; the final 4 bytes of the block
-// are not processed and are carried through unchanged.
+// A tunnel message is a fixed 1028-byte block laid out per the Tunnel Message
+// specification (https://i2p.net/en/docs/specs/tunnel-message/, "Tunnel Message
+// (Encrypted)"):
+//
+//	bytes 0..3     Tunnel ID        4 bytes, cleartext, nonzero
+//	bytes 4..19    IV               16 bytes
+//	bytes 20..1027 Encrypted Data   1008 bytes
+//
+// In the AES layer scheme the IV at bytes 4..19 is transformed with the IV key
+// before and after the payload is processed, and the whole 1008-byte region at
+// bytes 20..1027 is CBC-encrypted. Nothing in the block is left unencrypted
+// except the 4-byte tunnel ID, which is caller framing. See [TunnelIDSize],
+// [TunnelIVOffset], [TunnelIVSize], [TunnelPayloadOffset] and
+// [TunnelPayloadSize].
 package tunnel

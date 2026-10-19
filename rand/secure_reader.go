@@ -24,33 +24,31 @@ func NewSecureReader() *SecureReader {
 }
 
 // Read fills the provided byte slice with cryptographically secure random data.
-// Reads of 32 bytes or more are additionally checked by a heuristic entropy
-// validation pass and retried up to MaxEntropyRetries times if the check fails;
-// shorter reads are returned as-is without validation.
+//
+// Reads of 32 bytes or more are checked by a heuristic entropy validation pass.
+// The check is advisory only: the OS CSPRNG is the authority on its own output,
+// and no I2P specification asks for entropy validation of a cryptographically
+// secure source (encryptedleaseset.md §Definitions requires only "n-byte output
+// from a cryptographically-secure random number generator"). A healthy
+// crypto/rand read that trips the heuristic is therefore logged and returned, not
+// retried and not failed. Retrying-then-erroring converted a perfectly good CSPRNG
+// read into a spurious failure after MaxEntropyRetries attempts - a worse
+// outcome than the pattern the heuristic was meant to catch.
 func (sr *SecureReader) Read(p []byte) (n int, err error) {
-	for attempt := 0; attempt < MaxEntropyRetries; attempt++ {
-		// Read random bytes from crypto/rand
-		n, err = sr.source.Read(p)
-		if err != nil {
-			log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read"}).WithError(err).Error("Failed to read from secure random source")
-			return 0, oops.Errorf("random read failed: %w", err)
-		}
-
-		// Validate entropy for larger samples
-		if len(p) >= 32 {
-			if !sr.validateEntropy(p) {
-				log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read", "attempt": attempt + 1}).Debug("Entropy validation failed, retrying")
-				continue
-			}
-		}
-
-		log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read", "bytes_read": n}).Debug("Successfully generated secure random bytes")
-		return n, nil
+	n, err = sr.source.Read(p)
+	if err != nil {
+		log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read"}).WithError(err).Error("Failed to read from secure random source")
+		return 0, oops.Errorf("random read failed: %w", err)
 	}
 
-	err = oops.Errorf("entropy validation failed after %d attempts", MaxEntropyRetries)
-	log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read"}).WithError(err).Error("Secure random generation failed")
-	return 0, err
+	// Advisory entropy check: log a warning, never fail or discard the read.
+	if len(p) >= 32 && !sr.validateEntropy(p) {
+		log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read", "bytes_read": n}).
+			Warning("Adaptive: CSPRNG output tripped the heuristic entropy check; returning it unchanged as the OS CSPRNG is authoritative")
+	}
+
+	log.WithFields(logger.Fields{"pkg": "rand", "func": "SecureReader.Read", "bytes_read": n}).Debug("Successfully generated secure random bytes")
+	return n, nil
 }
 
 // ReadBigInt generates a cryptographically secure big.Int in the range [0, max)

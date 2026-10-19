@@ -19,9 +19,11 @@ func TestTunnelEncryptionType_String(t *testing.T) {
 			expected: "AES-256-CBC",
 		},
 		{
-			name:     "ECIES encryption type",
+			// The deprecated ECIES tombstone names itself as not-a-tunnel-scheme
+			// so log output cannot be mistaken for a working layer encryption.
+			name:     "ECIES encryption type (deprecated tombstone)",
 			encType:  TunnelEncryptionECIES,
-			expected: "ECIES-X25519",
+			expected: "ECIES-X25519 (not a tunnel scheme; deprecated)",
 		},
 		{
 			name:     "unknown encryption type",
@@ -95,26 +97,23 @@ func TestNewTunnelEncryptor_AES(t *testing.T) {
 	}
 }
 
-// TestNewTunnelEncryptor_ECIES validates factory function for ECIES encryption
+// TestNewTunnelEncryptor_ECIES verifies that the deprecated ECIES layer type is
+// rejected. No I2P specification defines an ECIES/ChaCha20 tunnel layer
+// encryption type (Tunnel-Creation-ECIES, "Layer Encryption": "The only layer
+// encryption currently supported is type 0, which is AES"), so the factory must
+// refuse to hand one out rather than produce records no router accepts.
 func TestNewTunnelEncryptor_ECIES(t *testing.T) {
-	// Create a test public key for ECIES (using layerKey parameter)
 	var layerKey TunnelKey
-	// Fill with test data (in real usage this would be an X25519 public key)
 	for i := range layerKey {
-		layerKey[i] = byte(i)
+		layerKey[i] = byte(i + 1)
 	}
 
 	encryptor, err := NewTunnelEncryptor(TunnelEncryptionECIES, layerKey, TunnelKey{})
-	if err != nil {
-		t.Errorf("expected ECIES encryption to be implemented, got error: %v", err)
+	if err == nil {
+		t.Error("expected TunnelEncryptionECIES to be rejected, got no error")
 	}
-
-	if encryptor == nil {
-		t.Error("encryptor should not be nil for ECIES encryption type")
-	}
-
-	if encryptor != nil && encryptor.Type() != TunnelEncryptionECIES {
-		t.Errorf("expected TunnelEncryptionECIES, got %v", encryptor.Type())
+	if encryptor != nil {
+		t.Error("encryptor must be nil for the rejected ECIES type")
 	}
 }
 
@@ -161,8 +160,9 @@ func TestTunnelEncryptor_Interface(t *testing.T) {
 
 	// Verify round trip (compare payloads for AES)
 	if encryptor.Type() == TunnelEncryptionAES {
-		// For AES, compare the 1008-byte payload (excluding IV)
-		if !bytes.Equal(decrypted, original[16:1024]) {
+		// For AES, compare the 1008-byte payload at bytes 20..1027 (after the
+		// 4-byte tunnel ID and 16-byte IV), per the Tunnel Message spec.
+		if !bytes.Equal(decrypted, original[TunnelPayloadOffset:]) {
 			t.Error("AES round trip should restore original payload data")
 		}
 	}
@@ -203,7 +203,7 @@ func TestTunnelEncryptor_Polymorphism(t *testing.T) {
 
 			// For AES, verify payload is restored (excluding IV)
 			if enc.Type() == TunnelEncryptionAES {
-				if !bytes.Equal(decrypted, original[16:1024]) {
+				if !bytes.Equal(decrypted, original[TunnelPayloadOffset:]) {
 					t.Errorf("encryptor %d round trip failed for AES payload", i)
 				}
 			}

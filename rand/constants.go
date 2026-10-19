@@ -21,11 +21,9 @@ const (
 	// Reduced to 4.0 for crypto/rand compatibility while still catching patterns
 	MinEntropyThreshold = 4.0
 
-	// Maximum retry attempts for entropy validation
+	// MaxEntropyRetries bounds the rejection loop in SecureReader.ReadBigInt,
+	// which regenerates until the value falls in [0, max). It no longer applies
+	// to SecureReader.Read, whose entropy check is advisory (log-only) rather
+	// than a retry-and-fail gate.
 	MaxEntropyRetries = 10
-
-	// EntropySampleSize is the sample size (in bytes) used when validating the
-	// entropy of random reads. It is currently unused: entropy validation
-	// operates on the caller's buffer directly. Reserved for future use.
-	EntropySampleSize = 1024
 )

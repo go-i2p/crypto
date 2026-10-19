@@ -37,6 +37,20 @@ type Source64 interface {
 	Uint64() uint64
 }
 
+// ErrorSource is implemented by sources that can report CSPRNG failure instead of
+// panicking. [cryptoSource] implements it; expose it through the package-level
+// [Int63Err]/[Uint64Err] helpers and [Rand.Int63Err]/[Rand.Uint64Err] so callers
+// deriving key or nonce material can handle a dead entropy source explicitly.
+//
+// This exists because the math/rand-compatible [Source.Int63]/[Source64.Uint64]
+// signatures have no error channel, and silently returning a fixed value on
+// failure is unsafe for cryptographic use (encryptedleaseset.md §Definitions
+// requires CSRNG output suitable for generating key material).
+type ErrorSource interface {
+	Int63Err() (int64, error)
+	Uint64Err() (uint64, error)
+}
+
 // cryptoSource implements Source64 using crypto/rand
 type cryptoSource struct {
 	reader io.Reader
@@ -54,23 +68,50 @@ func NewSource(seed int64) Source {
 	return &cryptoSource{reader: rand.Reader}
 }
 
+// read fills buf from the CSPRNG, falling back to DefaultSecureReader. It
+// returns the underlying error instead of substituting a constant, so a caller
+// that can handle failure (Int63Err/Uint64Err/Read) learns the entropy source is
+// dead rather than silently building key material from a fixed value.
+func (c *cryptoSource) read(buf []byte) error {
+	if _, err := c.reader.Read(buf); err != nil {
+		if _, err2 := DefaultSecureReader.Read(buf); err2 != nil {
+			return oops.Wrapf(err2, "crypto/rand and DefaultSecureReader both failed: %v", err)
+		}
+	}
+	return nil
+}
+
 func (c *cryptoSource) Int63() int64 {
+	n, err := c.Int63Err()
+	if err != nil {
+		// The math/rand-compatible signature has no error channel. Returning a
+		// constant here (the previous behaviour) let callers silently derive key
+		// or nonce material from a fixed value - the worst failure mode for a
+		// randomness abstraction. Fail loudly and non-recoverably instead; use
+		// Int63Err to handle the failure. See encryptedleaseset.md §Definitions,
+		// which requires CSRNG output to be "cryptographically-secure (and thus
+		// suitable for generating key material)".
+		panic(err)
+	}
+	return n
+}
+
+// Int63Err returns a non-negative pseudo-random 63-bit integer and any error
+// from the underlying CSPRNG. Prefer it over [cryptoSource.Int63] wherever key
+// or nonce material is derived, since Int63 panics rather than reporting failure.
+func (c *cryptoSource) Int63Err() (int64, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
 	var buf [8]byte
-	_, err := c.reader.Read(buf[:])
-	if err != nil {
-		// Fallback to DefaultSecureReader if crypto/rand fails
-		_, err = DefaultSecureReader.Read(buf[:])
-		if err != nil {
-			// This should never happen, but if it does, return a deterministic value
-			return 1
-		}
+	if err := c.read(buf[:]); err != nil {
+		return 0, err
 	}
 
-	// Convert to int64 and mask to 63 bits (non-negative)
-	return int64(binary.BigEndian.Uint64(buf[:]) >> 1)
+	// Convert to int64 and mask to 63 bits (non-negative). Shifting the full
+	// 64-bit read right by one discards a single bit; the result stays uniform
+	// over [0, 2^63) and keeps the value non-negative.
+	return int64(binary.BigEndian.Uint64(buf[:]) >> 1), nil
 }
 
 func (c *cryptoSource) Seed(seed int64) {
@@ -79,21 +120,26 @@ func (c *cryptoSource) Seed(seed int64) {
 }
 
 func (c *cryptoSource) Uint64() uint64 {
+	n, err := c.Uint64Err()
+	if err != nil {
+		// Same rationale as Int63: never substitute a constant for CSPRNG output.
+		panic(err)
+	}
+	return n
+}
+
+// Uint64Err returns a pseudo-random 64-bit value and any error from the
+// underlying CSPRNG. Prefer it over [cryptoSource.Uint64] for key material.
+func (c *cryptoSource) Uint64Err() (uint64, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
 	var buf [8]byte
-	_, err := c.reader.Read(buf[:])
-	if err != nil {
-		// Fallback to DefaultSecureReader if crypto/rand fails
-		_, err = DefaultSecureReader.Read(buf[:])
-		if err != nil {
-			// This should never happen, but if it does, return a deterministic value
-			return 1
-		}
+	if err := c.read(buf[:]); err != nil {
+		return 0, err
 	}
 
-	return binary.BigEndian.Uint64(buf[:])
+	return binary.BigEndian.Uint64(buf[:]), nil
 }
 
 // Rand represents a source of random numbers with math/rand compatibility
@@ -132,6 +178,30 @@ func (r *Rand) Int63() int64 {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	return r.src.Int63()
+}
+
+// Int63Err returns a non-negative pseudo-random 63-bit integer and any CSPRNG
+// error, if the underlying source implements [ErrorSource]. If it does not, it
+// falls back to [Rand.Int63] with a nil error. Prefer this over Int63 when the
+// value is used as key or nonce material.
+func (r *Rand) Int63Err() (int64, error) {
+	if es, ok := r.src.(ErrorSource); ok {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		return es.Int63Err()
+	}
+	return r.Int63(), nil
+}
+
+// Uint64Err returns a pseudo-random 64-bit integer and any CSPRNG error, if the
+// underlying source implements [ErrorSource]. See [Rand.Int63Err].
+func (r *Rand) Uint64Err() (uint64, error) {
+	if es, ok := r.src.(ErrorSource); ok {
+		r.mu.Lock()
+		defer r.mu.Unlock()
+		return es.Uint64Err()
+	}
+	return r.Uint64(), nil
 }
 
 // Uint32 returns a pseudo-random 32-bit value as a uint32
@@ -311,6 +381,19 @@ func Uint64() uint64 {
 	return globalRand.Uint64()
 }
 
+// Int63Err returns a non-negative pseudo-random 63-bit integer and any CSPRNG
+// error from the default source. Prefer it over [Int63] when the value is used
+// for key or nonce material, since Int63 panics rather than reporting failure.
+func Int63Err() (int64, error) {
+	return globalRand.Int63Err()
+}
+
+// Uint64Err returns a pseudo-random 64-bit value and any CSPRNG error from the
+// default source. See [Int63Err].
+func Uint64Err() (uint64, error) {
+	return globalRand.Uint64Err()
+}
+
 // Int31 returns a non-negative pseudo-random 31-bit integer as an int32
 func Int31() int32 {
 	return globalRand.Int31()
@@ -365,3 +448,10 @@ func NormFloat64() float64 {
 func ExpFloat64() float64 {
 	return globalRand.ExpFloat64()
 }
+
+// Compile-time proof that the CSPRNG source offers both the math/rand-compatible
+// shape and the error-reporting shape.
+var (
+	_ Source64    = (*cryptoSource)(nil)
+	_ ErrorSource = (*cryptoSource)(nil)
+)

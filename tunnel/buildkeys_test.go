@@ -314,9 +314,29 @@ func TestObfuscateOtherBuildRecordKnownAnswer(t *testing.T) {
 		t.Fatalf("stream output length = %d, want %d (no tag, no padding)", len(out), len(record))
 	}
 
-	want := mustHex(t, "55ceeec5cacbf09c9dfa5d3d01aeee4136767d3bf6e0929cea84853bc1f24f4e")
-	if !bytes.Equal(out[:32], want) {
-		t.Errorf("stream prefix mismatch:\n got  %x\n want  %x", out[:32], want)
+	want := mustHex(t, "9211e978a1c8a10f204bb2d472c3981ceab2b4c1635a9d03c3b91dc01bf48812"+
+		"e70d4e26a8e2e1de412605344c9846f424828b6442b34cd0ff8f7d8f650f7b8f"+
+		"bb8721aea991c346a4ee3ce8340a629c81c49535a3392098a1b68707f19339f2"+
+		"a6e748a453fda1b44d8e47154aa9e2c05f16b2c06763276e8816c6e17aba7d28"+
+		"9c910a6ebb80689d45a2e968014ccc1bb6e3263e170bfbce0d5b60ce8b96e3cf"+
+		"ead8b6136e6f9e29b093fa2d3b3e70b25771c3907cea9eee572ce14dbf069f49"+
+		"2c863f413ee574853ca8085d09cec4c2ea5aa4c06f358bb4bf6e")
+	if !bytes.Equal(out, want) {
+		t.Errorf("stream output mismatch:\n got  %x\n want %x", out, want)
+	}
+
+	// The first 202 bytes must equal the ChaCha20-Poly1305 ciphertext of the
+	// 202-byte short reply record under the same key and nonce (record number 3
+	// in byte 4): the AEAD uses the identical keystream and only appends a tag.
+	// This cross-checks the raw stream against the AEAD path.
+	ad := [32]byte{}
+	copy(ad[:], mustHex(t, "770e21dfafaefc7d26613ddb8e8cf3ce793e444608a0631746ccbb888492c2ac"))
+	aeadCT, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 3, record[:ShortBuildReplySize])
+	if err != nil {
+		t.Fatalf("EncryptOwnBuildReply: %v", err)
+	}
+	if !bytes.Equal(out[:ShortBuildReplySize], aeadCT[:ShortBuildReplySize]) {
+		t.Error("raw stream keystream differs from the AEAD keystream for the same key/nonce")
 	}
 
 	// XOR stream: applying it twice must restore the record.
@@ -478,4 +498,93 @@ func fixedScalar(seed byte) []byte {
 	s[31] &= 127
 	s[31] |= 64
 	return s
+}
+
+// TestLongBuildReplyNonceIsAlwaysZero pins the F-3 nonce rule: the deprecated
+// long record (512-byte plaintext) uses "n = 0" regardless of the record number,
+// while the short record (202-byte) uses the record number 0-7. See
+// tunnel-creation-ecies.md §Reply Record Encryption (long: "n = 0") vs
+// §Record Encryption (short: "'n' is the record number 0-7, instead of always
+// being 0").
+func TestLongBuildReplyNonceIsAlwaysZero(t *testing.T) {
+	s := seedStateAfterMixKey(t)
+	keys, err := DeriveBuildReplyKeys(s, false)
+	if err != nil {
+		t.Fatalf("DeriveBuildReplyKeys: %v", err)
+	}
+	var ad [32]byte
+	pt := make([]byte, LongBuildReplySize)
+	for i := range pt {
+		pt[i] = byte(i)
+	}
+
+	// Two different record numbers on a LONG record must give the SAME ciphertext,
+	// because the nonce is forced to 0. If the short-record rule leaked through,
+	// these would differ and a 0.9.48 router could not open record != 0.
+	a, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 3, pt)
+	if err != nil {
+		t.Fatalf("EncryptOwnBuildReply(long, n=3): %v", err)
+	}
+	b, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 5, pt)
+	if err != nil {
+		t.Fatalf("EncryptOwnBuildReply(long, n=5): %v", err)
+	}
+	if !bytes.Equal(a, b) {
+		t.Error("long reply nonce varies with record number; the spec fixes n = 0 for long records")
+	}
+	if len(a) != LongBuildReplyEncryptedSize {
+		t.Fatalf("long reply ciphertext = %d, want %d", len(a), LongBuildReplyEncryptedSize)
+	}
+
+	// Decrypt must recover it no matter which record number the caller passes,
+	// since the nonce is size-derived.
+	back, err := DecryptOwnBuildReply(keys.ReplyKey, ad, 7, a)
+	if err != nil {
+		t.Fatalf("DecryptOwnBuildReply(long, n=7): %v", err)
+	}
+	if !bytes.Equal(back, pt) {
+		t.Error("long reply round trip failed")
+	}
+
+	// Contrast: a SHORT record must vary with the record number.
+	spt := make([]byte, ShortBuildReplySize)
+	copy(spt, pt)
+	c3, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 3, spt)
+	if err != nil {
+		t.Fatalf("EncryptOwnBuildReply(short, n=3): %v", err)
+	}
+	c4, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 4, spt)
+	if err != nil {
+		t.Fatalf("EncryptOwnBuildReply(short, n=4): %v", err)
+	}
+	if bytes.Equal(c3, c4) {
+		t.Error("short reply nonce does not vary with record number; spec requires n = record number")
+	}
+}
+
+// TestObfuscateOtherBuildRecordRejectsLong pins the second half of F-3: the raw
+// ChaCha20 obfuscation is defined only for short records. Long records "use AES
+// and do not use the record number" (tunnel-creation-ecies.md §Record
+// Encryption), so a 528-byte record must be rejected rather than silently
+// ChaCha20-obfuscated into bytes a legacy router cannot unmask.
+func TestObfuscateOtherBuildRecordRejectsLong(t *testing.T) {
+	s := seedStateAfterMixKey(t)
+	keys, err := DeriveBuildReplyKeys(s, false)
+	if err != nil {
+		t.Fatalf("DeriveBuildReplyKeys: %v", err)
+	}
+
+	long := make([]byte, LongBuildRecordSize)
+	for i := range long {
+		long[i] = byte(i)
+	}
+	if _, err := ObfuscateOtherBuildRecord(keys.ReplyKey, 0, long); err == nil {
+		t.Error("ObfuscateOtherBuildRecord accepted a 528-byte long record; long records use AES obfuscation, not ChaCha20")
+	}
+
+	// The short record path must still work.
+	short := make([]byte, ShortBuildRecordSize)
+	if _, err := ObfuscateOtherBuildRecord(keys.ReplyKey, 0, short); err != nil {
+		t.Errorf("ObfuscateOtherBuildRecord rejected a valid 218-byte short record: %v", err)
+	}
 }

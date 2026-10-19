@@ -12,6 +12,33 @@ import (
 // Moved from: tunnel.go
 var log = logger.GetGoI2PLogger()
 
+// Tunnel message field offsets and sizes, per the Tunnel Message specification
+// (https://i2p.net/en/docs/specs/tunnel-message/, section "Tunnel Message
+// (Encrypted)"):
+//
+//	bytes 0..3     Tunnel ID        4 bytes, cleartext, nonzero
+//	bytes 4..19    IV               16 bytes
+//	bytes 20..1027 Encrypted Data   1008 bytes
+//	Total size: 1028 bytes
+//
+// The AES layer cipher processes bytes 4..19 (the IV, transformed with the IV
+// key) and bytes 20..1027 (the payload, CBC with the layer key). The 4-byte
+// tunnel ID is caller framing and is never touched by the cipher.
+const (
+	// TunnelMessageSize is the fixed size of a tunnel message block.
+	TunnelMessageSize = 1028
+	// TunnelIDSize is the size of the cleartext tunnel ID at the head of the block.
+	TunnelIDSize = 4
+	// TunnelIVOffset is the byte offset of the 16-byte initialization vector.
+	TunnelIVOffset = TunnelIDSize // 4
+	// TunnelIVSize is the size of the initialization vector.
+	TunnelIVSize = 16
+	// TunnelPayloadOffset is the byte offset of the encrypted payload region.
+	TunnelPayloadOffset = TunnelIVOffset + TunnelIVSize // 20
+	// TunnelPayloadSize is the size of the encrypted payload region.
+	TunnelPayloadSize = 1008
+)
+
 // Error definitions for tunnel cryptographic operations using structured error handling.
 // These errors follow the oops pattern for consistent error wrapping and context preservation.
 var (
@@ -42,34 +69,8 @@ var (
 	ErrDecryptionFailed = oops.Errorf("tunnel decryption failed")
 
 	// ErrUnsupportedEncryptionType indicates an unsupported tunnel encryption scheme was requested.
-	// Only TunnelEncryptionAES (0) and TunnelEncryptionECIES (1) are supported.
+	// TunnelEncryptionAES (0) is the only layer encryption type defined by the I2P
+	// specifications, so it is the only accepted value; anything else, including
+	// the deprecated TunnelEncryptionECIES tombstone, returns this error.
 	ErrUnsupportedEncryptionType = oops.Errorf("unsupported tunnel encryption type")
-
-	// ECIES-specific error constants for structured error handling
-
-	// ErrECIESEncryptionFailed indicates that ECIES encryption operation failed.
-	// This may occur due to invalid public keys, data size limits, or underlying cryptographic errors.
-	ErrECIESEncryptionFailed = oops.Errorf("ECIES encryption failed")
-
-	// ErrECIESDecryptionFailed indicates that ECIES decryption operation failed.
-	// This may occur due to invalid private keys, corrupted ciphertext, or authentication failures.
-	ErrECIESDecryptionFailed = oops.Errorf("ECIES decryption failed")
-
-	// ErrECIESInvalidPublicKey indicates that an invalid X25519 public key was provided for ECIES encryption.
-	// ECIES public keys must be exactly 32 bytes. It is reserved and is not currently
-	// returned by this package; the underlying ecies package reports its own errors.
-	ErrECIESInvalidPublicKey = oops.Errorf("invalid X25519 public key for ECIES encryption")
-
-	// ErrECIESInvalidPrivateKey indicates that an invalid X25519 private key was provided for ECIES decryption.
-	// ECIES private keys must be exactly 32 bytes. It is reserved and is not currently
-	// returned by this package; the underlying ecies package reports its own errors.
-	ErrECIESInvalidPrivateKey = oops.Errorf("invalid X25519 private key for ECIES decryption")
-
-	// ErrECIESInvalidCiphertext indicates that ECIES ciphertext has invalid format or size.
-	// ECIES ciphertext must include ephemeral public key, nonce, and authenticated encryption tag.
-	ErrECIESInvalidCiphertext = oops.Errorf("invalid ECIES ciphertext format")
-
-	// ErrECIESOperationNotSupported indicates that an unsupported operation was attempted.
-	// For example, trying to decrypt with an encryptor or encrypt with a decryptor.
-	ErrECIESOperationNotSupported = oops.Errorf("ECIES operation not supported by this instance")
 )
