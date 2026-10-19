@@ -4,52 +4,173 @@ import (
 	"crypto/rand"
 	"io"
 
-	upstream "github.com/go-i2p/red25519"
+	"filippo.io/edwards25519"
 	"github.com/samber/oops"
 )
 
-// BlindPublicKey derives a blinded public key by multiplying the public key
-// point A by the blinding factor scalar b: A' = b · A.
-// The result is unlinkable to the original public key without knowledge
-// of the blinding factor.
-func BlindPublicKey(pub Red25519PublicKey, blind upstream.BlindingFactor) (Red25519PublicKey, error) {
-	blindedPub, err := upstream.BlindPublicKey(upstream.PublicKey(pub), blind)
-	if err != nil {
-		return nil, oops.Errorf("failed to blind public key: %w", err)
+// This file exposes the Red25519 re-randomization (blinding) and Ed25519
+// conversion operations defined in red25519.md §RedDSA functions and
+// §Conversion functions, and used by encryptedleaseset.md §Blinding Calculations.
+//
+// Blinding here is ADDITIVE, the one scheme the I2P specs define:
+//
+//	A' = RANDOMIZE_PUBLIC(vk, alpha) = vk + [alpha] B
+//	a' = RANDOMIZE_PRIVATE(sk, alpha) = (sk + alpha) mod L
+//
+// The spec requires the invariant
+//
+//	RANDOMIZE_PUBLIC(vk, alpha) == DERIVE_PUBLIC(RANDOMIZE_PRIVATE(sk, alpha))
+//
+// which holds only for the additive group law. Multiplicative blinding
+// (A' = [b]A, a' = a*b mod l) satisfies a different invariant and yields a
+// different key for the same factor, so blinding a key pair with two different
+// schemes produces signatures that do not verify. The previous implementation
+// delegated to an upstream module that used the multiplicative form; it is
+// replaced here with the spec's additive form so this package agrees with
+// [github.com/go-i2p/crypto/ed25519] blinding for the same alpha.
+
+// BlindingFactor is the secret scalar alpha used to re-randomize a key pair. It
+// is a 32-byte little-endian scalar mod L, the same encoding as a private key.
+type BlindingFactor [ScalarSize]byte
+
+// BlindPublicKey computes A' = vk + [alpha] B (RANDOMIZE_PUBLIC).
+//
+// The result is checked to be a valid encoded point. The input public key must
+// decode; a nil/invalid point is rejected.
+func BlindPublicKey(pub Red25519PublicKey, blind BlindingFactor) (Red25519PublicKey, error) {
+	vk := pub.point()
+	if vk == nil {
+		return nil, oops.Wrapf(ErrInvalidPublicKeySize, "public key is not a valid encoded Edwards point")
 	}
-	return Red25519PublicKey(blindedPub), nil
+	alpha, err := decodeBlindingFactor(blind)
+	if err != nil {
+		return nil, err
+	}
+	out := randomizePublic(vk, alpha)
+	return Red25519PublicKey(encodePoint(out)), nil
 }
 
-// BlindPrivateKey derives a blinded private key by multiplying the private
-// scalar a by the blinding factor b: a' = a · b mod ℓ.
-// The resulting key can be used to sign messages that are verifiable against
-// the corresponding blinded public key.
-func BlindPrivateKey(priv Red25519PrivateKey, blind upstream.BlindingFactor) (Red25519PrivateKey, error) {
-	blindedPriv, err := upstream.BlindPrivateKey(upstream.PrivateKey(priv), blind)
+// BlindPrivateKey computes a' = (a + alpha) mod L (RANDOMIZE_PRIVATE).
+//
+// The private key scalar is reduced mod L first, so both a clamped representative
+// (from [ConvertEd25519PrivateKey]) and a canonical one are accepted. The result
+// is a canonical scalar mod L.
+func BlindPrivateKey(priv Red25519PrivateKey, blind BlindingFactor) (Red25519PrivateKey, error) {
+	a, err := priv.scalar()
 	if err != nil {
-		return nil, oops.Errorf("failed to blind private key: %w", err)
+		return nil, err
 	}
-	return Red25519PrivateKey(blindedPriv), nil
+	alpha, err := decodeBlindingFactor(blind)
+	if err != nil {
+		return nil, err
+	}
+	out := randomizePrivate(a, alpha)
+	return Red25519PrivateKey(encodeScalarLE(out)), nil
 }
 
-// GenerateBlindingFactor generates a random blinding factor using entropy
-// from the provided reader. If rand is nil, crypto/rand.Reader will be used.
-func GenerateBlindingFactor(r io.Reader) (upstream.BlindingFactor, error) {
+// GenerateBlindingFactor produces a random alpha via GENERATE_RANDOM: "s = 64
+// random bytes; return s mod L". A nil reader selects crypto/rand.
+func GenerateBlindingFactor(r io.Reader) (BlindingFactor, error) {
 	if r == nil {
 		r = rand.Reader
 	}
-	return upstream.GenerateBlindingFactor(r)
+	s, err := generateRandom(r)
+	if err != nil {
+		return BlindingFactor{}, oops.Wrapf(err, "GENERATE_RANDOM failed")
+	}
+	var bf BlindingFactor
+	copy(bf[:], encodeScalarLE(s))
+	return bf, nil
 }
 
-// ComposeBlindingFactors computes the scalar product of two blinding factors:
-// result = bf1 · bf2 mod ℓ. Sequential blinding with bf1 then bf2 produces
-// the same blinded public key as single blinding with the composed factor.
-func ComposeBlindingFactors(bf1, bf2 upstream.BlindingFactor) (upstream.BlindingFactor, error) {
-	return upstream.ComposeBlindingFactors(bf1, bf2)
+// ComposeBlindingFactors adds two blinding factors mod L: result = (bf1 + bf2)
+// mod L.
+//
+// Because re-randomization is additive, blinding successively with bf1 then bf2 is
+// equivalent to blinding once with their sum. (This is the additive analogue of
+// the multiplicative "product" the previous implementation computed; sequential
+// additive blinding composes by addition.)
+func ComposeBlindingFactors(bf1, bf2 BlindingFactor) (BlindingFactor, error) {
+	a, err := decodeBlindingFactor(bf1)
+	if err != nil {
+		return BlindingFactor{}, err
+	}
+	b, err := decodeBlindingFactor(bf2)
+	if err != nil {
+		return BlindingFactor{}, err
+	}
+	sum := edwards25519.NewScalar().Add(a, b)
+	var out BlindingFactor
+	copy(out[:], encodeScalarLE(sum))
+	return out, nil
 }
 
-// NewKeyFromSeed calculates a private key from a 32-byte seed.
-// This is provided for interoperability with RFC 8032.
+// decodeBlindingFactor decodes a BlindingFactor, rejecting the zero scalar.
+//
+// alpha = 0 is a no-op that leaves the key unchanged and thus leaks the original
+// Destination; encryptedleaseset.md §Security implies a "biased alpha" is
+// dangerous ("information about the key is leaked each time a biased alpha is
+// chosen, because additive re-randomization behaves like a one-time pad"). The
+// zero value is the most biased alpha possible, so it is refused.
+func decodeBlindingFactor(bf BlindingFactor) (*edwards25519.Scalar, error) {
+	if isAllZero(bf[:]) {
+		return nil, oops.Errorf("blinding factor must not be zero")
+	}
+	return reduceScalarModL(bf[:])
+}
+
+// ConvertEd25519PrivateKey runs CONVERT_ED25519_PRIVATE(privkey): the Red25519
+// private key corresponding to an Ed25519 private key, so an existing Ed25519
+// Destination can be re-randomized.
+//
+//	s = SHA-512(privkey)[0..32]
+//	s[0] = s[0] & 248
+//	s[31] = (s[31] & 63) | 64
+//	return s
+//
+// privkey may be a 32-byte Ed25519 seed or Go's 64-byte expanded key. The result
+// is the clamped scalar, which is >= L; [NewRed25519PrivateKey] accepts it and
+// reduces mod L for arithmetic. See red25519.md §Conversion functions.
+func ConvertEd25519PrivateKey(ed25519PrivKey []byte) (Red25519PrivateKey, error) {
+	s, err := convertEd25519Private(ed25519PrivKey)
+	if err != nil {
+		return nil, oops.Wrapf(ErrInvalidPrivateKeySize, "CONVERT_ED25519_PRIVATE: %v", err)
+	}
+	return Red25519PrivateKey(s[:]), nil
+}
+
+// ConvertEd25519PublicKey runs CONVERT_ED25519_PUBLIC(pubkey) := pubkey. The
+// encoding is shared with Ed25519, so the bytes pass through; the key is still
+// validated as a decodable point.
+func ConvertEd25519PublicKey(ed25519PubKey []byte) (Red25519PublicKey, error) {
+	p := decodePoint(ed25519PubKey)
+	if p == nil {
+		return nil, oops.Wrapf(ErrInvalidPublicKeySize, "CONVERT_ED25519_PUBLIC: not a valid encoded Edwards point")
+	}
+	out := make(Red25519PublicKey, PublicKeySize)
+	copy(out, ed25519PubKey)
+	return out, nil
+}
+
+// NewKeyFromSeed is retained for compatibility but now performs Red25519
+// GENERATE_PRIVATE-style derivation from a 32-byte seed rather than Ed25519
+// clamped expansion.
+//
+// Deprecated: Red25519 private keys are not defined by a 32-byte seed; the spec's
+// GENERATE_PRIVATE consumes 64 random bytes and reduces mod L. Use
+// [GenerateRed25519Key] for new keys or [ConvertEd25519PrivateKey] to derive a
+// Red25519 key from an Ed25519 one. This helper treats the seed as the low half of
+// a 64-byte GENERATE_PRIVATE input (seed || 0) and reduces mod L, which is
+// deterministic but not a spec-defined key derivation.
 func NewKeyFromSeed(seed []byte) Red25519PrivateKey {
-	return Red25519PrivateKey(upstream.NewKeyFromSeed(seed))
+	if len(seed) != SeedSize {
+		return nil
+	}
+	var in [64]byte
+	copy(in[:SeedSize], seed)
+	s := edwards25519.NewScalar()
+	if _, err := s.SetUniformBytes(in[:]); err != nil {
+		return nil
+	}
+	return Red25519PrivateKey(encodeScalarLE(s))
 }

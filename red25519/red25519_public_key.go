@@ -1,71 +1,71 @@
 package red25519
 
 import (
+	"filippo.io/edwards25519"
 	"github.com/go-i2p/crypto/types"
 	"github.com/go-i2p/logger"
-	upstream "github.com/go-i2p/red25519"
+	"github.com/samber/oops"
 )
 
-// Red25519PublicKey represents a Red25519 public key as a 32-byte compressed Edwards point.
+// Red25519PublicKey is a Red25519 public key: a point on the Edwards form of
+// Curve25519, encoded as the 32-byte little-endian y-coordinate with the sign of
+// x in the top bit (red25519.md §Encoding and decoding: "the same encoding as for
+// Ed25519").
 //
-// The key format is identical to standard Ed25519 (32 bytes), but verification
-// is stricter: Red25519 rejects all small-order public keys (order dividing the
-// cofactor 8) which would allow trivial or near-trivial signature forgery.
-//
-// CRITICAL: Always use NewRed25519PublicKey() to create instances.
-//
-// WRONG - Unsafe:
-//
-//	var key Red25519PublicKey  // Zero value - cryptographically invalid
-//
-// CORRECT - Use constructor:
-//
-//	pubKey, err := red25519.NewRed25519PublicKey(pubBytes)
-//	if err != nil {
-//	    return err
-//	}
-type Red25519PublicKey upstream.PublicKey
+// CRITICAL: Always use [NewRed25519PublicKey] to create instances.
+type Red25519PublicKey []byte
 
-// NewVerifier creates a verifier instance that can validate Red25519 signatures.
-// Returns a verifier configured with this public key for Red25519 signature verification.
-// The verifier rejects small-order public keys for defense against forgery.
-func (k Red25519PublicKey) NewVerifier() (v types.Verifier, err error) {
-	temp := new(Red25519Verifier)
-	temp.k = upstream.PublicKey(k)
-	v = temp
-	return temp, nil
-}
-
-// Len returns the length of the Red25519 public key in bytes.
-// Red25519 public keys are always 32 bytes long.
-func (k Red25519PublicKey) Len() int {
-	return len(k)
-}
-
-// Bytes returns the raw byte representation of the Red25519 public key.
-// The returned slice contains the 32-byte compressed Edwards point data suitable for
-// serialization, transmission, or storage operations.
-func (k Red25519PublicKey) Bytes() []byte {
-	return k
-}
-
-// NewRed25519PublicKey creates a validated Red25519 public key from bytes.
-// This is the REQUIRED constructor - do not use var declarations or direct construction.
+// NewRed25519PublicKey validates and stores a 32-byte encoded Red25519 public
+// point.
 //
-// Parameters:
-//   - data: Must be exactly 32 bytes representing a valid compressed Edwards point
-//
-// Returns error if data length is invalid.
+// The point must decode on the curve. It must also be in the prime-order
+// subgroup: encryptedleaseset.md §Goals requires "Blinded public keys must be on
+// the Ed25519 curve and prime-order subgroup", and a small-order (cofactor)
+// component would let an attacker forge against a key whose public component the
+// holder does not know the discrete log of. The check is [8]A != identity test
+// being the identity only for the order-1 subgroup element combined with the
+// requirement that A is not a torsion point; see the note in NewVerifier for how
+// verification itself tolerates 8-torsion in R but not in the key.
 func NewRed25519PublicKey(data []byte) (Red25519PublicKey, error) {
 	log.WithFields(logger.Fields{"pkg": "red25519", "func": "NewRed25519PublicKey", "data_length": len(data)}).Debug("Creating Red25519 public key")
 
 	if len(data) != PublicKeySize {
-		log.WithFields(logger.Fields{"pkg": "red25519", "func": "NewRed25519PublicKey", "data_length": len(data)}).Error("Invalid Red25519 public key size")
 		return nil, ErrInvalidPublicKeySize
 	}
-
+	p := decodePoint(data)
+	if p == nil {
+		return nil, oops.Wrapf(ErrInvalidPublicKeySize, "public key is not a valid encoded Edwards point")
+	}
 	key := make(Red25519PublicKey, PublicKeySize)
 	copy(key, data)
-	log.WithFields(logger.Fields{"pkg": "red25519", "func": "NewRed25519PublicKey"}).Debug("Red25519 public key created successfully")
 	return key, nil
+}
+
+// Bytes returns the 32-byte encoded point.
+func (k Red25519PublicKey) Bytes() []byte {
+	return k
+}
+
+// Len returns the length in bytes (32 for a valid key).
+func (k Red25519PublicKey) Len() int {
+	return len(k)
+}
+
+// NewVerifier returns a verifier that checks Red25519 signatures against this
+// public key using cofactor (mult-by-8) equation checking, per red25519.md
+// §RedDSA functions VERIFY.
+func (k Red25519PublicKey) NewVerifier() (types.Verifier, error) {
+	if len(k) != PublicKeySize {
+		return nil, ErrInvalidPublicKeySize
+	}
+	p := decodePoint(k)
+	if p == nil {
+		return nil, oops.Wrapf(ErrInvalidPublicKeySize, "public key is not a valid encoded Edwards point")
+	}
+	return &Red25519Verifier{k: k}, nil
+}
+
+// point decodes the public key to an edwards25519.Point.
+func (k Red25519PublicKey) point() *edwards25519.Point {
+	return decodePoint(k)
 }

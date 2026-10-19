@@ -10,7 +10,16 @@
 // (PureEdDSA) signatures. An Ed25519ph signature cannot be verified by a PureEdDSA
 // verifier and vice versa, even though both use the same key format.
 //
-// For standard I2P Ed25519 signatures (signature type 7: EdDSA-SHA512-Ed25519),
-// use the ed25519 package instead. This package exists for applications that
-// specifically require the pre-hashed variant.
+// For standard I2P Ed25519 signatures (EdDSA-SHA512-Ed25519), use the ed25519
+// package instead. This package exists for applications that specifically require
+// the pre-hashed variant.
+//
+// # Private key encoding
+//
+// common-structures.md §SigningPrivateKey gives EdDSA_SHA512_Ed25519ph a length
+// of 32 bytes, stored little-endian. That 32 bytes is the key *seed*; Go's
+// crypto/ed25519 keeps a private key as the 64-byte expansion seed‖publicKey,
+// and [Ed25519phPrivateKey] follows that in-memory layout. Use
+// [NewEd25519phPrivateKeyFromSeed] to import and [Ed25519phPrivateKey.Seed] to
+// export the 32-byte form a Java router uses for offline signing.
 package ed25519ph
