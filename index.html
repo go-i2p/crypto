@@ -13,7 +13,7 @@
         <a href="index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 239 commits
+        📝 255 commits
          • 📜 MIT License
       </div>
     </div>
@@ -44,7 +44,7 @@
       <div class="repo-stats">
         
         <div class="repo-stat">
-          <span>📝</span> <span>239 commits</span>
+          <span>📝</span> <span>255 commits</span>
         </div>
         
         
@@ -112,9 +112,23 @@ ChaCha20-Poly1305 (<code>chacha20poly1305</code>), which also detects tampering.
 messages flow, so compromising one key does not expose past messages.</p></li>
 
 <li><p><strong>The full scheme.</strong> The <code>ecies</code> package ties these together into
-ECIES-X25519-AEAD-Ratchet, the current I2P encryption standard. The
-<code>tunnel</code> package applies it to I2P tunnel messages.</p></li>
+ECIES-X25519-AEAD-Ratchet, the current I2P <em>end-to-end</em> (destination-to-
+destination) encryption standard.</p></li>
 </ol>
+
+<p>Keep two different things called &ldquo;tunnel encryption&rdquo; separate. ECIES-X25519
+   <strong>is</strong> the deployed standard for <em>building</em> tunnels — per the Low-level
+   Cryptography spec, &ldquo;X25519 tunnel creation has replaced ElGamal tunnel
+   creation&rdquo; — and the <code>tunnel</code> package implements that spec&rsquo;s build-record
+   key schedule and reply/layer KDFs (<a href="tunnel/buildkeys.go" target="_blank">tunnel.BuildNoiseState</a>,
+   <a href="tunnel/buildkeys.go" target="_blank">tunnel.EncryptBuildRequest</a>). Separately, the
+   <em>layer</em> encryption of each 1028-byte tunnel message is AES-256-CBC, which is
+   the only layer encryption type any specification defines
+   (<code>tunnel.TunnelEncryptionAES</code>, value 0). The <code>tunnel</code> package previously also
+   exposed a <code>TunnelEncryptionECIES</code> value (1); that was never a tunnel scheme —
+   it wrapped the end-to-end one-time format and produced variable-length records
+   — and it has been <strong>removed</strong>, so <code>tunnel.NewTunnelEncryptor</code> now accepts only
+   type 0.</p>
 
 <p>Start with the package docs on <a href="https://pkg.go.dev/github.com/go-i2p/crypto" target="_blank">pkg.go.dev</a>
 for details on each piece.</p>
@@ -281,8 +295,10 @@ func main() {
     rand.Read(key)
     rand.Read(iv)
     
-    // Create symmetric key (always use the validating constructor; direct
-    // struct literals and zero values are rejected by the aes package docs)
+    // Create symmetric key (always use the validating constructor; it rejects
+    // wrong-length keys and IVs and copies the input. Note it validates sizes
+    // only - an all-zero key passed via a struct literal is still accepted, so
+    // do not construct AESSymmetricKey that way)
     symmetricKey, _ := aes.NewAES256Key(key, iv)
     defer symmetricKey.Zero()
     
@@ -449,7 +465,12 @@ func main() {
 <li><p><strong>Asymmetric Encryption</strong></p>
 
 <ul>
-<li>ECIES-X25519-AEAD-Ratchet with a unified Session API — the modern standard</li>
+<li>ECIES-X25519-AEAD-Ratchet with a unified Session API — the modern standard
+for end-to-end encryption. Coverage is partial: the one-time (§1d) format
+and the data-phase KDFs are implemented, the New Session Reply (§1g),
+payload block format (§5) and full bound-session handshake are not, so a
+session created here will not interoperate with a Java router. See the
+<code>ecies</code> and <code>ratchet</code> package docs.</li>
 <li>Curve25519 (X25519) key agreement</li>
 <li>ElGamal — legacy, kept for compatibility with older routers</li>
 </ul></li>
@@ -562,7 +583,7 @@ func main() {
                 eyedeekay
               </div>
               <div class="contributor-commits">
-                239 commits
+                255 commits
               </div>
             </div>
           </div>
@@ -574,7 +595,7 @@ func main() {
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2026-10-19 23:18:53 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2026-10-20 01:44:44 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>

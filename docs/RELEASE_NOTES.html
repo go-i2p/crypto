@@ -13,7 +13,7 @@
         <a href="../index.html">go-i2p/crypto</a>
       </h2>
       <div class="repo-meta">
-        📝 239 commits
+        📝 255 commits
          • 📜 MIT License
       </div>
     </div>
@@ -43,7 +43,137 @@
     
     <main>
       <div class="doc-content">
-        <h1 id="release-notes-for-crypto-version-0-1-70001">Release notes for: <code>crypto</code> Version <code>0.1.70001</code></h1>
+        <h1 id="release-notes-for-crypto-version-0-1-70003">Release notes for: <code>crypto</code> Version <code>0.1.70003</code></h1>
+
+<p>Spec-compliance audit: wire-format fixes and removal of non-spec APIs.</p>
+
+<p>Behaviour changes (interop-critical):</p>
+
+<ul>
+<li>tunnel: fixed the AES tunnel layer cipher field layout. The IV is now written
+at bytes 4..19 and the payload CBC&rsquo;d over bytes 20..1027 (the full 1008-byte
+region), with the 4-byte tunnel ID left cleartext at bytes 0..3, matching the
+Tunnel Message spec. Previously the IV landed at bytes 0..15 and the last 4
+payload bytes were emitted unencrypted. Added named offset constants and
+spec-layout tests.</li>
+<li>tunnel: removed the deprecated long-record format from the build-record entry
+points. EncryptBuildRequest/DecryptBuildRequest/EncryptOwnBuildReply/
+DecryptOwnBuildReply/ObfuscateOtherBuildRecord and the five size checks now
+accept only the short (0.9.51+) record sizes; the long format is &ldquo;Deprecated,
+obsolete&rdquo; per tunnel-creation-ecies.md and used a different reply nonce and AES
+obfuscation. The LongBuild*Size constants are retained as reference values.</li>
+<li>chacha20: the unauthenticated STREAM cipher now starts at block counter 1, as
+the I2P STREAM definition requires (encryptedleaseset.md §Definitions: &ldquo;with
+the initial counter set to 1&rdquo;). Verified against RFC 7539 §A.2 Test Vector #2.</li>
+<li>red25519: reimplemented the Red25519 scheme directly (no upstream wrapper). It
+now uses H(x)=SHA-512(&ldquo;I2P_Red25519H(x)&rdquo;||x), the len_u16(M)||M length prefix
+with the 65534-byte cap, an 80-byte random nonce T (so every signature
+differs), mod-L key reduction without Ed25519 clamping, cofactor verification,
+and ADDITIVE blinding (A&rsquo; = A + [alpha]B, a&rsquo; = (a+alpha) mod L) that agrees
+with the ed25519 package. Passes all ten test vectors published in
+red25519.md §Test vectors.</li>
+</ul>
+
+<p>Removed (non-spec / dead APIs):</p>
+
+<ul>
+<li>tunnel: TunnelEncryptionECIES (value 1), ECIESEncryptor/ECIESDecryptor, and
+NewTunnelCrypto. NewTunnelEncryptor now accepts only TunnelEncryptionAES.</li>
+<li>curve25519: Curve25519Signer/Curve25519Verifier and the NewSigner/NewVerifier
+methods. X25519 is key-agreement only; no I2P signature type uses it.</li>
+<li>red25519: NewKeyFromSeed and ComposeBlindingFactors (no spec concept); the
+SeedSize constant.</li>
+<li>elg: the dead PrivateKey wrapper struct; added ElgNilPublicKey so a nil key no
+longer misreports as ElgEncryptTooBig.</li>
+</ul>
+
+<p>Ed25519 / Ed25519ph:</p>
+
+<ul>
+<li>added NewEd25519PrivateKeyFromSeed / NewEd25519phPrivateKeyFromSeed and Seed()
+accessors so the 32-byte SigningPrivateKey form a Java router uses
+(common-structures.md §SigningPrivateKey) can be imported/exported; the
+64-byte in-memory layout is documented as a Go detail.</li>
+</ul>
+
+<p>Blinding:</p>
+
+<ul>
+<li>ed25519.BlindPublicKey and red25519.BlindPublicKey now reject small-order input
+points, enforcing encryptedleaseset.md §Goals (&ldquo;blinded public keys must be on
+the Ed25519 curve and prime-order subgroup&rdquo;).</li>
+</ul>
+
+<p>rand:</p>
+
+<ul>
+<li>cryptoSource no longer returns the constant 1 on CSPRNG failure; it panics and
+exposes Int63Err/Uint64Err so callers can handle a dead entropy source.</li>
+<li>SecureReader&rsquo;s entropy gate is now advisory (log-only); it no longer retries and
+fails genuine CSPRNG output. Deleted the unused EntropySampleSize constant.</li>
+</ul>
+
+<p>Documentation: corrected the &ldquo;standard for I2P tunnel encryption&rdquo; claims in
+chacha20/chacha20poly1305 (tunnel layer encryption is AES type 0 only), added the
+&ldquo;no I2P spec uses Argon2&rdquo; disclaimer, named the ECIES §1f subsections, and added
+elligator2/doc.go with its §2a/§2 citations.</p>
+
+<h1 id="release-notes-for-crypto-version-0-1-70002">Release notes for: <code>crypto</code> Version <code>0.1.70002</code></h1>
+
+<p>Spec-compliance audit fixes (ECIES-X25519-AEAD-Ratchet, Proposal 144).</p>
+
+<p>Behaviour changes:</p>
+
+<ul>
+<li>ratchet: implemented the Noise Split() that section 4a makes mandatory.
+Session now keeps independent symmetric ratchets, tag ratchets, message
+counters and look-ahead windows for the inbound and outbound directions.
+Previously both directions shared one chain, which let a session&rsquo;s outbound
+and inbound streams collide. NewSessionFromECIESWithRole and the Role type
+expose the initiator/responder choice; NewSessionFromECIES is unchanged and
+remains the initiator-side wrapper. Note that sessions created before this
+release derive different keys than after it, and the per-direction split
+means two peers must be given opposite roles.</li>
+<li>ratchet: added Session.PerformReceivingDHRatchet (the inbound half of a
+NextKey exchange), Session.GenerateNewDHKeyPair, GetReceivingNextTag and
+GetReceivingMessageNumber. PerformDHRatchet now advances only the sending
+direction, as the spec&rsquo;s &ldquo;a ratchet is for a single direction&rdquo; requires.</li>
+<li>elligator2: added GenerateEncodedKeyPair, which returns the ENCODE_ELG2
+output alongside the key pair so the map is not computed twice per message
+(section 2a Notes). ecies now uses it.</li>
+<li>ecies: added spec-derived known-answer tests for the one-time key schedule
+(protocol name, each MixHash step, and the MixKey output) and ratchet added
+one for Split. These are computed from the specification text, not from this
+library, so they fail if the key schedule drifts.</li>
+<li>Makefile: <code>make test</code> and <code>make build</code> were broken (they inherited targets
+from the go-i2p monorepo that do not exist in this module). Replaced with
+library-appropriate build/test/vet/lint/cover targets.</li>
+<li>CI: the test matrix ran Go 1.22-1.24 while go.mod requires 1.26.8, so those
+jobs could never build. Aligned to 1.26.x.</li>
+</ul>
+
+<p>Documentation corrections:</p>
+
+<ul>
+<li>tunnel: the ECIES option is NOT part of any I2P specification. No tunnel
+specification defines a ChaCha20/ECIES layer encryption type; I2P&rsquo;s AES
+layer encryption is the only defined scheme. Corrected the &ldquo;follows Proposal
+144&rdquo;, &ldquo;recommended default&rdquo;, &ldquo;218-byte records (78% smaller)&rdquo; and &ldquo;default
+for new tunnel builds with 0.9.51+&rdquo; claims across the package docs and
+README, and documented the measured record sizes.</li>
+<li>kdf: removed &ldquo;AttachPayloadKDF&rdquo; from the list of spec-mandated info strings -
+it appears in no I2P specification - and listed the strings that are real.</li>
+<li>aes: corrected the claim that struct literals and zero-value keys are
+&ldquo;rejected&rdquo;. The constructors validate lengths only; an all-zero key of the
+correct length is accepted. Documented what is and is not enforced.</li>
+<li>ecies, ratchet, README: documented what is not implemented (New Session
+Reply, payload block format, Existing Session framing) and removed the
+unqualified &ldquo;implements the spec exactly&rdquo; marketing.</li>
+<li>types: documented the RFC 5869 vs I2P spec argument-order difference between
+KeyDeriver.Derive and kdf.StandardHKDF.</li>
+</ul>
+
+<h1 id="release-notes-for-crypto-version-0-1-70001">Release notes for: <code>crypto</code> Version <code>0.1.70001</code></h1>
 
 <p>Resolve parameter-order issues in HKDF, KDF, Argon2id</p>
 
@@ -69,7 +199,7 @@ It is necessary to resolve other compilation issues in the go-i2p library stack.
     </main>
     
     <footer class="page-footer">
-      <p>Generated on 2026-10-19 23:18:53 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
+      <p>Generated on 2026-10-20 01:44:44 • <a href="https://github.com/go-i2p/crypto" target="_blank">View on GitHub</a></p>
     </footer>
   </div>
 </body>
