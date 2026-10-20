@@ -41,9 +41,18 @@ const (
 	// and other I2P cryptographic primitives that require 256-bit keys.
 	DefaultKeyLength = 32 // 256 bits for ChaCha20
 
-	// MaxInfoLength defines the maximum allowed length for HKDF info parameter.
-	// Set to 255 bytes by this implementation as a defensive bound. RFC 5869 does not
-	// limit the length of info (it only caps the output length L at 255 * HashLen
-	// bytes), so this is a local restriction rather than a spec requirement.
-	MaxInfoLength = 255 // Maximum info length for HKDF
+	// MaxInfoLength defines the maximum allowed length for the HKDF info parameter.
+	//
+	// This is a local defensive bound, NOT a specification requirement. RFC 5869
+	// §3.1 places no limit on the length of Info; its only size cap is in §3.2 /
+	// §4 on the output length L, which is bounded at 255 * HashLen bytes. I2P
+	// likewise imposes no info limit: ECIES-X25519-AEAD-Ratchet §4 "HKDF"
+	// (https://i2p.net/en/docs/specs/ecies/) constrains only the salt
+	// ("a salt of length 32 bytes ... This means that SALT_LEN is 32 bytes max")
+	// and the output length.
+	//
+	// The value is chosen to match the largest info string any I2P label can need
+	// (the longest label in the specs is 18 bytes), so it cannot reject a valid
+	// I2P derivation. It is not a statement about what the spec requires.
+	MaxInfoLength = 255 // local defensive bound; RFC 5869 sets no info limit
 )

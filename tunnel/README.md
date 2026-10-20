@@ -55,7 +55,7 @@ Two record sizes are specified:
     - Short records (current, 0.9.51+): 154-byte request plaintext and 202-byte
       reply plaintext, both producing 218-byte encrypted records. The 218-byte
       figure is the whole wire record: for a request it is 16 (hop identity hash)
-      + 32 (sender ephemeral key) + 154 (ciphertext) + 16 (Poly1305 tag); for a
+    - 32 (sender ephemeral key) + 154 (ciphertext) + 16 (Poly1305 tag); for a
       reply there is no cleartext prefix, so it is 202 + 16.
     - Long records (deprecated, 0.9.48): 464-byte request and 512-byte reply
       plaintext, both producing 528-byte encrypted records, kept that size for
@@ -81,16 +81,19 @@ in current tunnels); 1 for future (ChaCha?)". The spec is explicit:
     Adding new layer encryption types, for example ChaCha20, is a topic for
     additional research, and is not currently a part of this specification."
 
-[TunnelEncryptionECIES] (value 1) is an experimental local value that wraps the
-ecies package's *end-to-end* one-time format. It is not the spec's layer type 1,
-it is not a build record, and no deployed router accepts it as either. It also
-produces variable-length output, which defeats the fixed-size tunnel layout
-whose purpose is to stop intermediate hops from observing payload sizes. Do not
-advertise it to a router.
+So type 1 is reserved-but-undefined, implemented by no router, and this package
+offers no constant for it: [NewTunnelEncryptor] accepts only
+[TunnelEncryptionAES] and returns [ErrUnsupportedEncryptionType] for anything
+else. (This package previously exported an ECIES layer encryptor under the value
+1. It wrapped the ecies package's *end-to-end* one-time format, which is
+destination-to-destination rather than a tunnel layer scheme, and produced
+variable-length output - defeating the fixed-size tunnel layout whose purpose is
+to stop intermediate hops from observing payload sizes. It has been removed.)
 
-Note that the local values 0 and 1 are an internal choice of this package. They
-are not the same as the "crypto type" field in the I2P LeaseSet2 (LS2) records,
-where ECIES-X25519 is identified by crypto type 4.
+Note also that the layer-encryption-type field is not the "crypto type" field of
+the I2P LeaseSet2 (LS2) records, where ECIES-X25519 is identified by crypto type
+4. ECIES-X25519 IS the deployed standard for tunnel *building* (see
+[EncryptBuildRequest]); that is a different layer from record encryption.
 
 See the official specifications:
 
@@ -105,10 +108,19 @@ See the official specifications:
 
 # Message layout
 
-A tunnel message is a fixed 1028-byte block. In the AES layer scheme the first
-16 bytes are the initialization vector (IV) and the following 1008 bytes
-(offsets 16..1024) are the encrypted payload; the final 4 bytes of the block are
-not processed and are carried through unchanged.
+A tunnel message is a fixed 1028-byte block laid out per the Tunnel Message
+specification (https://i2p.net/en/docs/specs/tunnel-message/, "Tunnel Message
+(Encrypted)"):
+
+    bytes 0..3     Tunnel ID        4 bytes, cleartext, nonzero
+    bytes 4..19    IV               16 bytes
+    bytes 20..1027 Encrypted Data   1008 bytes
+
+In the AES layer scheme the IV at bytes 4..19 is transformed with the IV key
+before and after the payload is processed, and the whole 1008-byte region at
+bytes 20..1027 is CBC-encrypted. Nothing in the block is left unencrypted except
+the 4-byte tunnel ID, which is caller framing. See [TunnelIDSize],
+[TunnelIVOffset], [TunnelIVSize], [TunnelPayloadOffset] and [TunnelPayloadSize].
 
 ## Usage
 
@@ -135,7 +147,14 @@ const (
 	ShortBuildReplyEncryptedSize = ShortBuildReplySize + BuildTagSize // 218
 
 	// LongBuildRequestSize is the deprecated long BuildRequestRecord plaintext
-	// length (spec: "Unencrypted size: 464 bytes").
+	// length (spec: "Unencrypted size: 464 bytes"). Reference only: this package
+	// does not accept long records. The Long Record Specification is headed
+	// "NOTE: Deprecated, obsolete. Use the Short Record format specified below",
+	// and tunnel-creation-ecies.md states it "was implemented as of release 0.9.48
+	// and is now deprecated", while the short format "is implemented as of release
+	// 0.9.51". No router negotiates a long record with a 0.9.51+ peer, so the size
+	// checks reject these lengths rather than silently emitting a deprecated
+	// format.
 	LongBuildRequestSize = 464
 	// LongBuildReplySize is the deprecated long BuildReplyRecord plaintext length
 	// (spec: "Unencrypted size: 512 bytes").
@@ -169,6 +188,35 @@ const (
 	EphemeralPublicKeySize = 32
 )
 ```
+
+```go
+const (
+	// TunnelMessageSize is the fixed size of a tunnel message block.
+	TunnelMessageSize = 1028
+	// TunnelIDSize is the size of the cleartext tunnel ID at the head of the block.
+	TunnelIDSize = 4
+	// TunnelIVOffset is the byte offset of the 16-byte initialization vector.
+	TunnelIVOffset = TunnelIDSize // 4
+	// TunnelIVSize is the size of the initialization vector.
+	TunnelIVSize = 16
+	// TunnelPayloadOffset is the byte offset of the encrypted payload region.
+	TunnelPayloadOffset = TunnelIVOffset + TunnelIVSize // 20
+	// TunnelPayloadSize is the size of the encrypted payload region.
+	TunnelPayloadSize = 1008
+)
+```
+Tunnel message field offsets and sizes, per the Tunnel Message specification
+(https://i2p.net/en/docs/specs/tunnel-message/, section "Tunnel Message
+(Encrypted)"):
+
+    bytes 0..3     Tunnel ID        4 bytes, cleartext, nonzero
+    bytes 4..19    IV               16 bytes
+    bytes 20..1027 Encrypted Data   1008 bytes
+    Total size: 1028 bytes
+
+The AES layer cipher processes bytes 4..19 (the IV, transformed with the IV key)
+and bytes 20..1027 (the payload, CBC with the layer key). The 4-byte tunnel ID
+is caller framing and is never touched by the cipher.
 
 ```go
 var (
@@ -209,34 +257,10 @@ var (
 	ErrDecryptionFailed = oops.Errorf("tunnel decryption failed")
 
 	// ErrUnsupportedEncryptionType indicates an unsupported tunnel encryption scheme was requested.
-	// Only TunnelEncryptionAES (0) and TunnelEncryptionECIES (1) are supported.
+	// TunnelEncryptionAES (0) is the only layer encryption type defined by the I2P
+	// specifications (Tunnel-Creation-ECIES: "The only layer encryption currently
+	// supported is type 0, which is AES"), so it is the only accepted value.
 	ErrUnsupportedEncryptionType = oops.Errorf("unsupported tunnel encryption type")
-
-	// ErrECIESEncryptionFailed indicates that ECIES encryption operation failed.
-	// This may occur due to invalid public keys, data size limits, or underlying cryptographic errors.
-	ErrECIESEncryptionFailed = oops.Errorf("ECIES encryption failed")
-
-	// ErrECIESDecryptionFailed indicates that ECIES decryption operation failed.
-	// This may occur due to invalid private keys, corrupted ciphertext, or authentication failures.
-	ErrECIESDecryptionFailed = oops.Errorf("ECIES decryption failed")
-
-	// ErrECIESInvalidPublicKey indicates that an invalid X25519 public key was provided for ECIES encryption.
-	// ECIES public keys must be exactly 32 bytes. It is reserved and is not currently
-	// returned by this package; the underlying ecies package reports its own errors.
-	ErrECIESInvalidPublicKey = oops.Errorf("invalid X25519 public key for ECIES encryption")
-
-	// ErrECIESInvalidPrivateKey indicates that an invalid X25519 private key was provided for ECIES decryption.
-	// ECIES private keys must be exactly 32 bytes. It is reserved and is not currently
-	// returned by this package; the underlying ecies package reports its own errors.
-	ErrECIESInvalidPrivateKey = oops.Errorf("invalid X25519 private key for ECIES decryption")
-
-	// ErrECIESInvalidCiphertext indicates that ECIES ciphertext has invalid format or size.
-	// ECIES ciphertext must include ephemeral public key, nonce, and authenticated encryption tag.
-	ErrECIESInvalidCiphertext = oops.Errorf("invalid ECIES ciphertext format")
-
-	// ErrECIESOperationNotSupported indicates that an unsupported operation was attempted.
-	// For example, trying to decrypt with an encryptor or encrypt with a decryptor.
-	ErrECIESOperationNotSupported = oops.Errorf("ECIES operation not supported by this instance")
 )
 ```
 Error definitions for tunnel cryptographic operations using structured error
@@ -260,7 +284,8 @@ bytes 16-47 of the record.
 ```go
 func DecryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, ciphertext []byte) ([]byte, error)
 ```
-DecryptOwnBuildReply decrypts a hop's own reply record.
+DecryptOwnBuildReply decrypts a hop's own short reply record, using the same
+nonce rule as [EncryptOwnBuildReply].
 
 #### func  EncryptBuildRequest
 
@@ -293,9 +318,16 @@ is returned, which is len(plaintext)+16 bytes.
 func EncryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, plaintext []byte) ([]byte, error)
 ```
 EncryptOwnBuildReply encrypts this hop's own BuildReplyRecord with
-ChaCha20-Poly1305. Per the spec, 'n' is the record's position in the build
-message (0-7), not always 0 as in the deprecated long-record form, and 'ad' is
-the handshake hash h left over from the build request.
+ChaCha20-Poly1305. 'ad' is the handshake hash h left over from the build
+request, and the AEAD nonce 'n' is the record's position in the build message
+(0-7), per tunnel-creation-ecies.md §Record Encryption: "'n' is the record
+number 0-7".
+
+Only the short (202-byte) record is accepted. The deprecated long record used a
+different nonce rule ("n = 0", §Reply Record Encryption) together with AES
+obfuscation of the other records; it is rejected by the size check rather than
+handled here, so a caller cannot silently emit a format no 0.9.51+ router
+accepts.
 
 #### func  ObfuscateOtherBuildRecord
 
@@ -303,12 +335,20 @@ the handshake hash h left over from the build request.
 func ObfuscateOtherBuildRecord(replyKey [32]byte, recordNumber byte, record []byte) ([]byte, error)
 ```
 ObfuscateOtherBuildRecord applies the raw ChaCha20 stream to another hop's
-already-encrypted 218-byte record, as each hop does iteratively on the reply
-path. This is deliberately unauthenticated ("ChaCha20 (NOT ChaCha20/Poly1305)"),
-and the record number goes in IV byte 4.
+already-encrypted 218-byte short record, as each hop does iteratively on the
+reply path. This is deliberately unauthenticated ("ChaCha20 (NOT
+ChaCha20/Poly1305)"), and the record number goes in IV byte 4.
 
 Encryption and decryption are the same XOR operation, so a hop that received a
 record obfuscated with its reply key simply calls this again to undo it.
+
+Only short (218-byte) records are accepted. The deprecated long-record format
+obfuscates the other records with AES and does not use the record number
+(tunnel-creation-ecies.md §Record Encryption: "This is different from the long
+record specification above, which uses AES and does not use the record number").
+That is a different scheme, not implemented here, so [checkBuildRecordSize]
+rejects a 528-byte record rather than silently ChaCha20-obfuscating it into
+bytes a legacy router cannot unmask.
 
 #### type AESEncryptor
 
@@ -338,14 +378,6 @@ for secure data transmission. Returns a configured AESEncryptor instance or an
 error if cipher creation fails due to invalid keys. Example usage: encryptor,
 err := NewAESEncryptor(layerKey, ivKey)
 
-#### func  NewTunnelCrypto
-
-```go
-func NewTunnelCrypto(layerKey, ivKey TunnelKey) (*AESEncryptor, error)
-```
-NewTunnelCrypto is deprecated. Use NewAESEncryptor instead. This function is
-kept for backward compatibility and will be removed in a future version.
-
 #### func (*AESEncryptor) Decrypt
 
 ```go
@@ -353,9 +385,9 @@ func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error)
 ```
 Decrypt decrypts ciphertext data using AES-256-CBC dual-layer decryption. For
 AES tunnel decryption, the input should be exactly 1028 bytes of tunnel data.
-Returns the 1008-byte payload from bytes 16..1024 (excluding the 16-byte IV) or
-error if decryption fails. This implements the TunnelEncryptor interface for
-AES-256-CBC decryption.
+Returns the 1008-byte payload from bytes 20..1027 (excluding the 4-byte tunnel
+ID and the 16-byte IV) or error if decryption fails. This implements the
+TunnelEncryptor interface for AES-256-CBC decryption.
 
 #### func (*AESEncryptor) Encrypt
 
@@ -364,10 +396,20 @@ func (a *AESEncryptor) Encrypt(plaintext []byte) ([]byte, error)
 ```
 Encrypt encrypts plaintext data using AES-256-CBC dual-layer encryption. For AES
 tunnel encryption, the input should be exactly 1008 bytes of payload data (a
-random 16-byte IV is then prepended); a full 1028-byte record is also accepted
-and used as-is. The method creates a 1028-byte tunnel structure with a 16-byte
-IV prefix. Returns the complete tunnel data (1028 bytes) or error if encryption
-fails. This implements the TunnelEncryptor interface for AES-256-CBC encryption.
+random 16-byte IV is then written at bytes 4..19); a full 1028-byte record is
+also accepted and used as-is.
+
+The record layout follows the Tunnel Message specification
+(https://i2p.net/en/docs/specs/tunnel-message/, "Tunnel Message (Encrypted)"):
+Tunnel ID bytes 0..3 (4 bytes, cleartext, nonzero), IV bytes 4..19 (16 bytes),
+Encrypted Data bytes 20..1027 (1008 bytes). Total size 1028 bytes.
+
+When the 1008-byte payload-only form is used, bytes 0..3 are left zero: the
+tunnel ID is caller-supplied framing, not a cryptographic value, so set it
+before putting the record on the wire.
+
+Returns the complete tunnel data (1028 bytes) or error if encryption fails. This
+implements the TunnelEncryptor interface for AES-256-CBC encryption.
 
 #### func (*AESEncryptor) Type
 
@@ -495,133 +537,22 @@ the 32 bytes at indices 0..31), so keydata[0:7] is the 8-byte garlic reply tag -
 consistent with the spec's own "32-byte garlic reply key and 8-byte garlic reply
 tag".
 
-#### type ECIESDecryptor
-
-```go
-type ECIESDecryptor struct {
-}
-```
-
-ECIESDecryptor implements TunnelEncryptor using ECIES-X25519 decryption. This is
-a separate struct because decryption requires a private key.
-
-#### func  NewECIESDecryptor
-
-```go
-func NewECIESDecryptor(recipientPrivKey [32]byte) *ECIESDecryptor
-```
-NewECIESDecryptor creates a new ECIES tunnel decryptor using the recipient's
-private key. The private key must be exactly 32 bytes (X25519 private key
-format).
-
-#### func (*ECIESDecryptor) Decrypt
-
-```go
-func (d *ECIESDecryptor) Decrypt(ciphertext []byte) ([]byte, error)
-```
-Decrypt decrypts the ciphertext using ECIES-X25519 scheme with the private key.
-This method wraps ecies.DecryptECIESX25519() and delegates all cryptographic
-operations to the existing ecies package.
-
-#### func (*ECIESDecryptor) Encrypt
-
-```go
-func (d *ECIESDecryptor) Encrypt(plaintext []byte) ([]byte, error)
-```
-Encrypt is not supported by the decryptor. Returns an error.
-
-#### func (*ECIESDecryptor) Type
-
-```go
-func (d *ECIESDecryptor) Type() TunnelEncryptionType
-```
-Type returns the tunnel encryption type for this decryptor.
-
-#### func (*ECIESDecryptor) Zero
-
-```go
-func (d *ECIESDecryptor) Zero()
-```
-Zero securely clears the private key from memory.
-
-#### type ECIESEncryptor
-
-```go
-type ECIESEncryptor struct {
-}
-```
-
-ECIESEncryptor implements TunnelEncryptor using ECIES-X25519 encryption. This is
-a thin wrapper around the existing ecies package functionality.
-
-EXPERIMENTAL - NOT INTEROPERABLE as a tunnel scheme, and unrelated to the
-deployed ECIES tunnel BUILDING crypto in this package ([EncryptBuildRequest]).
-No I2P specification defines this as a tunnel layer encryption scheme. The ecies
-package's one-time format is an end-to-end (destination-to-destination)
-construct; Tunnel-Creation-ECIES, which does govern tunnel layer encryption,
-supports only AES (type 0) and explicitly leaves any ChaCha20-based type out of
-scope. Records produced here are variable length, which also conflicts with the
-fixed-size tunnel record layout. Use [AESEncryptor] for real tunnels; see the
-package docs for the details.
-
-#### func  NewECIESEncryptor
-
-```go
-func NewECIESEncryptor(recipientPubKey [32]byte) *ECIESEncryptor
-```
-NewECIESEncryptor creates a new ECIES tunnel encryptor using the recipient's
-public key. The public key must be exactly 32 bytes (X25519 public key format).
-This encryptor will generate ephemeral keys for each encryption operation.
-
-#### func (*ECIESEncryptor) Decrypt
-
-```go
-func (e *ECIESEncryptor) Decrypt(ciphertext []byte) ([]byte, error)
-```
-Decrypt is not supported by the encryptor: it only holds a public key, and
-ECIES-X25519 decryption requires the recipient's private key. It is present to
-satisfy the TunnelEncryptor interface and always returns an error. Use
-ECIESDecryptor for real decryption.
-
-#### func (*ECIESEncryptor) Encrypt
-
-```go
-func (e *ECIESEncryptor) Encrypt(plaintext []byte) ([]byte, error)
-```
-Encrypt encrypts the plaintext using ECIES-X25519 scheme. This method wraps
-ecies.EncryptECIESX25519() and delegates all cryptographic operations to the
-existing ecies package.
-
-The encryption uses: - Ephemeral X25519 key pair - X25519 key agreement with
-recipient's public key - The spec's Noise-based key derivation (see the ecies
-package) - ChaCha20-Poly1305 AEAD encryption
-
-Returns ciphertext in the ecies package's one-time format: [Elligator2-encoded
-ephemeral public key 32][flags section 48][payload section N+16] - 96 bytes of
-overhead plus the plaintext, so the result is variable length and is not a
-1028-byte tunnel record. See the ecies package for the full wire format.
-
-#### func (*ECIESEncryptor) Type
-
-```go
-func (e *ECIESEncryptor) Type() TunnelEncryptionType
-```
-
 #### type TunnelData
 
 ```go
-type TunnelData [1028]byte
+type TunnelData [TunnelMessageSize]byte
 ```
 
 TunnelData represents the standardized data structure for I2P tunnel messages
-(1028 bytes total). The structure follows I2P's tunnel message format where the
-first 16 bytes serve as the initialization vector (IV) and the following 1008
-bytes (offsets 16..1024) contain the encrypted payload data; the final 4 bytes
-of the block are not processed by the AES layer. This fixed-size format ensures
-network compatibility and provides consistent message boundaries for tunnel
-encryption operations. The 1028-byte size aligns with I2P's network protocol
-requirements for efficient data transmission. TunnelData represents the data
-structure for tunnel messages (1028 bytes). Moved from: tunnel.go
+(1028 bytes total). The layout follows the Tunnel Message specification
+(https://i2p.net/en/docs/specs/tunnel-message/, "Tunnel Message (Encrypted)"):
+bytes 0..3 hold the cleartext 4-byte Tunnel ID, bytes 4..19 hold the 16-byte IV,
+and bytes 20..1027 hold the 1008-byte encrypted payload. The whole 1008-byte
+payload region is processed by the AES layer; there is no unencrypted tail. The
+fixed size exists to stop intermediate hops from tagging or correlating messages
+by observing their length. See TunnelIDSize, TunnelIVOffset, TunnelIVSize and
+TunnelPayloadOffset. TunnelData represents the data structure for tunnel
+messages (1028 bytes). Moved from: tunnel.go
 
 #### type TunnelEncryptionType
 
@@ -633,8 +564,7 @@ TunnelEncryptionType distinguishes between tunnel *layer* encryption schemes -
 the symmetric encryption of each 1028-byte tunnel message, which is a different
 concern from tunnel *building* (which is ECIES-based; see
 [EncryptBuildRequest]). I2P's specifications define only AES (type 0) for layer
-encryption. Use [TunnelEncryptionAES] for anything that has to talk to a real
-router; [TunnelEncryptionECIES] is experimental and not interoperable.
+encryption, so [TunnelEncryptionAES] is the only usable value.
 
 ```go
 const (
@@ -643,34 +573,9 @@ const (
 	// (Tunnel-Creation-ECIES: "The only layer encryption currently supported is
 	// type 0, which is AES"). Use this for anything that must interoperate.
 	// It uses dual-layer AES encryption with separate layer and IV keys.
-	// Tunnel records are 1028 bytes: a 16-byte IV prefix followed by the
-	// encrypted payload region (bytes 16..1024 are CBC-processed; the final 4
-	// bytes are carried through unchanged).
+	// Tunnel records are 1028 bytes: a 4-byte cleartext tunnel ID, a 16-byte IV
+	// at bytes 4..19, and the encrypted payload region at bytes 20..1027.
 	TunnelEncryptionAES TunnelEncryptionType = 0
-
-	// TunnelEncryptionECIES is EXPERIMENTAL and NOT interoperable as a tunnel
-	// LAYER encryption scheme. No I2P specification defines an ECIES/ChaCha20
-	// tunnel layer encryption type: Tunnel-Creation-ECIES lists type 1 only as
-	// "for future (ChaCha?)" and says adding such types "is a topic for
-	// additional research, and is not currently a part of this specification".
-	// (ECIES-X25519 IS the deployed standard for tunnel BUILDING - see
-	// [EncryptBuildRequest] - but that is a different layer, and this value
-	// implements neither of those formats.) The ECIES-X25519-AEAD-Ratchet spec
-	// this is often assumed to implement is end-to-end (destination to
-	// destination) and does not define tunnel layer encryption at all.
-	//
-	// This value wraps the ecies package's one-time format, so records are
-	// variable length: 96 bytes of overhead plus the plaintext (Elligator2-
-	// encoded ephemeral key + flags section + payload + tag). Measured: a
-	// 1-byte payload yields 97 bytes, a 222-byte payload 318 bytes, and a
-	// full 1008-byte tunnel payload 1104 bytes - larger than the fixed
-	// 1028-byte AES record. Variable-length records also defeat the fixed-size
-	// tunnel layout that stops intermediate hops from observing payload sizes.
-	//
-	// The local value 1 is this package's own choice; it is not the spec's
-	// layer encryption type 1, and it is distinct from the LS2 crypto type 4
-	// used in LeaseSet2 records. Do not advertise it to a router.
-	TunnelEncryptionECIES TunnelEncryptionType = 1
 )
 ```
 
@@ -687,20 +592,18 @@ debugging.
 ```go
 type TunnelEncryptor interface {
 	// Encrypt encrypts plaintext data and returns the ciphertext.
-	// For AES: accepts 1008 bytes of payload (a random 16-byte IV is prepended)
-	// or a full 1028-byte record, and returns a 1028-byte record. Note that only
-	// bytes 16..1024 of the record are CBC-processed; the final 4 bytes are left
-	// as provided.
-	// For ECIES: accepts variable-length data up to the ECIES max plaintext size
-	// and returns the ECIES one-time format (96 bytes of overhead plus the
-	// payload).
+	// For AES: accepts 1008 bytes of payload (a random 16-byte IV is written at
+	// bytes 4..19) or a full 1028-byte record, and returns a 1028-byte record.
+	// Per the Tunnel Message specification, bytes 20..1027 are the CBC-processed
+	// payload region; bytes 0..3 (the cleartext tunnel ID) are carried through
+	// untouched.
 	// Returns error if encryption fails due to invalid keys or cryptographic operations.
 	Encrypt(plaintext []byte) ([]byte, error)
 
 	// Decrypt decrypts ciphertext data and returns the plaintext.
 	// For AES: expects 1028 bytes of tunnel data and returns the 1008-byte
-	// payload from bytes 16..1024 (excluding the 16-byte IV prefix).
-	// For ECIES: expects ECIES-formatted ciphertext, returns original plaintext
+	// payload from bytes 20..1027 (excluding the 4-byte tunnel ID and the
+	// 16-byte IV).
 	// Returns error if decryption fails due to invalid keys, corrupted data, or authentication failures.
 	Decrypt(ciphertext []byte) ([]byte, error)
 
@@ -711,10 +614,11 @@ type TunnelEncryptor interface {
 ```
 
 TunnelEncryptor defines the interface for tunnel-level encryption operations.
-The abstraction has two implementations: AES-256-CBC, the only scheme the I2P
-specifications define for tunnel *layer* encryption, and ECIES-X25519, an
-experimental wrapper around the end-to-end ecies package that is not a tunnel
-scheme at all (see [TunnelEncryptionECIES]).
+
+AES-256-CBC ([AESEncryptor]) is the only implementation, because it is the only
+scheme the I2P specifications define for tunnel *layer* encryption
+(Tunnel-Creation-ECIES, "Layer Encryption": "The only layer encryption currently
+supported is type 0, which is AES").
 
 Note that tunnel *building* is a separate concern from tunnel layer encryption
 and is ECIES-based in current I2P; that crypto lives in this package's
@@ -728,21 +632,16 @@ error handling.
 func NewTunnelEncryptor(encType TunnelEncryptionType, layerKey, ivKey TunnelKey) (TunnelEncryptor, error)
 ```
 NewTunnelEncryptor creates a new tunnel encryptor based on the specified
-encryption type. This factory function provides a unified interface for creating
-both AES and ECIES encryptors.
-
-For AES encryption (type 0), the only scheme defined by the I2P specifications:
+encryption type. AES (type 0) is the only layer encryption scheme defined by the
+I2P specifications, so it is the only accepted value.
 
     - layerKey: 32-byte AES-256 key for data layer encryption
     - ivKey: 32-byte AES-256 key for IV encryption
 
-For ECIES encryption (type 1), which is experimental and not interoperable:
-
-    - recipientPubKey: 32-byte X25519 public key (layerKey parameter)
-    - ivKey parameter is ignored for ECIES
-
-Returns configured TunnelEncryptor or error if creation fails due to invalid
-parameters.
+Returns a configured TunnelEncryptor, or [ErrUnsupportedEncryptionType] for any
+other value. In particular the numeric value 1, which this package once exposed
+as TunnelEncryptionECIES, is now rejected outright: no I2P specification defines
+an ECIES tunnel layer encryption type.
 
 #### type TunnelIV
 
@@ -753,11 +652,13 @@ type TunnelIV []byte
 TunnelIV represents the initialization vector for tunnel message encryption
 operations. The IV provides randomization for CBC mode encryption and should be
 unique for each tunnel message to prevent cryptographic attacks. In I2P tunnel
-messages, the IV occupies the first 16 bytes of the TunnelData structure and
-serves as the randomization source for CBC encryption. IVs must be unpredictable
-but do not need to be secret, following standard cryptographic practices.
-TunnelIV represents the initialization vector for a tunnel message. Moved from:
-tunnel.go
+messages the IV occupies bytes 4..19 of the TunnelData structure - immediately
+after the 4-byte cleartext Tunnel ID - and serves as the randomization source
+for CBC encryption. It is also the value transformed with the IV key before and
+after the payload is processed. IVs must be unpredictable but do not need to be
+secret, following standard cryptographic practices. See TunnelIVOffset and
+TunnelIVSize. TunnelIV represents the initialization vector for a tunnel
+message. Moved from: tunnel.go
 
 #### type TunnelKey
 

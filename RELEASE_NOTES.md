@@ -1,3 +1,69 @@
+Release notes for: `crypto` Version `0.1.70003`
+==============================================
+
+Spec-compliance audit: wire-format fixes and removal of non-spec APIs.
+
+Behaviour changes (interop-critical):
+
+- tunnel: fixed the AES tunnel layer cipher field layout. The IV is now written
+  at bytes 4..19 and the payload CBC'd over bytes 20..1027 (the full 1008-byte
+  region), with the 4-byte tunnel ID left cleartext at bytes 0..3, matching the
+  Tunnel Message spec. Previously the IV landed at bytes 0..15 and the last 4
+  payload bytes were emitted unencrypted. Added named offset constants and
+  spec-layout tests.
+- tunnel: removed the deprecated long-record format from the build-record entry
+  points. EncryptBuildRequest/DecryptBuildRequest/EncryptOwnBuildReply/
+  DecryptOwnBuildReply/ObfuscateOtherBuildRecord and the five size checks now
+  accept only the short (0.9.51+) record sizes; the long format is "Deprecated,
+  obsolete" per tunnel-creation-ecies.md and used a different reply nonce and AES
+  obfuscation. The LongBuild*Size constants are retained as reference values.
+- chacha20: the unauthenticated STREAM cipher now starts at block counter 1, as
+  the I2P STREAM definition requires (encryptedleaseset.md §Definitions: "with
+  the initial counter set to 1"). Verified against RFC 7539 §A.2 Test Vector #2.
+- red25519: reimplemented the Red25519 scheme directly (no upstream wrapper). It
+  now uses H(x)=SHA-512("I2P_Red25519H(x)"||x), the len_u16(M)||M length prefix
+  with the 65534-byte cap, an 80-byte random nonce T (so every signature
+  differs), mod-L key reduction without Ed25519 clamping, cofactor verification,
+  and ADDITIVE blinding (A' = A + [alpha]B, a' = (a+alpha) mod L) that agrees
+  with the ed25519 package. Passes all ten test vectors published in
+  red25519.md §Test vectors.
+
+Removed (non-spec / dead APIs):
+
+- tunnel: TunnelEncryptionECIES (value 1), ECIESEncryptor/ECIESDecryptor, and
+  NewTunnelCrypto. NewTunnelEncryptor now accepts only TunnelEncryptionAES.
+- curve25519: Curve25519Signer/Curve25519Verifier and the NewSigner/NewVerifier
+  methods. X25519 is key-agreement only; no I2P signature type uses it.
+- red25519: NewKeyFromSeed and ComposeBlindingFactors (no spec concept); the
+  SeedSize constant.
+- elg: the dead PrivateKey wrapper struct; added ElgNilPublicKey so a nil key no
+  longer misreports as ElgEncryptTooBig.
+
+Ed25519 / Ed25519ph:
+
+- added NewEd25519PrivateKeyFromSeed / NewEd25519phPrivateKeyFromSeed and Seed()
+  accessors so the 32-byte SigningPrivateKey form a Java router uses
+  (common-structures.md §SigningPrivateKey) can be imported/exported; the
+  64-byte in-memory layout is documented as a Go detail.
+
+Blinding:
+
+- ed25519.BlindPublicKey and red25519.BlindPublicKey now reject small-order input
+  points, enforcing encryptedleaseset.md §Goals ("blinded public keys must be on
+  the Ed25519 curve and prime-order subgroup").
+
+rand:
+
+- cryptoSource no longer returns the constant 1 on CSPRNG failure; it panics and
+  exposes Int63Err/Uint64Err so callers can handle a dead entropy source.
+- SecureReader's entropy gate is now advisory (log-only); it no longer retries and
+  fails genuine CSPRNG output. Deleted the unused EntropySampleSize constant.
+
+Documentation: corrected the "standard for I2P tunnel encryption" claims in
+chacha20/chacha20poly1305 (tunnel layer encryption is AES type 0 only), added the
+"no I2P spec uses Argon2" disclaimer, named the ECIES §1f subsections, and added
+elligator2/doc.go with its §2a/§2 citations.
+
 Release notes for: `crypto` Version `0.1.70002`
 ==============================================
 

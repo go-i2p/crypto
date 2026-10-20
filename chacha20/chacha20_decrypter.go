@@ -12,7 +12,8 @@ type ChaCha20PolyDecrypter struct {
 }
 
 // Decrypt decrypts data encrypted with ChaCha20-Poly1305
-// The format should be: [12-byte nonce][ciphertext+tag]
+// The format should be: [12-byte nonce][ciphertext+tag] - the general-purpose
+// framing of [ChaCha20PolyEncrypter], not an I2P wire format (see that type).
 func (d *ChaCha20PolyDecrypter) Decrypt(data []byte) ([]byte, error) {
 	return d.DecryptWithAd(data, nil)
 }

@@ -62,7 +62,14 @@ const (
 	ShortBuildReplyEncryptedSize = ShortBuildReplySize + BuildTagSize // 218
 
 	// LongBuildRequestSize is the deprecated long BuildRequestRecord plaintext
-	// length (spec: "Unencrypted size: 464 bytes").
+	// length (spec: "Unencrypted size: 464 bytes"). Reference only: this package
+	// does not accept long records. The Long Record Specification is headed
+	// "NOTE: Deprecated, obsolete. Use the Short Record format specified below",
+	// and tunnel-creation-ecies.md states it "was implemented as of release 0.9.48
+	// and is now deprecated", while the short format "is implemented as of release
+	// 0.9.51". No router negotiates a long record with a 0.9.51+ peer, so the size
+	// checks reject these lengths rather than silently emitting a deprecated
+	// format.
 	LongBuildRequestSize = 464
 	// LongBuildReplySize is the deprecated long BuildReplyRecord plaintext length
 	// (spec: "Unencrypted size: 512 bytes").
@@ -375,44 +382,29 @@ func DeriveBuildReplyKeys(state *BuildNoiseState, isOBEP bool) (BuildReplyKeys, 
 
 // EncryptOwnBuildReply encrypts this hop's own BuildReplyRecord with
 // ChaCha20-Poly1305. 'ad' is the handshake hash h left over from the build
-// request.
+// request, and the AEAD nonce 'n' is the record's position in the build message
+// (0-7), per tunnel-creation-ecies.md §Record Encryption: "'n' is the record
+// number 0-7".
 //
-// The AEAD nonce 'n' depends on the record size and is derived here rather than
-// taken from recordNumber blindly, because the two formats differ:
-//
-//   - Short (202-byte plaintext): §Record Encryption - "'n' is the record number
-//     0-7". recordNumber is used.
-//   - Long (512-byte plaintext, deprecated): §Reply Record Encryption - "n = 0".
-//     The record number is ignored and the nonce is always zero.
-//
-// Passing a non-zero recordNumber with a long record would produce bytes a
-// 0.9.48-era router cannot open, so the size, not the caller, decides.
+// Only the short (202-byte) record is accepted. The deprecated long record used a
+// different nonce rule ("n = 0", §Reply Record Encryption) together with AES
+// obfuscation of the other records; it is rejected by the size check rather than
+// handled here, so a caller cannot silently emit a format no 0.9.51+ router
+// accepts.
 func EncryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, plaintext []byte) ([]byte, error) {
 	if err := checkBuildReplyPlaintextSize(plaintext); err != nil {
 		return nil, err
 	}
-	return sealBuildRecord(replyKey, ad, plaintext, uint64(replyNonce(recordNumber, len(plaintext))))
+	return sealBuildRecord(replyKey, ad, plaintext, uint64(recordNumber))
 }
 
-// DecryptOwnBuildReply decrypts a hop's own reply record, applying the same
-// size-derived nonce rule as [EncryptOwnBuildReply].
+// DecryptOwnBuildReply decrypts a hop's own short reply record, using the same
+// nonce rule as [EncryptOwnBuildReply].
 func DecryptOwnBuildReply(replyKey, ad [32]byte, recordNumber byte, ciphertext []byte) ([]byte, error) {
 	if err := checkBuildReplyCiphertextSize(ciphertext); err != nil {
 		return nil, err
 	}
-	// The AEAD output is plaintext+BuildTagSize; recover the plaintext length so
-	// the long/short nonce rule keys off the same value encryption used.
-	return openBuildRecord(replyKey, ad, ciphertext, uint64(replyNonce(recordNumber, len(ciphertext)-BuildTagSize)))
-}
-
-// replyNonce returns the ChaCha20-Poly1305 build reply nonce for a record of the
-// given plaintext length: always 0 for the deprecated 512-byte long record, the
-// record number for the 202-byte short record. See [EncryptOwnBuildReply].
-func replyNonce(recordNumber byte, plaintextSize int) byte {
-	if plaintextSize == LongBuildReplySize {
-		return 0
-	}
-	return recordNumber
+	return openBuildRecord(replyKey, ad, ciphertext, uint64(recordNumber))
 }
 
 // ObfuscateOtherBuildRecord applies the raw ChaCha20 stream to another hop's
@@ -427,16 +419,12 @@ func replyNonce(recordNumber byte, plaintextSize int) byte {
 // obfuscates the other records with AES and does not use the record number
 // (tunnel-creation-ecies.md §Record Encryption: "This is different from the long
 // record specification above, which uses AES and does not use the record
-// number"). That is a different scheme, not implemented here, so a 528-byte
-// record is rejected rather than silently ChaCha20-obfuscated into bytes a legacy
-// router cannot unmask.
+// number"). That is a different scheme, not implemented here, so [checkBuildRecordSize]
+// rejects a 528-byte record rather than silently ChaCha20-obfuscating it into
+// bytes a legacy router cannot unmask.
 func ObfuscateOtherBuildRecord(replyKey [32]byte, recordNumber byte, record []byte) ([]byte, error) {
 	if err := checkBuildRecordSize(record); err != nil {
 		return nil, err
-	}
-	if len(record) == LongBuildRecordSize {
-		return nil, oops.Wrapf(ErrBuildRecordSize,
-			"long (528-byte) records use AES obfuscation without a record number, not ChaCha20; this function only handles short 218-byte records")
 	}
 	iv, err := buildRecordIV(recordNumber)
 	if err != nil {
@@ -496,69 +484,73 @@ func buildRecordIV(recordNumber byte) ([]byte, error) {
 	return iv, nil
 }
 
-// checkBuildRequestPlaintextSize accepts exactly the spec-defined BuildRequestRecord
-// plaintext sizes: 154 (short) or 464 (long).
+// checkBuildRequestPlaintextSize accepts only the short (154-byte) BuildRequestRecord
+// plaintext. The deprecated long format (464 bytes) is rejected: the Long Record
+// Specification is headed "Deprecated, obsolete. Use the Short Record format".
 func checkBuildRequestPlaintextSize(plaintext []byte) error {
 	switch len(plaintext) {
-	case ShortBuildRequestSize, LongBuildRequestSize:
+	case ShortBuildRequestSize:
 		return nil
 	default:
 		return oops.Wrapf(ErrBuildRecordSize,
-			"build request plaintext must be %d (short) or %d (long) bytes, got %d",
-			ShortBuildRequestSize, LongBuildRequestSize, len(plaintext))
+			"build request plaintext must be %d bytes (short record); the deprecated long format is not supported, got %d",
+			ShortBuildRequestSize, len(plaintext))
 	}
 }
 
-// checkBuildReplyPlaintextSize accepts exactly the spec-defined BuildReplyRecord
-// plaintext sizes: 202 (short) or 512 (long).
+// checkBuildReplyPlaintextSize accepts only the short (202-byte) BuildReplyRecord
+// plaintext. The deprecated long format (512 bytes) is rejected.
 func checkBuildReplyPlaintextSize(plaintext []byte) error {
 	switch len(plaintext) {
-	case ShortBuildReplySize, LongBuildReplySize:
+	case ShortBuildReplySize:
 		return nil
 	default:
 		return oops.Wrapf(ErrBuildRecordSize,
-			"build reply plaintext must be %d (short) or %d (long) bytes, got %d",
-			ShortBuildReplySize, LongBuildReplySize, len(plaintext))
+			"build reply plaintext must be %d bytes (short record); the deprecated long format is not supported, got %d",
+			ShortBuildReplySize, len(plaintext))
 	}
 }
 
-// checkBuildRequestCiphertextSize accepts the AEAD output for a request record:
-// plaintext plus the 16-byte Poly1305 tag (170 short, 480 long). The 48-byte
-// cleartext prefix is not part of this value.
+// checkBuildRequestCiphertextSize accepts the AEAD output for a short request
+// record: plaintext plus the 16-byte Poly1305 tag (170 bytes). The 48-byte
+// cleartext prefix is not part of this value; the deprecated long output (480)
+// is rejected.
 func checkBuildRequestCiphertextSize(ciphertext []byte) error {
 	switch len(ciphertext) {
-	case ShortBuildRequestEncryptedSize, LongBuildRequestEncryptedSize:
+	case ShortBuildRequestEncryptedSize:
 		return nil
 	default:
 		return oops.Wrapf(ErrBuildRecordSize,
-			"build request ciphertext must be %d (short) or %d (long) bytes, got %d",
-			ShortBuildRequestEncryptedSize, LongBuildRequestEncryptedSize, len(ciphertext))
+			"build request ciphertext must be %d bytes (short record); the deprecated long format is not supported, got %d",
+			ShortBuildRequestEncryptedSize, len(ciphertext))
 	}
 }
 
-// checkBuildReplyCiphertextSize accepts the AEAD output for a reply record
-// (218 short, 528 long). A reply has no cleartext prefix, so the short reply
-// ciphertext is the whole 218-byte wire record.
+// checkBuildReplyCiphertextSize accepts the AEAD output for a short reply record
+// (218 bytes). A reply has no cleartext prefix, so the short reply ciphertext is
+// the whole 218-byte wire record; the deprecated long output (528) is rejected.
 func checkBuildReplyCiphertextSize(ciphertext []byte) error {
 	switch len(ciphertext) {
-	case ShortBuildReplyEncryptedSize, LongBuildReplyEncryptedSize:
+	case ShortBuildReplyEncryptedSize:
 		return nil
 	default:
 		return oops.Wrapf(ErrBuildRecordSize,
-			"build reply ciphertext must be %d (short) or %d (long) bytes, got %d",
-			ShortBuildReplyEncryptedSize, LongBuildReplyEncryptedSize, len(ciphertext))
+			"build reply ciphertext must be %d bytes (short record); the deprecated long format is not supported, got %d",
+			ShortBuildReplyEncryptedSize, len(ciphertext))
 	}
 }
 
-// checkBuildRecordSize accepts a complete encrypted record of either length, for
-// the raw-ChaCha20 obfuscation applied to records belonging to other hops.
+// checkBuildRecordSize accepts a complete short (218-byte) encrypted record, for
+// the raw-ChaCha20 obfuscation applied to records belonging to other hops. The
+// deprecated long record (528 bytes) is rejected because its obfuscation uses AES
+// and no record number, a different scheme.
 func checkBuildRecordSize(record []byte) error {
 	switch len(record) {
-	case ShortBuildRecordSize, LongBuildRecordSize:
+	case ShortBuildRecordSize:
 		return nil
 	default:
 		return oops.Wrapf(ErrBuildRecordSize,
-			"build record must be %d (short) or %d (long) bytes, got %d",
-			ShortBuildRecordSize, LongBuildRecordSize, len(record))
+			"build record must be %d bytes (short record); the deprecated long format is not supported, got %d",
+			ShortBuildRecordSize, len(record))
 	}
 }

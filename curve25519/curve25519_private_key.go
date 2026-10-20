@@ -6,9 +6,11 @@ import (
 	"go.step.sm/crypto/x25519"
 )
 
-// Curve25519PrivateKey represents a Curve25519 private key for decryption and signing operations.
-// This type implements the types.PrivateEncryptionKey interface and provides X25519 elliptic curve
-// cryptographic operations including key derivation, decryption, and digital signature creation.
+// Curve25519PrivateKey represents a Curve25519 private key for decryption and
+// key agreement. This type implements the types.PrivateEncryptionKey interface
+// and provides X25519 elliptic curve cryptographic operations including key
+// derivation and decryption. X25519 is a key-agreement primitive: I2P defines
+// no signature type that signs with it, so this type has no NewSigner method.
 //
 // CRITICAL: Always use NewCurve25519PrivateKey() to create instances.
 //

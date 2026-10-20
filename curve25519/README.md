@@ -36,6 +36,18 @@ no associated data.
 
 Use the ecies package for anything that must interoperate with I2P routers.
 
+# X25519 is not a signing key
+
+This package provides encryption keys only. There is no I2P signature type based
+on X25519: cryptography.md §Signatures enumerates DSA-SHA1, the three ECDSA
+curves, EdDSA-SHA512-Ed25519, RedDSA-SHA512-Ed25519 and the offline-only RSA and
+Ed25519ph variants, and §New Signature Algorithms states "Signature type is
+encoded in the Destination and Router Identity". X25519 appears in the spec
+strictly for key agreement (ecies.md §2: "DH Function: X25519 ... as specified
+in RFC-7748"). Accordingly [Curve25519PrivateKey] and [Curve25519PublicKey]
+expose NewDecrypter/NewEncrypter but no NewSigner or NewVerifier. Use ed25519,
+ed25519ph, red25519, dsa, ecdsa or rsa for signing.
+
 ## Usage
 
 ```go
@@ -221,10 +233,11 @@ overhead requirements.
 type Curve25519PrivateKey []byte
 ```
 
-Curve25519PrivateKey represents a Curve25519 private key for decryption and
-signing operations. This type implements the types.PrivateEncryptionKey
-interface and provides X25519 elliptic curve cryptographic operations including
-key derivation, decryption, and digital signature creation.
+Curve25519PrivateKey represents a Curve25519 private key for decryption and key
+agreement. This type implements the types.PrivateEncryptionKey interface and
+provides X25519 elliptic curve cryptographic operations including key derivation
+and decryption. X25519 is a key-agreement primitive: I2P defines no signature
+type that signs with it, so this type has no NewSigner method.
 
 CRITICAL: Always use NewCurve25519PrivateKey() to create instances.
 
@@ -291,17 +304,6 @@ exchange combined with ChaCha20-Poly1305 AEAD decryption to provide secure
 decryption of data encrypted with the corresponding public key. Returns
 ErrInvalidPrivateKey if the private key size is invalid (must be 32 bytes).
 
-#### func (Curve25519PrivateKey) NewSigner
-
-```go
-func (k Curve25519PrivateKey) NewSigner() (types.Signer, error)
-```
-NewSigner creates a new Curve25519 signer for creating digital signatures with
-this private key. The signer uses X25519 elliptic curve digital signature
-algorithms to create cryptographically secure signatures that can be verified
-using the corresponding Curve25519 public key. Returns ErrInvalidPrivateKey if
-the private key size is invalid (must be 32 bytes).
-
 #### func (Curve25519PrivateKey) Public
 
 ```go
@@ -331,10 +333,11 @@ maintaining security in cryptographic applications.
 type Curve25519PublicKey []byte
 ```
 
-Curve25519PublicKey represents a Curve25519 public key for encryption and
-signature verification. This type implements the types.PublicEncryptionKey
-interface and provides X25519 elliptic curve cryptographic operations for I2P
-network encryption and ECDH key exchange protocols.
+Curve25519PublicKey represents a Curve25519 public key for encryption only. This
+type implements the types.PublicEncryptionKey interface and provides X25519
+elliptic curve cryptographic operations for I2P network encryption and ECDH key
+exchange protocols. X25519 is a key-agreement primitive and cannot sign or
+verify; see the package doc.
 
 CRITICAL: Always use NewCurve25519PublicKey() to create instances. Direct
 construction produces an unvalidated (often nil/empty) key whose operations
@@ -342,7 +345,7 @@ return errors rather than working correctly.
 
 WRONG - No validation:
 
-    var key Curve25519PublicKey  // nil slice - NewEncrypter()/NewVerifier() return an error
+    var key Curve25519PublicKey  // nil slice - NewEncrypter() returns an error
     copy(key[:], data)           // no-op: copies 0 bytes into a zero-length slice (does not grow it)
 
 CORRECT - Use constructor:
@@ -408,92 +411,3 @@ public key. The encrypter uses X25519 elliptic curve Diffie-Hellman key exchange
 combined with ChaCha20-Poly1305 AEAD encryption to provide secure encryption
 suitable for I2P network protocols. Returns ErrInvalidPublicKey if the key size
 is invalid (must be 32 bytes).
-
-#### func (Curve25519PublicKey) NewVerifier
-
-```go
-func (k Curve25519PublicKey) NewVerifier() (types.Verifier, error)
-```
-NewVerifier creates a Curve25519 verifier for signature verification operations.
-This method validates the public key size and returns a verifier instance
-capable of verifying signatures created with the corresponding Curve25519
-private key using X25519 signature algorithms. Returns ErrInvalidPublicKey if
-the key size is invalid (must be 32 bytes).
-
-#### type Curve25519Signer
-
-```go
-type Curve25519Signer struct {
-}
-```
-
-Curve25519Signer handles Curve25519-based digital signature creation operations.
-This type implements the types.Signer interface and provides X25519 elliptic
-curve signature generation using SHA-512 hashing for data integrity and
-authentication in I2P network protocols.
-
-#### func (*Curve25519Signer) Sign
-
-```go
-func (s *Curve25519Signer) Sign(data []byte) ([]byte, error)
-```
-Sign creates a digital signature of the provided data using Curve25519
-cryptography. This method automatically hashes the input data using SHA-512
-before signing to ensure data integrity. The signature can be verified using the
-corresponding Curve25519 public key and the original data. Returns
-ErrInvalidPrivateKey if the private key size is invalid (must be 32 bytes).
-
-#### func (*Curve25519Signer) SignHash
-
-```go
-func (s *Curve25519Signer) SignHash(h []byte) ([]byte, error)
-```
-SignHash creates a digital signature of a pre-computed hash using Curve25519
-cryptography. This method accepts a pre-hashed input (typically SHA-512) and
-creates a cryptographic signature using X25519 elliptic curve algorithms. This
-is useful when the hash has already been computed or when implementing custom
-hash functions for specific I2P protocol requirements.
-
-#### type Curve25519Verifier
-
-```go
-type Curve25519Verifier struct {
-}
-```
-
-Curve25519Verifier handles Curve25519-based digital signature verification
-operations. This type implements the types.Verifier interface and provides
-X25519 elliptic curve signature verification using SHA-512 hashing for
-authenticating data integrity in I2P network protocols.
-
-#### func (*Curve25519Verifier) Verify
-
-```go
-func (v *Curve25519Verifier) Verify(data, sig []byte) error
-```
-Verify verifies a digital signature against the provided data using Curve25519
-cryptography. This method automatically hashes the input data using SHA-512
-before verification to ensure data integrity. It validates that the signature
-was created by the private key corresponding to this public key using the
-provided data. This is the primary method for signature verification in I2P
-protocols.
-
-#### func (*Curve25519Verifier) VerifyHash
-
-```go
-func (v *Curve25519Verifier) VerifyHash(h, sig []byte) error
-```
-VerifyHash verifies a digital signature against a pre-computed hash using
-Curve25519 cryptography. This method validates that the signature was created by
-the private key corresponding to this public key using the provided hash. The
-hash should typically be computed using SHA-512 for security. Returns
-types.ErrBadSignatureSize for invalid signature length, ErrInvalidPublicKey for
-invalid key, or ErrInvalidSignature if verification fails.
-
-
-
-curve25519 
-
-github.com/go-i2p/crypto/curve25519
-
-[go-i2p template file](/template.md)

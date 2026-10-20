@@ -8,9 +8,10 @@ import (
 	"go.step.sm/crypto/x25519"
 )
 
-// Curve25519PublicKey represents a Curve25519 public key for encryption and signature verification.
+// Curve25519PublicKey represents a Curve25519 public key for encryption only.
 // This type implements the types.PublicEncryptionKey interface and provides X25519 elliptic curve
 // cryptographic operations for I2P network encryption and ECDH key exchange protocols.
+// X25519 is a key-agreement primitive and cannot sign or verify; see the package doc.
 //
 // CRITICAL: Always use NewCurve25519PublicKey() to create instances. Direct
 // construction produces an unvalidated (often nil/empty) key whose operations
@@ -18,7 +19,7 @@ import (
 //
 // WRONG - No validation:
 //
-//	var key Curve25519PublicKey  // nil slice - NewEncrypter()/NewVerifier() return an error
+//	var key Curve25519PublicKey  // nil slice - NewEncrypter() returns an error
 //	copy(key[:], data)           // no-op: copies 0 bytes into a zero-length slice (does not grow it)
 //
 // CORRECT - Use constructor:

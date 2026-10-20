@@ -6,7 +6,14 @@ import (
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
-// ChaCha20PolyEncrypter implements the Encrypter interface using ChaCha20-Poly1305
+// ChaCha20PolyEncrypter implements the Encrypter interface using ChaCha20-Poly1305.
+//
+// The [12-byte nonce][ciphertext+tag] framing with a random nonce is a
+// general-purpose construction and is NOT any I2P wire format. ECIES-X25519-AEAD
+// (ecies.md §1d/§1f) uses a counter nonce derived from the running mix-hash with
+// the mix-hash as associated data, and the payload-block framing lives in the
+// caller (go-i2p / common). Use the ecies package for anything that must
+// interoperate with routers.
 type ChaCha20PolyEncrypter struct {
 	Key ChaCha20Key
 }

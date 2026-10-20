@@ -500,55 +500,51 @@ func fixedScalar(seed byte) []byte {
 	return s
 }
 
-// TestLongBuildReplyNonceIsAlwaysZero pins the F-3 nonce rule: the deprecated
-// long record (512-byte plaintext) uses "n = 0" regardless of the record number,
-// while the short record (202-byte) uses the record number 0-7. See
-// tunnel-creation-ecies.md §Reply Record Encryption (long: "n = 0") vs
-// §Record Encryption (short: "'n' is the record number 0-7, instead of always
-// being 0").
-func TestLongBuildReplyNonceIsAlwaysZero(t *testing.T) {
+// TestDeprecatedLongRecordsRejected pins the F-3 remediation: the deprecated long
+// record format is not accepted anywhere. tunnel-creation-ecies.md heads the Long
+// Record Specification "NOTE: Deprecated, obsolete. Use the Short Record format
+// specified below", and states it "was implemented as of release 0.9.48 and is
+// now deprecated" while the short format "is implemented as of release 0.9.51".
+// The long format also uses a different reply nonce ("n = 0") and AES obfuscation
+// of the other records, so silently accepting a long-sized input would emit bytes
+// a current router cannot process. Every build-record entry point must refuse the
+// long lengths.
+func TestDeprecatedLongRecordsRejected(t *testing.T) {
 	s := seedStateAfterMixKey(t)
 	keys, err := DeriveBuildReplyKeys(s, false)
 	if err != nil {
 		t.Fatalf("DeriveBuildReplyKeys: %v", err)
 	}
 	var ad [32]byte
-	pt := make([]byte, LongBuildReplySize)
-	for i := range pt {
-		pt[i] = byte(i)
+
+	// Request: 464 plaintext / 480 ciphertext are the long sizes. The size checks
+	// are the gate EncryptBuildRequest/DecryptBuildRequest run first, so testing
+	// them directly covers the request path without a full Noise state.
+	if err := checkBuildRequestPlaintextSize(make([]byte, LongBuildRequestSize)); err == nil {
+		t.Error("checkBuildRequestPlaintextSize accepted a 464-byte long request plaintext")
+	}
+	if err := checkBuildRequestCiphertextSize(make([]byte, LongBuildRequestEncryptedSize)); err == nil {
+		t.Error("checkBuildRequestCiphertextSize accepted a 480-byte long request ciphertext")
+	}
+	// The short request sizes must still pass.
+	if err := checkBuildRequestPlaintextSize(make([]byte, ShortBuildRequestSize)); err != nil {
+		t.Errorf("checkBuildRequestPlaintextSize rejected the 154-byte short plaintext: %v", err)
+	}
+	if err := checkBuildRequestCiphertextSize(make([]byte, ShortBuildRequestEncryptedSize)); err != nil {
+		t.Errorf("checkBuildRequestCiphertextSize rejected the 170-byte short ciphertext: %v", err)
 	}
 
-	// Two different record numbers on a LONG record must give the SAME ciphertext,
-	// because the nonce is forced to 0. If the short-record rule leaked through,
-	// these would differ and a 0.9.48 router could not open record != 0.
-	a, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 3, pt)
-	if err != nil {
-		t.Fatalf("EncryptOwnBuildReply(long, n=3): %v", err)
+	// Reply: 512 plaintext / 528 ciphertext are the long sizes.
+	if _, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 0, make([]byte, LongBuildReplySize)); err == nil {
+		t.Error("EncryptOwnBuildReply accepted a 512-byte long reply plaintext")
 	}
-	b, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 5, pt)
-	if err != nil {
-		t.Fatalf("EncryptOwnBuildReply(long, n=5): %v", err)
-	}
-	if !bytes.Equal(a, b) {
-		t.Error("long reply nonce varies with record number; the spec fixes n = 0 for long records")
-	}
-	if len(a) != LongBuildReplyEncryptedSize {
-		t.Fatalf("long reply ciphertext = %d, want %d", len(a), LongBuildReplyEncryptedSize)
+	if _, err := DecryptOwnBuildReply(keys.ReplyKey, ad, 0, make([]byte, LongBuildReplyEncryptedSize)); err == nil {
+		t.Error("DecryptOwnBuildReply accepted a 528-byte long reply ciphertext")
 	}
 
-	// Decrypt must recover it no matter which record number the caller passes,
-	// since the nonce is size-derived.
-	back, err := DecryptOwnBuildReply(keys.ReplyKey, ad, 7, a)
-	if err != nil {
-		t.Fatalf("DecryptOwnBuildReply(long, n=7): %v", err)
-	}
-	if !bytes.Equal(back, pt) {
-		t.Error("long reply round trip failed")
-	}
-
-	// Contrast: a SHORT record must vary with the record number.
+	// The short reply path must still vary with the record number (the spec's
+	// "'n' is the record number 0-7" rule).
 	spt := make([]byte, ShortBuildReplySize)
-	copy(spt, pt)
 	c3, err := EncryptOwnBuildReply(keys.ReplyKey, ad, 3, spt)
 	if err != nil {
 		t.Fatalf("EncryptOwnBuildReply(short, n=3): %v", err)

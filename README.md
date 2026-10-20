@@ -52,10 +52,12 @@ from the simplest idea to the full scheme:
    key schedule and reply/layer KDFs ([tunnel.BuildNoiseState](tunnel/buildkeys.go),
    [tunnel.EncryptBuildRequest](tunnel/buildkeys.go)). Separately, the
    *layer* encryption of each 1028-byte tunnel message is AES-256-CBC, which is
-   the only layer encryption type any specification defines. The `tunnel`
-   package's `TunnelEncryptionECIES` value is neither of those: it is an
-   experimental wrapper around the end-to-end one-time format and does not
-   interoperate.
+   the only layer encryption type any specification defines
+   (`tunnel.TunnelEncryptionAES`, value 0). The `tunnel` package previously also
+   exposed a `TunnelEncryptionECIES` value (1); that was never a tunnel scheme —
+   it wrapped the end-to-end one-time format and produced variable-length records
+   — and it has been **removed**, so `tunnel.NewTunnelEncryptor` now accepts only
+   type 0.
 
 Start with the package docs on [pkg.go.dev](https://pkg.go.dev/github.com/go-i2p/crypto)
 for details on each piece.

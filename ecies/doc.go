@@ -41,9 +41,13 @@
 //
 // # Specification coverage
 //
-// Implemented: the one-time format and its key schedule (sections 1d and the
-// no-static-key path of 1f), the Elligator2 encoding of section 2a, and the
-// AEAD rules of section 3.
+// Implemented: the one-time format and its key schedule (section 1d "One-time
+// format (no binding or session)" together with section 1f "KDFs for New Session
+// Message" - specifically "KDF for Initial ChainKey", "KDF for Flags/Static Key
+// Section Encrypted Contents" and "KDF for Payload Section (without Alice static
+// key)"), the Elligator2 encoding of section 2a, and the AEAD rules of section 3.
+// The "KDF for Payload Section (with Alice static key)" subsection is the
+// static-key path and is not implemented here (see Not implemented below).
 //
 // Not implemented: the New Session message with a static key (sections 1a and
 // 1b), the New Session Reply (section 1g) and its SessionReplyTags KDF, the
