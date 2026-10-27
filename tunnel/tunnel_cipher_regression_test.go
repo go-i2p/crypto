@@ -39,10 +39,10 @@ func TestAESEncryptRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Decrypt failed: %v", err)
 	}
-	if len(plain) != 1008 {
-		t.Errorf("plain len=%d, want 1008", len(plain))
+	if len(plain) != 1028 {
+		t.Errorf("plain len=%d, want 1028 (full decrypted record)", len(plain))
 	}
-	if !bytes.Equal(plain, payload) {
+	if !bytes.Equal(plain[TunnelPayloadOffset:], payload) {
 		t.Error("round-trip payload mismatch — cipher mutation lost (F079 regression)")
 	}
 }

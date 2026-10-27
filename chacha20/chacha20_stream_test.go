@@ -53,7 +53,7 @@ func rfc7539TV2(t *testing.T) (key, nonce, plaintext, ciphertext []byte) {
 		"a16f80ef2554d7189c411f5869ca52c5b83fa36ff216b9c1d30062bebcfd2dc5bce091" +
 		"1934fda79a86f6e698ced759c3ff9b6477338f3da4f9cd8514ea9982ccafb341b2384d" +
 		"d902f3d1ab7ac61dd29c6f21ba5b862f3730e37cfdc4fd806c22f221")
-	return
+	return key, nonce, plaintext, ciphertext
 }
 
 // TestStreamEncryptRFC7539Vector asserts that StreamEncrypt reproduces RFC 7539
@@ -98,7 +98,8 @@ func TestStreamEncryptNotCounterZero(t *testing.T) {
 	// therefore the counter-0 keystream.
 	counter0Keystream, err := hex.DecodeString(
 		"76b8e0ada0f13d90405d6ae55386bd28bdd219b8a08ded1aa836efcc8b770dc7" +
-			"da41597c5157488d7724e03fb8d84a376a43b8f41518a11cc387b669b2ee6586")
+			"da41597c5157488d7724e03fb8d84a376a43b8f41518a11cc387b669b2ee6586",
+	)
 	if err != nil {
 		t.Fatalf("decode vector: %v", err)
 	}

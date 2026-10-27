@@ -111,7 +111,10 @@ func TestAESEncryptor_PayloadOnlyLayout(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Decrypt: %v", err)
 	}
-	if !bytes.Equal(got, payload) {
+	if len(got) != TunnelMessageSize {
+		t.Fatalf("Decrypt returned %d bytes, want the full %d-byte decrypted record", len(got), TunnelMessageSize)
+	}
+	if !bytes.Equal(got[TunnelPayloadOffset:], payload) {
 		t.Error("round trip did not restore the 1008-byte payload")
 	}
 }
@@ -168,15 +171,19 @@ func TestAESEncryptor_FullRecordKeepsTunnelIDCleartext(t *testing.T) {
 		t.Error("bytes 1024..1027 are all zero; the final 4 payload bytes must be encrypted")
 	}
 
-	// Decrypt must hand back exactly the payload region.
+	// Decrypt must hand back the full decrypted record, with the payload region
+	// restored and the cleartext tunnel ID framing preserved.
 	got, err := enc.Decrypt(out)
 	if err != nil {
 		t.Fatalf("Decrypt: %v", err)
 	}
-	if len(got) != TunnelPayloadSize {
-		t.Fatalf("Decrypt returned %d bytes, want %d", len(got), TunnelPayloadSize)
+	if len(got) != TunnelMessageSize {
+		t.Fatalf("Decrypt returned %d bytes, want %d", len(got), TunnelMessageSize)
 	}
-	if !bytes.Equal(got, rec[TunnelPayloadOffset:]) {
+	if !bytes.Equal(got[:TunnelIDSize], tunnelID) {
+		t.Errorf("Decrypt lost the tunnel ID: got %x, want %x", got[:TunnelIDSize], tunnelID)
+	}
+	if !bytes.Equal(got[TunnelPayloadOffset:], rec[TunnelPayloadOffset:]) {
 		t.Error("Decrypt did not restore bytes 20..1027 of the original record")
 	}
 }
@@ -220,12 +227,57 @@ func TestAESEncryptor_IVDoubleTransformIsSymmetric(t *testing.T) {
 		t.Error("forwarded IV equals the received IV; the IV transform did not run")
 	}
 
-	// Decrypt inverts the double transform and must recover the payload.
+	// Decrypt inverts the double transform and must recover the payload and the
+	// IV, since a transit hop hands the next hop the whole decrypted record.
 	got, err := enc.Decrypt(out)
 	if err != nil {
 		t.Fatalf("Decrypt: %v", err)
 	}
-	if !bytes.Equal(got, rec[TunnelPayloadOffset:]) {
+	if !bytes.Equal(got[TunnelPayloadOffset:], rec[TunnelPayloadOffset:]) {
 		t.Error("payload not restored; the IV transform is not symmetric")
+	}
+	if !bytes.Equal(got[TunnelIVOffset:TunnelIVOffset+TunnelIVSize], origIV) {
+		t.Error("IV not restored; a full Encrypt/Decrypt cycle must return the IV the record was built with")
+	}
+}
+
+// TestAESEncryptor_DecryptReturnsForwardingFraming pins the transit-hop
+// requirement: peeling one layer must leave the next hop's cleartext tunnel ID
+// (bytes 0..3) and the IV produced for the next hop (bytes 4..19) intact, so a
+// participant can rebuild the 1028-byte message it forwards. A Decrypt that
+// returned only the 1008-byte payload would make forwarding impossible.
+func TestAESEncryptor_DecryptReturnsForwardingFraming(t *testing.T) {
+	layer, ivk := fixedKeys(t)
+	enc, err := NewAESEncryptor(*layer, *ivk)
+	if err != nil {
+		t.Fatalf("NewAESEncryptor: %v", err)
+	}
+
+	var rec TunnelData
+	nextHopID := []byte{0x00, 0x00, 0xAB, 0xCD}
+	copy(rec[:TunnelIDSize], nextHopID)
+	for i := TunnelPayloadOffset; i < TunnelMessageSize; i++ {
+		rec[i] = byte(i % 253)
+	}
+
+	out, err := enc.Encrypt(rec[:])
+	if err != nil {
+		t.Fatalf("Encrypt: %v", err)
+	}
+
+	got, err := enc.Decrypt(out)
+	if err != nil {
+		t.Fatalf("Decrypt: %v", err)
+	}
+	if len(got) != TunnelMessageSize {
+		t.Fatalf("Decrypt returned %d bytes, want %d", len(got), TunnelMessageSize)
+	}
+	if !bytes.Equal(got[:TunnelIDSize], nextHopID) {
+		t.Errorf("forwarded tunnel ID lost: got %x, want %x", got[:TunnelIDSize], nextHopID)
+	}
+	// The IV in the decrypted record is the one the next hop will use; it must
+	// be present and must not equal the wire IV that was received.
+	if bytes.Equal(got[TunnelIVOffset:TunnelIVOffset+TunnelIVSize], out[TunnelIVOffset:TunnelIVOffset+TunnelIVSize]) {
+		t.Error("decrypted IV equals the received wire IV; the inverse IV transform did not run")
 	}
 }

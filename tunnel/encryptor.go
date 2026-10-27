@@ -27,10 +27,18 @@ type TunnelEncryptor interface {
 	// Returns error if encryption fails due to invalid keys or cryptographic operations.
 	Encrypt(plaintext []byte) ([]byte, error)
 
-	// Decrypt decrypts ciphertext data and returns the plaintext.
-	// For AES: expects 1028 bytes of tunnel data and returns the 1008-byte
-	// payload from bytes 20..1027 (excluding the 4-byte tunnel ID and the
-	// 16-byte IV).
+	// Decrypt removes one tunnel layer and returns the plaintext.
+	// For AES: expects 1028 bytes of tunnel data and returns the complete
+	// 1028-byte decrypted record, matching the Tunnel Message specification's
+	// "Tunnel Message (Decrypted)" view: bytes 0..3 tunnel ID, bytes 4..19 IV,
+	// bytes 20..1027 payload.
+	//
+	// The 4-byte tunnel ID and the 16-byte IV must be included in the result.
+	// A transit hop forwards both to the next hop (Tunnel-Implementation
+	// §Participant Processing: the hop "encrypts the current IV with AES256/ECB
+	// using their IV key again" precisely so the next hop receives that IV), and
+	// the endpoint needs the restored IV to verify the checksum. Returning only
+	// the payload makes transit forwarding and checksum validation impossible.
 	// Returns error if decryption fails due to invalid keys, corrupted data, or authentication failures.
 	Decrypt(ciphertext []byte) ([]byte, error)
 

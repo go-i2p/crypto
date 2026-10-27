@@ -335,11 +335,20 @@ type BuildReplyKeys struct {
 // - consistent with the spec's own "32-byte garlic reply key and 8-byte garlic
 // reply tag".
 func DeriveBuildReplyKeys(state *BuildNoiseState, isOBEP bool) (BuildReplyKeys, error) {
-	var out BuildReplyKeys
 	if state == nil {
+		var out BuildReplyKeys
 		return out, oops.Errorf("nil build Noise state")
 	}
-	ck := state.ChainKey()
+	return DeriveBuildReplyKeysFromChain(state.ChainKey(), isOBEP)
+}
+
+// DeriveBuildReplyKeysFromChain runs the same KDF chain as
+// [DeriveBuildReplyKeys] but takes the chaining key directly, for callers that
+// have already extracted it from the Noise state (or are reconstructing it on the
+// tunnel-creator side, where there is no live handshake state to read).
+func DeriveBuildReplyKeysFromChain(chainingKey [32]byte, isOBEP bool) (BuildReplyKeys, error) {
+	var out BuildReplyKeys
+	ck := chainingKey
 
 	keydata, err := kdf.StandardHKDF(ck[:], nil, []byte("SMTunnelReplyKey"), 64)
 	if err != nil {

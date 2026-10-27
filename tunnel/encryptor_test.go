@@ -138,9 +138,13 @@ func TestTunnelEncryptor_Interface(t *testing.T) {
 
 	// Verify round trip (compare payloads for AES)
 	if encryptor.Type() == TunnelEncryptionAES {
-		// For AES, compare the 1008-byte payload at bytes 20..1027 (after the
-		// 4-byte tunnel ID and 16-byte IV), per the Tunnel Message spec.
-		if !bytes.Equal(decrypted, original[TunnelPayloadOffset:]) {
+		// Decrypt returns the full 1028-byte decrypted record, so compare the
+		// 1008-byte payload at bytes 20..1027 (after the 4-byte tunnel ID and
+		// 16-byte IV), per the Tunnel Message spec.
+		if len(decrypted) != TunnelMessageSize {
+			t.Fatalf("AES Decrypt returned %d bytes, want %d", len(decrypted), TunnelMessageSize)
+		}
+		if !bytes.Equal(decrypted[TunnelPayloadOffset:], original[TunnelPayloadOffset:]) {
 			t.Error("AES round trip should restore original payload data")
 		}
 	}
@@ -179,9 +183,13 @@ func TestTunnelEncryptor_Polymorphism(t *testing.T) {
 				t.Fatalf("encryptor %d Decrypt failed: %v", i, err)
 			}
 
-			// For AES, verify payload is restored (excluding IV)
+			// For AES, verify the full 1028-byte record is restored, including
+			// the payload region at bytes 20..1027.
 			if enc.Type() == TunnelEncryptionAES {
-				if !bytes.Equal(decrypted, original[TunnelPayloadOffset:]) {
+				if len(decrypted) != TunnelMessageSize {
+					t.Fatalf("encryptor %d Decrypt returned %d bytes, want %d", i, len(decrypted), TunnelMessageSize)
+				}
+				if !bytes.Equal(decrypted[TunnelPayloadOffset:], original[TunnelPayloadOffset:]) {
 					t.Errorf("encryptor %d round trip failed for AES payload", i)
 				}
 			}
@@ -257,10 +265,10 @@ func TestAESEncryptor_KnownAnswer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Decrypt failed: %v", err)
 	}
-	if len(decrypted) != 1008 {
-		t.Errorf("expected 1008-byte payload, got %d", len(decrypted))
+	if len(decrypted) != 1028 {
+		t.Errorf("expected 1028-byte decrypted record, got %d", len(decrypted))
 	}
-	if !bytes.Equal(decrypted, plaintext) {
+	if !bytes.Equal(decrypted[TunnelPayloadOffset:], plaintext) {
 		t.Error("decrypt round-trip failed: payload does not match original")
 	}
 }

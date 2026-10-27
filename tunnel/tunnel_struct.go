@@ -148,10 +148,29 @@ func (a *AESEncryptor) encryptTunnelData(td *TunnelData) error {
 	return a.processTunnelData(td, a.ivKey.Encrypt, cipher.NewCBCEncrypter, "AES tunnel data encrypted successfully")
 }
 
-// Decrypt decrypts ciphertext data using AES-256-CBC dual-layer decryption.
-// For AES tunnel decryption, the input should be exactly 1028 bytes of tunnel data.
-// Returns the 1008-byte payload from bytes 20..1027 (excluding the 4-byte
-// tunnel ID and the 16-byte IV) or error if decryption fails.
+// Decrypt removes one tunnel encryption layer using AES-256-CBC dual-layer
+// decryption. The input must be exactly 1028 bytes of tunnel data.
+//
+// It returns the complete 1028-byte decrypted record, not just the 1008-byte
+// payload region. This is what the I2P specifications require a forwarding hop
+// to be able to produce: per Tunnel-Implementation §Participant Processing, a
+// hop "encrypts the current IV with AES256/ECB using their IV key again" so
+// that the IV it hands on is part of the message the next hop receives, and
+// per Tunnel-Message ("Tunnel Message (Decrypted)") the decrypted view keeps
+// the 4-byte Tunnel ID at bytes 0..3 and the 16-byte IV at bytes 4..19 ahead of
+// the 1008-byte payload. Those two fields are exactly the framing a transit
+// hop must forward, so discarding them makes transit forwarding impossible.
+//
+// The transform applied here is the exact inverse of [AESEncryptor.Encrypt]:
+// AES-256/ECB-decrypt the received IV to recover the current IV, CBC-decrypt
+// bytes 20..1027 with the layer key using that IV, then AES-256/ECB-decrypt the
+// current IV once more to produce the IV forwarded to the next hop. Because the
+// pair is symmetric, a record that has travelled through every hop's layer
+// arrives back at the gateway's original IV, which the endpoint needs in order
+// to verify the checksum (Tunnel-Message: the checksum is taken over the
+// delivery instructions and fragments concatenated with the IV).
+//
+// Returns the 1028-byte decrypted record, or error if decryption fails.
 // This implements the TunnelEncryptor interface for AES-256-CBC decryption.
 func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 	log.WithFields(logger.Fields{"pkg": "tunnel", "func": "AESEncryptor.Decrypt"}).Debug("Decrypting data with AES-256-CBC tunnel decryption")
@@ -171,9 +190,12 @@ func (a *AESEncryptor) Decrypt(ciphertext []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	// Return the decrypted payload (excluding the tunnel ID and the IV)
-	result := make([]byte, TunnelPayloadSize)
-	copy(result, td[TunnelPayloadOffset:])
+	// Return the whole decrypted record. Bytes 0..3 are the cleartext tunnel ID
+	// framing supplied by the sender (never touched by the layer transform);
+	// bytes 4..19 are the IV transformed for the next hop; bytes 20..1027 are
+	// the inner layer's data region.
+	result := make([]byte, TunnelMessageSize)
+	copy(result, td[:])
 	return result, nil
 }
 

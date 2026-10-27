@@ -31,7 +31,7 @@ func DH_INITIALIZE(rootKey [ChainKeySize]byte, k [32]byte) [32]byte {
 // both the next root key (keydata[0:32]) and the chain key (keydata[32:64]).
 //
 //	keydata = HKDF(salt=rootKey, ikm=k, info="KDFDHRatchetStep", 64)
-func DH_INITIALIZEFull(rootKey [ChainKeySize]byte, k [32]byte) (nextRootKey [32]byte, ck [32]byte, err error) {
+func DH_INITIALIZEFull(rootKey [ChainKeySize]byte, k [32]byte) (nextRootKey, ck [32]byte, err error) {
 	keydata, err := kdf.StandardHKDF(rootKey[:], k[:], []byte("KDFDHRatchetStep"), 64)
 	if err != nil {
 		return [32]byte{}, [32]byte{}, err

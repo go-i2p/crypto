@@ -252,10 +252,12 @@ func TestAESEncryptor_Decrypt(t *testing.T) {
 				if err != nil {
 					t.Errorf("unexpected error: %v", err)
 				}
-				if tt.data != nil && len(result) != 1008 {
-					t.Errorf("expected 1008 bytes (payload), got %d", len(result))
+				if tt.data != nil && len(result) != TunnelMessageSize {
+					t.Errorf("expected %d bytes (full decrypted record), got %d", TunnelMessageSize, len(result))
 				}
-				// Note: New interface returns only the 1008-byte payload (excluding 16-byte IV)
+				// Decrypt returns the whole 1028-byte decrypted record: the
+				// cleartext tunnel ID, the IV forwarded to the next hop, and
+				// the payload region.
 				// For random data, the decrypted portion should differ from encrypted
 				// For zero data with zero keys, output might be identical - this is OK
 			}

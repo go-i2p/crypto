@@ -223,7 +223,7 @@ func DecryptECIESX25519(recipientPrivKey, ciphertext []byte) ([]byte, error) {
 //
 // The DH step is DH(aesk, bpk) on the encrypt path and DH(besk, aepk) on the
 // decrypt path; both yield the same shared secret.
-func deriveOneTimeKey(bpk, aesk, aepk, besk []byte) (h [32]byte, k [32]byte, err error) {
+func deriveOneTimeKey(bpk, aesk, aepk, besk []byte) (h, k [32]byte, err error) {
 	// h = SHA256(protocol_name); chainKey = h
 	protocolHash := sha256.Sum256([]byte(noiseProtocolName))
 	chainKey := protocolHash
@@ -275,7 +275,7 @@ func hkdfDerive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 // and the given associated data.
 //
 // Returns the ciphertext concatenated with the 16-byte Poly1305 tag.
-func encryptSection(k [32]byte, h [32]byte, plaintext []byte, counter uint64) ([]byte, error) {
+func encryptSection(k, h [32]byte, plaintext []byte, counter uint64) ([]byte, error) {
 	aead, err := chacha20poly1305.New(k[:])
 	if err != nil {
 		return nil, oops.Wrapf(ErrEncryptionFailed, "failed to create AEAD: %w", err)
@@ -287,7 +287,7 @@ func encryptSection(k [32]byte, h [32]byte, plaintext []byte, counter uint64) ([
 
 // decryptSection decrypts a section with ChaCha20-Poly1305. The wire format
 // is ciphertext followed by the 16-byte Poly1305 tag.
-func decryptSection(k [32]byte, h [32]byte, wire []byte, counter uint64) ([]byte, error) {
+func decryptSection(k, h [32]byte, wire []byte, counter uint64) ([]byte, error) {
 	if len(wire) < TagSize {
 		return nil, oops.Wrapf(ErrInvalidCiphertext, "section too short: %d bytes", len(wire))
 	}
