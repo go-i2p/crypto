@@ -2,6 +2,7 @@ package ratchet
 
 import (
 	"encoding/binary"
+	"sync"
 
 	"github.com/go-i2p/crypto/kdf"
 	"github.com/go-i2p/logger"
@@ -45,7 +46,14 @@ const (
 // for both directions, you have to ratchet twice", so each direction also keeps
 // its own root key for the next DH ratchet step.
 type Session struct {
-	dhRatchet *DHRatchet
+	// mu serializes every state-mutating operation on the session. A Session
+	// holds a single forward-progressing key schedule per direction, so two
+	// concurrent EncryptMessage (or DecryptMessage, or a DH ratchet step) calls
+	// would otherwise read and advance the same chain-key/message-number state
+	// and emit a duplicate (message key, nonce) pair - a ChaCha20-Poly1305
+	// nonce+key reuse. The lock also makes each DH ratchet step atomic with
+	// respect to the other direction.
+	mu sync.Mutex
 
 	// sending is the outbound direction's ratchet state.
 	sending direction
@@ -56,10 +64,12 @@ type Session struct {
 	role Role
 
 	// sendingRootKey is the root key for the sending direction, used as the
-	// input to DH_INITIALIZE on the next DH ratchet step.
+	// input to DH_INITIALIZE on the next DH ratchet step. It mirrors the root
+	// key held by sending.dhRatchet and is kept as the authoritative record.
 	sendingRootKey [ChainKeySize]byte
 	// receivingRootKey is the root key for the receiving direction, used as the
-	// input to DH_INITIALIZE by PerformReceivingDHRatchet.
+	// input to DH_INITIALIZE by PerformReceivingDHRatchet. It mirrors the root
+	// key held by receiving.dhRatchet.
 	receivingRootKey [ChainKeySize]byte
 
 	// lookaheadSize is the receiver look-ahead window size for session tag
@@ -73,6 +83,13 @@ type Session struct {
 // direction"). The two directions never share a chain key, a tag chain, or a
 // message-number counter.
 type direction struct {
+	// dhRatchet is this direction's own DH ratchet. Each direction keeps a
+	// separate instance so a ratchet step in one direction can never read or
+	// overwrite the other direction's root key (spec section 4a: "a ratchet is
+	// for a single direction"). The DH keypair (our private key / their public
+	// key) is shared across directions - both derive the same X25519 secret -
+	// so keypair rotations are mirrored to both instances by the Session.
+	dhRatchet  *DHRatchet
 	symRatchet *SymmetricRatchet
 	tagRatchet *TagRatchet
 	messageNum uint32
@@ -235,13 +252,17 @@ func NewSessionFromECIESWithRole(sharedSecret, ourPrivKey, theirPubKey [32]byte,
 		return nil, err
 	}
 
-	// Initialize the DH ratchet with the sending direction's root key.
-	dhRatchet := NewDHRatchet(sendingRootKey, ourPrivKey, theirPubKey)
+	// Each direction gets its own DH ratchet, seeded with that direction's root
+	// key. The DH keypair is shared - both directions derive the same X25519
+	// secret from ourPrivKey and theirPubKey - so both ratchets carry the same
+	// keys but a different root key. Keeping them separate means a ratchet step
+	// in one direction can never read or overwrite the other's root key.
+	sending.dhRatchet = NewDHRatchet(sendingRootKey, ourPrivKey, theirPubKey)
+	receiving.dhRatchet = NewDHRatchet(receivingRootKey, ourPrivKey, theirPubKey)
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "NewSessionFromECIESWithRole"}).Debug("Session created successfully from ECIES shared secret")
 
 	return &Session{
-		dhRatchet:        dhRatchet,
 		sending:          sending,
 		receiving:        receiving,
 		role:             role,
@@ -354,6 +375,8 @@ func NewSessionFromHandshake(handshake HandshakeResult) (*Session, error) {
 //	aead, _ := chacha20poly1305.NewAEAD(messageKey)
 //	ciphertext, authTag, _ := aead.Encrypt(plaintext, sessionTag[:], nonce[:])
 func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]byte, nonce [NonceSize]byte, err error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.EncryptMessage", "plaintext_len": len(plaintext), "message_num": s.sending.messageNum}).Debug("Encrypting message")
 
 	// Spec §3: 65535 is the maximum valid message number, so a tag set carries
@@ -420,6 +443,8 @@ func (s *Session) EncryptMessage(plaintext []byte) (messageKey [32]byte, tag [8]
 //	aead, _ := chacha20poly1305.NewAEAD(messageKey)
 //	plaintext, _ := aead.Decrypt(ciphertext, authTag, sessionTag[:], nonce[:])
 func (s *Session) DecryptMessage(tag [8]byte) (messageKey [32]byte, nonce [NonceSize]byte, err error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.DecryptMessage", "session_tag": tag, "message_num": s.receiving.messageNum}).Debug("Decrypting message")
 
 	// Only the inbound direction has a look-ahead window: the spec's receiver
@@ -562,12 +587,15 @@ func (s *Session) rebuildLookahead() {
 //	    return err
 //	}
 func (s *Session) PerformDHRatchet() (chainKey, nextRootKey [32]byte, err error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.PerformDHRatchet"}).Debug("Performing DH ratchet")
 
-	// Select the sending-direction root key before the ratchet step.
-	s.dhRatchet.SetRootKey(s.sendingRootKey)
-
-	nextRootKey, ck, err := s.dhRatchet.PerformRatchet()
+	// The sending direction owns its DH ratchet, which already holds the
+	// sending-direction root key, so no root-key selection is needed here. The
+	// step is atomic with respect to the receiving direction (the session lock
+	// is held and the ratchets are separate).
+	nextRootKey, ck, err := s.sending.dhRatchet.PerformRatchet()
 	if err != nil {
 		return chainKey, nextRootKey, err
 	}
@@ -579,13 +607,19 @@ func (s *Session) PerformDHRatchet() (chainKey, nextRootKey [32]byte, err error)
 	// inbound chain and its look-ahead window are untouched.
 	//
 	// PerformRatchet already ran DH RATCHET KDF + DH_INITIALIZE, so the new
-	// tag set is seeded directly from the returned chain key.
+	// tag set is seeded directly from the returned chain key. The direction's
+	// DH ratchet is preserved across the replacement: its root key was just
+	// advanced by PerformRatchet and is the input to the next step, so it is
+	// detached before Zero() (which would otherwise wipe it) and reattached.
 	sending, err := newTagSet(ck)
 	if err != nil {
 		return chainKey, nextRootKey, err
 	}
+	dh := s.sending.dhRatchet
+	s.sending.dhRatchet = nil
 	s.sending.Zero()
 	s.sending = sending
+	s.sending.dhRatchet = dh
 	s.sendingRootKey = nextRootKey
 
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.PerformDHRatchet"}).Debug("DH ratchet completed successfully")
@@ -614,12 +648,13 @@ func (s *Session) PerformDHRatchet() (chainKey, nextRootKey [32]byte, err error)
 //   - nextRootKey: The new root key for the receiving direction
 //   - error: Any error during ratchet operation
 func (s *Session) PerformReceivingDHRatchet() (chainKey, nextRootKey [32]byte, err error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.PerformReceivingDHRatchet"}).Debug("Performing receiving DH ratchet")
 
-	// Select the receiving-direction root key before the ratchet step.
-	s.dhRatchet.SetRootKey(s.receivingRootKey)
-
-	nextRootKey, ck, err := s.dhRatchet.PerformRatchet()
+	// The receiving direction owns its DH ratchet, which already holds the
+	// receiving-direction root key, so no root-key selection is needed here.
+	nextRootKey, ck, err := s.receiving.dhRatchet.PerformRatchet()
 	if err != nil {
 		return chainKey, nextRootKey, err
 	}
@@ -629,8 +664,13 @@ func (s *Session) PerformReceivingDHRatchet() (chainKey, nextRootKey [32]byte, e
 	if err != nil {
 		return chainKey, nextRootKey, err
 	}
+	// Preserve the direction's DH ratchet across the tag-set replacement (see
+	// PerformDHRatchet for why Zero() would otherwise wipe its advanced root key).
+	dh := s.receiving.dhRatchet
+	s.receiving.dhRatchet = nil
 	s.receiving.Zero()
 	s.receiving = receiving
+	s.receiving.dhRatchet = dh
 	s.receivingRootKey = nextRootKey
 
 	// The inbound tag set was replaced, so rebuild the look-ahead window from
@@ -644,8 +684,20 @@ func (s *Session) PerformReceivingDHRatchet() (chainKey, nextRootKey [32]byte, e
 
 // GenerateNewDHKeyPair generates a fresh ephemeral key pair for this endpoint's
 // DH ratchet and returns the public key to send to the peer in a NextKey block.
+//
+// The DH keypair is shared by both directions (both derive the same X25519
+// secret), so the new private key is installed in each direction's ratchet.
 func (s *Session) GenerateNewDHKeyPair() ([32]byte, error) {
-	return s.dhRatchet.GenerateNewKeyPair()
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	// Generate one fresh keypair and install the same private key in both
+	// directions so they keep deriving the identical X25519 secret.
+	pub, err := s.sending.dhRatchet.GenerateNewKeyPair()
+	if err != nil {
+		return pub, err
+	}
+	s.receiving.dhRatchet.ourPrivKey = s.sending.dhRatchet.ourPrivKey
+	return pub, nil
 }
 
 // UpdateRemotePublicKey updates the remote party's public key for DH ratchet.
@@ -657,8 +709,14 @@ func (s *Session) GenerateNewDHKeyPair() ([32]byte, error) {
 // Returns:
 //   - error: Any error during key update
 func (s *Session) UpdateRemotePublicKey(newPubKey [32]byte) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	log.WithFields(logger.Fields{"pkg": "ratchet", "func": "Session.UpdateRemotePublicKey"}).Debug("Updating remote public key")
-	return s.dhRatchet.UpdateKeys(newPubKey[:])
+	// The remote key is shared by both directions, so install it in each.
+	if err := s.sending.dhRatchet.UpdateKeys(newPubKey[:]); err != nil {
+		return err
+	}
+	return s.receiving.dhRatchet.UpdateKeys(newPubKey[:])
 }
 
 // Role returns the handshake role this endpoint was created with, which
@@ -674,32 +732,39 @@ func (s *Session) Role() Role {
 // Returns:
 //   - [8]byte: The next expected session tag
 func (s *Session) GetNextTag() ([8]byte, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	return s.sending.tagRatchet.PeekNextTag()
 }
 
 // GetReceivingNextTag returns the next session tag expected from the peer
 // without advancing the receiving ratchet.
 func (s *Session) GetReceivingNextTag() ([8]byte, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	return s.receiving.tagRatchet.PeekNextTag()
 }
 
 // GetMessageNumber returns the current sending-direction message number.
 func (s *Session) GetMessageNumber() uint32 {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	return s.sending.messageNum
 }
 
 // GetReceivingMessageNumber returns the current receiving-direction message
 // number, i.e. the number of inbound messages consumed in the current tag set.
 func (s *Session) GetReceivingMessageNumber() uint32 {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	return s.receiving.messageNum
 }
 
 // Zero securely clears all session state from memory.
 // This should be called when the session is no longer needed.
 func (s *Session) Zero() {
-	if s.dhRatchet != nil {
-		s.dhRatchet.Zero()
-	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	s.sending.Zero()
 	s.receiving.Zero()
 	s.sendingRootKey = [ChainKeySize]byte{}
@@ -711,6 +776,9 @@ func (s *Session) Zero() {
 // Zero clears one direction's ratchet state, including the per-message keys
 // cached in its look-ahead window.
 func (d *direction) Zero() {
+	if d.dhRatchet != nil {
+		d.dhRatchet.Zero()
+	}
 	if d.symRatchet != nil {
 		d.symRatchet.Zero()
 	}
