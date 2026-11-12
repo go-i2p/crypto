@@ -103,22 +103,30 @@ func EncryptECIESX25519(recipientPubKey, plaintext []byte) ([]byte, error) {
 	//
 	// Spec section 1f labels this MixHash under the "s" message pattern, and the
 	// no-static-key path says only "ad = h from Flags/Static key section", so the
-	// text is ambiguous about whether the mix happens when there is no static key
-	// to send. It is done here because the flags section is a complete Noise
-	// transport message (encrypted with k at n = 0) and Noise mixes every
-	// transport message's ciphertext into h. The spec's own use of n = 1 for the
-	// payload - the counter advance for a second transport message - is the
-	// strongest available evidence that the payload is that second message, so h
-	// must already include the flags ciphertext.
+	// text alone is ambiguous about whether the mix happens when there is no static
+	// key to send. It is done here because the flags section is a complete Noise
+	// transport message (encrypted with k at n = 0) and Noise mixes every transport
+	// message's ciphertext into h. The spec's own use of n = 1 for the payload - the
+	// counter advance for a second transport message - is the strongest available
+	// evidence that the payload is that second message, so h must already include
+	// the flags ciphertext.
 	//
 	// Note that the "+hs2" in the protocol name does NOT settle this: section 1f
-	// says it indicates "that MixHash() is called before the second message to
-	// mix in the tag value", and the tag mix is the MixHash(tag) step in the New
-	// Session Reply path, not this one.
+	// says it indicates "that MixHash() is called before the second message to mix
+	// in the tag value", and the tag mix is the MixHash(tag) step in the New Session
+	// Reply path, not this one.
 	//
-	// TODO(spec): confirm against a reference implementation (Java ECIESOneTime /
-	// i2pd) and add a known-answer vector for the one-time format. If the mix is
-	// wrong, every one-time message fails to interoperate.
+	// Confirmed against the i2pd reference (ECIESX25519AEADRatchetSession::
+	// HandleNewIncomingSession, libi2pd/ECIESX25519AEADRatchetSession.cpp): the
+	// flags/static ciphertext is mixed with "MixHash(buf, 48)" UNCONDITIONALLY,
+	// before the "isStatic = !fs.IsZero()" branch that decides whether to run the
+	// "ss" pattern. So when the flags section is all zeros (the one-time case) the
+	// 48-byte flags ciphertext is still mixed into h, and the payload is then
+	// decrypted with that updated h at nonce 1 - exactly what is done here. The
+	// one-time format is the spec's "1d) One-time format", which section 1f says is
+	// processed by the New Session "IK" state machine with the "ss" pattern skipped.
+	//
+	// Regression-pinned by TestOneTimeKnownAnswerFull in spec_vectors_test.go.
 	h = sha256.Sum256(append(h[:], flagsCt...))
 
 	// Encrypt the payload with nonce 1.
@@ -198,7 +206,8 @@ func DecryptECIESX25519(recipientPrivKey, ciphertext []byte) ([]byte, error) {
 		return nil, oops.Wrapf(ErrDecryptionFailed, "flags section is not all zeros; not a one-time message")
 	}
 
-	// MixHash with the flags ciphertext.
+	// MixHash with the flags ciphertext (see the encrypt path for why the mix
+	// happens even when the flags section is all zeros).
 	h = sha256.Sum256(append(h[:], flagsCt...))
 
 	// Decrypt the payload with nonce 1.

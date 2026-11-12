@@ -155,3 +155,72 @@ func TestOneTimeKnownAnswerDecryptable(t *testing.T) {
 		t.Errorf("flags section decrypted to %x, want 32 zero bytes", flags)
 	}
 }
+
+// TestOneTimeKnownAnswerFull pins the step the earlier vectors stop short of:
+// the MixHash(flagsCt) that produces the payload's associated data, and the
+// payload ciphertext derived from it.
+//
+// The spec text is ambiguous about whether the flags ciphertext is mixed into h
+// when there is no static key to send (the one-time case). It is, confirmed
+// against the i2pd reference (ECIESX25519AEADRatchetSession::
+// HandleNewIncomingSession mixes the 48-byte flags/static ciphertext
+// unconditionally, before the isStatic branch). The expectations below were
+// computed independently from that schedule using only SHA-256, X25519, RFC 5869
+// HKDF and ChaCha20-Poly1305, over the same fixed inputs as katInputs:
+//
+//	flagsCt = ENCRYPT(k, n=0, 32 zero bytes, ad=h)
+//	h2      = SHA256(h || flagsCt)          // MixHash(flagsCt)
+//	payload = "I2P one-time ECIES known-answer vector."
+//	payloadCt = ENCRYPT(k, n=1, payload, ad=h2)
+//
+// This is the regression guard for CRP-001: if the mix were dropped, the payload
+// would be encrypted with ad=h instead of ad=h2 and every one-time message would
+// fail to interoperate. The final sub-check asserts the two are in fact distinct,
+// so removing the mix fails the test rather than silently passing.
+func TestOneTimeKnownAnswerFull(t *testing.T) {
+	bpk, aesk, aepk := katInputs(t)
+
+	h, k, err := deriveOneTimeKey(bpk, aesk, aepk, nil)
+	if err != nil {
+		t.Fatalf("deriveOneTimeKey failed: %v", err)
+	}
+
+	// Flags section ciphertext at n=0 with ad=h.
+	flagsCt, err := encryptSection(k, h, make([]byte, flagsSectionSize), 0)
+	if err != nil {
+		t.Fatalf("encryptSection(flags) failed: %v", err)
+	}
+	wantFlagsCt := mustHexVec(t, "404b97bc24200aae65a67623cc37bd1e33a78837d7ff995a3d5abc3657e984d6cfedb77913f0a8dd4684551b66f0dd1b")
+	if hex.EncodeToString(flagsCt) != hex.EncodeToString(wantFlagsCt) {
+		t.Errorf("flags ciphertext mismatch:\n got  %x\n want %x", flagsCt, wantFlagsCt)
+	}
+
+	// MixHash(flagsCt) -> h2, the payload's associated data.
+	h2 := sha256.Sum256(append(h[:], flagsCt...))
+	wantH2 := mustHexVec(t, "28aa59e8bd52e899f9da77fd2a280b3b82398e99578b1c00a2c5e97ccf47ded7")
+	if hex.EncodeToString(h2[:]) != hex.EncodeToString(wantH2) {
+		t.Errorf("h after MixHash(flagsCt):\n got  %x\n want %x", h2, wantH2)
+	}
+
+	// Payload ciphertext at n=1 with ad=h2.
+	plaintext := []byte("I2P one-time ECIES known-answer vector.")
+	payloadCt, err := encryptSection(k, h2, plaintext, 1)
+	if err != nil {
+		t.Fatalf("encryptSection(payload) failed: %v", err)
+	}
+	wantPayloadCt := mustHexVec(t, "87b04e7b857bd32feaba0c16eddff4a40746ee3dc5b0a0de4e9de2163e9bb0c228d9833a11a4b7445b8ea87af6c6484b165e0f4888b11a")
+	if hex.EncodeToString(payloadCt) != hex.EncodeToString(wantPayloadCt) {
+		t.Errorf("payload ciphertext mismatch:\n got  %x\n want %x", payloadCt, wantPayloadCt)
+	}
+
+	// Regression guard: encrypting the payload with the un-mixed h must differ
+	// from the correct h2-derived ciphertext, so dropping the MixHash(flagsCt)
+	// step is caught here rather than passing a self-consistent round-trip.
+	wrongCt, err := encryptSection(k, h, plaintext, 1)
+	if err != nil {
+		t.Fatalf("encryptSection(payload, ad=h) failed: %v", err)
+	}
+	if hex.EncodeToString(wrongCt) == hex.EncodeToString(payloadCt) {
+		t.Errorf("payload ciphertext with ad=h equals the one with ad=h2; the MixHash(flagsCt) step is a no-op")
+	}
+}
