@@ -296,15 +296,6 @@ ratchet step in this direction, and ck is the chain key output of DH_INITIALIZE.
 The caller must apply the TagAndKeyGenKeys KDF to ck to obtain the session tag
 chain key and symmetric key chain key.
 
-#### func (*DHRatchet) SetRootKey
-
-```go
-func (r *DHRatchet) SetRootKey(rootKey [ChainKeySize]byte)
-```
-SetRootKey sets the root key used as input to DH_INITIALIZE on the next
-PerformRatchet call. This is used by the Session to select the correct
-per-direction root key before performing a ratchet step.
-
 #### func (*DHRatchet) UpdateKeys
 
 ```go

@@ -83,13 +83,6 @@ func (r *DHRatchet) PerformRatchet() ([ChainKeySize]byte, [ChainKeySize]byte, er
 	return nextRootKey, ck, nil
 }
 
-// SetRootKey sets the root key used as input to DH_INITIALIZE on the next
-// PerformRatchet call. This is used by the Session to select the correct
-// per-direction root key before performing a ratchet step.
-func (r *DHRatchet) SetRootKey(rootKey [ChainKeySize]byte) {
-	r.rootKey = rootKey
-}
-
 // UpdateKeys updates the DH ratchet with a new remote public key.
 func (r *DHRatchet) UpdateKeys(newTheirPubKey []byte) error {
 	if len(newTheirPubKey) != PublicKeySize {
