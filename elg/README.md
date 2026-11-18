@@ -21,10 +21,11 @@ recipient's public key, and only the recipient can decrypt using their private
 key.
 
 Key Features: - 2048-bit ElGamal encryption with I2P-standard domain parameters
-- Constant-time decryption operations to prevent timing attacks - SHA-256
-message integrity verification during decryption - I2P-standard 514-byte
-zero-padded message format - Secure random ephemeral key generation for each
-encryption session
+- Constant-time SHA-256 integrity comparison during decryption (note: the
+underlying ElGamal modular exponentiation is not constant-time, so decryption
+as a whole is not protected against timing attacks) - SHA-256 message integrity
+verification during decryption - I2P-standard 514-byte zero-padded message
+format - Secure random ephemeral key generation for each encryption session
 
 Security Considerations: - Maximum plaintext size limited to 222 bytes for
 cryptographic security - Private keys must be securely generated and stored in
