@@ -157,19 +157,17 @@ func ElgamalGenerate(priv *elgamal.PrivateKey, _ io.Reader) (err error) {
 }
 
 // elgamalDecrypt decrypts ElGamal encrypted data using I2P's specific format and validation.
-// The zeroPadding parameter controls parsing of the encrypted data format.
 // This function coordinates the complete decryption process by parsing ciphertext format,
 // performing decryption, and validating the integrity of the decrypted message.
-func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (decrypted []byte, err error) {
+func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte) (decrypted []byte, err error) {
 	log.WithFields(logger.Fields{
-		"pkg":          "elg",
-		"func":         "elgamalDecrypt",
-		"data_length":  len(data),
-		"zero_padding": zeroPadding,
+		"pkg":         "elg",
+		"func":        "elgamalDecrypt",
+		"data_length": len(data),
 	}).Debug("Decrypting ElGamal data")
 
-	// Parse ciphertext format (with or without zero-padding)
-	ciphertext, err := parseCiphertext(data, zeroPadding)
+	// Parse ciphertext format (the I2P 514-byte zero-padded block)
+	ciphertext, err := parseCiphertext(data)
 	if err != nil {
 		return nil, err
 	}
@@ -192,28 +190,19 @@ func elgamalDecrypt(priv *elgamal.PrivateKey, data []byte, zeroPadding bool) (de
 }
 
 // parseCiphertext extracts the raw ciphertext from I2P's formatted encrypted data.
-// Handles both zero-padded format (514 bytes) and non-padded format (512 bytes).
-// Returns the extracted ciphertext ready for cryptographic decryption.
-func parseCiphertext(data []byte, zeroPadding bool) ([]byte, error) {
-	if zeroPadding {
-		// Zero-padded format: [0][256 bytes c1][0][256 bytes c2] = 514 bytes
-		if len(data) != 514 {
-			log.WithFields(logger.Fields{"pkg": "elg", "func": "parseCiphertext"}).WithError(ElgDecryptFail).Error("Invalid ciphertext length for zero-padded format")
-			return nil, ElgDecryptFail
-		}
-		// Extract c1 and c2, removing the zero bytes
-		ciphertext := make([]byte, 512)
-		copy(ciphertext[0:256], data[1:257])     // c1 from positions 1-256
-		copy(ciphertext[256:512], data[258:514]) // c2 from positions 258-513
-		return ciphertext, nil
-	}
-
-	// Non-padded format: [256 bytes c1][256 bytes c2] = 512 bytes
-	if len(data) != 512 {
-		log.WithFields(logger.Fields{"pkg": "elg", "func": "parseCiphertext"}).WithError(ElgDecryptFail).Error("Invalid ciphertext length for non-padded format")
+// Handles the zero-padded format (514 bytes). Returns the extracted ciphertext
+// ready for cryptographic decryption.
+func parseCiphertext(data []byte) ([]byte, error) {
+	// Zero-padded format: [0][256 bytes c1][0][256 bytes c2] = 514 bytes
+	if len(data) != 514 {
+		log.WithFields(logger.Fields{"pkg": "elg", "func": "parseCiphertext"}).WithError(ElgDecryptFail).Error("Invalid ciphertext length for zero-padded format")
 		return nil, ElgDecryptFail
 	}
-	return data, nil
+	// Extract c1 and c2, removing the zero bytes
+	ciphertext := make([]byte, 512)
+	copy(ciphertext[0:256], data[1:257])     // c1 from positions 1-256
+	copy(ciphertext[256:512], data[258:514]) // c2 from positions 258-513
+	return ciphertext, nil
 }
 
 // verifyAndExtractPayload validates the decrypted message format and integrity,

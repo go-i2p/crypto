@@ -172,12 +172,14 @@ network protocols.
 func (c *Curve25519Decrypter) Decrypt(data []byte) ([]byte, error)
 ```
 Decrypt decrypts data that was encrypted using Curve25519 and ChaCha20-Poly1305
-AEAD. The encrypted data format is: [zero
-padding][ephemeral_public_key][nonce][aead_ciphertext] This method performs
-X25519 key exchange with the ephemeral public key, derives the decryption key
-using HKDF-SHA256, and then decrypts the data using ChaCha20-Poly1305
-authenticated encryption. The minimum data size is 61 bytes (1 zero-padding byte
-+ 32-byte public key + 12-byte nonce + 16-byte tag).
+AEAD. The encrypted data format is either [zero
+padding][ephemeral_public_key][nonce][aead_ciphertext] (padded, the default) or
+the compact [ephemeral_public_key][nonce][aead_ciphertext] form; the optional
+leading zero-padding byte is auto-detected. This method performs X25519 key
+exchange with the ephemeral public key, derives the decryption key using
+HKDF-SHA256, and then decrypts the data using ChaCha20-Poly1305 authenticated
+encryption. The minimum data size is 60 bytes (32-byte public key + 12-byte
+nonce + 16-byte tag), or 61 bytes when zero-padded.
 
 #### type Curve25519Encryption
 

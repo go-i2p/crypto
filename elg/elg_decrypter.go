@@ -25,10 +25,8 @@ type elgDecrypter struct {
 // constant-time.
 func (elg *elgDecrypter) Decrypt(data []byte) (dec []byte, err error) {
 	log.WithFields(logger.Fields{"pkg": "elg", "func": "elgDecrypter.Decrypt", "data_length": len(data)}).Debug("Decrypting ElGamal data")
-	// Use zero padding format for I2P compatibility with standard message structure
-	// The zero padding parameter affects how the encrypted data components are parsed
-	// TODO(psi): Verify if zero padding should be configurable for different I2P message types
-	dec, err = elgamalDecrypt(elg.k, data, true) // TODO(psi): should this be true or false?
+	// Use the I2P zero-padded format for standard message structure
+	dec, err = elgamalDecrypt(elg.k, data)
 	if err != nil {
 		log.WithFields(logger.Fields{"pkg": "elg", "func": "elgDecrypter.Decrypt"}).WithError(err).Error("Failed to decrypt ElGamal data")
 	} else {

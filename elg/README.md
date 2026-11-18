@@ -22,8 +22,8 @@ key.
 
 Key Features: - 2048-bit ElGamal encryption with I2P-standard domain parameters
 - Constant-time decryption operations to prevent timing attacks - SHA-256
-message integrity verification during decryption - Support for both zero-padded
-and compact message formats - Secure random ephemeral key generation for each
+message integrity verification during decryption - I2P-standard 514-byte
+zero-padded message format - Secure random ephemeral key generation for each
 encryption session
 
 Security Considerations: - Maximum plaintext size limited to 222 bytes for
@@ -351,22 +351,22 @@ formatting with SHA-256 integrity checks.
 ```go
 func (elg *ElgamalEncryption) Encrypt(data []byte) (enc []byte, err error)
 ```
-Encrypt encrypts data using ElGamal with zero padding enabled by default.
-Provides a simple interface for standard ElGamal encryption operations. Returns
-encrypted data or error if encryption fails or data is too large (>222 bytes).
-This method applies I2P's standard ElGamal message format with SHA-256 integrity
-protection and automatic zero-padding for network protocol compatibility.
+Encrypt encrypts data using ElGamal, producing I2P's standard 514-byte
+zero-padded message block. Provides a simple interface for standard ElGamal
+encryption operations. Returns encrypted data or error if encryption fails or
+data is too large (>222 bytes). This method applies I2P's standard ElGamal
+message format with SHA-256 integrity protection and zero-padding for network
+protocol compatibility.
 
 #### func (*ElgamalEncryption) EncryptPadding
 
 ```go
-func (elg *ElgamalEncryption) EncryptPadding(data []byte, zeroPadding bool) (encrypted []byte, err error)
+func (elg *ElgamalEncryption) EncryptPadding(data []byte) (encrypted []byte, err error)
 ```
-EncryptPadding encrypts data using ElGamal with configurable padding options.
-The zeroPadding parameter controls whether to apply zero-padding for data
-shorter than block size. Maximum supported data size is 222 bytes due to ElGamal
-security requirements. This method coordinates the I2P ElGamal encryption
-process.
+EncryptPadding encrypts data using ElGamal, producing I2P's standard 514-byte
+zero-padded message block. Maximum supported data size is 222 bytes due to
+ElGamal security requirements. This method coordinates the I2P ElGamal
+encryption process.
 
 #### type PrivateKey
 

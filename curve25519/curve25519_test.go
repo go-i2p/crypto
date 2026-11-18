@@ -487,3 +487,83 @@ func BenchmarkNewCurve25519PrivateKey(b *testing.B) {
 		NewCurve25519PrivateKey(priv[:])
 	}
 }
+
+// TestCurve25519PaddingRoundTrip verifies that both the zero-padded (default) and
+// compact EncryptPadding output formats round-trip through Decrypt, and that the
+// auto-detection of the leading zero-padding byte is robust.
+func TestCurve25519PaddingRoundTrip(t *testing.T) {
+	pub, priv, err := curve25519.GenerateKey(rand.Reader)
+	if err != nil {
+		t.Fatalf("GenerateKey: %v", err)
+	}
+	privKey, err := NewCurve25519PrivateKey(priv[:])
+	if err != nil {
+		t.Fatalf("NewCurve25519PrivateKey: %v", err)
+	}
+	pubKey, err := NewCurve25519PublicKey(pub[:])
+	if err != nil {
+		t.Fatalf("NewCurve25519PublicKey: %v", err)
+	}
+
+	enc, err := pubKey.NewEncrypter()
+	if err != nil {
+		t.Fatalf("NewEncrypter: %v", err)
+	}
+	e, ok := enc.(*Curve25519Encryption)
+	if !ok {
+		t.Fatalf("encrypter is not *Curve25519Encryption")
+	}
+	dec, err := privKey.NewDecrypter()
+	if err != nil {
+		t.Fatalf("NewDecrypter: %v", err)
+	}
+
+	message := []byte("round trip across both padding formats")
+
+	for _, tc := range []struct {
+		name        string
+		zeroPadding bool
+	}{
+		{"padded", true},
+		{"compact", false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			ct, err := e.EncryptPadding(message, tc.zeroPadding)
+			if err != nil {
+				t.Fatalf("EncryptPadding: %v", err)
+			}
+			// Padded output is one byte longer than compact.
+			wantLen := 1 + 32 + 12 + len(message) + 16
+			if !tc.zeroPadding {
+				wantLen--
+			}
+			if len(ct) != wantLen {
+				t.Fatalf("ciphertext length = %d, want %d", len(ct), wantLen)
+			}
+			pt, err := dec.Decrypt(ct)
+			if err != nil {
+				t.Fatalf("Decrypt: %v", err)
+			}
+			if !bytes.Equal(pt, message) {
+				t.Errorf("round trip mismatch: got %q, want %q", pt, message)
+			}
+		})
+	}
+
+	t.Run("too short", func(t *testing.T) {
+		if _, err := dec.Decrypt(make([]byte, 10)); err == nil {
+			t.Error("expected error for short ciphertext, got nil")
+		}
+	})
+
+	t.Run("tampered", func(t *testing.T) {
+		ct, err := e.EncryptPadding(message, true)
+		if err != nil {
+			t.Fatalf("EncryptPadding: %v", err)
+		}
+		ct[len(ct)-1] ^= 0xFF // flip a byte in the AEAD tag
+		if _, err := dec.Decrypt(ct); err == nil {
+			t.Error("expected authentication error for tampered ciphertext, got nil")
+		}
+	})
+}

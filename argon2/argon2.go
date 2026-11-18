@@ -1,6 +1,8 @@
 package argon2
 
 import (
+	"math"
+
 	"github.com/go-i2p/logger"
 
 	"golang.org/x/crypto/argon2"
@@ -25,7 +27,13 @@ func NewArgon2id(timeCost, memoryCost uint32, parallelism uint8) *Argon2id {
 // minimum requirements before performing the expensive key derivation operation.
 func validateDeriveParams(keyLen int, salt []byte, timeCost, memoryCost uint32, parallelism uint8) error {
 	log.WithFields(logger.Fields{"pkg": "argon2", "func": "validateDeriveParams", "key_len": keyLen}).Debug("Validating Argon2id parameters")
-	if keyLen <= 0 {
+	// keyLen is an int but is narrowed to uint32 for argon2.IDKey. Reject any
+	// value that would not survive that conversion losslessly: on 64-bit
+	// platforms keyLen > math.MaxUint32 would wrap mod 2^32 and silently return
+	// a wrong-length (often zero-length) key. The uint64 cast keeps the
+	// comparison valid on 32-bit platforms too, where int can never exceed
+	// MaxUint32 and the guard is always false.
+	if keyLen <= 0 || uint64(keyLen) > math.MaxUint32 {
 		log.WithFields(logger.Fields{"pkg": "argon2", "func": "validateDeriveParams"}).Error("Invalid key length")
 		return ErrInvalidKeyLength
 	}
@@ -51,6 +59,10 @@ func validateDeriveParams(keyLen int, salt []byte, timeCost, memoryCost uint32, 
 // secret/context parameter, so two calls that differ only in info produce the same
 // derived key. Bind context into the salt (or into the IKM) instead if separation is
 // required.
+//
+// keyLen must satisfy 0 < keyLen <= math.MaxUint32; the value is narrowed to uint32
+// for the underlying argon2.IDKey call, so larger values are rejected with
+// [ErrInvalidKeyLength] rather than silently truncated.
 func (a *Argon2id) Derive(ikm, salt, info []byte, keyLen int) ([]byte, error) {
 	log.WithFields(logger.Fields{"pkg": "argon2", "func": "Argon2id.Derive", "key_len": keyLen}).Debug("Deriving key with Argon2id")
 	if err := validateDeriveParams(keyLen, salt, a.TimeCost, a.MemoryCost, a.Parallelism); err != nil {

@@ -161,7 +161,7 @@ func encryptMessage(t *testing.T, enc *ElgamalEncryption, msg []byte) ([]byte, e
 
 // decryptMessage decrypts the given ciphertext using the ElGamal private key.
 func decryptMessage(t *testing.T, k *elgamal.PrivateKey, ciphertext []byte) ([]byte, error) {
-	dec, err := elgamalDecrypt(k, ciphertext, true)
+	dec, err := elgamalDecrypt(k, ciphertext)
 	if err != nil {
 		t.Logf("decrypt failed: %s", err.Error())
 		t.Fail()
@@ -287,5 +287,57 @@ func TestElgamalPayloadLengths(t *testing.T) {
 				t.Errorf("round trip mismatch: got %d bytes, want %d bytes", len(pt), len(tc.data))
 			}
 		})
+	}
+}
+
+// TestElgamalEncryptPaddingRoundTrip verifies that EncryptPadding produces the
+// I2P 514-byte zero-padded block and that Decrypt round-trips it for a range of
+// payload shapes, including trailing-zero and full-222-byte payloads.
+func TestElgamalEncryptPaddingRoundTrip(t *testing.T) {
+	pub, priv, err := GenerateKeyPair()
+	if err != nil {
+		t.Fatalf("GenerateKeyPair: %v", err)
+	}
+	enc, err := pub.NewEncrypter()
+	if err != nil {
+		t.Fatalf("NewEncrypter: %v", err)
+	}
+	dec, err := priv.NewDecrypter()
+	if err != nil {
+		t.Fatalf("NewDecrypter: %v", err)
+	}
+	e, ok := enc.(*ElgamalEncryption)
+	if !ok {
+		t.Fatalf("encrypter is not *ElgamalEncryption")
+	}
+
+	full := make([]byte, 222)
+	if _, err := io.ReadFull(rand.Reader, full); err != nil {
+		t.Fatal(err)
+	}
+
+	cases := [][]byte{
+		{0x41},
+		[]byte("i2p"),
+		append([]byte("payload"), 0x00, 0x00, 0x00),
+		make([]byte, 8),
+		full,
+	}
+
+	for _, data := range cases {
+		ct, err := e.EncryptPadding(data)
+		if err != nil {
+			t.Fatalf("EncryptPadding: %v", err)
+		}
+		if len(ct) != 514 {
+			t.Fatalf("ciphertext length = %d, want 514", len(ct))
+		}
+		pt, err := dec.Decrypt(ct)
+		if err != nil {
+			t.Fatalf("Decrypt: %v", err)
+		}
+		if !bytes.Equal(pt, data) {
+			t.Errorf("round trip mismatch: got %d bytes, want %d bytes", len(pt), len(data))
+		}
 	}
 }
