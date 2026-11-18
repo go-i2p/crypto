@@ -16,13 +16,13 @@
 // private key.
 //
 // Key Features:
-// - 2048-bit ElGamal encryption with I2P-standard domain parameters
-// - Constant-time SHA-256 integrity comparison during decryption (note: the
-//   underlying ElGamal modular exponentiation is not constant-time, so
-//   decryption as a whole is not protected against timing attacks)
-// - SHA-256 message integrity verification during decryption
-// - Support for both zero-padded and compact message formats
-// - Secure random ephemeral key generation for each encryption session
+//   - 2048-bit ElGamal encryption with I2P-standard domain parameters
+//   - Constant-time SHA-256 integrity comparison during decryption (note: the
+//     underlying ElGamal modular exponentiation is not constant-time, so
+//     decryption as a whole is not protected against timing attacks)
+//   - SHA-256 message integrity verification during decryption
+//   - Support for both zero-padded and compact message formats
+//   - Secure random ephemeral key generation for each encryption session
 //
 // Security Considerations:
 // - Maximum plaintext size limited to 222 bytes for cryptographic security
