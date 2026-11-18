@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "category": "crypto",
+    "summary": "Core crypto vectors generated with deterministic harness randomness over the Java reference APIs.",
+    "reference_implementation": "Java I2P (geti2p.net)",
+    "reference_version": "2.12.0",
+    "reference_artifacts": [
+      "net.i2p:i2p:2.12.0",
+      "net.i2p:router:2.12.0"
+    ],
+    "deterministic_seed_hex": "00112233445566778899aabbccddeeff0123456789abcdeffedcba9876543210"
+  },
+  "vectors": [
+    {
+      "name": "dsa-sha1-keygen-sign-verify",
+      "inputs": {
+        "sig_type": "DSA_SHA1",
+        "message_utf8": "I2P vectors are ground truth",
+        "message_hex": "49325020766563746f7273206172652067726f756e64207472757468"
+      },
+      "expected": {
+        "signing_private_key_hex": "0a2edda0049b939f8df2fb9f17ab8f343dc2ebbc",
+        "signing_public_key_hex": "6bf0e95c55bb16c128e74ab6630391188381dd2c37eeca90b81e67393e8755531857fefd0707aae4da1fc0fff0a3ac8fc6b5e5d7ef3bd1a32700b74ee13ed4f98acf7d494c3b9bb0b7666f3a852fc92958851c719c6adab63d206f5e3b9c87db529bfbe0028a26ca1fc54927ad526d0e6b07f07fc7f35fb85adb74fcc99ed744",
+        "signature_hex": "57d60c707455ac3b23fc9e22472b4d30b29bdaf9a01689d0a1e59ea6a2dcf09775ae6df0cb3a92f0",
+        "verified": true
+      },
+      "comment": "Generates a DSA_SHA1 signing keypair from the reference key generator, signs a fixed message, and verifies the resulting signature."
+    },
+    {
+      "name": "ecdsa-p256-keygen-sign-verify",
+      "inputs": {
+        "sig_type": "ECDSA_SHA256_P256",
+        "message_utf8": "I2P vectors are ground truth",
+        "message_hex": "49325020766563746f7273206172652067726f756e64207472757468"
+      },
+      "expected": {
+        "signing_private_key_hex": "c50c4a8f48d3a19d4bb04712ec72c10bc448da45557de924d4afec540492c364",
+        "signing_public_key_hex": "249124916ea0d04590655cf3b7738e6ff13b3cd6e2f939f3ca0b979543da24bbbc947e1928e55ca1fbe49eb146da474779954999579d2dcfd9bf06b7a5227313",
+        "signature_hex": "7cded1e7fc83690a8fc759a1f668dfb30be0e7a5cc8b8a735a595bc09d006aa7f7d61ca8dbfba35a518eb226583e5b7ced6c05bd4373aac8dd14289af6e6277d",
+        "verified": true
+      },
+      "comment": "Generates a ECDSA_SHA256_P256 signing keypair from the reference key generator, signs a fixed message, and verifies the resulting signature."
+    },
+    {
+      "name": "ecdsa-p384-keygen-sign-verify",
+      "inputs": {
+        "sig_type": "ECDSA_SHA384_P384",
+        "message_utf8": "I2P vectors are ground truth",
+        "message_hex": "49325020766563746f7273206172652067726f756e64207472757468"
+      },
+      "expected": {
+        "signing_private_key_hex": "53a37afc697ae10f2ae2ed904fa0f4f2472b8f4e01bfa8f05c1be654bb0619e02cf29cdd181d11e6de2ac11276eda746",
+        "signing_public_key_hex": "16b77b727d81ec501d28393dc23f8e5a0122b1845134c5de8da51d5eadc1e21aef2df94c0d30687e2c43a3b75113a37e2ea7c1262ea35964b77d167fba483f49c1e2798737672bc970375e8e26babd471c2d8e39dea6a1858431df601971f98b",
+        "signature_hex": "664db293a759f66603c64fb3b4a0800d3aa9b5b18a5ff15c2af57c62457402574c678cfd5c85d1ee172e111c20e42fc5dc18eb1261f5996655a06d2ece9390b47f92cae439714d6a215ad686486bd50f301f6f3d4d899e56ec7430a5c73c754c",
+        "verified": true
+      },
+      "comment": "Generates a ECDSA_SHA384_P384 signing keypair from the reference key generator, signs a fixed message, and verifies the resulting signature."
+    },
+    {
+      "name": "ecdsa-p521-keygen-sign-verify",
+      "inputs": {
+        "sig_type": "ECDSA_SHA512_P521",
+        "message_utf8": "I2P vectors are ground truth",
+        "message_hex": "49325020766563746f7273206172652067726f756e64207472757468"
+      },
+      "expected": {
+        "signing_private_key_hex": "01635874e08acca0c687e5667f48271fbc64bbee447f376c48e9e1ff748bcf6c2c40f96b3dbd2d700e9f9dd3107ae6a2e18ba29f0e629743da80385772c82db3b163",
+        "signing_public_key_hex": "014d73882631a2b4788415a76b06136a9866dafb6f7514cd72996d1ecda8896c941abda0933a2d0998de1bb00077e1691cc3f7e5593edc5ed2470373285e4dc53d6400a0a278d6c66fda67ec0a2d75c66a9a08ccc72ece2e890f245431e356461a0680a36701317e12f86960defb702d4fd6801f18ab219becc368f3c008f4a1b703a3af",
+        "signature_hex": "0062fc78d112e65bc2fc01b1884eea868f69885511666792e8d7d2252e812a8c2eca14c76a99b7481d63c936d1b8a6a2e4f86bdcd0029d192b968f018cc0e946129401031389f705a550e3b48e137f22e7478df99d47f463d2e92fe2820893de0b92946512b5aa316784ec1bd423338fc0fc1d1f515afe73b531ccdde9df9b531bc6672e",
+        "verified": true
+      },
+      "comment": "Generates a ECDSA_SHA512_P521 signing keypair from the reference key generator, signs a fixed message, and verifies the resulting signature."
+    },
+    {
+      "name": "ed25519-keygen-sign-verify",
+      "inputs": {
+        "sig_type": "EdDSA_SHA512_Ed25519",
+        "message_utf8": "I2P vectors are ground truth",
+        "message_hex": "49325020766563746f7273206172652067726f756e64207472757468"
+      },
+      "expected": {
+        "signing_private_key_hex": "109d48563b1399055b6fd6e6e4258fe61c132c35f279916a260131bea66d5caa",
+        "signing_public_key_hex": "1a0603d46ebdb8395049c42aeb5d69ad15032f192270049d43958ba49bb7209f",
+        "signature_hex": "6cea428b2a88900af130845c9088aa241b0f267c070f585d5d9132d9f4816b1df6e440a456cf189c6ee60d9c38ba0a1c6666b3771d52f40b7069e2b4c09ed409",
+        "verified": true
+      },
+      "comment": "Generates a EdDSA_SHA512_Ed25519 signing keypair from the reference key generator, signs a fixed message, and verifies the resulting signature."
+    },
+    {
+      "name": "reddsa-ed25519-keygen-sign-verify",
+      "inputs": {
+        "sig_type": "RedDSA_SHA512_Ed25519",
+        "message_utf8": "I2P vectors are ground truth",
+        "message_hex": "49325020766563746f7273206172652067726f756e64207472757468"
+      },
+      "expected": {
+        "signing_private_key_hex": "a63dbaf6b6ae77601a697509ca71ea7ce812ee42c9f2a1bca68120973a262a09",
+        "signing_public_key_hex": "97f158f9259c3eb791a901737f966d4e2ee83859c9e4a72f1d34188ad7a55b9a",
+        "signature_hex": "d0a583ea7256e16e1e6e8fb30805c93b4d76aacc93937b33afde8388584ae1775d11e2b346adf99f456ae52956808a1905b845fc23aee377d61409d01ad1e304",
+        "verified": true
+      },
+      "comment": "Generates a RedDSA_SHA512_Ed25519 signing keypair from the reference key generator, signs a fixed message, and verifies the resulting signature."
+    },
+    {
+      "name": "elgamal-encrypt-decrypt",
+      "inputs": {
+        "enc_type": "ELGAMAL_2048",
+        "plaintext_utf8": "ElGamal vector payload",
+        "plaintext_hex": "456c47616d616c20766563746f72207061796c6f6164"
+      },
+      "expected": {
+        "private_key_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002b65120294145794fd123a81bdd36b0887e865aa614b7fc39be659270",
+        "public_key_hex": "96d8acc09166a29e5e5794d93be17cdd32aee1eaae165b73befb5f270ca6002ab187c94bede35589c8f873263859f89167aecf6763dcd034ac2862dcde30c4fd4d7b6f593214981fa6d3222e13b9b5f9fada73df1ee4e768aa8ee7c7c0f46dbd491954298a8b9990df89538a7efc2fcc28823ac18341eb68a8d736b3ed90259e0dfd78d5d6af926dc3e4abd02afabe5f7fec7124544a2a36b7d39aeb32cbd8e843152a7851df9158a35d993db2e1a3eda106acc9970f0b2836cae6f30c47629a29334df89d7bd7fb9b5298967c667e9c552918d7f34f565bd002a80e95b69b0e491f6392f24f8e8172073525ec7028856cb9bdf398e9ba42cc3b7333300ba7e4",
+        "ciphertext_hex": "00c6bf7d9842c500525c53b21ac929b688dc3c6b35f0a52edc680a189a78a876e707d57937e33bac04052a30bed586618ea7ca38ab52f57aa0fffbf6e524d7aad9bca0923d4e33a5f4e343859460c3b3dd209ff5e15e6098bc47cb1256511e46498690e2b508366e88113ed508e2984d1722ad0ad2f8332f7006db06e2e80c192ffe87df2b7e3cb670e4ed46b48930f12fd3844110e7c81ca1a3093eb0c1d5b6edccc398e8032c34216c4ffd341d90da593b528679b5ff61c4928c3706669c0286a4a672e2d832b46cbaf188861aef3655626ff94b29b10ad48fcc500205a6d538a54e2770962f4fd1d958fbb15e601a7aa20eeb09dc3353c31a19a0ebe0e6605500fa852bccc198290702eaf4c75ec3d12f43fa6c9e677099f358911edf278fc1707f607b651bfbecd4c6b909a5b5458d4c957fa67a6696c1e51668ec0e8e56950751b60674259f899927637467f5c835c3fa90749f50afd1a2a5c0eaf3b9b729c12de060c69d5796ab2a3dd3b2f927fb705627a4e20063b8fe049dd24fdeaee6ee88bd75e058d68c76f95684b15c6f54871aba66c4a622bcf22fc4c25c89b39337b648ff316662879a58324717828cb3c9bf79bc9a7448ecea691e0ebd77af19b052df7ef4f117f54e7a2eccebb442a88d507632963bdb54741de0c526a977bde0eb7b2a5ae2de6ef2901d229fa4e76c6e0420bdf5a3ca83987a08fc173e16a73a",
+        "decrypted_hex": "456c47616d616c20766563746f72207061796c6f6164",
+        "roundtrip_equal": true
+      },
+      "comment": "Encrypts and decrypts a short payload with the reference ElGamal engine."
+    },
+    {
+      "name": "x25519-key-agreement",
+      "inputs": {
+        "enc_type": "ECIES_X25519",
+        "alice_public_key_hex": "0c4961d8a29f2f125ca854bbaf80293cf09cf72141cd412ccd669812118a0200",
+        "bob_public_key_hex": "1f29504ef33e4274cd8ae1e7af39f52abd2142c88f8a00ef1f4707285874d131"
+      },
+      "expected": {
+        "alice_private_key_hex": "1874cfb2932dede9093c8814702b2d7644ec044b81995f82ca26be3913785613",
+        "bob_private_key_hex": "ace3bf71ffa2ff595e6c36a627f6b0ad56e9ce8d9d1ddc234b76f536c191dcc8",
+        "alice_shared_secret_hex": "41c163a7d7d89e603b352a1963e5f5c49caa23635018d0533dd4a16df3c34a58",
+        "bob_shared_secret_hex": "41c163a7d7d89e603b352a1963e5f5c49caa23635018d0533dd4a16df3c34a58",
+        "shared_secrets_equal": true
+      },
+      "comment": "Generates two ECIES_X25519 keypairs (Alice and Bob) from the reference key generator and performs X25519 Diffie-Hellman key agreement from both sides, verifying that alice_shared == bob_shared. These 32-byte Curve25519 keys are the cryptographic primitive underlying the I2P ECIES-X25519-AEAD-Ratchet protocol."
+    },
+    {
+      "name": "aes-cbc-safe-encrypt",
+      "inputs": {
+        "session_key_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+        "iv_hex": "1f1e1d1c1b1a19181716151413121110",
+        "plaintext_utf8": "CBC payload for I2P AES",
+        "plaintext_hex": "434243207061796c6f616420666f722049325020414553"
+      },
+      "expected": {
+        "ciphertext_hex": "cfb53ccb14ef7483afd935328a7989786d2b7280ef970cc9a11957564776d023e53badede5fab8d6ae75cbf860a1f79f3d6a5f11821e619485be6dcf197f9603",
+        "decrypted_hex": "434243207061796c6f616420666f722049325020414553",
+        "roundtrip_equal": true
+      },
+      "comment": "Uses the reference AES helper to safe-encrypt a fixed payload with deterministic padding."
+    },
+    {
+      "name": "hkdf-derive-32-bytes",
+      "inputs": {
+        "ikm_hex": "0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a",
+        "salt_hex": "f0e0d0c0b0a090807060504030201000",
+        "info_utf8": "i2p-vectors"
+      },
+      "expected": {
+        "output_hex": "3842a575890856c6d47e4ac75ff89e37c17ce4496729816947bbeb544c58defa",
+        "output_len": 32
+      },
+      "comment": "Derives a 32-byte key using the reference HKDF implementation."
+    }
+  ],
+  "notes": [
+    "ECDSA, DSA, and RedDSA signatures normally consume randomness. The harness injects a fixed PRNG seed so regenerated signatures stay stable across runs.",
+    "Legacy: DSA_SHA1 signing, ELGAMAL_2048 encryption. Modern: Ed25519/RedDSA signing, ECIES_X25519 key agreement, HKDF."
+  ]
+}
