@@ -4,7 +4,7 @@ package aes
 // supported size (128/192/256-bit) are built correctly and that invalid
 // inputs are rejected. AES-256-CBC is used by the legacy ElGamal/AES+
 // SessionTags scheme (https://i2p.net/en/docs/specs/elgamal-aes/), but note
-// that this package provides generic AES-CBC with PKCS#7 padding, not that
+// that this package provides generic unpadded AES-CBC, not that
 // scheme's wire format (which uses pseudorandom padding and an explicit
 // payload length field).
 

@@ -2,6 +2,7 @@ package aes
 
 import (
 	"bytes"
+	"crypto/aes"
 	"testing"
 )
 
@@ -30,15 +31,16 @@ func FuzzNewAESKey(f *testing.F) {
 	})
 }
 
-// FuzzAESRoundTrip drives a full AES-CBC/PKCS#7 encrypt-then-decrypt cycle with
+// FuzzAESRoundTrip drives a full AES-CBC encrypt-then-decrypt cycle with
 // arbitrary key material and plaintext. It asserts the library never panics on
-// malformed ciphertext and that a clean round-trip recovers the plaintext.
+// malformed ciphertext and that a clean round-trip recovers the plaintext for
+// block-aligned input.
 func FuzzAESRoundTrip(f *testing.F) {
 	seedKey := make([]byte, 32)
 	seedIV := make([]byte, 16)
-	f.Add(seedKey, seedIV, []byte("hello i2p"))
+	f.Add(seedKey, seedIV, []byte("hello i2p 123456")) // 16 bytes, block-aligned
 	f.Add(seedKey, seedIV, []byte{})
-	f.Add(seedKey[:16], seedIV, []byte("aes-128 plaintext"))
+	f.Add(seedKey[:16], seedIV, []byte("aes-128 plain!!")) // 15 bytes, not aligned
 
 	f.Fuzz(func(t *testing.T, key, iv, plaintext []byte) {
 		k, err := NewAESKey(key, iv)
@@ -49,20 +51,28 @@ func FuzzAESRoundTrip(f *testing.F) {
 		if err != nil {
 			t.Fatalf("NewEncrypter on accepted key: %v", err)
 		}
-		ct, err := enc.Encrypt(plaintext)
-		if err != nil {
-			t.Fatalf("Encrypt: %v", err)
-		}
 		dec, err := k.NewDecrypter()
 		if err != nil {
 			t.Fatalf("NewDecrypter on accepted key: %v", err)
 		}
-		got, err := dec.Decrypt(ct)
-		if err != nil {
-			t.Fatalf("Decrypt of own ciphertext: %v", err)
-		}
-		if !bytes.Equal(got, plaintext) {
-			t.Fatalf("round-trip mismatch: got %q, want %q", got, plaintext)
+
+		ct, err := enc.Encrypt(plaintext)
+		if len(plaintext)%aes.BlockSize != 0 {
+			// Unpadded AES-CBC rejects non-block-aligned plaintext.
+			if err == nil {
+				t.Fatalf("expected error for non-aligned plaintext of length %d", len(plaintext))
+			}
+		} else {
+			if err != nil {
+				t.Fatalf("Encrypt: %v", err)
+			}
+			got, err := dec.Decrypt(ct)
+			if err != nil {
+				t.Fatalf("Decrypt of own ciphertext: %v", err)
+			}
+			if !bytes.Equal(got, plaintext) {
+				t.Fatalf("round-trip mismatch: got %q, want %q", got, plaintext)
+			}
 		}
 
 		// Now feed arbitrary bytes as ciphertext: must return an error or a

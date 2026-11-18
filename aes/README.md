@@ -41,14 +41,9 @@ AESSymmetricDecrypter implements the Decrypter interface using AES
 ```go
 func (d *AESSymmetricDecrypter) Decrypt(data []byte) ([]byte, error)
 ```
-Decrypt decrypts data using AES-CBC with PKCS#7 padding
-
-#### func (*AESSymmetricDecrypter) DecryptNoPadding
-
-```go
-func (d *AESSymmetricDecrypter) DecryptNoPadding(data []byte) ([]byte, error)
-```
-DecryptNoPadding decrypts data using AES-CBC without padding
+Decrypt decrypts data using AES-CBC without padding. The ciphertext length
+must be a multiple of the 16-byte AES block size. This matches how I2P uses
+AES-CBC (unpadded, over fixed-size payload regions).
 
 #### type AESSymmetricEncrypter
 
@@ -66,14 +61,10 @@ AESSymmetricEncrypter implements the Encrypter interface using AES
 ```go
 func (e *AESSymmetricEncrypter) Encrypt(data []byte) ([]byte, error)
 ```
-Encrypt encrypts data using AES-CBC with PKCS#7 padding
-
-#### func (*AESSymmetricEncrypter) EncryptNoPadding
-
-```go
-func (e *AESSymmetricEncrypter) EncryptNoPadding(data []byte) ([]byte, error)
-```
-EncryptNoPadding encrypts data using AES-CBC without padding
+Encrypt encrypts data using AES-CBC without padding. The data length must be
+a multiple of the 16-byte AES block size; callers are responsible for any
+padding. This matches how I2P uses AES-CBC (unpadded, over fixed-size payload
+regions).
 
 #### type AESSymmetricKey
 

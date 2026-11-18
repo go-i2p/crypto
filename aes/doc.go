@@ -3,17 +3,18 @@
 //
 // AES is a widely used block cipher that encrypts data in fixed-size blocks
 // using a shared secret key. Both the sender and receiver must know the same
-// key. This package implements AES in CBC (Cipher Block Chaining) mode, with
-// and without PKCS#7 padding. The padded form is the general-purpose helper;
-// note that I2P's legacy tunnel encryption (see the tunnel package) uses
-// unpadded CBC over a fixed payload region rather than this package.
+// key. This package implements AES in CBC (Cipher Block Chaining) mode without
+// padding: the caller supplies data whose length is a multiple of the 16-byte
+// block size. This matches how I2P uses AES-CBC (unpadded, over fixed-size
+// payload regions, e.g. the tunnel and ElGamal/AES session layers) rather than
+// the PKCS#7-style padding common in general-purpose crypto libraries.
 //
 // # How it works
 //
 //   - A key (16, 24, or 32 bytes) is shared between sender and receiver.
 //   - An IV (initialization vector) is used to make each encryption unique.
-//   - Data is padded to a multiple of the 16-byte block size before
-//     encryption.
+//   - Data must already be a multiple of the 16-byte block size; no padding is
+//     applied or stripped.
 //
 // # Security notes
 //
@@ -26,9 +27,9 @@
 // This package is a general-purpose AES-CBC helper. It is NOT an
 // implementation of I2P's ElGamal/AES+SessionTags wire format
 // (https://i2p.net/en/docs/specs/elgamal-aes/), and it is not the tunnel-layer
-// cipher either (see the tunnel package for that). In particular the padding
-// differs: this package uses standard PKCS#7 padding, whereas the I2P
-// ElGamal/AES scheme pads with pseudorandom bytes and carries the real payload
-// length in a separate field of the AES block. Do not use this package to
-// interoperate with Java I2P's end-to-end encryption.
+// cipher either (see the tunnel package for that). In particular it applies no
+// padding, whereas the I2P ElGamal/AES scheme pads with pseudorandom bytes
+// (RFC-2313 block type 02) and carries the real payload length in a separate
+// field of the AES block. Do not use this package to interoperate with Java
+// I2P's end-to-end encryption.
 package aes
